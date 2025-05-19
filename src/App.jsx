@@ -11,15 +11,17 @@ import Members from "./pages/Members.jsx";
 import Advertisement from "./pages/Advertisement.jsx";
 import Download from "./pages/Download.jsx";
 import Haridwar from "./pages/Haridwar.jsx";
-
+import GoogleTranslate from "../src/components/GoogleTranslate.jsx";
 import AdminLogin from "./pages/AdminLogin.jsx";
 import PendingForms from "./pages/PendingForms.jsx";
 
 function App() {
   return (
     <>
+    {/* <GoogleTranslate/> */}
       <BrowserRouter>
         <Routes>
+         
           <Route path="/" element={<Navigate to="/home" replace />} />
           <Route path="/home" element={<Homepage />} />
           <Route path="/about" element={<About />} />

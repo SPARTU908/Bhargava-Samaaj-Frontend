@@ -186,10 +186,6 @@ const Homepage = () => {
           <div className={styles.contentPres}>
             <div className={styles.message}>
               प्रधान की कलम से.... <br />
-              अनिल भार्गव <br />
-              1855, सेक्टर-04,
-              <br />
-              रेवाड़ी <br />
               प्रिय बंधुवर, सादर अभिनन्दन !! सर्वप्रथम में आप सभी स्नेहीजनों,
               बड़े व छोटे भाई. बहनों का का मुझे व मेरी कार्यकारिणी को भारी मतों
               से विजय का आशीर्वाद देने के लिए हृदय से आभार व्यक्त करता हूँ। आप
@@ -242,6 +238,10 @@ const Homepage = () => {
               के लिए हार्दिक आभार, अभिनन्दन | आपका अपना भवदीय
               <br />
               अनिल भार्गव
+              <br/>
+              1855, सेक्टर-04,
+              <br />
+              रेवाड़ी <br />
               <br />
             </div>
           </div>
@@ -395,12 +395,12 @@ const Homepage = () => {
           <div>
             <img src={pankaj} alt="" className={styles.girish} />
             <div className={styles.girishName}> श्री पंकज भार्गव</div>
-            <div className={styles.pankajOcc}>उपाध्यक्ष</div>
+            <div className={styles.pankajOcc}>सचिव</div>
           </div>
           <div>
             <img src={sanjeev} alt="" className={styles.girish} />
             <div className={styles.girishName}> श्री संजीव भार्गव</div>
-            <div className={styles.sanjeevOcc}>उपाध्यक्ष</div>
+            <div className={styles.sanjeevOcc}>सचिव</div>
           </div>
         </div>
 
@@ -408,18 +408,18 @@ const Homepage = () => {
           <div>
             <img src={anil2} alt="" className={styles.girish} />
             <div className={styles.girishName}> श्री अनिल भार्गव</div>
-            <div className={styles.sanjeevOcc}>उपाध्यक्ष</div>
+            <div className={styles.sanjeevOcc}>सचिव</div>
           </div>
           <div>
             <img src={saurabh} alt="" className={styles.girish} />
             <div className={styles.girishName}> श्री सौरभ भार्गव</div>
-            <div className={styles.sanjeevOcc}>उपाध्यक्ष</div>
+            <div className={styles.sanjeevOcc}>सचिव</div>
           </div>
 
           <div>
             <img src={deepesh} alt="" className={styles.girish} />
             <div className={styles.girishName}> श्री दीपेश भार्गव</div>
-            <div className={styles.sanjeevOcc}>उपाध्यक्ष</div>
+            <div className={styles.sanjeevOcc}>सचिव</div>
           </div>
         </div>
       </div>
