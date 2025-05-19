@@ -1,0 +1,46 @@
+.footer {
+    display: flex;
+    align-items: center;
+    background-color: #e95114;
+    height: 170px;
+  }
+  .footerLogo {
+    padding: 35px 0px 0px 149px;
+  }
+  .footercol2 {
+    display: flex;
+    flex-direction: column;
+  }
+  .footercol3 {
+    display: flex;
+    flex-direction: column;
+  }
+  .socialIcons {
+    display: flex;
+    align-items: center;
+    color: white;
+    gap: 20px;
+    padding: 15px 0px 0px 411px;
+  }
+  .social {
+    font-family: "Merriweather", serif;
+    color: white;
+    padding: 0px 0px 0px 400px;
+    font-size: large;
+  }
+  .contact {
+    font-family: "Merriweather", serif;
+    color: white;
+    font-size: large;
+    padding-left: 300px;
+  }
+  .phone {
+    color: white;
+    padding-left: 288px;
+    padding-top: 10px;
+  }
+  .address {
+    color: white;
+    padding-left: 220px;
+    padding-top: 10px;
+  }

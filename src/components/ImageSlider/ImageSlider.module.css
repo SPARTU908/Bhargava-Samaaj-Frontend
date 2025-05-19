@@ -1,0 +1,28 @@
+.slider {
+    position: relative;
+    width: 350px ;
+    height: 350px;
+    overflow: hidden;
+    margin-left: 373px;
+    border: 10px solid black;
+    margin: 36px 0px 0px 488px;
+  }
+  
+  .slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    object-fit: cover;
+  }
+  
+  .active {
+    opacity: 1;
+    z-index: 1;
+  }
+
+  
+
+
+   

@@ -1,0 +1,45 @@
+.container{
+  width: 632px;
+  height: 521px;
+  margin:  58px 0px 0px 325px;
+}
+.inputBox {
+    display: flex;
+    flex-direction: column;
+   margin: 35px 20px 20px 82px;;
+   }
+  
+  
+  .label {
+    font-weight: 600;
+    font-size: 20px;
+    color: #333;
+    margin: 9px 0px 8px 3px;
+  }
+  .admin{
+    color: #eb5c22;
+    margin: 20px 0px 0px 290px;
+    font-size: 60px;
+    font-weight: 700;
+  }
+  .heading{
+    font-size: 35px;
+    margin: 31px 0px 0px 218px;
+    font-weight: bold;
+    font-family: sans-serif;
+  }
+  .input {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 455px;
+   
+  }
+  .btn{
+    background-color: #eb5c22;
+    color: white;
+  margin: 0px 0px 0px 260px;
+    padding: 0.5rem 1rem;
+   
+  }

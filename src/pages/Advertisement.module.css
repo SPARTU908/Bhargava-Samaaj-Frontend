@@ -1,0 +1,19 @@
+.heading{
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: 45px;
+    color: #ec6e3c;
+    margin-left: 98px;
+}
+.img{
+    width: 508px;
+    height: 424px;
+    margin: 58px 0px 45px 127px;
+    border: 1px solid black;
+    border-radius: 15px;
+}
+    
+.advertisement{
+    display: flex;
+}

@@ -1,0 +1,14 @@
+.heading{
+    font-family: "Merriweather", serif;
+    font-size: 20px;
+    line-height: 40px;
+}
+.info{
+    margin: 40px 0px 0px 20px;
+}
+.details{
+    line-height: 30px;
+}
+b {
+    font-weight: bold !important;
+  }

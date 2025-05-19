@@ -1,0 +1,81 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.card1 {
+  border: 4px solid black;
+  height: auto;
+  width: 550px;
+  margin: 0px 0px 34px 100px;
+ 
+}
+.box {
+  display: flex;
+  align-items: flex-start;
+}
+
+
+.imageBox {
+ margin: 34px 0px 23px 20px;
+}
+.img{
+  width: 200px;
+  height: 215px;
+}
+
+.info{
+    margin: 40px 0px 0px 0px;
+    line-height: 37px;
+
+}
+.name{
+  font-size: 24px;
+  font-family: "Merriweather", serif;
+    text-align: center;
+    padding-top: 20px;
+    color: #ea5a1f;
+}
+.view{
+    background-color: black;
+    color: white;
+}
+.filterBox {
+  display: flex;
+  gap: 10px;
+  margin: 20px;
+}
+
+.filterBox input {
+  margin-left: 5px;
+  padding: 5px;
+}
+.filter{
+  margin: 30px 10px 0px 80px;
+}
+.select{
+  margin: 30px 10px 0px 4px;
+}
+.selectAge{
+  margin: 30px 10px 0px 4px;
+  padding: 0px 100px 0px 0px;
+}
+.selectCity{
+  margin: 30px 10px 0px 4px;
+
+}
+.filterCity{
+  margin: 30px 0px 0px -14px;
+
+}
+.selectName{
+  margin: 30px 10px 0px 4px;
+  padding: 0px 100px 0px 0px;
+
+}
+.filterName{
+  margin: 30px 0px 0px 83px;
+  
+
+}

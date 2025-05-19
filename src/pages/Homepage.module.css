@@ -1,0 +1,593 @@
+.banner {
+    height: 460px;
+  }
+  .newsWrapper {
+    overflow: hidden;
+    white-space: nowrap;
+    width: 1370px;
+  }
+  .latest {
+    font-family: "Merriweather", serif;
+    font-weight: bolder;
+  }
+  .news {
+    border: 1px solid black;
+    background-color: #ed8e67;
+    color: white;
+    font-family: "Source Serif 4", serif;
+    font-size: 15px;
+    overflow: hidden;
+    position: relative;
+    padding: 10px;
+  }
+  .scrollText {
+    display: inline-block;
+    padding-left: 100%;
+    animation: scroll-left 22s linear infinite;
+  }
+  .scrollText:hover {
+    animation-play-state: paused;
+  }
+  @keyframes scroll-left {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  .president{
+    display: flex;
+  }
+ 
+  .imgPresident{
+  width: 270px;
+  height: 306px;
+  border: 4px solid black;
+     margin-left: 736px;
+    margin-bottom: 47px;
+  }
+
+  .note{
+    font-size: 30px;
+    color: #eb5c22;
+  }
+  
+ .row1{
+  display: flex;
+}
+.row2{
+  display: flex;
+  margin-top: 55px;
+}
+.presImg{
+  width: 270px;
+  height: 340px;
+  margin: 30px 0px 0px 200px;
+  border: 4px solid black;
+
+}
+.presImg2{
+  width: 270px;
+  height: 340px;
+  margin: 30px 0px 0px 50px;
+  border: 4px solid black;
+
+}
+.rightContent{
+    margin-top: 27px;
+    margin-left: 50px;
+}
+.rightContent2{
+    margin-top: 27px;
+    margin-left: 200px;
+}
+
+.heading{
+    font-size: 30px;
+    color: #eb5c22;
+  
+}
+.contentPres{
+  font-size: 15px;
+  line-height: 29px;
+  width: 700px;
+  margin-top: 9px;
+  height: 300px;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+}
+.contentPres2{
+  font-size: 15px;
+  line-height: 29px;
+  width: 700px;
+  margin-top: 9px;
+  height: 300px;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+}
+
+.collapsibleCollapsed {
+  display: none;
+}
+.collapsibleExpanded {
+  display: block;
+}
+.toggleButton {
+  background-color: #eb5c22;
+  color: white;
+  border: none;
+  padding: 3px 15px;
+  margin-top: 10px;
+  cursor: pointer;
+ 
+  border-radius: 24px;
+  /* margin-left: 315px; */
+}
+.toggleButton:hover {
+  background-color: #eb5c22;
+}
+@media (max-width: 768px) {
+  .heading {
+    font-size: 1.5rem;
+  }
+
+  .contentPres {
+    font-size: 1rem;
+  }
+}
+
+  /* Office Bearers Section */
+  .office{
+    height: auto;
+    margin-top: 100px;
+    margin-left: 25px;
+  }
+  .headingOffice{
+    margin-left: 523PX;
+    color: #eb5c22;
+    font-size: 50px;
+    font-weight: bold;
+  }
+  .offrow1{
+    display: flex;
+    margin: 70px 0px 0px 35px;
+  }
+  .anil{
+    width: 200px;
+    height: 200px;
+    border: 4px solid black;
+  }
+ .anilName{
+  font-size: 22px;
+    font-family: "Merriweather", serif;
+    text-align: center;
+    padding-top: 10px;
+    font-weight: 400;
+  }
+  .anilOcc{
+    font-weight: bold;
+    margin: 7px 0px 0px 62px;
+    font-size: 20px;
+  }
+  .sanjay2{
+     width: 200px;
+    height: 200px;
+    border: 4px solid black;
+    margin-left: 50px;
+  }
+  .sanjayName{
+    font-size: 22px;
+    font-family: "Merriweather", serif;
+     padding-top: 10px;
+    font-weight: 400;
+    margin-left: 80px;
+  }
+  .sanjayOcc{
+     font-weight: bold;
+    margin: 7px 0px 0px 88px;
+    font-size: 20px;
+  }
+  .vijay{
+    width: 200px;
+    height: 200px;;
+    margin-left: 52px;
+    border: 4px solid black;
+  }
+  .vijayName{
+    font-size: 22px;
+    font-family: "Merriweather", serif;
+     padding-top: 10px;
+    font-weight: 400;
+    margin-left: 88px;
+  }
+  .vijayOcc{
+    font-weight: bold;
+    margin: 7px 0px 0px 100px;
+    font-size: 20px;
+  }
+  .mohit{
+    width: 200px;
+    height: 200px;
+    margin-left: 53px;
+    border: 4px solid black;
+  }
+  .mohitName{
+    font-size: 22px;
+    font-family: "Merriweather", serif;
+     padding-top: 10px;
+    font-weight: 400;
+    margin-left: 88px;
+  }
+  .mohitOcc{
+     font-weight: bold;
+    margin: 7px 0px 0px 100px;
+    font-size: 20px;
+  }
+  .narayanOcc{
+    font-weight: bold;
+    margin: 7px 0px 0px 93px;
+    font-size: 20px;
+  }
+  .offrow2{
+    display: flex;
+    margin-top: 60px;
+    margin-left: -16px;
+  }
+  .ajay{
+    width: 200px;
+    height: 200px;
+    border: 4px solid black;
+    margin: 0px 0px 0px 50px;
+  }
+  .ajayName{
+    font-size: 22px;
+    font-family: "Merriweather", serif;
+    padding-top: 10px;
+    font-weight: 400;
+    margin-left: 83px;
+  }
+  .ajayOcc{
+     font-weight: bold;
+    margin: 7px 0px 0px 108px;
+    font-size: 20px;
+  }
+  .vivek{
+    width: 200px;
+    height: 200px;
+    border: 4px solid black;
+    margin: 44px 0px 0px 32px;
+  }
+  .vivekName{
+    font-size: 22px;
+    font-family: "Merriweather", serif;
+    padding-top: 10px;
+    font-weight: 400;
+    margin-left: 49px;
+  }
+  .vivekOcc{
+     font-weight: bold;
+    margin: 7px 0px 0px 80px;
+    font-size: 20px;
+  }
+  .ramesh{
+   width: 200px;
+    height: 200px;
+    border: 4px solid black;
+    margin: 44px 0px 0px 50px;
+  }
+  .rameshName{
+    font-size: 22px;
+    font-family: "Merriweather", serif;
+    padding-top: 10px;
+    font-weight: 400;
+    margin-left: 80px;
+  }
+  .rameshOcc{
+     font-weight: bold;
+    margin: 7px 0px 0px 100px;
+    font-size: 20px;
+  }
+  .girish{
+    width: 200px;
+    height: 200px;
+    border: 4px solid black;
+    margin: 44px 0px 0px 50px;
+  }
+  .girishName{
+    font-size: 22px;
+    font-family: "Merriweather", serif;
+    padding-top: 10px;
+    font-weight: 400;
+    margin-left: 80px;
+  }
+  .girishOcc{
+     font-weight: bold;
+    margin: 7px 0px 0px 100px;
+    font-size: 20px;
+  }
+  .pankajOcc{
+    font-weight: bold;
+    margin: 7px 0px 0px 98px;
+    font-size: 20px;
+
+  }
+  .sanjeevOcc{
+   
+    font-weight: bold;
+    margin: 7px 0px 0px 95px;
+    font-size: 20px;
+  }
+
+  .offrow3{
+    display: flex;
+    margin-top: 45px;
+  }
+  .offrow4{
+     display: flex;
+    margin-top: 45px;
+  }
+  .harishOcc{
+    font-weight: bold;
+    margin: 7px 0px 0px 90px;
+    font-size: 20px;
+  }
+  
+  
+  
+  
+  /* Announcement Section */
+  .announceSection {
+   display: flex;
+   margin-top: 65px;
+  }
+  .announceImg {
+  height: 200px;
+  padding-left: 150px;
+  }
+ .headingAnnounce{
+  font-size: 20px;
+    font-weight: bold;
+    font-family: "Merriweather", serif;
+    text-align: center;
+    color: #ed8e67;
+    margin-top: 20px;
+    margin-left: 60px;
+    margin-bottom: 55px;
+
+ }
+ .content{
+      font-size: 15px;
+    line-height: 30px;
+    width: 620px;
+    text-align: justify;
+   padding-top: 22px;
+    color: black;
+
+ }
+ .announce{
+  margin-top: 54px;
+ }
+  /* Festival Section */
+  .festival {
+    height: 430px;
+    background-color: #002560;
+  }
+  .festHead {
+    color: white;
+    text-align: center;
+    padding: 35px;
+    font-weight: bolder;
+    font-family: "Merriweather", serif;
+  }
+  .col1 {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .col2 {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .festBox1 {
+    width: 338px;
+    height: 100px;
+    border: 1px solid orange;
+    margin: 10px 0px 0px 250px;
+    text-align: center;
+    color: white;
+  }
+  .festBox2 {
+    width: 290px;
+    height: 50px;
+    border: 1px solid black;
+    margin: 10px 0px 0px 250px;
+    text-align: center;
+    background-color: #998d3d;
+    color: white;
+  }
+  .festivalBox {
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Activities Section */
+  .activities {
+    height: 430px;
+  }
+  .imageContainer {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .activityHeading {
+    color: #ed8e67;
+    text-align: center;
+    padding: 35px;
+    font-weight: bolder;
+    font-family: "Merriweather", serif;
+  }
+  .activities_row_1 {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+  }
+  .actImg {
+    border: 1px solid black;
+    width: 500px;
+    margin-left: 115px;
+    margin-left: 203px;
+    height: 250px;
+    display: block;
+  }
+  .topRightBox {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: orange;
+    color: white;
+    padding: 11px 27px;
+    font-size: 14px;
+  }
+  .bottomLeftBox {
+    position: absolute;
+    bottom: 35px;
+    left: 209px;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #333;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  .actBox1 {
+    display: flex;
+    gap: 30px;
+  }
+  .actBox2 {
+    display: flex;
+    gap: 30px;
+    padding-top: 20px;
+  }
+  .rightAct {
+    display: flex;
+    flex-direction: column;
+    padding-left: 15px;
+  }
+  .line {
+    width: 9px;
+    height: 54px;
+    background-color: orange;
+  }
+  .three {
+    font-weight: bolder;
+    font-size: 22px;
+  }
+  .month {
+    font-weight: bolder;
+    font-size: 13px;
+    padding-top: 3px;
+  }
+  .year {
+    font-weight: bolder;
+    font-size: 13px;
+    padding-top: 3px;
+  }
+  .date {
+    display: flex;
+    flex-direction: column;
+  }
+  .actInfo {
+    display: flex;
+    flex-direction: column;
+    padding-left: 10px;
+  }
+  .actName {
+    font-weight: bold;
+    font-size: 16px;
+  }
+  .actTiming {
+    font-weight: bold;
+    font-size: 13px;
+    padding-top: 4px;
+  }
+  .clockIcon{
+    padding-top: 4px;
+  }
+  /* Event Gallery Section */
+  .gallery {
+    height: 430px;
+    margin-top: 90px;
+  }
+  .galleryHeading {
+    font-family: "Merriweather", serif;
+    padding: 20px 0px 0px 600px;
+  }
+  
+  /* Ashram Section */
+  
+  .ashramSection{
+    margin: 100px 0px 0px 0px ;
+  }
+    .headingAshram {
+    text-align: center;
+    color: #eb5c22;
+    font-size: 50px;
+    font-weight: bold;
+  }
+  .ashram_row_1 {
+    display: flex;
+    align-items: center;
+    gap: 110px;
+    padding: 11px 0px 0px 160px;
+  }
+  .btn2{
+    background-color: #ed8e67;
+    color: white;
+  }
+  .secondAsh {
+    gap: 130px;
+    display: flex;
+    align-items: center;
+    margin-top: 66px;
+    padding: 11px 0px 0px 160px;
+  }
+  .ashName {
+    text-align: center;
+    padding-top: 20px;
+    font-family: "Merriweather", serif;
+    color: black;
+  }
+  .imgAsh {
+    border: 1px solid black;
+  }
+  .imgHari{
+    border: 4px solid black;
+    height: 198px;
+    width: 287px;
+    margin-top: 3px;
+  }
+  .nameHari{
+    text-align: center;
+    margin-top: 20px ;
+    font-weight: bold;
+    font-size: 25px;
+
+  }
+  .details{
+    text-align: center;
+    margin-top: 13px;
+    cursor: pointer;
+  }
+
+  .ashramInfo {
+    padding: 20px 0px 0px 160px;
+  }
+  .ashramInfo1 {
+    padding: 20px 0px 0px 160px;
+    margin-top: 50px;
+  }  
+
+
+

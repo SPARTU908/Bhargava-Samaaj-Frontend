@@ -1,0 +1,70 @@
+.container {
+    width: 100vw;
+    padding: 80px 0px 0px 140px;
+  }
+  .heading{
+    font-family: "Merriweather", serif;
+    font-size: 40px;
+    text-align: center;
+  }
+  
+  .inputBox {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+  }
+  
+  
+  .label {
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #333;
+    margin: 0px 0px 8px 50px;
+  }
+  .label1{
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #333;
+    margin: 0px 0px 8px 79px;
+
+  }
+  
+  .input {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 455px;
+    margin: 4px 0px 0px 47px;
+  }
+  .input1{
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 455px;
+    margin: 2px 0px 0px 76px;
+
+  }
+  .row1{
+    display: flex;
+    margin-top: 40px;
+   
+  }
+  .submit{
+    margin: 30px 0px 18px 49px;
+    background-color: #e95114;
+    color: white;
+    width: 124px;
+  }
+  .error {
+    color: red;
+  }
+  .error1{
+    color: red;
+    margin-left: 50px;
+
+  }
+  

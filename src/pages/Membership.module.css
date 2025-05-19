@@ -1,0 +1,32 @@
+.heading{
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: 45px;
+    color: #ec6e3c;
+    margin-left: 98px;
+}
+.pdf{
+    display: flex;
+}
+.pdf1{
+    width: 250px;
+    height: 280px;
+    margin: 53px 0px 0px 247px;
+}
+.pdf2{
+    width: 250px;
+    height: 280px;
+    margin:  54px 0px 0px 402px;
+}
+.abbs{
+   margin-left: 201px;
+    margin-top: 20px;
+    font-size: 20px;
+}
+.patrika{
+    margin-left: 335px;
+    margin-top: 20px;
+    font-size: 20px;
+
+}

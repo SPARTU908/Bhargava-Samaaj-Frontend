@@ -1,0 +1,54 @@
+.container {
+    padding: 20px;
+    
+    margin: 20px 0px 0px 50px;
+  }
+  .title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  .card{
+    border: 2px solid black;
+    margin: 0px 590px 0px 17px;
+    padding: 17px 0px 0px 20px;
+   
+  }
+  .name{
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    padding-bottom: 25px;
+    
+  }
+  .row1{
+    display: flex;
+  }
+  .info{
+    margin: -14px 0px 0px 20px;
+  }
+  .buttonGroup{
+        margin: 20px 0px 20px 0px;
+  }
+  
+  
+  
+  .approveBtn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+   
+    margin-right: 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .rejectBtn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+  
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  

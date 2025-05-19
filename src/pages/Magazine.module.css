@@ -1,0 +1,10 @@
+.container {
+ margin: 20px 0px 20px 20px;
+}
+.heading{
+  text-align: center;
+  font-family: "Merriweather", serif;
+  font-size: 40px;
+  padding-top: 20px;
+  padding-bottom: 45px;
+}

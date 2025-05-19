@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+ }
+  .heading{
+    font-family: "Merriweather", serif;
+    font-size: 40px;
+    padding-top: 20px;
+    padding-bottom: 15px;
+  }
+  .btn{
+    margin-left: 1000px;
+    margin-top: 20px;
+    width: 179px;
+    line-height: 23px;
+    display: flex;
+    gap: 20px;
+  }
+  .login{
+   background-color: #e95114;
+   color: white;
+    width: 161px;
+
+  }
+  .admin{
+    width: 136px;
+    color: white;
+    background-color: #e95114;
+  }
