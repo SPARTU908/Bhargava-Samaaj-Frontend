@@ -13,16 +13,16 @@
 }
 .fees{
     border: 2px solid black;
-    width: 370px;
-    margin: 36px 0px 0px 490px;
+    width: 500px;
+    margin: 36px 0px 0px 440px;
     padding: 10px;
     height: auto;
 }
 .memberFees{
     font-size: 20px;
     font-weight: bold;
-    text-align: center;
     color: #ec6e3c;
+    padding-left: 162px;
 }
 
 .age{

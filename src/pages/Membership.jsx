@@ -33,12 +33,16 @@ const Membership = () => {
     spousePhoto: "",
     spouseSignature: "",
   });
+  const [selectedFee, setSelectedFee] = useState("");
   const [errors, setErrors] = useState({});
   const [photourl, setPhotoUrl] = useState("");
   const [signatureurl, setSignatureUrl] = useState("");
   const [spousephotourl, setSpousePhotoUrl] = useState("");
   const [spousesignatureurl, setSpouseSignatureUrl] = useState("");
   const navigate = useNavigate();
+  const handleSelection = (event) => {
+    setSelectedFee(event.target.value);
+  };
 
   const validate = () => {
     let newErrors = {};
@@ -89,7 +93,7 @@ const Membership = () => {
     memberData.spouseSignature = spousesignatureurl;
     console.log(memberData);
     e.preventDefault();
- 
+
     const validationErrors = validate();
     console.log(validationErrors);
     if (Object.keys(validationErrors).length > 0) {
@@ -140,8 +144,8 @@ const Membership = () => {
         console.log("Member Data Submitted:", memberData);
       }
     }
-    
-     navigate("/payment");
+
+    navigate("/payment");
   };
 
   return (
@@ -159,27 +163,59 @@ const Membership = () => {
 
         <div className={styles.fees}>
           <div className={styles.memberFees}>सदस्यता शुल्क </div>
-          <div className={styles.row1}>
-            <div>1.</div>
+          <label className={styles.row1}>
+            <input
+              type="radio"
+              name="membership"
+              value="साधारण सभासद - 300 रुपये"
+              checked={selectedFee === "साधारण सभासद - 300 रुपये"}
+              onChange={handleSelection}
+            />
+           
             <div className={styles.col1}>साधारण सभासद</div>
             <div className={styles.col2}>300 रुपये</div>
-          </div>
-          <div className={styles.row2}>
-            <div>2.</div>
+          </label>
+          <label className={styles.row2}>
+            <input
+              type="radio"
+              name="membership"
+              value="आजीवन सभासद - एकल - 600 रुपये"
+              checked={selectedFee === "आजीवन सभासद - एकल - 600 रुपये"}
+              onChange={handleSelection}
+            />
+            
             <div className={styles.sabhasadh}>आजीवन सभासद-</div>
             <div className={styles.ekal}>एकल</div>
             <div className={styles.rupees}>600 रुपये</div>
-          </div>
-          <div className={styles.row3}>
+          </label>
+
+          <label className={styles.row3}>
+            <input
+              type="radio"
+              name="membership"
+              value="आजीवन सभासद - युगल - 1000 रुपये"
+              checked={selectedFee === "आजीवन सभासद - युगल - 1000 रुपये"}
+              onChange={handleSelection}
+            />
             <div className={styles.couple}>युगल-(पति-पत्नी)</div>
             <div className={styles.rupee}>1,000 रुपये</div>
-          </div>
-          <div className={styles.row4}>
+          </label>
+          <label className={styles.row4}>
+            <input
+              type="radio"
+              name="membership"
+              value="डुप्लिकेट परिचय शुल्क - ₹50 रुपये"
+              checked={selectedFee === "डुप्लिकेट परिचय शुल्क - ₹50 रुपये"}
+              onChange={handleSelection}
+            />
             <div className={styles.dual}>
-              डुप्लिकेट परिचय हेतु शुल्क (प्रति सदस्य) –{" "}
+              डुप्लिकेट परिचय हेतु शुल्क (प्रति सदस्य)
             </div>
             <div className={styles.duplicate}>₹50 रुपये</div>
-          </div>
+          </label>
+           <div style={{ marginTop: "20px" }}>
+        <strong>आपका चयन:</strong> {selectedFee || "कोई चयन नहीं किया गया"}
+      </div>
         </div>
 
         {/* FORM */}
@@ -195,13 +231,13 @@ const Membership = () => {
                 type="text"
                 name="username"
                 id="username"
-                value={memberData.number}
+                value={memberData.username}
                 onChange={handleChange}
               />
             </div>
             <div className={styles.inputBox}>
               <label htmlFor="spouse" className={styles.label}>
-                Spouse Name 
+                Spouse Name
               </label>
               <input
                 placeholder=""
@@ -232,7 +268,7 @@ const Membership = () => {
             </div>
             <div className={styles.inputBox}>
               <label htmlFor="spouseEmail" className={styles.label}>
-                Spouse Email 
+                Spouse Email
               </label>
               <input
                 placeholder=""
@@ -294,7 +330,7 @@ const Membership = () => {
             </div>
             <div className={styles.inputBox}>
               <label htmlFor="spouseMobile" className={styles.label}>
-                Spouse Mobile 
+                Spouse Mobile
               </label>
               <input
                 placeholder=""
@@ -444,7 +480,7 @@ const Membership = () => {
             </button>
           </div>
         </div>
-          <ToastContainer />
+        <ToastContainer />
       </>
     </>
   );

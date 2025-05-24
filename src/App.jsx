@@ -36,7 +36,7 @@ function App() {
           <Route path="/members" element={<Members />} />
          <Route path="/login" element={<AdminLogin />} />
          <Route path="/review" element={<PendingForms/>} />
-         {/* <Route path="/payment" element={<Payment/>} /> */}
+         <Route path="/payment" element={<Payment/>} />
 
         </Routes>
       </BrowserRouter>

@@ -1,325 +1,154 @@
-import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import React from "react";
+import Navbar from "../components/Navbar/Navbar";
 import styles from "./Payment.module.css";
-// import Header from '../../components/Header/Header';
-// import Navbar from '../../components/Navbar/Navbar';
-// import back from '../../assets/logo/arrow.png';
-// import arrow from '../../assets/logo/ArrowRight.png';
-// import addDebit from '../../assets/logo/addDebit.png';
-// import mastercard from '../../assets/logo/mastercard.png';
-// import wallet from '../../assets/logo/wallet.png';
-// import paypal from '../../assets/logo/paypal.png';
-// import stripe from '../../assets/logo/stripe.png';
-// import payment from '../../assets/logo/payment.png';
-// import home from '../../assets/logo/home.png';
-// import placed from '../../assets/logo/placed.png';
-// import { deleteCart } from '../../apis/cart';
+import { FaGooglePay } from "react-icons/fa";
+import {useState} from "react";
 
+const Payment = () => {
+  const[paymentdata,setPaymentData] = useState({
+    name:"",
+    email:"",
+    mobile:"",
+    transactionid:""
+  });
+   const validate = () => {
+    let newErrors = {};
+   const requiredFields = [
+    "name",
+    "email",
+    "mobile",
+    "transactionid"
+     
+    ];
+     requiredFields.forEach((field) => {
+      if (!paymentdata[field]) {
+        newErrors[field] = `${field} is required`;
+      }
+    });
 
-function Payment() {
-  const navigate = useNavigate();
-  const { state } = useLocation();
-  const { cart, finalPrice } = state || {};
-  const [order, setOrder] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(null);
-  console.log(cart);
+    if (paymentdata.email && !/\S+@\S+\.\S+/.test(paymentdata.email)) {
+      newErrors.email = "Email is invalid";
+    }
 
-  const handleSelect = (option) => {
-    setSelectedOption(option);
+    return newErrors;
   };
-
-  const handleGoBack = () => {
-    navigate(-1);
-  };
-
-  const handleHome = async () => {
-    await deleteCart();
-    navigate("/homepage");
-    setOrder(false);
-  };
-
-  const handleOrder = async () => {
-    setOrder(true);
-    await deleteCart();
-  };
+  const handleChange = (e) => {
+      const { name, value } = e.target;
+      setPaymentData({ ...paymentdata, [name]: value });
+    };
+  
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+   
+      const validationErrors = validate();
+      console.log(validationErrors);
+      if (Object.keys(validationErrors).length > 0) {
+        setErrors(validationErrors);
+      } else {
+        setErrors({});
+  
+        
+      }
+      
+     
+    };
 
   return (
     <>
+      <Navbar />
       <div className={styles.container}>
-      
-        {!order && (
-          <div className={styles.sectionFirst}>
-            <div className={styles.headingBox}>
-              <img
-                src=""
-                alt=""
-                style={{ cursor: "pointer" }}
-                onClick={handleGoBack}
-              />
-              <div className={styles.heading}>Choose and Pay</div>
-            </div>
-            <div className={styles.paymentSection}>
-              <div className={styles.paymentLeft}>
-                <div className={styles.wallet} onClick={() => handleSelect("")}>
-                  <div className={styles.dFlex}>
-                    <img src="" alt="" />
-                    <div>
-                      <div>Wallet</div>
-                      <div className={styles.available}>
-                        Available balance: ₹300
-                      </div>
-                    </div>
-                  </div>
-                  <img src="" alt="" />
-                </div>
-                <div className={styles.line}></div>
-                <div
-                  className={styles.others}
-                  style={{
-                    border:
-                      selectedOption === "mastercard"
-                        ? "1px solid #FC8A06"
-                        : "none",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => handleSelect("mastercard")}
-                >
-                  <div className={styles.dFlex}>
-                    <img src="" alt="" />
-                    <div>MasterCard</div>
-                  </div>
-
-                  <input
-                    type="radio"
-                    checked={selectedOption === "mastercard"}
-                    readOnly
-                  />
-                </div>
-                <div
-                  className={styles.others}
-                  style={{
-                    border:
-                      selectedOption === "paypal"
-                        ? "1px solid #FC8A06"
-                        : "none",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => handleSelect("paypal")}
-                >
-                  <div className={styles.dFlex}>
-                    <img src="" alt="" />
-                    <div>Paypal</div>
-                  </div>
-
-                  <input
-                    type="radio"
-                    checked={selectedOption === "paypal"}
-                    readOnly
-                  />
-                </div>
-                <div
-                  className={styles.others}
-                  style={{
-                    border:
-                      selectedOption === "stripe"
-                        ? "1px solid #FC8A06"
-                        : "none",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => handleSelect("stripe")}
-                >
-                  <div className={styles.dFlex}>
-                    <img src="" alt="" />
-                    <div>Stripe</div>
-                  </div>
-
-                  <input
-                    type="radio"
-                    checked={selectedOption === "stripe"}
-                    readOnly
-                  />
-                </div>
-                <div className={styles.others}>
-                  <div className={styles.dFlex}>
-                    <img src="" alt="" />
-                    <div>Add Debit Card</div>
-                  </div>
-                </div>
-              </div>
-              <div className={styles.amountSection}>
-                <div className={styles.amountBox}>
-                  <div className={styles.amountText}>Amount to be payed</div>
-                  <div className={styles.amount}>&#8377;{finalPrice}</div>
-                </div>
-                <div className={styles.line}></div>
-                <img
-                  src=""
-                  alt=""
-                  style={{ cursor: "pointer" }}
-                  onClick={handleOrder}
-                />
-              </div>
-            </div>
+        <div className={styles.step1}>
+          <div className={styles.payment}>
+            Step #1 - Scan QR Code & Make Payment
           </div>
-        )}
-        {order && (
-          <div className={styles.sectionSecond}>
-            <img src="" alt="" />
-            <div className={styles.homeSection}>
-              <div className={styles.names}>
-                {cart?.map((item, index) => {
-                  return <div key={index}>{item.foodId.title}</div>;
-                })}
-              </div>
-              <img
-                src=""
-                alt=""
-                style={{ cursor: "pointer" }}
-                onClick={handleHome}
-              />
-            </div>
+          <div className={styles.name}>
+            Account Name :
+            <span className={styles.info}>Akhil Bhartiya Bhargava Sabha</span>
           </div>
-        )}
-      </div>
-      <div className={styles.containerMob}>
-        {/* <Header />
-                <Navbar /> */}
-        {!order && (
-          <div className={styles.sectionFirst}>
-            <div className={styles.headingBox}>
-              <img
-                src=""
-                alt=""
-                style={{ cursor: "pointer" }}
-                onClick={handleGoBack}
-              />
-              <div className={styles.heading}>Choose and Pay</div>
-            </div>
-            <div className={styles.paymentSection}>
-              <div className={styles.paymentLeft}>
-                <div className={styles.wallet} onClick={() => handleSelect("")}>
-                  <div className={styles.dFlex}>
-                    <img src="" alt="" />
-                    <div>
-                      <div>Wallet</div>
-                      <div className={styles.available}>
-                        Available balance: ₹300
-                      </div>
-                    </div>
-                  </div>
-                  <img src="" alt="" />
-                </div>
-                <div className={styles.line}></div>
-                <div
-                  className={styles.others}
-                  style={{
-                    border:
-                      selectedOption === "mastercard"
-                        ? "1px solid #FC8A06"
-                        : "none",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => handleSelect("mastercard")}
-                >
-                  <div className={styles.dFlex}>
-                    <img src="" alt="" />
-                    <div>MasterCard</div>
-                  </div>
-
-                  <input
-                    type="radio"
-                    checked={selectedOption === "mastercard"}
-                    readOnly
-                  />
-                </div>
-                <div
-                  className={styles.others}
-                  style={{
-                    border:
-                      selectedOption === "paypal"
-                        ? "1px solid #FC8A06"
-                        : "none",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => handleSelect("paypal")}
-                >
-                  <div className={styles.dFlex}>
-                    <img src="" alt="" />
-                    <div>Paypal</div>
-                  </div>
-
-                  <input
-                    type="radio"
-                    checked={selectedOption === "paypal"}
-                    readOnly
-                  />
-                </div>
-                <div
-                  className={styles.others}
-                  style={{
-                    border:
-                      selectedOption === "stripe"
-                        ? "1px solid #FC8A06"
-                        : "none",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => handleSelect("stripe")}
-                >
-                  <div className={styles.dFlex}>
-                    <img src="" alt="" />
-                    <div>Stripe</div>
-                  </div>
-
-                  <input
-                    type="radio"
-                    checked={selectedOption === "stripe"}
-                    readOnly
-                  />
-                </div>
-                <div className={styles.others}>
-                  <div className={styles.dFlex}>
-                    <img src="" alt="" />
-                    <div>Add Debit Card</div>
-                  </div>
-                </div>
-              </div>
-              <div className={styles.amountSection}>
-                <div className={styles.amountBox}>
-                  <div className={styles.amountText}>Amount to be payed</div>
-                  <div className={styles.amount}>&#8377;{finalPrice}</div>
-                </div>
-                <div className={styles.line}></div>
-                <img
-                  src=""
-                  alt=""
-                  style={{ cursor: "pointer" }}
-                  onClick={handleOrder}
-                />
-              </div>
-            </div>
+          <div className={styles.number}>
+            SB Account No: <span className={styles.info}>90442010053572</span>
           </div>
-        )}
-        {order && (
-          <div className={styles.sectionSecond}>
-            <img src="" alt="" />
-            <div className={styles.homeSection}>
-              <div className={styles.names}>
-                {cart?.map((item, index) => {
-                  return <div key={index}>{item.foodId.title}</div>;
-                })}
-              </div>
-              <img
-                src=""
-                alt=""
-                style={{ cursor: "pointer" }}
-                onClick={handleHome}
-              />
-            </div>
+          <div className={styles.location}>
+            {" "}
+            Bank & Branch :{" "}
+            <span className={styles.info}>
+              CANARA BANK, Nehru Place, New Delhi,
+            </span>{" "}
           </div>
-        )}
+          <div className={styles.ifsc}>
+            {" "}
+            IFSC: <span className={styles.info}>CNRB0000390</span>
+          </div>
+          <div className={styles.micr}>
+            {" "}
+            MICR Code: <span className={styles.info}>110015016</span>
+          </div>
+          <div className={styles.qr}>QR</div>
+        </div>
+
+        <div className={styles.step2}>
+          <div className={styles.submit}>Step #2 - Submit The Details </div>
+          <div className={styles.inputBox}>
+            <label htmlFor="name" className={styles.label}>
+              Name <span style={{ color: "red" }}>*</span>
+            </label>
+            <input
+              placeholder=""
+              className={styles.input}
+              type="text"
+              name="name"
+              id="name"
+              value={paymentdata.name}
+              onChange={handleChange}
+            />
+          </div>
+          <div className={styles.inputBox}>
+            <label htmlFor="email" className={styles.label}>
+              Email <span style={{ color: "red" }}>*</span>
+            </label>
+            <input
+              placeholder=""
+              className={styles.input}
+              type="text"
+              name="email"
+              id="email"
+              value={paymentdata.email}
+              onChange={handleChange}
+            />
+          </div>
+          <div className={styles.inputBox}>
+            <label htmlFor="mobile" className={styles.label}>
+              Mobile <span style={{ color: "red" }}>*</span>
+            </label>
+            <input
+              placeholder=""
+              className={styles.input}
+              type="text"
+              name="mobile"
+              id="mobile"
+              value={paymentdata.mobile}
+              onChange={handleChange}
+            />
+          </div>
+          <div className={styles.inputBox}>
+            <label htmlFor="transactionid" className={styles.label}>
+              Transaction id: <span style={{ color: "red" }}>*</span>
+            </label>
+            <input
+              placeholder=""
+              className={styles.input}
+              type="text"
+              name="transactionid"
+              id="transactionid"
+              value={paymentdata.transactionid}
+              onChange={handleChange}
+            />
+          </div>
+          <div><button className={styles.btn}> SUBMIT</button></div>
+        </div>
       </div>
     </>
   );
-}
+};
 
 export default Payment;
