@@ -1,11 +1,13 @@
 .container{
    margin: 0px;
    padding: 0px;
+    width: 1100px;
+    height: auto;
     
 }
 .heading{
     text-align: center;
-    padding: 40px 0px 0px 45px;
+    padding: 40px 0px 0px 230px;
     font-size: 30px;
     color: #eb5a20;
 

@@ -5,13 +5,25 @@ import samvidhaan from "../assets/samvidhaan.png";
 import sabha from "../assets/sabhayein.png";
 import samiti from "../assets/samiti.png";
 import executive from "../assets/executive.png";
+import React, { useEffect } from "react";
 
 const About = () => {
+   useEffect(() => {
+      // Get the hash from the URL and scroll to the element with that id
+      const hash = window.location.hash;
+  
+      if (hash) {
+        const section = document.getElementById(hash.slice(1)); // Remove the '#' from the hash
+        if (section) {
+          section.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    }, [window.location.hash]);
   return (
     <>
       <Navbar />
       {/* Hmare Etihaas */}
-      <div className={styles.container}>
+      <div id="history" className={styles.container}>
         <div className={styles.heading}> इतिहास</div>
         <div>
           <img src={history} alt="" className={styles.history} />
@@ -31,8 +43,8 @@ const About = () => {
       </div>
 
       {/* Samvidhaan */}
-      <div>
-        <div className={styles.heading}>संविधान</div>
+      <div id="samvidhaan" className={styles.container}>
+        <div  className={styles.heading}>संविधान</div>
         <div>
           <img src={samvidhaan} alt="" className={styles.history} />
         </div>
@@ -51,7 +63,7 @@ const About = () => {
       </div>
 
       {/* esthaniya sabhayein */}
-      <div>
+      <div id="sabhayein" className={styles.container}>
         <div className={styles.heading}>स्थानीय सभाएं</div>
         <div>
           <img src={sabha} alt="" className={styles.history} />
@@ -71,7 +83,7 @@ const About = () => {
       </div>
 
       {/* Samiti */}
-      <div>
+      <div id="samiti" className={styles.container}>
         <div className={styles.heading}>समिति </div>
         <div>
           <img src={samiti} alt="" className={styles.history} />
@@ -92,7 +104,7 @@ const About = () => {
 
       {/* nidhiyan */}
 
-      <div>
+      <div id="nidhiyan" className={styles.container}>
         <div className={styles.heading}>सभा की निधियाँ </div>
         <div>
           <img src={samiti} alt="" className={styles.history} />
@@ -112,7 +124,7 @@ const About = () => {
       </div>
 
       {/* executive body */}
-      <div>
+      <div id="executive" className={styles.container}>
         <div className={styles.heading}>कार्यकारी निकाय </div>
         <div>
           <img src={executive} alt="" className={styles.history} />

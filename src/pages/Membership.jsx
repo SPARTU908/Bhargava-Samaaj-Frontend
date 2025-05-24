@@ -47,7 +47,7 @@ const Membership = () => {
       "username",
       "email",
       "address",
-      "spouse",
+      // "spouse",
       "dob",
       "pincode",
       "photo",
@@ -57,10 +57,10 @@ const Membership = () => {
       "gotra",
       "kuldevi",
       "mobile",
-      "spouseMobile",
-      "spouseEmail",
-      "spousePhoto",
-      "spouseSignature",
+      // "spouseMobile",
+      // "spouseEmail",
+      // "spousePhoto",
+      // "spouseSignature",
       "occupation",
     ];
 
@@ -201,7 +201,7 @@ const Membership = () => {
             </div>
             <div className={styles.inputBox}>
               <label htmlFor="spouse" className={styles.label}>
-                Spouse Name <span style={{ color: "red" }}>*</span>
+                Spouse Name 
               </label>
               <input
                 placeholder=""
@@ -232,7 +232,7 @@ const Membership = () => {
             </div>
             <div className={styles.inputBox}>
               <label htmlFor="spouseEmail" className={styles.label}>
-                Spouse Email <span style={{ color: "red" }}>*</span>
+                Spouse Email 
               </label>
               <input
                 placeholder=""
@@ -294,7 +294,7 @@ const Membership = () => {
             </div>
             <div className={styles.inputBox}>
               <label htmlFor="spouseMobile" className={styles.label}>
-                Spouse Mobile <span style={{ color: "red" }}>*</span>
+                Spouse Mobile 
               </label>
               <input
                 placeholder=""
@@ -381,7 +381,7 @@ const Membership = () => {
             </div>
             <div className={styles.inputBox}>
               <label htmlFor="spousePhoto" className={styles.label}>
-                Upload Spouse Photo<span style={{ color: "red" }}>*</span>
+                Upload Spouse Photo
               </label>
               <SpousePhotoUpload
                 url={spousephotourl}
@@ -399,7 +399,7 @@ const Membership = () => {
             </div>
             <div className={styles.inputBox}>
               <label htmlFor="spouseSignature" className={styles.label}>
-                Upload Spouse Signature<span style={{ color: "red" }}>*</span>
+                Upload Spouse Signature
               </label>
               <SpouseSignatureUpload
                 url={spousesignatureurl}
@@ -422,7 +422,7 @@ const Membership = () => {
                 onChange={handleChange}
               />
             </div>
-            <div className={styles.inputBox}>
+            {/* <div className={styles.inputBox}>
               <label className={styles.label}>
                 Husband Name <span style={{ color: "red" }}>*</span>
               </label>
@@ -435,7 +435,7 @@ const Membership = () => {
                 value={memberData.husbandName}
                 onChange={handleChange}
               />
-            </div>
+            </div> */}
           </div>
 
           <div className={styles.btn}>

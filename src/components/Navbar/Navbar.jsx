@@ -55,8 +55,11 @@ const Navbar = () => {
   const handleHome = () => {
     navigate("/home");
   };
-  const handleAbout = () => {
+  const handleAbout = (sectionId) => {
     navigate("/about");
+    setTimeout(() => {
+      window.location.hash = sectionId;
+    }, 100);
   };
   const handleCensus = () => {
     navigate("/census");
@@ -110,12 +113,12 @@ const Navbar = () => {
           </div>
           {isDropdownOpen1 && (
             <div className={styles.dropdownContent}>
-              <div onClick={handleAbout}>हमारा इतिहास</div>
-              <div onClick={handleAbout}>संविधान</div>
-              <div onClick={handleAbout}>स्थानीय सभाएं</div>
-              <div onClick={handleAbout}>समिति</div>
-              <div onClick={handleAbout}>सभा की निधियाँ</div>
-              <div onClick={handleAbout}>कार्यकारी निकाय</div>
+              <div onClick={()=>handleAbout("history")}>हमारा इतिहास</div>
+              <div onClick={()=>handleAbout("samvidhaan")}>संविधान</div>
+              <div onClick={()=>handleAbout("sabhayein")}>स्थानीय सभाएं</div>
+              <div onClick={()=>handleAbout("samiti")}>समिति</div>
+              <div onClick={()=>handleAbout("nidhiyan")}>सभा की निधियाँ</div>
+              <div onClick={()=>handleAbout("executive")}>कार्यकारी निकाय</div>
             </div>
           )}
         </div>
