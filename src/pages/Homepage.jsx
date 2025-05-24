@@ -24,7 +24,7 @@ import vivek from "../assets/Vivek Bhargava.jpeg";
 import ramesh from "../assets/Ramesh Bhargava.jpeg";
 import girish from "../assets/Girish.jpg";
 import pankaj from "../assets/Pankaj.jpg";
-import sanjeev from "../assets/Sanjeev.jpg";
+import sanjeev from "../assets/sanjeev.jpg";
 import anil2 from "../assets/anil.jpg";
 import saurabh from "../assets/Saurabh.jpg";
 import deepesh from "../assets/Deepesh.jpg";
