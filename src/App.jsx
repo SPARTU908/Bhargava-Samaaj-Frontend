@@ -11,9 +11,9 @@ import Members from "./pages/Members.jsx";
 import Advertisement from "./pages/Advertisement.jsx";
 import Download from "./pages/Download.jsx";
 import Haridwar from "./pages/Haridwar.jsx";
-import GoogleTranslate from "../src/components/GoogleTranslate.jsx";
 import AdminLogin from "./pages/AdminLogin.jsx";
 import PendingForms from "./pages/PendingForms.jsx";
+import Payment from "./pages/Payment.jsx";
 
 function App() {
   return (
@@ -36,6 +36,7 @@ function App() {
           <Route path="/members" element={<Members />} />
          <Route path="/login" element={<AdminLogin />} />
          <Route path="/review" element={<PendingForms/>} />
+         {/* <Route path="/payment" element={<Payment/>} /> */}
 
         </Routes>
       </BrowserRouter>

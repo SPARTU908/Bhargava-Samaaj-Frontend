@@ -8,7 +8,7 @@ import ImageSlider from "../components/ImageSlider/ImageSlider.jsx";
 import img1 from "../assets/imgs1.png";
 import img2 from "../assets/imgs2.png";
 import img3 from "../assets/imgs3.png";
-import ashram from "../assets/ashram.png";
+import bannerHaridwar from "../assets/haridwar-banner.png";
 import activity from "../assets/activity.png";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
@@ -238,7 +238,7 @@ const Homepage = () => {
               के लिए हार्दिक आभार, अभिनन्दन | आपका अपना भवदीय
               <br />
               अनिल भार्गव
-              <br/>
+              <br />
               1855, सेक्टर-04,
               <br />
               रेवाड़ी <br />
@@ -250,7 +250,6 @@ const Homepage = () => {
 
       {/* Message of Pradhan Sachiv */}
       <div className={styles.row2}>
-        
         <div className={styles.rightContent2}>
           <div className={styles.heading}>प्रधान सचिव</div>
           <div className={styles.contentPres2}>
@@ -337,34 +336,6 @@ const Homepage = () => {
             <div className={styles.vijayOcc}>कोषाध्यक्ष</div>
           </div>
           <div>
-            <img src={harish} alt="" className={styles.vijay} />
-            <div className={styles.vijayName}> श्री हरीश भार्गव</div>
-            <div className={styles.harishOcc}>क्षेत्रीय उपाध्यक्ष</div>
-          </div>
-          <div>
-            <img src={salil} alt="" className={styles.vijay} />
-            <div className={styles.vijayName}> श्री सलिल भार्गव</div>
-            <div className={styles.harishOcc}>क्षेत्रीय उपाध्यक्ष</div>
-          </div>
-        </div>
-        <div className={styles.offrow2}>
-          <div>
-            <img src={sanjay3} alt="" className={styles.mohit} />
-            <div className={styles.mohitName}> श्री संजय भार्गव</div>
-            <div className={styles.narayanOcc}>क्षेत्रीय उपाध्यक्ष</div>
-          </div>
-          <div>
-            <img src={sohan} alt="" className={styles.mohit} />
-            <div className={styles.mohitName}> श्री नारायण भार्गव</div>
-            <div className={styles.narayanOcc}>क्षेत्रीय उपाध्यक्ष</div>
-          </div>
-          <div>
-            <img src={narayan} alt="" className={styles.mohit} />
-            <div className={styles.mohitName}> श्री सोहन भार्गव</div>
-            <div className={styles.narayanOcc}>क्षेत्रीय उपाध्यक्ष</div>
-          </div>
-
-          <div>
             <img src={mohit} alt="" className={styles.mohit} />
             <div className={styles.mohitName}> श्री मोहित भार्गव</div>
             <div className={styles.mohitOcc}>उपाध्यक्ष</div>
@@ -375,8 +346,7 @@ const Homepage = () => {
             <div className={styles.ajayOcc}>उपाध्यक्ष</div>
           </div>
         </div>
-
-        <div className={styles.offrow3}>
+        <div className={styles.offrow2}>
           <div>
             <img src={vivek} alt="" className={styles.vivek} />
             <div className={styles.vivekName}> डा.श्री विवेक भार्गव</div>
@@ -391,6 +361,35 @@ const Homepage = () => {
             <img src={girish} alt="" className={styles.girish} />
             <div className={styles.girishName}> श्री गिरीश भार्गव</div>
             <div className={styles.girishOcc}>उपाध्यक्ष</div>
+          </div>
+
+          <div>
+            <img src={harish} alt="" className={styles.harish} />
+            <div className={styles.harishName}> श्री हरीश भार्गव</div>
+            <div className={styles.harishOcc}>क्षेत्रीय उपाध्यक्ष</div>
+          </div>
+          <div>
+            <img src={salil} alt="" className={styles.salil} />
+            <div className={styles.salilName}> श्री सलिल भार्गव</div>
+            <div className={styles.salilOcc}>क्षेत्रीय उपाध्यक्ष</div>
+          </div>
+        </div>
+
+        <div className={styles.offrow3}>
+          <div>
+            <img src={sanjay3} alt="" className={styles.sanjay3} />
+            <div className={styles.mohitName}> श्री संजय भार्गव</div>
+            <div className={styles.narayanOcc}>क्षेत्रीय उपाध्यक्ष</div>
+          </div>
+          <div>
+            <img src={sohan} alt="" className={styles.narayan} />
+            <div className={styles.mohitName}> श्री नारायण भार्गव</div>
+            <div className={styles.narayanOcc}>क्षेत्रीय उपाध्यक्ष</div>
+          </div>
+          <div>
+            <img src={narayan} alt="" className={styles.sohan} />
+            <div className={styles.mohitName}> श्री सोहन भार्गव</div>
+            <div className={styles.narayanOcc}>क्षेत्रीय उपाध्यक्ष</div>
           </div>
           <div>
             <img src={pankaj} alt="" className={styles.girish} />
@@ -425,19 +424,12 @@ const Homepage = () => {
       </div>
 
       {/* Event Gallery Section */}
-      <div className={styles.gallery}>
-        <div className={styles.galleryHeading}>Event Gallery</div>
-        <ImageSlider images={[img1, img2, img3]} interval={4000} />
-      </div>
 
       {/* Ashrams Section */}
       <div className={styles.ashramSection}>
-        <div className={styles.headingAshram}>आश्रम</div>
-        <div className={styles.ashram_row_1}>
-          <div>
-            <img src={ashram} alt="" className={styles.imgAsh} />
-            <div className={styles.ashName}>बीकानेर</div>
-          </div>
+        <div className={styles.headingAshram}>भार्गव आश्रम</div>
+        <div>
+          <img src={bannerHaridwar} alt="" className={styles.bg} />
           <div>
             <img src={Haridwar} alt="" className={styles.imgHari} />
             <div className={styles.nameHari}>हरिद्वार</div>
@@ -445,21 +437,12 @@ const Homepage = () => {
               View Full Details
             </div>
           </div>
-          <div>
-            <img src={ashram} alt="" className={styles.imgAsh} />
-            <div className={styles.ashName}>प्रयागराज</div>
-          </div>
         </div>
-        <div className={styles.secondAsh}>
-          <div>
-            <img src={ashram} alt="" className={styles.imgAsh} />
-            <div className={styles.ashName}>जयपुर</div>
-          </div>
-          <div>
-            <img src={ashram} alt="" className={styles.imgAsh} />
-            <div className={styles.ashName}>कानपुर</div>
-          </div>
-        </div>
+      </div>
+
+      <div className={styles.gallery}>
+        <div className={styles.galleryHeading}>Event Gallery</div>
+        <ImageSlider images={[img1, img2, img3]} interval={4000} />
       </div>
       <Footer />
     </>

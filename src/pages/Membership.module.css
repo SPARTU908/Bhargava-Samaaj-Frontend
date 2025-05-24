@@ -1,32 +1,115 @@
+.container{
+    margin: 50px 143px;
+    /* padding-left: 300px; */
+}
+
 .heading{
-    text-align: center;
-    font-size: 30px;
+    margin-left: 190px;
+    font-size: 25px;
     font-weight: bold;
     margin-top: 45px;
     color: #ec6e3c;
+    
+}
+.fees{
+    border: 2px solid black;
+    width: 370px;
+    margin: 36px 0px 0px 490px;
+    padding: 10px;
+    height: auto;
+}
+.memberFees{
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    color: #ec6e3c;
+}
+
+.age{
+    text-align: center;
+    margin: 32px 69px 0px 143px;
+    font-weight: bold;
+}
+.row1{
+  display: flex;
+}
+ .inputBox {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+  }
+  
+  .label {
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #333;
+    margin: 0px 0px 8px 50px;
+  }
+   .input {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 455px;
+    margin: 4px 0px 0px 47px;
+  }
+  .row1{
+    display: flex;
+    margin-top: 20px;
+  }
+  .row2{
+    display: flex;
+    margin-top: 20px;
+  }
+  .row3{
+    display: flex;
+    margin-top: 20px;
+  }
+  .row4{
+    display: flex;
+    margin-top: 20px;
+  }
+  .col1{
+    margin-top: 1px;
+    margin-left: 3px;
+  }
+  .col2{
+    margin-left: 148px;
+  }
+  .sabhasadh{
+    margin-left: 2px;
+  }
+.ekal{
+    margin-left: 8px;
+}
+.rupees{
     margin-left: 98px;
 }
-.pdf{
-    display: flex;
+.couple{
+    margin-left: 134px ;
 }
-.pdf1{
-    width: 250px;
-    height: 280px;
-    margin: 53px 0px 0px 247px;
+.rupee{
+    margin-left: 26px;
 }
-.pdf2{
-    width: 250px;
-    height: 280px;
-    margin:  54px 0px 0px 402px;
+.duplicate{
+    margin-left: 5px;
+    font-weight: bold;
 }
-.abbs{
-   margin-left: 201px;
-    margin-top: 20px;
-    font-size: 20px;
+.dual{
+    font-weight: bold;
 }
-.patrika{
-    margin-left: 335px;
-    margin-top: 20px;
-    font-size: 20px;
+.submit{
+    margin: 30px 0px 18px 49px;
+    background-color: #e95114;
+    color: white;
+    width: 190px;
+  }
+  .error {
+    color: red;
+  }
+  .error1{
+    color: red;
+    margin-left: 50px;
 
-}
+  }

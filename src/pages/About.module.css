@@ -1,3 +1,30 @@
 .container{
+   margin: 0px;
+   padding: 0px;
     
+}
+.heading{
+    text-align: center;
+    padding: 40px 0px 0px 45px;
+    font-size: 30px;
+    color: #eb5a20;
+
+}
+
+.history{
+    border: 4px solid black;
+    margin: 33px 0px 20px 483px;
+    width: 380px;
+
+}
+.btn{
+    margin: 20px 0px 20px 569px;
+}
+.button{
+    background-color: #eb5a20;
+    color: white;
+}
+.btn1{
+    background-color: #eb5a20;
+    color: white;
 }

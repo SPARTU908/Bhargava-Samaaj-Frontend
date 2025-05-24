@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from "./Footer.module.css";
-import logo2 from "../../assets/logo.png";
+import logo2 from "../../assets/Bhargava-Samaaj-Logo.jpeg";
 import { CiFacebook } from "react-icons/ci";
 import { FaInstagram } from "react-icons/fa6";
 import { FaTwitter } from "react-icons/fa";
@@ -10,7 +10,7 @@ const Footer = () => {
     <>
 <div className={styles.footer}>
         <div className={styles.footerLogo}>
-          <img src={logo2} width={100} height={100} />
+          <img src={logo2} width={100} height={100} className={styles.logo}/>
         </div>
         <div className={styles.footercol2}>
           <div className={styles.social}>Social Media</div>

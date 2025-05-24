@@ -450,7 +450,7 @@ const Form = () => {
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label htmlFor="education" className={styles.label}>
-              Educational Qualification<span style={{ color: 'red' }}>*</span>
+              Education Qualification<span style={{ color: 'red' }}>*</span>
             </label>
             <input
               placeholder=""
@@ -687,14 +687,8 @@ const Form = () => {
           
         </div>
 
-        {/* monthername and motherdob */}
-        <div className={styles.row1}>
-          
-         
-
-          
-          
-        </div>
+        
+        
 
         {/* NATIVE PLACE AND ADDRESS */}
         <div className={styles.row1}>

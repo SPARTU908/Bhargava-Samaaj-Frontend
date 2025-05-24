@@ -22,27 +22,29 @@ const Navbar = () => {
   };
   const toggleHamburger = () => setHamburgerOpen((prev) => !prev);
 
-  useEffect(() => {
-    const addGoogleTranslateScript = () => {
-      const script = document.createElement("script");
-      script.src =
-        "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
-      script.async = true;
-      document.body.appendChild(script);
-    };
-    window.googleTranslateElementInit = () => {
-      new window.google.translate.TranslateElement(
-        {
-          pageLanguage: "en",
-          includedLanguages: "en,hi",
-          layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
-        },
-        "google_translate_element"
-      );
-    };
+  // useEffect(() => {
+  //   const addGoogleTranslateScript = () => {
+  //     const script = document.createElement("script");
+  //     script.src =
+  //       "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+  //     script.async = true;
+  //     document.body.appendChild(script);
+  //   };
+  //   window.googleTranslateElementInit = () => {
+  //     new window.google.translate.TranslateElement(
+  //       {
+  //         pageLanguage: "en",
+  //         includedLanguages: "en,hi",
+  //         layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
+  //       },
+  //       "google_translate_element"
+  //     );
+  //   };
 
-    addGoogleTranslateScript();
-  }, []);
+  //   addGoogleTranslateScript();
+  // }, []);
+
+
   const navigate = useNavigate();
 
   const handleNavigate = (path) => {
@@ -68,10 +70,10 @@ const Navbar = () => {
   const handleMatrimonial = () => {
     navigate("/matrimonial");
   };
-   const handleAdvertisement = () => {
+  const handleAdvertisement = () => {
     navigate("/advertisement");
   };
- 
+
   const handleMembership = () => {
     navigate("/membership");
   };
@@ -80,15 +82,15 @@ const Navbar = () => {
   };
   const handleSociety = (sectionId) => {
     navigate("/society");
-   setTimeout(() => {
-    window.location.hash = sectionId;
-  }, 100);  // Adjust timeout if needed to ensure the page is loaded first
-};
+    setTimeout(() => {
+      window.location.hash = sectionId;
+    }, 100); // Adjust timeout if needed to ensure the page is loaded first
+  };
   return (
     <>
       <div className={styles.top_bar}>
         <img src={logo} alt="" className={styles.logo} />
-        <div id="google_translate_element" className={styles.translate}></div>
+        {/* <div id="google_translate_element" className={styles.translate}></div> */}
         <div className={styles.hamburger} onClick={toggleHamburger}>
           {hamburgerOpen ? <FaTimes /> : <FaBars />}
         </div>
@@ -101,105 +103,19 @@ const Navbar = () => {
         <div className={styles.menu} onClick={handleHome}>
           होम
         </div>
-        {/* <div>About Us</div>
-         */}
-        {/* <div className={styles.dropdown} onClick={toggleDropdown1}>
-          <div className={styles.dropbtn} >
-            हमारे बारे में <FaChevronDown className={styles.arrow} />
-          </div>
-          {isDropdownOpen1 && (
-            <div className={styles.dropdownContent}>
-              <div ><a
-              href="/pdfs/Sabha/History-1989-2014.pdf"
-              className={styles.btn1}
-              target="_blank"
-              rel="noopener noreferrer"
-            ></a>हमारा इतिहास</div>
-              <div onClick={handleAbout}>संविधान</div>
-              <div onClick={handleAbout}>स्थानीय सभाएं</div>
-              <div onClick={handleAbout}>समिति</div>
-              <div onClick={handleAbout}>अखिल भारतीय सदस्य सूची</div>
-              <div onClick={handleAbout}>सभा की निधियाँ</div>
-              <div onClick={handleAbout}>कार्यकारी निकाय</div>
-            </div>
-          )}
-        </div> */}
+
         <div className={styles.dropdown} onClick={toggleDropdown1}>
           <div className={styles.dropbtn}>
             हमारे बारे में <FaChevronDown className={styles.arrow} />
           </div>
           {isDropdownOpen1 && (
             <div className={styles.dropdownContent}>
-              <div>
-                <a
-                  href="/pdfs/Sabha/History-1989-2014.pdf"
-                  className={styles.btn1}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  हमारा इतिहास
-                </a>
-              </div>
-              <div>
-                <a
-                  href="/pdfs/Sabha/Samvidhaan.pdf"
-                  className={styles.btn1}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  संविधान
-                </a>
-              </div>
-              <div>
-                <a
-                  href="/pdfs/Sabha/Localsabha.pdf"
-                  className={styles.btn1}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  स्थानीय सभाएं
-                </a>
-              </div>
-              <div>
-                <a
-                  href="/pdfs/Sabha/Samiti.pdf"
-                  className={styles.btn1}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  समिति
-                </a>
-              </div>
-              <div>
-                <a
-                  href="/pdfs/Sabha/Member-list.pdf"
-                  className={styles.btn1}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  अखिल भारतीय सदस्य सूची
-                </a>
-              </div>
-              <div>
-                <a
-                  href="/pdfs/Sabha/Sabhayein.pdf"
-                  className={styles.btn1}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  सभा की निधियाँ
-                </a>
-              </div>
-              <div>
-                <a
-                  href="/pdfs/Sabha/Executive-body.pdf"
-                  className={styles.btn1}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  कार्यकारी निकाय
-                </a>
-              </div>
+              <div onClick={handleAbout}>हमारा इतिहास</div>
+              <div onClick={handleAbout}>संविधान</div>
+              <div onClick={handleAbout}>स्थानीय सभाएं</div>
+              <div onClick={handleAbout}>समिति</div>
+              <div onClick={handleAbout}>सभा की निधियाँ</div>
+              <div onClick={handleAbout}>कार्यकारी निकाय</div>
             </div>
           )}
         </div>
@@ -235,7 +151,6 @@ const Navbar = () => {
             <div className={styles.dropdownContent}>
               <div onClick={handleHaridwar}>हरिद्वार </div>
             </div>
-           
           )}
         </div>
 
@@ -250,10 +165,9 @@ const Navbar = () => {
         <div className={styles.menu} onClick={handleCensus}>
           जनगणना
         </div>
-         <div className={styles.menu} onClick={handleAdvertisement}>
-         विज्ञापन
+        <div className={styles.menu} onClick={handleAdvertisement}>
+          विज्ञापन
         </div>
-     
 
         <div className={styles.menu} onClick={handleMembership}>
           सदस्यता
