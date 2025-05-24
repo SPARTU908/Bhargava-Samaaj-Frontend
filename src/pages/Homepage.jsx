@@ -27,7 +27,7 @@ import pankaj from "../assets/Pankaj.jpg";
 import sanjeev from "../assets/sanjeev.jpg";
 import anil2 from "../assets/anil.jpg";
 import saurabh from "../assets/Saurabh.jpg";
-import deepesh from "../assets/Deepesh.jpg";
+import deepesh from "../assets/deepesh.jpg";
 import harish from "../assets/harish.png";
 import salil from "../assets/salil.jpg";
 import sanjay3 from "../assets/sanjay2.jpg";
