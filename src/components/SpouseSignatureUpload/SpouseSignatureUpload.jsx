@@ -1,6 +1,6 @@
 import React, { useState , useRef } from "react";
 import axios from "axios";
-import styles from "./SpouseSignatureUpload.module.css"
+import styles from "./SpouseSignatureupload.module.css"
 
 const SpouseSignatureUpload = ({url,setUrl}) => {
   const [file, setFile] = useState(null);
