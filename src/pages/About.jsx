@@ -51,7 +51,7 @@ const About = () => {
         <div className={styles.btn}>
           <button className={styles.button}>
             <a
-              href="/pdfs/Sabha/Samvidhaan.pdf"
+             href="/pdfs/Sabha/Localsabha.pdf"
               className={styles.btn1}
               target="_blank"
               rel="noopener noreferrer"
@@ -112,7 +112,8 @@ const About = () => {
         <div className={styles.btn}>
           <button className={styles.button}>
             <a
-              href="/pdfs/Sabha/Localsabha.pdf"
+              href="/pdfs/Sabha/Samvidhaan.pdf"
+             
               className={styles.btn1}
               target="_blank"
               rel="noopener noreferrer"
