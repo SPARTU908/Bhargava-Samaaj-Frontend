@@ -14,7 +14,7 @@ const PhotoUpload = ({url,setUrl}) => {
   const memberData = new FormData();
     memberData.append("file", file);
   try {
-      const res = await axios.post("http://localhost:3000/upload", memberData );
+      const res = await axios.post("https://bhargava-samaaj-backend-3.onrender.com/upload", memberData );
       console.log(memberData)
       setUrl(res.data.url); 
       setFile(null);

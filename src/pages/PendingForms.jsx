@@ -12,7 +12,7 @@ const PendingForms = () => {
     const fetchPendingForms = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:3000/api/v1/form/admin/pending",
+          "https://bhargava-samaaj-backend-3.onrender.com/api/v1/form/admin/pending",
           {
             headers: { Authorization: `Bearer ${token}` },
           }

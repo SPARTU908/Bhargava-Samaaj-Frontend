@@ -19,7 +19,7 @@ const FileUpload = ({url,setUrl}) => {
     formData.append("file", file);
 
     try {
-      const res = await axios.post("http://localhost:3000/upload", formData);
+      const res = await axios.post("https://bhargava-samaaj-backend-3.onrender.com/upload", formData);
       setUrl(res.data.url); 
       setFile(null);
       fileInputRef.current.value = null;

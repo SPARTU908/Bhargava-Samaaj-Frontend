@@ -33,6 +33,6 @@ export const getMembers = async () => {
 };
 
 export const getApprovedMembers = async () => {
-  const response = await axios.get('http://localhost:3000/api/v1/form/approved'); 
+  const response = await axios.get('https://bhargava-samaaj-backend-3.onrender.com/api/v1/form/approved'); 
   return response.data;
 };
