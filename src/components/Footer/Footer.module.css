@@ -1,11 +1,11 @@
 .footer {
     display: flex;
     align-items: center;
-    background-color: #e95114;
+    background-color:#ea8d0c;
     height: 170px;
   }
   .footerLogo {
-    padding: 35px 0px 0px 149px;
+    padding: 5px 0px 0px 89px;
   }
   .footercol2 {
     display: flex;
@@ -31,17 +31,19 @@
   .contact {
     font-family: "Merriweather", serif;
     color: white;
-    font-size: large;
-    padding-left: 300px;
-  }
+    font-size: 30px;
+    padding-left: 240px;
+}
+  
   .phone {
     color: white;
-    padding-left: 288px;
+    padding-left: 270px;
     padding-top: 10px;
   }
   .address {
     color: white;
     padding-left: 220px;
     padding-top: 10px;
+    line-height: 25px;
   }
  

@@ -1,26 +1,22 @@
-import React from "react";
 import Navbar from "../components/Navbar/Navbar";
 import styles from "./Payment.module.css";
-import { FaGooglePay } from "react-icons/fa";
-import {useState} from "react";
+import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
 const Payment = () => {
-  const[paymentdata,setPaymentData] = useState({
-    name:"",
-    email:"",
-    mobile:"",
-    transactionid:""
+  const [paymentdata, setPaymentData] = useState({
+    name: "",
+    email: "",
+    mobile: "",
+    transactionid: "",
   });
-   const validate = () => {
+  const location = useLocation();
+  const membershipFee =
+    location.state?.selectedFee || "कोई सदस्यता चयनित नहीं है";
+  const validate = () => {
     let newErrors = {};
-   const requiredFields = [
-    "name",
-    "email",
-    "mobile",
-    "transactionid"
-     
-    ];
-     requiredFields.forEach((field) => {
+    const requiredFields = ["name", "email", "mobile", "transactionid"];
+    requiredFields.forEach((field) => {
       if (!paymentdata[field]) {
         newErrors[field] = `${field} is required`;
       }
@@ -33,25 +29,21 @@ const Payment = () => {
     return newErrors;
   };
   const handleChange = (e) => {
-      const { name, value } = e.target;
-      setPaymentData({ ...paymentdata, [name]: value });
-    };
-  
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-   
-      const validationErrors = validate();
-      console.log(validationErrors);
-      if (Object.keys(validationErrors).length > 0) {
-        setErrors(validationErrors);
-      } else {
-        setErrors({});
-  
-        
-      }
-      
-     
-    };
+    const { name, value } = e.target;
+    setPaymentData({ ...paymentdata, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const validationErrors = validate();
+    console.log(validationErrors);
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+    } else {
+      setErrors({});
+    }
+  };
 
   return (
     <>
@@ -82,6 +74,9 @@ const Payment = () => {
           <div className={styles.micr}>
             {" "}
             MICR Code: <span className={styles.info}>110015016</span>
+          </div>
+          <div className={styles.amountBox}>
+            <strong>आपके द्वारा चुनी गई सदस्यता:</strong> {membershipFee}
           </div>
           <div className={styles.qr}>QR</div>
         </div>
@@ -144,7 +139,9 @@ const Payment = () => {
               onChange={handleChange}
             />
           </div>
-          <div><button className={styles.btn}> SUBMIT</button></div>
+          <div>
+            <button className={styles.btn}> SUBMIT</button>
+          </div>
         </div>
       </div>
     </>

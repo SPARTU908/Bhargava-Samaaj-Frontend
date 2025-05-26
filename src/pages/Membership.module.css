@@ -72,32 +72,31 @@
   }
   .col1{
     margin-top: 1px;
-    margin-left: 3px;
+    margin-left: 40px;
   }
   .col2{
-    margin-left: 148px;
+    margin-left: 70px;
   }
   .sabhasadh{
-    margin-left: 2px;
+    margin-left: 40px
   }
 .ekal{
     margin-left: 8px;
 }
 .rupees{
-    margin-left: 98px;
+    margin-left: 136px;
 }
-.couple{
-    margin-left: 134px ;
-}
+
 .rupee{
-    margin-left: 26px;
+    margin-left: 70px;
 }
 .duplicate{
-    margin-left: 5px;
-    font-weight: bold;
+    margin-left: 45px;
+ 
 }
 .dual{
-    font-weight: bold;
+   
+    margin-left: 40px;
 }
 .submit{
     margin: 30px 0px 18px 49px;
@@ -107,9 +106,17 @@
   }
   .error {
     color: red;
+    margin-left: 50px;
+    margin-top: 5px;
   }
   .error1{
     color: red;
-    margin-left: 50px;
+    margin-left: 455px;
+    margin-top: 10px;
 
+  }
+  .result{
+    margin-top: 30px;
+    margin-left: 50px;
+    font-weight: bold;
   }

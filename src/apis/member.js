@@ -15,3 +15,5 @@ export const registerMember = async(memberDetails)=>{
     return error;
   }
 }
+
+

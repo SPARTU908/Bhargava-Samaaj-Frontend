@@ -6,7 +6,6 @@ import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
-// import pdf from "../assets/pdf.png";
 import DatePicker from "react-datepicker";
 import SpousePhotoUpload from "../components/SpousePhotoUpload/SpousePhotoUpload";
 import SpouseSignatureUpload from "../components/SpouseSignatureUpload/SpouseSignatureUpload";
@@ -24,7 +23,6 @@ const Membership = () => {
     photo: "",
     signature: "",
     fatherName: "",
-    husbandName: "",
     gotra: "",
     kuldevi: "",
     occupation: "",
@@ -32,6 +30,7 @@ const Membership = () => {
     spouseEmail: "",
     spousePhoto: "",
     spouseSignature: "",
+    membership: "",
   });
   const [selectedFee, setSelectedFee] = useState("");
   const [errors, setErrors] = useState({});
@@ -47,35 +46,40 @@ const Membership = () => {
   const validate = () => {
     let newErrors = {};
 
-    const requiredFields = [
-      "username",
-      "email",
-      "address",
-      // "spouse",
-      "dob",
-      "pincode",
-      "photo",
-      "signature",
-      "fatherName",
-      "husbandName",
-      "gotra",
-      "kuldevi",
-      "mobile",
-      // "spouseMobile",
-      // "spouseEmail",
-      // "spousePhoto",
-      // "spouseSignature",
-      "occupation",
-    ];
+    if (!memberData.username) newErrors.username = "कृपया नाम दर्ज करें।";
+    if (!memberData.email) newErrors.email = "कृपया ईमेल दर्ज करें।";
+    else if (!/\S+@\S+\.\S+/.test(memberData.email)) {
+      newErrors.email = "कृपया मान्य ईमेल दर्ज करें।";
+    }
+    if (!memberData.address) newErrors.address = "कृपया पता दर्ज करें।";
+    if (!memberData.dob) newErrors.dob = "कृपया जन्म तिथि चुनें।";
+    if (!memberData.pincode) newErrors.pincode = "कृपया पिनकोड दर्ज करें।";
+    if (!photourl) newErrors.photo = "कृपया फोटो अपलोड करें।";
+    if (!signatureurl) newErrors.signature = "कृपया हस्ताक्षर अपलोड करें।";
+    if (!memberData.fatherName)
+      newErrors.fatherName = "कृपया पिता का नाम दर्ज करें।";
+    if (!memberData.gotra) newErrors.gotra = "कृपया गोत्र दर्ज करें।";
+    if (!memberData.kuldevi) newErrors.kuldevi = "कृपया कुलदेवी दर्ज करें।";
+    if (!memberData.mobile) newErrors.mobile = "कृपया मोबाइल नंबर दर्ज करें।";
+    if (!memberData.occupation)
+      newErrors.occupation = "कृपया व्यवसाय दर्ज करें।";
+    if (!selectedFee)
+      newErrors.membership = "कृपया सदस्यता शुल्क का एक विकल्प चुनें।";
 
-    requiredFields.forEach((field) => {
-      if (!memberData[field]) {
-        newErrors[field] = `${field} is required`;
+    if (selectedFee === "आजीवन सभासद - युगल - 1000 रुपये") {
+      if (!memberData.spouse)
+        newErrors.spouse = "कृपया जीवनसाथी का नाम दर्ज करें।";
+      if (!memberData.spouseEmail)
+        newErrors.spouseEmail = "कृपया जीवनसाथी का ईमेल दर्ज करें।";
+      else if (!/\S+@\S+\.\S+/.test(memberData.spouseEmail)) {
+        newErrors.spouseEmail = "कृपया जीवनसाथी का मान्य ईमेल दर्ज करें।";
       }
-    });
-
-    if (memberData.email && !/\S+@\S+\.\S+/.test(memberData.email)) {
-      newErrors.email = "Email is invalid";
+      if (!memberData.spouseMobile)
+        newErrors.spouseMobile = "कृपया जीवनसाथी का मोबाइल नंबर दर्ज करें।";
+      if (!spousephotourl)
+        newErrors.spousePhoto = "कृपया जीवनसाथी की फोटो अपलोड करें।";
+      if (!spousesignatureurl)
+        newErrors.spouseSignature = "कृपया जीवनसाथी का हस्ताक्षर अपलोड करें।";
     }
 
     return newErrors;
@@ -87,22 +91,41 @@ const Membership = () => {
   };
 
   const handleSubmit = async (e) => {
-    memberData.photo = photourl;
-    memberData.signature = signatureurl;
-    memberData.spousePhoto = spousephotourl;
-    memberData.spouseSignature = spousesignatureurl;
-    console.log(memberData);
     e.preventDefault();
 
-    const validationErrors = validate();
-    console.log(validationErrors);
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-    } else {
-      setErrors({});
+    // Update URLs and membership value before validation
+    const updatedData = {
+      ...memberData,
+      dob: memberData.dob ? memberData.dob.toISOString() : "",
 
-      const result = await registerMember(memberData);
-      console.log("result", result);
+      photo: photourl,
+      signature: signatureurl,
+      spousePhoto: spousephotourl,
+      spouseSignature: spousesignatureurl,
+      membership: selectedFee,
+    };
+
+    console.log('Final data to submit:', updatedData);
+     if (selectedFee !== "आजीवन सभासद - युगल - 1000 रुपये") {
+    delete updatedData.spouse;
+    delete updatedData.spouseMobile;
+    delete updatedData.spouseEmail;
+    delete updatedData.spousePhoto;
+    delete updatedData.spouseSignature;
+  }
+
+    const validationErrors = validate(updatedData);
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length > 0) {
+      toast.error("कृपया सभी आवश्यक फ़ील्ड भरें।", {
+        position: "top-center",
+      });
+      return; 
+    }
+
+    try {
+      const result = await registerMember(updatedData);
       if (result.status === 201) {
         toast.success(
           result.data.message || "Thanks for submitting your details!",
@@ -117,6 +140,8 @@ const Membership = () => {
             theme: "light",
           }
         );
+
+        // Reset form
         setMemberData({
           username: "",
           email: "",
@@ -128,7 +153,6 @@ const Membership = () => {
           photo: "",
           signature: "",
           fatherName: "",
-          husbandName: "",
           gotra: "",
           kuldevi: "",
           occupation: "",
@@ -136,16 +160,22 @@ const Membership = () => {
           spouseEmail: "",
           spousePhoto: "",
           spouseSignature: "",
+          membership: "",
         });
+
         setPhotoUrl("");
         setSignatureUrl("");
         setSpousePhotoUrl("");
         setSpouseSignatureUrl("");
-        console.log("Member Data Submitted:", memberData);
-      }
-    }
+        setSelectedFee("");
 
-    navigate("/payment");
+        // ✅ Proceed to payment only if submission succeeded
+        navigate("/payment", { state: { selectedFee } });
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      toast.error(error.response?.data?.message || "फॉर्म सबमिट करते समय कुछ त्रुटि हुई।");
+    }
   };
 
   return (
@@ -171,8 +201,9 @@ const Membership = () => {
               checked={selectedFee === "साधारण सभासद - 300 रुपये"}
               onChange={handleSelection}
             />
-           
-            <div className={styles.col1}>साधारण सभासद</div>
+
+            <div className={styles.col1}>साधारण सभासद-वित्तीय वर्ष के लिए</div>
+
             <div className={styles.col2}>300 रुपये</div>
           </label>
           <label className={styles.row2}>
@@ -183,7 +214,7 @@ const Membership = () => {
               checked={selectedFee === "आजीवन सभासद - एकल - 600 रुपये"}
               onChange={handleSelection}
             />
-            
+
             <div className={styles.sabhasadh}>आजीवन सभासद-</div>
             <div className={styles.ekal}>एकल</div>
             <div className={styles.rupees}>600 रुपये</div>
@@ -197,6 +228,7 @@ const Membership = () => {
               checked={selectedFee === "आजीवन सभासद - युगल - 1000 रुपये"}
               onChange={handleSelection}
             />
+            <div className={styles.sabhasadh}>आजीवन सभासद-</div>
             <div className={styles.couple}>युगल-(पति-पत्नी)</div>
             <div className={styles.rupee}>1,000 रुपये</div>
           </label>
@@ -211,12 +243,15 @@ const Membership = () => {
             <div className={styles.dual}>
               डुप्लिकेट परिचय हेतु शुल्क (प्रति सदस्य)
             </div>
-            <div className={styles.duplicate}>₹50 रुपये</div>
+            <div className={styles.duplicate}>50 रुपये</div>
           </label>
-           <div style={{ marginTop: "20px" }}>
-        <strong>आपका चयन:</strong> {selectedFee || "कोई चयन नहीं किया गया"}
-      </div>
+          <div className={styles.result}>
+            <strong>आपका चयन:</strong> {selectedFee || "कोई चयन नहीं किया गया"}
+          </div>
         </div>
+        {errors.membership && (
+          <div className={styles.error1}>{errors.membership}</div>
+        )}
 
         {/* FORM */}
         <div className={styles.container}>
@@ -234,7 +269,11 @@ const Membership = () => {
                 value={memberData.username}
                 onChange={handleChange}
               />
+              {errors.username && (
+                <p className={styles.error}>{errors.username}</p>
+              )}
             </div>
+
             <div className={styles.inputBox}>
               <label htmlFor="spouse" className={styles.label}>
                 Spouse Name
@@ -242,13 +281,15 @@ const Membership = () => {
               <input
                 placeholder=""
                 className={styles.input}
-                type="spouse"
+                type="text"
                 name="spouse"
                 id="spouse"
                 value={memberData.spouse}
                 onChange={handleChange}
               />
+              {errors.spouse && <p className={styles.error}>{errors.spouse}</p>}
             </div>
+          
           </div>
 
           <div className={styles.row1}>
@@ -265,7 +306,9 @@ const Membership = () => {
                 value={memberData.email}
                 onChange={handleChange}
               />
+              {errors.email && <p className={styles.error}>{errors.email}</p>}
             </div>
+
             <div className={styles.inputBox}>
               <label htmlFor="spouseEmail" className={styles.label}>
                 Spouse Email
@@ -279,6 +322,9 @@ const Membership = () => {
                 value={memberData.spouseEmail}
                 onChange={handleChange}
               />
+              {errors.spouseEmail && (
+                <p className={styles.error}>{errors.spouseEmail}</p>
+              )}
             </div>
           </div>
 
@@ -296,7 +342,11 @@ const Membership = () => {
                 value={memberData.address}
                 onChange={handleChange}
               />
+              {errors.address && (
+                <p className={styles.error}>{errors.address}</p>
+              )}
             </div>
+
             <div className={styles.inputBox}>
               <label htmlFor="fatherName" className={styles.label}>
                 Father Name <span style={{ color: "red" }}>*</span>
@@ -310,6 +360,9 @@ const Membership = () => {
                 value={memberData.fatherName}
                 onChange={handleChange}
               />
+              {errors.fatherName && (
+                <p className={styles.error}>{errors.fatherName}</p>
+              )}
             </div>
           </div>
 
@@ -327,7 +380,9 @@ const Membership = () => {
                 value={memberData.mobile}
                 onChange={handleChange}
               />
+              {errors.mobile && <p className={styles.error}>{errors.mobile}</p>}
             </div>
+
             <div className={styles.inputBox}>
               <label htmlFor="spouseMobile" className={styles.label}>
                 Spouse Mobile
@@ -341,6 +396,9 @@ const Membership = () => {
                 value={memberData.spouseMobile}
                 onChange={handleChange}
               />
+              {errors.spouseMobile && (
+                <p className={styles.error}>{errors.spouseMobile}</p>
+              )}
             </div>
           </div>
 
@@ -359,7 +417,9 @@ const Membership = () => {
                 showYearDropdown
                 dropdownMode="select"
               />
+              {errors.dob && <p className={styles.error}>{errors.dob}</p>}
             </div>
+
             <div className={styles.inputBox}>
               <label htmlFor="pincode" className={styles.label}>
                 Pincode<span style={{ color: "red" }}>*</span>
@@ -373,6 +433,9 @@ const Membership = () => {
                 value={memberData.pincode}
                 onChange={handleChange}
               />
+              {errors.pincode && (
+                <p className={styles.error}>{errors.pincode}</p>
+              )}
             </div>
           </div>
 
@@ -390,6 +453,7 @@ const Membership = () => {
                 value={memberData.gotra}
                 onChange={handleChange}
               />
+              {errors.gotra && <p className={styles.error}>{errors.gotra}</p>}
             </div>
 
             <div className={styles.inputBox}>
@@ -405,45 +469,12 @@ const Membership = () => {
                 value={memberData.kuldevi}
                 onChange={handleChange}
               />
+              {errors.kuldevi && (
+                <p className={styles.error}>{errors.kuldevi}</p>
+              )}
             </div>
           </div>
-
-          <div className={styles.row1}>
-            <div className={styles.inputBox}>
-              <label htmlFor="photo" className={styles.label}>
-                Upload Photo<span style={{ color: "red" }}>*</span>
-              </label>
-              <PhotoUpload url={photourl} setUrl={setPhotoUrl} />
-            </div>
-            <div className={styles.inputBox}>
-              <label htmlFor="spousePhoto" className={styles.label}>
-                Upload Spouse Photo
-              </label>
-              <SpousePhotoUpload
-                url={spousephotourl}
-                setUrl={setSpousePhotoUrl}
-              />
-            </div>
-          </div>
-
-          <div className={styles.row1}>
-            <div className={styles.inputBox}>
-              <label htmlFor="signature" className={styles.label}>
-                Upload Signature<span style={{ color: "red" }}>*</span>
-              </label>
-              <SignatureUpload url={signatureurl} setUrl={setSignatureUrl} />
-            </div>
-            <div className={styles.inputBox}>
-              <label htmlFor="spouseSignature" className={styles.label}>
-                Upload Spouse Signature
-              </label>
-              <SpouseSignatureUpload
-                url={spousesignatureurl}
-                setUrl={setSpouseSignatureUrl}
-              />
-            </div>
-          </div>
-          <div className={styles.row1}>
+           <div className={styles.row1}>
             <div className={styles.inputBox}>
               <label className={styles.label}>
                 Occupation <span style={{ color: "red" }}>*</span>
@@ -457,22 +488,58 @@ const Membership = () => {
                 value={memberData.occupation}
                 onChange={handleChange}
               />
+              {errors.occupation && (
+                <p className={styles.error}>{errors.occupation}</p>
+              )}
             </div>
-            {/* <div className={styles.inputBox}>
-              <label className={styles.label}>
-                Husband Name <span style={{ color: "red" }}>*</span>
-              </label>
-              <input
-                placeholder=""
-                className={styles.input}
-                type="text"
-                name="husbandName"
-                id="husbandName"
-                value={memberData.husbandName}
-                onChange={handleChange}
-              />
-            </div> */}
           </div>
+
+          <div className={styles.row1}>
+            <div className={styles.inputBox}>
+              <label htmlFor="photo" className={styles.label}>
+                Upload Photo<span style={{ color: "red" }}>*</span>
+              </label>
+              <PhotoUpload url={photourl} setUrl={setPhotoUrl} />
+              {errors.photo && <p className={styles.error}>{errors.photo}</p>}
+            </div>
+            <div className={styles.inputBox}>
+              <label htmlFor="spousePhoto" className={styles.label}>
+                Upload Spouse Photo
+              </label>
+              <SpousePhotoUpload
+                url={spousephotourl}
+                setUrl={setSpousePhotoUrl}
+              />
+              {errors.spousePhoto && (
+                <p className={styles.error}>{errors.spousePhoto}</p>
+              )}
+            </div>
+          </div>
+
+          <div className={styles.row1}>
+            <div className={styles.inputBox}>
+              <label htmlFor="signature" className={styles.label}>
+                Upload Signature<span style={{ color: "red" }}>*</span>
+              </label>
+              <SignatureUpload url={signatureurl} setUrl={setSignatureUrl} />
+              {errors.signature && (
+                <p className={styles.error}>{errors.signature}</p>
+              )}
+            </div>
+            <div className={styles.inputBox}>
+              <label htmlFor="spouseSignature" className={styles.label}>
+                Upload Spouse Signature
+              </label>
+              <SpouseSignatureUpload
+                url={spousesignatureurl}
+                setUrl={setSpouseSignatureUrl}
+              />
+              {errors.spouseSignature && (
+                <p className={styles.error}>{errors.spouseSignature}</p>
+              )}
+            </div>
+          </div>
+         
 
           <div className={styles.btn}>
             <button className={styles.submit} onClick={handleSubmit}>
