@@ -3,18 +3,14 @@ import styles from "./Homepage.module.css";
 import banner from "../assets/banner.jpg";
 import president from "../assets/President.jpeg";
 import sanjay from "../assets/sanjay.jpg";
-import announcement from "../assets/announce.jpg";
-import ImageSlider from "../components/ImageSlider/ImageSlider.jsx";
-import img1 from "../assets/imgs1.png";
-import img2 from "../assets/imgs2.png";
-import img3 from "../assets/imgs3.png";
-import bannerHaridwar from "../assets/haridwar-banner.png";
-import activity from "../assets/activity.png";
+import announcement from "../assets/announce.png";
+
+import activity from "../assets/activity.jpeg";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
 import { FaClock } from "react-icons/fa";
 import { IoLocation } from "react-icons/io5";
-import Haridwar from "../assets/Haridwar.jpeg";
+
 import anil from "../assets/Anil Bhargava.jpeg";
 import sanjay2 from "../assets/Sanjay Bhargava.jpeg";
 import vijay from "../assets/Vijay Bhargava.jpeg";
@@ -70,15 +66,13 @@ const Homepage = () => {
         </div>
         <div className={styles.headingAnnounce}>
           {" "}
-          वार्षिक आम बैठक निर्धारित – 15 जून 2025
-          <div className={styles.content}>
-            भर्गव समाज को यह सूचित करते हुए प्रसन्नता हो रही है कि वार्षिक आम
-            बैठक (AGM) रविवार, 15 जून 2025 को कम्युनिटी हॉल, वाराणसी में आयोजित
-            की जाएगी। समाज के सभी सदस्यों से निवेदन है कि वे इस बैठक में उपस्थित
-            होकर आगामी वर्ष की योजनाओं और महत्वपूर्ण चर्चाओं में भाग लें। बैठक
-            का एजेंडा और समय की जानकारी शीघ्र ही साझा की जाएगी।भर्गव समाज को यह
-            सूचित करते हुए प्रसन्नता हो रही है कि वार्षिक आम बैठक (AGM) रविवार,
-            15 जून 2025 को कम्युनिटी हॉल, वाराणसी में आयोजित की जाएगी।
+         <div className={styles.content}>
+            अखिल भारतीय भार्गव सभा (रजि.) के सत्रा 2025-2027 की कार्यकारिणी की
+            द्वितीय बैठक रविवार, दिनांक 20.07.2025 को प्रातः 10.00 बजे से
+            ‘NITTTR Auditorium, श्यामला हिल्स, भोपाल’ में आयोजित की जायेगी। साथ
+            ही एक दिन पूर्व अर्थात् शनिवार 19.07.2025 को आवश्यकतानुसार समितियों
+            की बैठकें होटल विज्ञा श्री/NITTTR Auditorium में रखी जा सकती हैं,
+            जिसकी सूचना समितियों द्वारा सम्बन्ध्ति को भेजी जाएगी।
           </div>
         </div>
       </div>
@@ -88,13 +82,13 @@ const Homepage = () => {
         <div className={styles.festHead}> Upcoming Festival 2025</div>
         <div className={styles.festivalBox}>
           <div className={styles.col1}>
-            <div className={styles.festBox1}>Festival1</div>
-            <div className={styles.festBox1}>Festival2</div>
+            <div className={styles.festBox1}>गुरुवार, 5 जून – गंगा दशहरा</div>
+            <div className={styles.festBox1}>शुक्रवार, 6 जून – एकादशी (निर्जला)</div>
           </div>
           <div className={styles.col2}>
-            <div className={styles.festBox2}>Festival3</div>
-            <div className={styles.festBox2}>Festival4</div>
-            <div className={styles.festBox2}>Festival5</div>
+            <div className={styles.festBox2}>रविवार, 8 जून – प्रदोष</div>
+            <div className={styles.festBox2}>मंगलवार, 10 जून – पूर्णिमा (व्रत)</div>
+            <div className={styles.festBox2}>बुधवार, 11 जून – पूर्णिमा (स्नान)</div>
           </div>
         </div>
       </div>
@@ -105,73 +99,30 @@ const Homepage = () => {
         <div className={styles.activities_row_1}>
           <div className={styles.imageContainer}>
             <img src={activity} alt="" className={styles.actImg} />
-            <div className={styles.topRightBox}>
-              03 <br />
-              April <br />
-              2025
-            </div>
+            
           </div>
           <div className={styles.rightAct}>
             <div className={styles.actBox1}>
               <div className={styles.line}></div>
               <div className={styles.date}>
-                <div className={styles.three}>03</div>
-                <div className={styles.month}>DEC</div>
+                <div className={styles.three}>30</div>
+                <div className={styles.month}>AUG</div>
                 <div className={styles.year}>2025</div>
               </div>
               <div className={styles.actInfo}>
-                <div className={styles.actName}>Rajendra Prasad Jayanti</div>
+                <div className={styles.actName}>महाराजा अग्रसेन भवन </div>
                 <div className={styles.actTiming}>
                   <FaClock className={styles.clockIcon} />
-                  12:00-2:00
+                  
                 </div>
                 <div className={styles.actTiming}>
                   <IoLocation className={styles.clockIcon} />
-                  Hazaribagh
+               आगरा 
                 </div>
               </div>
               <div className={styles.actName}>Sunday</div>
             </div>
-            <div className={styles.actBox2}>
-              <div className={styles.line}></div>
-              <div className={styles.date}>
-                <div className={styles.three}>03</div>
-                <div className={styles.month}>DEC</div>
-                <div className={styles.year}>2025</div>
-              </div>
-              <div className={styles.actInfo}>
-                <div className={styles.actName}>Rajendra Prasad Jayanti</div>
-                <div className={styles.actTiming}>
-                  <FaClock className={styles.clockIcon} />
-                  12:00-2:00
-                </div>
-                <div className={styles.actTiming}>
-                  <IoLocation className={styles.clockIcon} />
-                  Hazaribagh
-                </div>
-              </div>
-              <div className={styles.actName}>Sunday</div>
-            </div>
-            <div className={styles.actBox2}>
-              <div className={styles.line}></div>
-              <div className={styles.date}>
-                <div className={styles.three}>03</div>
-                <div className={styles.month}>DEC</div>
-                <div className={styles.year}>2025</div>
-              </div>
-              <div className={styles.actInfo}>
-                <div className={styles.actName}>Rajendra Prasad Jayanti</div>
-                <div className={styles.actTiming}>
-                  <FaClock className={styles.clockIcon} />
-                  12:00-2:00
-                </div>
-                <div className={styles.actTiming}>
-                  <IoLocation className={styles.clockIcon} />
-                  Hazaribagh
-                </div>
-              </div>
-              <div className={styles.actName}>Sunday</div>
-            </div>
+           
           </div>
         </div>
       </div>
@@ -425,24 +376,10 @@ const Homepage = () => {
 
       {/* Event Gallery Section */}
 
-      {/* Ashrams Section */}
-      <div className={styles.ashramSection}>
-        <div className={styles.headingAshram}>भार्गव आश्रम</div>
-        <div>
-          <img src={bannerHaridwar} alt="" className={styles.bg} />
-          <div>
-            <img src={Haridwar} alt="" className={styles.imgHari} />
-            <div className={styles.nameHari}>हरिद्वार</div>
-            <div className={styles.details} onClick={handleHaridwar}>
-              View Full Details
-            </div>
-          </div>
-        </div>
-      </div>
-
       <div className={styles.gallery}>
         <div className={styles.galleryHeading}>Event Gallery</div>
-        <ImageSlider images={[img1, img2, img3]} interval={4000} />
+
+        {/* <ImageSlider images={[img1, img2, img3]} interval={4000} /> */}
       </div>
       <Footer />
     </>

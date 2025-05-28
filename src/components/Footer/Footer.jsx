@@ -12,20 +12,7 @@ const Footer = () => {
         <div className={styles.footerLogo}>
           <img src={logo2} width={150} height={150} className={styles.logo} />
         </div>
-        <div className={styles.footercol2}>
-          <div className={styles.social}>Social Media</div>
-          <div className={styles.socialIcons}>
-            <div>
-              <CiFacebook />
-            </div>
-            <div>
-              <FaInstagram />
-            </div>
-            <div>
-              <FaTwitter />
-            </div>
-          </div>
-        </div>
+       
         <div className={styles.footercol3}>
           <div className={styles.contact}>Contact Details</div>
           <div className={styles.phone}>Phone no:9414076842</div>

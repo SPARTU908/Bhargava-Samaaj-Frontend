@@ -14,6 +14,7 @@
   .footercol3 {
     display: flex;
     flex-direction: column;
+    margin-left: 495px;
   }
   .socialIcons {
     display: flex;

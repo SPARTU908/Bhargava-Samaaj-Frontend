@@ -1,19 +1,48 @@
 import axios from "axios";
 
 
-export const registerMember = async(memberDetails)=>{
-    const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/member/register`;  
+// export const registerMember = async(memberDetails)=>{
+//     const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/member/register`;  
+//   try {
+//     const response = await axios.post(reqUrl, memberDetails);
+//   if (response) {
+//       return response;
+//     } else {
+//       throw new Error("Registration failed: No email returned from server");
+//     }
+//   } catch (error) {
+//     console.log(error);
+//     return error;
+//   }
+// }
+
+
+
+
+export const registerMember = async (memberDetails) => {
+  const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/member/register`;
+
   try {
+    console.log(memberDetails)
     const response = await axios.post(reqUrl, memberDetails);
-  if (response) {
-      return response;
+    if (response.status === 201) {
+      return {
+        success: true,
+        data: response.data,
+      };
     } else {
-      throw new Error("Registration failed: No email returned from server");
+      return {
+        success: false,
+        error: "Unexpected response from server",
+      };
     }
   } catch (error) {
-    console.log(error);
-    return error;
+    console.error("Registration error:", error.response?.data || error.message);
+    return {
+      success: false,
+      error: error.response?.data || "Something went wrong",
+    };
   }
-}
+};
 
 

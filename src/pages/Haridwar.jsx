@@ -125,7 +125,7 @@ const Haridwar = () => {
               <div>Including GST</div>
               <div>Attached Bathrooms</div>
             </div>
-            <div className={styles.rupee2}>Rs.1,000.00</div>
+            <div className={styles.rupee2}>Rs.1200.00</div>
           </div>
         </div>
 
