@@ -33,7 +33,7 @@ export const registerMember = async (memberDetails) => {
     } else {
       return {
         success: false,
-        error: "Unexpected response from server",
+        error: response.message,
       };
     }
   } catch (error) {

@@ -11,8 +11,10 @@ const Payment = () => {
     transactionid: "",
   });
   const location = useLocation();
-  const membershipFee =
-    location.state?.selectedFee || "कोई सदस्यता चयनित नहीं है";
+  
+  const {  membership: plan } = location.state || {};
+  console.log(plan)
+  
   const validate = () => {
     let newErrors = {};
     const requiredFields = ["name", "email", "mobile", "transactionid"];
@@ -76,7 +78,7 @@ const Payment = () => {
             MICR Code: <span className={styles.info}>110015016</span>
           </div>
           <div className={styles.amountBox}>
-            <strong>आपके द्वारा चुनी गई सदस्यता:</strong> {membershipFee}
+            <strong>आपके द्वारा चुनी गई सदस्यता:</strong> {plan}
           </div>
           <div className={styles.qr}>QR</div>
         </div>

@@ -2,7 +2,7 @@ import React, { useState , useRef } from "react";
 import axios from "axios";
 import styles from "./SpouseSignatureupload.module.css"
 
-const SpouseSignatureUpload = ({url,setUrl}) => {
+const SpouseSignatureUpload = ({url,setUrl,disabled}) => {
   const [file, setFile] = useState(null);
   const fileInputRef = useRef(null); 
   const handleChange = (e) => {
@@ -14,7 +14,7 @@ const SpouseSignatureUpload = ({url,setUrl}) => {
   const memberData = new FormData();
     memberData.append("file", file);
   try {
-      const res = await axios.post("https://bhargava-samaaj-backend-3.onrender.com/upload", memberData);
+      const res = await axios.post("http://localhost:3000/upload", memberData);
       setUrl(res.data.url); 
       setFile(null);
       fileInputRef.current.value = null; 
@@ -26,8 +26,8 @@ const SpouseSignatureUpload = ({url,setUrl}) => {
   return (
     <div>
       <form onSubmit={handleSubmit} encType="multipart/form-data" className={styles.input}>
-        <input type="file" name="file" onChange={handleChange} ref={fileInputRef} accept="image/png, image/jpeg, image/jpg, "/>
-        <input type="submit" value="Upload" className={styles.btn} />
+        <input type="file" name="file" onChange={handleChange} disabled={disabled} ref={fileInputRef} accept="image/png, image/jpeg, image/jpg, "/>
+        <input type="submit" value="Upload" className={styles.btn} disabled={disabled} />
       </form>
       <div
         className="container"
