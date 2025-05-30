@@ -49,9 +49,9 @@ margin-left: 28px;
      margin:20px 0px 0px 30px;
 }
 .qr{
-    border: 3px solid black;
-    margin: 63px 0px 0px 25px;
-    height: 345px;
+ 
+   margin: 53px 0px 0px 81px;
+    
 }
 .inputBox {
     display: flex;
@@ -74,3 +74,15 @@ margin-left: 28px;
     width: 455px;
     margin: 4px 0px 0px 1px;
   }
+  .plan{
+    font-weight: bold;
+    margin: 12px 0px 0px 57px;
+  }
+  .planing{
+        margin: 40px 0px 0px 130px;
+  }
+  .error {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: 4px;
+}

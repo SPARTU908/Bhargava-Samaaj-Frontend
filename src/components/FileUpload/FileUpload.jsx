@@ -19,7 +19,8 @@ const FileUpload = ({url,setUrl}) => {
     formData.append("file", file);
 
     try {
-      const res = await axios.post("https://bhargava-samaaj-backend-3.onrender.com/upload", formData);
+      const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/upload`;
+      const res = await axios.post(reqUrl, formData);
       setUrl(res.data.url); 
       setFile(null);
       fileInputRef.current.value = null;

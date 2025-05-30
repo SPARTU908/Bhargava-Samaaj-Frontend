@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar/Navbar";
-import Footer from "../components/Footer/Footer";
 import styles from "./Matrimonial.module.css";
 import Form from "../components/Form/Form";
 import { useNavigate } from "react-router-dom";
@@ -140,7 +139,7 @@ const Matrimonial = () => {
         </div>
       )}
 
-      <Footer />
+     
     </>
   );
 };

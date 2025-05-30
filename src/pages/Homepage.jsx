@@ -4,13 +4,11 @@ import banner from "../assets/banner.jpg";
 import president from "../assets/President.jpeg";
 import sanjay from "../assets/sanjay.jpg";
 import announcement from "../assets/announce.png";
-
 import activity from "../assets/activity.jpeg";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
 import { FaClock } from "react-icons/fa";
 import { IoLocation } from "react-icons/io5";
-
 import anil from "../assets/Anil Bhargava.jpeg";
 import sanjay2 from "../assets/Sanjay Bhargava.jpeg";
 import vijay from "../assets/Vijay Bhargava.jpeg";
@@ -52,9 +50,6 @@ const Homepage = () => {
         <div className={styles.news}>
           <div className={styles.scrollText}>
             <span className={styles.latest}>Latest News</span>
-            -Bhargava Samaj announces the Annual Cultural Meet 2025, celebrating
-            heritage and unity.Scholarship applications for meritorious Bhargava
-            students are now open until May 31st.
           </div>
         </div>
       </div>
@@ -65,8 +60,7 @@ const Homepage = () => {
           <img src={announcement} alt="" className={styles.announceImg} />
         </div>
         <div className={styles.headingAnnounce}>
-          {" "}
-         <div className={styles.content}>
+          <div className={styles.content}>
             अखिल भारतीय भार्गव सभा (रजि.) के सत्रा 2025-2027 की कार्यकारिणी की
             द्वितीय बैठक रविवार, दिनांक 20.07.2025 को प्रातः 10.00 बजे से
             ‘NITTTR Auditorium, श्यामला हिल्स, भोपाल’ में आयोजित की जायेगी। साथ
@@ -79,29 +73,53 @@ const Homepage = () => {
 
       {/* Festival */}
       <div className={styles.festival}>
-        <div className={styles.festHead}> Upcoming Festival 2025</div>
-        <div className={styles.festivalBox}>
+        <div className={styles.festHead}> अपकमिंग फेस्टिवल्स 2025</div>
+        <div >
           <div className={styles.col1}>
-            <div className={styles.festBox1}>गुरुवार, 5 जून – गंगा दशहरा</div>
-            <div className={styles.festBox1}>शुक्रवार, 6 जून – एकादशी (निर्जला)</div>
+            <div className={styles.festBox1}>
+              <div className={styles.day}>गुरुवार, 5 जून – गंगा दशहरा</div>
+            </div>
+            <div className={styles.festBox1}>
+              <div className={styles.day}>शुक्रवार, 6 जून – एकादशी (निर्जला)</div>
+            </div>
+            <div className={styles.festBox1}>
+              <div className={styles.day}>रविवार, 8 जून – प्रदोष </div>
+            </div>
+            <div className={styles.festBox1}>
+              <div className={styles.day}>मंगलवार, 10 जून – पूर्णिमा (व्रत)</div>
+            </div>
+            <div className={styles.festBox1}>
+              <div className={styles.day}>बुधवार, 11 जून – पूर्णिमा (स्नान) </div>
+            </div>
           </div>
-          <div className={styles.col2}>
-            <div className={styles.festBox2}>रविवार, 8 जून – प्रदोष</div>
-            <div className={styles.festBox2}>मंगलवार, 10 जून – पूर्णिमा (व्रत)</div>
-            <div className={styles.festBox2}>बुधवार, 11 जून – पूर्णिमा (स्नान)</div>
-          </div>
+          {/* <div className={styles.col2}>
+            <div className={styles.festBox2}>
+              <div className={styles.day}>रविवार</div>
+              <div className={styles.ganga}>प्रदोष </div>
+              <div className={styles.june}>8 जून</div>
+            </div>
+            <div className={styles.festBox2}>
+              <div className={styles.day}>मंगलवार</div>
+              <div className={styles.ganga}>पूर्णिमा (व्रत) </div>
+              <div className={styles.june}>10 जून</div>
+            </div>
+            <div className={styles.festBox2}>
+              <div className={styles.day}>बुधवार</div>
+              <div className={styles.ganga}>पूर्णिमा (स्नान)</div>
+              <div className={styles.june}>11 जून </div>
+            </div>
+          </div> */}
         </div>
       </div>
 
       {/* Activities-Section */}
       <div className={styles.activities}>
-        <div className={styles.activityHeading}> Upcoming Activities</div>
+        <div className={styles.activityHeading}> अपकमिंग एक्टिविटीज 2025</div>
         <div className={styles.activities_row_1}>
           <div className={styles.imageContainer}>
             <img src={activity} alt="" className={styles.actImg} />
-            
           </div>
-          <div className={styles.rightAct}>
+          {/* <div className={styles.rightAct}>
             <div className={styles.actBox1}>
               <div className={styles.line}></div>
               <div className={styles.date}>
@@ -123,7 +141,7 @@ const Homepage = () => {
               <div className={styles.actName}>Sunday</div>
             </div>
            
-          </div>
+          </div> */}
         </div>
       </div>
 
@@ -377,7 +395,7 @@ const Homepage = () => {
       {/* Event Gallery Section */}
 
       <div className={styles.gallery}>
-        <div className={styles.galleryHeading}>Event Gallery</div>
+        <div className={styles.galleryHeading}>इवेंट गैलरी </div>
 
         {/* <ImageSlider images={[img1, img2, img3]} interval={4000} /> */}
       </div>

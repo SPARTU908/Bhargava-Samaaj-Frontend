@@ -10,13 +10,23 @@ const PendingForms = () => {
 
   useEffect(() => {
     const fetchPendingForms = async () => {
-      try {
-        const res = await axios.get(
-          "https://bhargava-samaaj-backend-3.onrender.com/api/v1/form/admin/pending",
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
+      // try {
+      //   const res = await axios.get(
+      //     "https://bhargava-samaaj-backend-3.onrender.com/api/v1/form/admin/pending",
+      //     {
+      //       headers: { Authorization: `Bearer ${token}` },
+      //     }
+      //   );
+      //   setPendingForms(res.data);
+      // } catch (err) {
+      //   console.error("Failed to fetch pending forms", err);
+      // }
+       try {
+        // Use dynamic backend URL from environment variables
+        const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/form/admin/pending`;
+        const res = await axios.get(reqUrl, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         setPendingForms(res.data);
       } catch (err) {
         console.error("Failed to fetch pending forms", err);
@@ -27,9 +37,23 @@ const PendingForms = () => {
   }, [token]);
 
   const handleReview = async (formId, action) => {
+    // try {
+    //   await axios.post(
+    //     "http://localhost:3000/api/v1/form/admin/review",
+    //     { formId, action },
+    //     { headers: { Authorization: `Bearer ${token}` } }
+    //   );
+    //   setPendingForms((prev) => prev.filter((form) => form._id !== formId));
+    //   alert(`Form ${action}d successfully`);
+    // } catch (err) {
+    //   console.error(err);
+    //   alert("Error performing action");
+    // }
     try {
+      // Use dynamic backend URL from environment variables
+      const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/form/admin/review`;
       await axios.post(
-        "http://localhost:3000/api/v1/form/admin/review",
+        reqUrl,
         { formId, action },
         { headers: { Authorization: `Bearer ${token}` } }
       );

@@ -9,11 +9,9 @@ import React, { useEffect } from "react";
 
 const About = () => {
    useEffect(() => {
-      // Get the hash from the URL and scroll to the element with that id
-      const hash = window.location.hash;
-  
-      if (hash) {
-        const section = document.getElementById(hash.slice(1)); // Remove the '#' from the hash
+   const hash = window.location.hash;
+  if (hash) {
+        const section = document.getElementById(hash.slice(1)); 
         if (section) {
           section.scrollIntoView({ behavior: 'smooth' });
         }

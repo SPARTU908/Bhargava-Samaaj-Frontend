@@ -10,14 +10,6 @@ const Members = () => {
   const [city, setCity] = useState("");
   const [sortBy, setSortBy] = useState("");
 
-  // useEffect(() => {
-  //   const fetchMembers = async () => {
-  //     const result = await getMembers();
-  //     console.log(result);
-  //     setMembers(result);
-  //   };
-  //   fetchMembers();
-  // }, []);
 
   useEffect(() => {
   const fetchMembers = async () => {

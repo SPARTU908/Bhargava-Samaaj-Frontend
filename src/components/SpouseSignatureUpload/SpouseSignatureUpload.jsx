@@ -13,11 +13,12 @@ const SpouseSignatureUpload = ({url,setUrl,disabled}) => {
     if (!file) return;
   const memberData = new FormData();
     memberData.append("file", file);
-  try {
-      const res = await axios.post("http://localhost:3000/upload", memberData);
-      setUrl(res.data.url); 
+ try {
+      const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/upload`;
+      const res = await axios.post(reqUrl, memberData);
+      setUrl(res.data.url);
       setFile(null);
-      fileInputRef.current.value = null; 
+      fileInputRef.current.value = null;
     } catch (err) {
       console.error("Upload error:", err);
     }

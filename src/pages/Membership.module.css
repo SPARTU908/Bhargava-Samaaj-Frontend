@@ -1,8 +1,122 @@
+.container{
+    margin: 50px 143px;
+ 
+}
+
 .heading{
-    text-align: center;
-    font-size: 30px;
+    margin-left: 190px;
+    font-size: 25px;
     font-weight: bold;
     margin-top: 45px;
     color: #ec6e3c;
-    margin-left: 98px;
+    
 }
+.fees{
+    border: 2px solid black;
+    width: 500px;
+    margin: 36px 0px 0px 440px;
+    padding: 10px;
+    height: auto;
+}
+.memberFees{
+    font-size: 20px;
+    font-weight: bold;
+    color: #ec6e3c;
+    padding-left: 162px;
+}
+
+.age{
+    text-align: center;
+    margin: 32px 69px 0px 143px;
+    font-weight: bold;
+}
+.row1{
+  display: flex;
+}
+ .inputBox {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+  }
+  
+  .label {
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #333;
+    margin: 0px 0px 8px 50px;
+  }
+   .input {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 455px;
+    margin: 4px 0px 0px 47px;
+  }
+  .row1{
+    display: flex;
+    margin-top: 20px;
+  }
+  .row2{
+    display: flex;
+    margin-top: 20px;
+  }
+  .row3{
+    display: flex;
+    margin-top: 20px;
+  }
+  .row4{
+    display: flex;
+    margin-top: 20px;
+  }
+  .col1{
+    margin-top: 1px;
+    margin-left: 40px;
+  }
+  .col2{
+    margin-left: 70px;
+  }
+  .sabhasadh{
+    margin-left: 40px
+  }
+.ekal{
+    margin-left: 8px;
+}
+.rupees{
+    margin-left: 136px;
+}
+
+.rupee{
+    margin-left: 70px;
+}
+.duplicate{
+    margin-left: 45px;
+ 
+}
+.dual{
+   
+    margin-left: 40px;
+}
+.submit{
+    margin: 30px 0px 18px 49px;
+    background-color: #e95114;
+    color: white;
+    width: 190px;
+  }
+  .error {
+    color: red;
+    margin-left: 50px;
+    margin-top: 5px;
+  }
+  .error1{
+    color: red;
+    margin-left: 455px;
+    margin-top: 10px;
+
+  }
+  .result{
+    margin-top: 30px;
+    margin-left: 50px;
+    font-weight: bold;
+  }

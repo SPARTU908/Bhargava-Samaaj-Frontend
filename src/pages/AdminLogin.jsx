@@ -22,13 +22,26 @@ const AdminLogin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      // 1. Admin login
-      const res = await axios.post("http://localhost:3000/api/v1/admin/login", adminData);
+    // try {
+    //   // 1. Admin login
+    //   const res = await axios.post("http://localhost:3000/api/v1/admin/login", adminData);
+    //   const authToken = res.data.token;
+    //   localStorage.setItem("adminToken", authToken);
+    //   setError("");
+    //   navigate("/review");
+
+    // } catch (err) {
+    //   console.error(err);
+    //   setError("Login failed. Please check your credentials.");
+    // }
+     try {
+      // 1. Admin login with dynamic backend URL
+      const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/admin/login`;
+      const res = await axios.post(reqUrl, adminData);
 
       const authToken = res.data.token;
       localStorage.setItem("adminToken", authToken);
-      setError("");
+      setError(""); // Clear previous error
 
       // 2. Navigate after successful login
       navigate("/review");

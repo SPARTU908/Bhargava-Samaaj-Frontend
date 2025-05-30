@@ -2,6 +2,8 @@ import React, { useState , useRef } from "react";
 import axios from "axios";
 import styles from "./BioDataUpload.module.css"
 
+
+
 const BioDataUpload = ({url,setUrl}) => {
   const [file, setFile] = useState(null);
   const fileInputRef = useRef(null); 
@@ -14,10 +16,11 @@ const BioDataUpload = ({url,setUrl}) => {
   const formData = new FormData();
     formData.append("file", file);
   try {
-      const res = await axios.post("https://bhargava-samaaj-backend-3.onrender.com/upload", formData);
+      const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/upload`;
+      const res = await axios.post(reqUrl, formData);
       setUrl(res.data.url); 
       setFile(null);
-      fileInputRef.current.value = null; 
+      fileInputRef.current.value = null;
     } catch (err) {
       console.error("Upload error:", err);
     }
@@ -28,6 +31,7 @@ const BioDataUpload = ({url,setUrl}) => {
       <form onSubmit={handleSubmit} encType="multipart/form-data" className={styles.input}>
         <input type="file" name="file" onChange={handleChange} ref={fileInputRef} accept="image/png, image/jpeg, image/jpg, "/>
         <input type="submit" value="Upload" className={styles.btn} />
+          
       </form>
       <div
         className="container"

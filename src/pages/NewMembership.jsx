@@ -48,62 +48,7 @@ const NewMembership = () => {
       setShowSpouseFields(true);
     }
   };
-
-  // const isSpouseFieldsReadonly =
-  //   selectedFee === "साधारण सभासद-द्विवार्षिक सत्र के लिए - 300 रुपये" ||
-  //   selectedFee === "आजीवन सभासद - एकल - 600 रुपये" ||
-  //   selectedFee === "डुप्लिकेट परिचय शुल्क - ₹50 रुपये";
-
-  // const validate = () => {
-  //     let newErrors = {};
-  //     if (!memberData.username) newErrors.username = "कृपया नाम दर्ज करें।";
-  //     if (!memberData.email) newErrors.email = "कृपया ईमेल दर्ज करें।";
-  //     else if (!/\S+@\S+\.\S+/.test(memberData.email)) {
-  //       newErrors.email = "कृपया मान्य ईमेल दर्ज करें।";
-  //     }
-  //     if (!memberData.address) newErrors.address = "कृपया पता दर्ज करें।";
-  //     if (!memberData.dob) newErrors.dob = "कृपया जन्म तिथि चुनें।";
-  //     if (!memberData.pincode) newErrors.pincode = "कृपया पिनकोड दर्ज करें।";
-  //     if (!photourl) newErrors.photo = "कृपया फोटो अपलोड करें।";
-  //     if (!signatureurl) newErrors.signature = "कृपया हस्ताक्षर अपलोड करें।";
-  //     if (!memberData.fatherName)
-  //       newErrors.fatherName = "कृपया पिता का नाम दर्ज करें।";
-  //     if (!memberData.gotra) newErrors.gotra = "कृपया गोत्र दर्ज करें।";
-  //     if (!memberData.kuldevi) newErrors.kuldevi = "कृपया कुलदेवी दर्ज करें।";
-  //     if (!memberData.mobile) newErrors.mobile = "कृपया मोबाइल नंबर दर्ज करें।";
-  //     if (!memberData.occupation)
-  //       newErrors.occupation = "कृपया व्यवसाय दर्ज करें।";
-  //     if (!selectedFee)
-  //       newErrors.membership = "कृपया सदस्यता शुल्क का एक विकल्प चुनें।";
-
-  // const skipSpouseValidation = [
-  //       "साधारण सभासद-द्विवार्षिक सत्र के लिए - 300 रुपये",
-  //       "आजीवन सभासद - एकल - 600 रुपये",
-  //       "डुप्लिकेट परिचय शुल्क - ₹50 रुपये"
-  //     ].includes(selectedFee);
-
-  //     if (!skipSpouseValidation) {
-  //       if (selectedFee === "आजीवन सभासद - युगल-(पति-पत्नी) - 1000 रुपये") {
-  //         if (!memberData.spouse)
-  //           newErrors.spouse = "कृपया जीवनसाथी का नाम दर्ज करें।";
-  //         if (!memberData.spouseEmail)
-  //           newErrors.spouseEmail = "कृपया जीवनसाथी का ईमेल दर्ज करें।";
-  //         else if (!/\S+@\S+\.\S+/.test(memberData.spouseEmail)) {
-  //           newErrors.spouseEmail = "कृपया जीवनसाथी का मान्य ईमेल दर्ज करें।";
-  //         }
-  //         if (!memberData.spouseMobile)
-  //           newErrors.spouseMobile = "कृपया जीवनसाथी का मोबाइल नंबर दर्ज करें।";
-  //         if (!spousephotourl)
-  //           newErrors.spousePhoto = "कृपया जीवनसाथी की फोटो अपलोड करें।";
-  //         if (!spousesignatureurl)
-  //           newErrors.spouseSignature = "कृपया जीवनसाथी का हस्ताक्षर अपलोड करें।";
-  //       }
-  //     }
-
-  //     return newErrors;
-  //   };
-
-  const validate = () => {
+const validate = () => {
     let newErrors = {};
 
     if (!memberData.username) newErrors.username = "कृपया नाम दर्ज करें।";
@@ -148,28 +93,7 @@ const NewMembership = () => {
           newErrors.spouseSignature = "कृपया जीवनसाथी का हस्ताक्षर अपलोड करें।";
       }
     }
-
-    // const skipSpouseValidation =
-    //   selectedFee === "साधारण सभासद-द्विवार्षिक सत्र के लिए - 300 रुपये" ||
-    //   selectedFee === "आजीवन सभासद - एकल - 600 रुपये" ||
-    //   selectedFee === "डुप्लिकेट परिचय शुल्क - ₹50 रुपये";
-
-    // if (!skipSpouseValidation) {
-    //   if (!memberData.spouse) newErrors.spouse = "कृपया जीवनसाथी का नाम दर्ज करें।";
-    //   if (!memberData.spouseEmail)
-    //     newErrors.spouseEmail = "कृपया जीवनसाथी का ईमेल दर्ज करें।";
-    //   else if (!/\S+@\S+\.\S+/.test(memberData.spouseEmail)) {
-    //     newErrors.spouseEmail = "कृपया जीवनसाथी का मान्य ईमेल दर्ज करें।";
-    //   }
-    //   if (!memberData.spouseMobile)
-    //     newErrors.spouseMobile = "कृपया जीवनसाथी का मोबाइल नंबर दर्ज करें।";
-    //   if (!spousephotourl)
-    //     newErrors.spousePhoto = "कृपया जीवनसाथी की फोटो अपलोड करें।";
-    //   if (!spousesignatureurl)
-    //     newErrors.spouseSignature = "कृपया जीवनसाथी का हस्ताक्षर अपलोड करें।";
-    // }
-
-    return newErrors;
+return newErrors;
   };
 
   const handleChange = (e) => {
@@ -217,7 +141,8 @@ const NewMembership = () => {
           }
         );
         setPlan(
-            memberData.membership
+            memberData.membership,
+            console.log(memberData.membership)
         )
            
         
@@ -254,7 +179,7 @@ const NewMembership = () => {
           console.log(plan)
           navigate("/payment", {
             state: {
-              membership: plan,
+              membership: memberData.membership,
             
             },
           });

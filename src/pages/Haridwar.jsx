@@ -176,49 +176,7 @@ const Haridwar = () => {
           </div>
         </div>
 
-        {/* faq */}
-        {/* <div className={styles.faq}>
-          <div className={styles.faqs}>Frequently Asked Questions</div>
-          <div className={styles.questions}>
-            <div className={styles.ques}>1. How do I contact Bhargav Ashram in Haridwar?</div>
-            <div className={styles.ans}>
-              You can contact Bhargav Ashram by using toll-free number
-              08069266023.
-            </div>
-            <div className={styles.ques}>2. How far Bhargav Ashram is from Har ki Pauri?</div>
-            <div className={styles.ans}>
-              The distance between Bhargav Ashram and Har ki Pauri is around 3.6
-              km.
-            </div>
-            <div className={styles.ques}>3. What amenities can I expect at Bhargav Ashram?</div>
-            <div className={styles.ans}>
-              The accommodation provides amenities like hot water and drinking
-              water.
-            </div>
-            <div className={styles.ques}>4. What types of rooms are available at Bhargav Ashram?</div>
-            <div className={styles.ans}>
-              At Bhargav Ashram 2 Bed Deluxe AC Rooms and 2 Bed Super Deluxe AC
-              Rooms are available.
-            </div>
-            <div className={styles.ques}>
-              5. What are the check-in and check-out times of Bhargav Ashram?
-            </div>
-            <div className={styles.ans}>
-              The check-in and check-out times at Bhargav Ashram are 10:00 AM
-              and 09:00 AM.
-            </div>
-            <div className={styles.ques}>
-              6. What is the distance of Bhargav Ashram from Haridwar Railway
-              Station?
-            </div>
-            <div className={styles.ans}>
-              The distance between Bhargav Ashram and Haridwar Railway Station
-              is around 1.1 km.
-            </div>
-            <div className={styles.ques}>7. Do Bhargav Ashram provides any food facility?</div>
-            <div className={styles.ans}>No, Food facility is not available at Bhargav Ashram.</div>
-          </div>
-        </div> */}
+       
       </div>
     </>
   );
