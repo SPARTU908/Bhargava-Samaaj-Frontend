@@ -91,5 +91,36 @@ export const updateUploadedForm = async (paymentId, uploadedFormUrl) => {
   }
 };
 
+export const updatePaymentForm = async (paymentId, formValue) => {
+  const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/payment/update`;
+
+  try {
+    const response = await axios.put(reqUrl, {
+      paymentId,
+      formValue,
+    });
+
+    if (response.status === 200) {
+      return {
+        success: true,
+        data: response.data,
+      };
+    } else {
+      return {
+        success: false,
+        error: response.data?.message || "Unexpected response status",
+      };
+    }
+  } catch (error) {
+    console.error(
+      "Payment form update error:",
+      error.response?.data || error.message
+    );
+    return {
+      success: false,
+      error: error.response?.data?.message || "Something went wrong",
+    };
+  }
+};
 
 
