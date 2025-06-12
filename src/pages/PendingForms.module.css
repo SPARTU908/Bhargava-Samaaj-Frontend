@@ -51,4 +51,7 @@
     border-radius: 4px;
     cursor: pointer;
   }
+  .photoThumb{
+    width: 250px;
+  }
   

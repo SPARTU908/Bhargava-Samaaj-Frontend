@@ -12,7 +12,7 @@
     />
     <title>Bhargava Samaaj</title>
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-  
+
     <!-- Font Import -->
     <style>
       @import url("https://fonts.googleapis.com/css?family=Inter:400,700,600|Lora:400|Roboto+Slab:400");
@@ -26,10 +26,28 @@
         box-sizing: border-box;
       }
     </style>
+    <style>
+      body > .skiptranslate {
+        display: none;
+      }
+
+      .goog-te-banner-frame.skiptranslate {
+        display: none !important;
+      }
+      body {
+        top: 0px !important;
+      }
+      @media print {
+        #google_translate_element {
+          display: none;
+        }
+      }
+    </style>
+  
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
-      <script  src="bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>

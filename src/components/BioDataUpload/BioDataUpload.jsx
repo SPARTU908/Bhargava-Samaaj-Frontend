@@ -2,8 +2,6 @@ import React, { useState , useRef } from "react";
 import axios from "axios";
 import styles from "./BioDataUpload.module.css"
 
-
-
 const BioDataUpload = ({url,setUrl}) => {
   const [file, setFile] = useState(null);
   const fileInputRef = useRef(null); 

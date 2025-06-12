@@ -36,6 +36,8 @@ const Form = () => {
     guardianName: "",
     fatherName: "",
     fatherProfession: "",
+    fatherIncome:"",
+    fatherDesignation:"",
     motherName: "",
     nativePlace: "",
     address: "",
@@ -56,7 +58,7 @@ const Form = () => {
     let newErrors = {};
 
     const requiredFields = [
-      "number",
+      // "number",
       "name",
       "email",
       "mobile",
@@ -64,32 +66,37 @@ const Form = () => {
       "birthTime",
       "birthPlace",
       "height",
-      "weight",
+      // "weight",
       "dob",
-      "bloodGroup",
-      "manglik",
+      // "bloodGroup",
+      // "manglik",
       "gotra",
       "kuldevi",
       "complexion",
       "education",
-      "professionQualification",
-      "profession",
-      "company",
-      "designation",
+      // "professionQualification",
+      // // "profession",
+      // "company",
+      // "designation",
       "income",
-      "hobbies",
-      "guardianName",
+      // "hobbies",
+      // "guardianName",
       "fatherName",
       "fatherProfession",
+      // "fatherIncome",
+      // "fatherDesignation",
+      "otherQualification",
       "motherName",
       "nativePlace",
       "address",
       "city",
       "pin",
-      "whatsapp",
-      "residence",
+      // "whatsapp",
+     
+      // "residence",
+      "country",
       "nri",
-      "remarks",
+      // "remarks",
       "password",
       "photo",
       "bioData",
@@ -97,7 +104,7 @@ const Form = () => {
 
     requiredFields.forEach((field) => {
       if (!formData[field]) {
-        newErrors[field] = `${field} is required`;
+        newErrors[field] = "This field is required";;
       }
     });
 
@@ -170,6 +177,8 @@ const Form = () => {
           guardianName: "",
           fatherName: "",
           fatherProfession: "",
+          fatherIncome:"",
+          fatherDesignation:"",
           motherName: "",
           nativePlace: "",
           address: "",
@@ -196,7 +205,7 @@ const Form = () => {
       <div className={styles.container}>
         <div className={styles.inputBox}>
           <label htmlFor="number" className={styles.label}>
-            ABBS Membership <span style={{ color: "red" }}>*</span>
+            ABBS Membership Number <span style={{ color: "red" }}>*</span>
           </label>
           <input
             placeholder="Enter Your ABBS Membership No."
@@ -207,6 +216,7 @@ const Form = () => {
             value={formData.number}
             onChange={handleChange}
           />
+           {errors.number && <p className={styles.error}>{errors.number}</p>}
         </div>
 
         {/* Name and Email */}
@@ -224,6 +234,7 @@ const Form = () => {
               value={formData.name}
               onChange={handleChange}
             />
+            {errors.name && <p className={styles.error}>{errors.name}</p>}
           </div>
 
           <div className={styles.inputBox}>
@@ -239,6 +250,9 @@ const Form = () => {
               value={formData.email}
               onChange={handleChange}
             />
+            {errors.email && (
+              <p className={styles.error1}>{errors.email}</p>
+            )}
           </div>
         </div>
 
@@ -257,6 +271,9 @@ const Form = () => {
               value={formData.mobile}
               onChange={handleChange}
             />
+             {errors.mobile && (
+              <p className={styles.error}>{errors.mobile}</p>
+            )}
           </div>
 
           <div className={styles.inputBox}>
@@ -274,6 +291,9 @@ const Form = () => {
               <option value="Female">Female</option>
               <option value="Other">Other</option>
             </select>
+             {errors.gender && (
+              <p className={styles.error1}>{errors.gender}</p>
+            )}
           </div>
         </div>
 
@@ -292,6 +312,9 @@ const Form = () => {
               value={formData.birthTime}
               onChange={handleChange}
             />
+             {errors.birthTime && (
+              <p className={styles.error}>{errors.birthTime}</p>
+            )}
           </div>
 
           <div className={styles.inputBox}>
@@ -307,6 +330,9 @@ const Form = () => {
               value={formData.birthPlace}
               onChange={handleChange}
             />
+             {errors.birthPlace && (
+              <p className={styles.error1}>{errors.birthPlace}</p>
+            )}
           </div>
         </div>
 
@@ -325,6 +351,9 @@ const Form = () => {
               value={formData.height}
               onChange={handleChange}
             />
+             {errors.height && (
+              <p className={styles.error}>{errors.height}</p>
+            )}
           </div>
 
           <div className={styles.inputBox}>
@@ -340,6 +369,9 @@ const Form = () => {
               value={formData.weight}
               onChange={handleChange}
             />
+             {errors.weight && (
+              <p className={styles.error1}>{errors.weight}</p>
+            )}
           </div>
         </div>
 
@@ -359,6 +391,9 @@ const Form = () => {
               showYearDropdown
               dropdownMode="select"
             />
+             {errors.dob && (
+              <p className={styles.error}>{errors.dob}</p>
+            )}
           </div>
 
           <div className={styles.inputBox}>
@@ -381,6 +416,9 @@ const Form = () => {
               <option value="AB+">AB+</option>
               <option value="AB-">AB-</option>
             </select>
+             {errors.bloodGroup && (
+              <p className={styles.error1}>{errors.bloodGroup}</p>
+            )}
           </div>
         </div>
 
@@ -401,6 +439,9 @@ const Form = () => {
               <option value="No">No</option>
               <option value="Don't Know">Don't Know</option>
             </select>
+             {errors.manglik && (
+              <p className={styles.error}>{errors.manglik}</p>
+            )}
           </div>
 
           <div className={styles.inputBox}>
@@ -416,6 +457,9 @@ const Form = () => {
               value={formData.gotra}
               onChange={handleChange}
             />
+             {errors.gotra && (
+              <p className={styles.error1}>{errors.gotra}</p>
+            )}
           </div>
         </div>
 
@@ -434,6 +478,9 @@ const Form = () => {
               value={formData.kuldevi}
               onChange={handleChange}
             />
+             {errors.kuldevi && (
+              <p className={styles.error}>{errors.kuldevi}</p>
+            )}
           </div>
 
           <div className={styles.inputBox}>
@@ -449,6 +496,9 @@ const Form = () => {
               value={formData.complexion}
               onChange={handleChange}
             />
+             {errors.complexion && (
+              <p className={styles.error1}>{errors.complexion}</p>
+            )}
           </div>
         </div>
 
@@ -467,6 +517,9 @@ const Form = () => {
               value={formData.education}
               onChange={handleChange}
             />
+             {errors.education && (
+              <p className={styles.error}>{errors.education}</p>
+            )}
           </div>
 
           <div className={styles.inputBox}>
@@ -482,6 +535,9 @@ const Form = () => {
               value={formData.professionQualification}
               onChange={handleChange}
             />
+             {errors.professionQualification && (
+              <p className={styles.error1}>{errors.professionQualification}</p>
+            )}
           </div>
         </div>
 
@@ -500,6 +556,9 @@ const Form = () => {
               value={formData.profession}
               onChange={handleChange}
             />
+             {errors.profession && (
+              <p className={styles.error}>{errors.profession}</p>
+            )}
           </div>
 
           <div className={styles.inputBox}>
@@ -515,6 +574,9 @@ const Form = () => {
               value={formData.company}
               onChange={handleChange}
             />
+             {errors.company && (
+              <p className={styles.error1}>{errors.company}</p>
+            )}
           </div>
         </div>
         {/* Designation and monthly income */}
@@ -532,6 +594,9 @@ const Form = () => {
               value={formData.designation}
               onChange={handleChange}
             />
+             {errors.designation && (
+              <p className={styles.error}>{errors.designation}</p>
+            )}
           </div>
 
           <div className={styles.inputBox}>
@@ -547,6 +612,9 @@ const Form = () => {
               value={formData.income}
               onChange={handleChange}
             />
+             {errors.income && (
+              <p className={styles.error1}>{errors.income}</p>
+            )}
           </div>
         </div>
 
@@ -565,6 +633,9 @@ const Form = () => {
               value={formData.hobbies}
               onChange={handleChange}
             />
+             {errors.hobbies && (
+              <p className={styles.error}>{errors.hobbies}</p>
+            )}
           </div>
 
           <div className={styles.inputBox}>
@@ -580,6 +651,9 @@ const Form = () => {
               value={formData.otherQualification}
               onChange={handleChange}
             />
+             {errors.otherQualification && (
+              <p className={styles.error1}>{errors.otherQualification}</p>
+            )}
           </div>
         </div>
 
@@ -598,6 +672,9 @@ const Form = () => {
               value={formData.guardianName}
               onChange={handleChange}
             />
+             {errors.guardianName && (
+              <p className={styles.error}>{errors.guardianName}</p>
+            )}
           </div>
 
           <div className={styles.inputBox}>
@@ -613,6 +690,9 @@ const Form = () => {
               value={formData.fatherName}
               onChange={handleChange}
             />
+             {errors.fatherName && (
+              <p className={styles.error1}>{errors.fatherName}</p>
+            )}
           </div>
         </div>
 
@@ -631,21 +711,27 @@ const Form = () => {
               value={formData.fatherProfession}
               onChange={handleChange}
             />
+             {errors.fatherProfession && (
+              <p className={styles.error}>{errors.fatherProfession}</p>
+            )}
           </div>
 
           <div className={styles.inputBox}>
-            <label htmlFor="monthlyIncome" className={styles.label1}>
-              Monthly Income<span style={{ color: "red" }}>*</span>
+            <label htmlFor="fatherIncome" className={styles.label1}>
+            Father Monthly Income<span style={{ color: "red" }}>*</span>
             </label>
             <input
               placeholder=""
               className={styles.input1}
               type="text"
-              name="monthlyIncome"
-              id="monthlyIncome"
-              value={formData.monthlyIncome}
+              name="fatherIncome"
+              id="fatherIncome"
+              value={formData.fatherIncome}
               onChange={handleChange}
             />
+             {errors.fatherIncome && (
+              <p className={styles.error1}>{errors.fatherIncome}</p>
+            )}
           </div>
         </div>
 
@@ -664,6 +750,9 @@ const Form = () => {
               value={formData.fatherDesignation}
               onChange={handleChange}
             />
+             {errors.fatherDesignation && (
+              <p className={styles.error}>{errors.fatherDesignation}</p>
+            )}
           </div>
           <div className={styles.inputBox}>
             <label htmlFor="motherName" className={styles.label1}>
@@ -678,6 +767,9 @@ const Form = () => {
               value={formData.motherName}
               onChange={handleChange}
             />
+             {errors.motherName && (
+              <p className={styles.error1}>{errors.motherName}</p>
+            )}
           </div>
         </div>
 
@@ -696,6 +788,9 @@ const Form = () => {
               value={formData.nativePlace}
               onChange={handleChange}
             />
+             {errors.nativePlace && (
+              <p className={styles.error}>{errors.nativePlace}</p>
+            )}
           </div>
 
           <div className={styles.inputBox}>
@@ -711,6 +806,9 @@ const Form = () => {
               value={formData.address}
               onChange={handleChange}
             />
+             {errors.address && (
+              <p className={styles.error1}>{errors.address}</p>
+            )}
           </div>
         </div>
         {/* city and pin */}
@@ -728,6 +826,9 @@ const Form = () => {
               value={formData.city}
               onChange={handleChange}
             />
+             {errors.city && (
+              <p className={styles.error}>{errors.city}</p>
+            )}
           </div>
 
           <div className={styles.inputBox}>
@@ -743,6 +844,9 @@ const Form = () => {
               value={formData.pin}
               onChange={handleChange}
             />
+             {errors.pin && (
+              <p className={styles.error1}>{errors.pin}</p>
+            )}
           </div>
         </div>
 
@@ -750,7 +854,7 @@ const Form = () => {
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label htmlFor="whatsapp" className={styles.label}>
-              Whatsapp No<span style={{ color: "red" }}>*</span>
+              Mobile no.of Parents<span style={{ color: "red" }}>*</span>
             </label>
             <input
               placeholder=""
@@ -761,6 +865,9 @@ const Form = () => {
               value={formData.whatsapp}
               onChange={handleChange}
             />
+             {errors.whatsapp && (
+              <p className={styles.error}>{errors.whatsapp}</p>
+            )}
           </div>
 
           <div className={styles.inputBox}>
@@ -776,6 +883,9 @@ const Form = () => {
               value={formData.residence}
               onChange={handleChange}
             />
+             {errors.residence && (
+              <p className={styles.error1}>{errors.residence}</p>
+            )}
           </div>
         </div>
 
@@ -783,10 +893,14 @@ const Form = () => {
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label htmlFor="photo" className={styles.label}>
-              Upload Photo<span style={{ color: "red" }}>*</span>
+              Upload Photo (Choose file and then click on upload)
+              <span style={{ color: "red" }}>*</span>
             </label>
 
             <FileUpload url={url} setUrl={setUrl} />
+             {errors.photo && (
+              <p className={styles.error}>{errors.photo}</p>
+            )}
           </div>
 
           <div className={styles.inputBox}>
@@ -803,13 +917,16 @@ const Form = () => {
               <option value="Yes">Yes</option>
               <option value="No">No</option>
             </select>
+             {errors.nri && (
+              <p className={styles.error1}>{errors.nri}</p>
+            )}
           </div>
         </div>
         {/* remarks and create passowrd */}
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label htmlFor="remarks" className={styles.label}>
-              Remarks<span style={{ color: "red" }}>*</span>
+              Family Details<span style={{ color: "red" }}>*</span>
             </label>
             <textarea
               placeholder=""
@@ -820,6 +937,9 @@ const Form = () => {
               value={formData.remarks}
               onChange={handleChange}
             />
+             {errors.remarks && (
+              <p className={styles.error}>{errors.remarks}</p>
+            )}
           </div>
 
           <div className={styles.inputBox}>
@@ -835,17 +955,24 @@ const Form = () => {
               value={formData.password}
               onChange={handleChange}
             />
+             {errors.password && (
+              <p className={styles.error1}>{errors.password}</p>
+            )}
           </div>
         </div>
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label htmlFor="bioData" className={styles.label}>
-              Upload Bio Data <span style={{ color: "red" }}>*</span>
+              Upload Bio Data (Choose file and then click on upload){" "}
+              <span style={{ color: "red" }}>*</span>
               <span></span>
             </label>
             {/* <BioDataUpload /> */}
             {/* <input type="file"  className={styles.input}/> */}
             <BioDataUpload url={biourl} setUrl={setbiourl} />
+             {errors.bioData && (
+              <p className={styles.error}>{errors.bioData}</p>
+            )}
           </div>
         </div>
         <div className={styles.btn}>

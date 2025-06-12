@@ -77,9 +77,9 @@ const Matrimonial = () => {
   const handleMembers = () => {
     navigate("/members");
   };
-  const handleLogin = () => {
-    navigate("/login");
-  };
+  // const handleLogin = () => {
+  //   navigate("/login");
+  // };
 
   return (
     <>
@@ -87,9 +87,9 @@ const Matrimonial = () => {
       <div className={styles.container}>
         <div className={styles.btn}>
           <div>
-            <button onClick={handleLogin} className={styles.admin}>
+            {/* <button onClick={handleLogin} className={styles.admin}>
               प्रशासक लॉगिन
-            </button>
+            </button> */}
           </div>
           <div>
             <button className={styles.login} onClick={() => setShowModal(true)}>

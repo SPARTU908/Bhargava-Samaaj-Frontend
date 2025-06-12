@@ -24,10 +24,20 @@
     color: #ec6e3c;
     padding-left: 162px;
 }
+.subheading{
+  display: flex;
+}
+.admin{
+   width: 136px;
+    color: white;
+    background-color: #e95114;
+    margin: 20px 0px 0px 90px;
+  }
+
 
 .age{
     text-align: center;
-    margin: 32px 69px 0px 143px;
+    margin: 32px 69px 0px 425px;
     font-weight: bold;
 }
 .row1{
@@ -102,7 +112,7 @@
     margin: 30px 0px 18px 49px;
     background-color: #e95114;
     color: white;
-    width: 190px;
+    /* width: 190px; */
   }
   .error {
     color: red;
@@ -120,3 +130,9 @@
     margin-left: 50px;
     font-weight: bold;
   }
+  .reference{
+    margin-top: 20px;
+  }
+
+
+  

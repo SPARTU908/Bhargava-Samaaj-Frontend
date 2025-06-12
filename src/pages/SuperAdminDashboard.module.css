@@ -1,0 +1,106 @@
+/* .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.options {
+  margin-top: 20px;
+}
+
+.optionButton {
+  padding: 10px 20px;
+  font-size: 16px;
+  margin: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.optionButton:hover {
+  background-color: #45a049;
+} */
+
+
+/* General container styles */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(to right, #3e8e41, #1d582d); /* Beautiful gradient */
+  padding: 40px;
+  color: #fff;
+  font-family: 'Arial', sans-serif;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 30px;
+  color: #f1f1f1;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* Button Container */
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Adds space between the buttons */
+  align-items: center;
+  justify-content: center;
+}
+
+/* Individual Button Styling */
+.optionButton {
+  background-color: #4CAF50; /* Green button */
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border-radius: 8px;
+  width: 200px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Hover Effects for Buttons */
+.optionButton:hover {
+  background-color: #45a049;
+  transform: scale(1.05); /* Slight zoom effect */
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.optionButton:focus {
+  outline: none;
+  box-shadow: 0 0 5px 2px #4CAF50;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .container {
+    padding: 20px;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .optionButton {
+    width: 100%;
+    font-size: 1rem;
+  }
+}

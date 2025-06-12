@@ -1,8 +1,7 @@
-import Navbar from "../components/Navbar/Navbar";
 import PhotoUpload from "../components/PhotoUpload/PhotoUpload";
 import SignatureUpload from "../components/Signature/SignatureUpload";
 import styles from "./Membership.module.css";
-import React, { useState } from "react";
+import  { useState,  } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -10,8 +9,9 @@ import DatePicker from "react-datepicker";
 import SpousePhotoUpload from "../components/SpousePhotoUpload/SpousePhotoUpload";
 import SpouseSignatureUpload from "../components/SpouseSignatureUpload/SpouseSignatureUpload";
 import { registerMember } from "../apis/member";
+import Navbar from "../components/Navbar/Navbar";
 
-const Membership = () => {
+const Membership = ({ nextStep }) => {
   const [memberData, setMemberData] = useState({
     username: "",
     email: "",
@@ -38,17 +38,40 @@ const Membership = () => {
   const [signatureurl, setSignatureUrl] = useState("");
   const [spousephotourl, setSpousePhotoUrl] = useState("");
   const [spousesignatureurl, setSpouseSignatureUrl] = useState("");
+  const [referencesignatureurl, setReferenceSignatureUrl] = useState("");
   const [showSpouseFields, setShowSpouseFields] = useState(false);
-  const[plan, setPlan] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [userData, setUserData] = useState({ email: "", password: "" });
+  const [plan, setPlan] = useState("");
 
   const navigate = useNavigate();
+  const handleFormChange = (e) => {
+    const { name, value } = e.target;
+    setUserData({ ...userData, [name]: value });
+  };
+
   const handleSelection = (event) => {
-    setSelectedFee(event.target.value);
-    if (event.target.value === "आजीवन सभासद - युगल-(पति-पत्नी) - 1000 रुपये") {
+    const value = event.target.value;
+    setSelectedFee(value);
+    if (value === "आजीवन सभासद - युगल-(पति-पत्नी) - 1000 रुपये") {
       setShowSpouseFields(true);
+    } else {
+      setShowSpouseFields(false);
+
+      setMemberData((prevData) => ({
+        ...prevData,
+        spouse: "",
+        spouseEmail: "",
+        spouseMobile: "",
+        spousePhoto: "",
+        spouseSignature: "",
+      }));
+      setSpousePhotoUrl("");
+      setSpouseSignatureUrl("");
     }
   };
-const validate = () => {
+
+  const validate = () => {
     let newErrors = {};
 
     if (!memberData.username) newErrors.username = "कृपया नाम दर्ज करें।";
@@ -93,7 +116,7 @@ const validate = () => {
           newErrors.spouseSignature = "कृपया जीवनसाथी का हस्ताक्षर अपलोड करें।";
       }
     }
-return newErrors;
+    return newErrors;
   };
 
   const handleChange = (e) => {
@@ -106,13 +129,13 @@ return newErrors;
     memberData.signature = signatureurl;
     memberData.spousePhoto = spousephotourl;
     memberData.spouseSignature = spousesignatureurl;
+    memberData.uploadReferenceSignature = referencesignatureurl;
     memberData.membership = selectedFee;
-    console.log("member", memberData);
 
     e.preventDefault();
 
     const validationErrors = validate();
-    console.log("hello", validationErrors);
+
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       toast.error("कृपया सभी आवश्यक फ़ील्ड भरें।", {
@@ -140,12 +163,7 @@ return newErrors;
             theme: "light",
           }
         );
-        setPlan(
-            memberData.membership,
-            console.log(memberData.membership)
-        )
-           
-        
+        setPlan(memberData.membership, console.log(memberData.membership));
 
         // Reset form
         setMemberData({
@@ -173,14 +191,16 @@ return newErrors;
         setSignatureUrl("");
         setSpousePhotoUrl("");
         setSpouseSignatureUrl("");
+        setReferenceSignatureUrl("");
         setSelectedFee("");
         console.log("Member Data Submitted:", memberData);
         setTimeout(() => {
-          console.log(plan)
-          navigate("/payment", {
+          console.log(plan);
+          navigate("/displayform", {
             state: {
               membership: memberData.membership,
-            
+              name: memberData.username,
+              email: memberData.email,
             },
           });
         }, 2000);
@@ -195,16 +215,18 @@ return newErrors;
 
   return (
     <>
-      <Navbar />
-      <>
+      <Navbar/>
         <div className={styles.heading}>
           अखिल भारतीय भार्गव सभा (रजि.) के सभासद बनने एवं लिमिटेड परिचय-पत्र
           प्राप्त करने हेतु आवेदन-पत्र{" "}
         </div>
-        <div className={styles.age}>
-          सम्भवत: 18 वर्ष या उससे अधिक आयु के सभी महिला/पुरुष नियमुसार बन सकते
-          हैं
+        <div className={styles.subheading}>
+          <div className={styles.age}>
+            सम्भवत: 18 वर्ष या उससे अधिक आयु के सभी महिला/पुरुष नियमुसार बन सकते
+            हैं
+          </div>
         </div>
+
         <div>
           <div className={styles.fees}>
             <div className={styles.memberFees}>सदस्यता शुल्क </div>
@@ -310,7 +332,6 @@ return newErrors;
                   value={memberData.spouse}
                   onChange={handleChange}
                   disabled={!showSpouseFields}
-                  // disabled={isSpouseFieldsReadonly}
                 />
                 {errors.spouse && (
                   <p className={styles.error}>{errors.spouse}</p>
@@ -348,7 +369,6 @@ return newErrors;
                   value={memberData.spouseEmail}
                   onChange={handleChange}
                   disabled={!showSpouseFields}
-                  // disabled={isSpouseFieldsReadonly}
                 />
                 {errors.spouseEmail && (
                   <p className={styles.error}>{errors.spouseEmail}</p>
@@ -402,7 +422,7 @@ return newErrors;
                 <input
                   placeholder=""
                   className={styles.input}
-                  type="text"
+                  type="tel"
                   name="mobile"
                   id="mobile"
                   value={memberData.mobile}
@@ -426,7 +446,6 @@ return newErrors;
                   value={memberData.spouseMobile}
                   onChange={handleChange}
                   disabled={!showSpouseFields}
-                  // disabled={isSpouseFieldsReadonly}
                 />
                 {errors.spouseMobile && (
                   <p className={styles.error}>{errors.spouseMobile}</p>
@@ -508,6 +527,7 @@ return newErrors;
                 )}
               </div>
             </div>
+
             <div className={styles.row1}>
               <div className={styles.inputBox}>
                 <label className={styles.label}>
@@ -544,7 +564,6 @@ return newErrors;
                   url={spousephotourl}
                   setUrl={setSpousePhotoUrl}
                   disabled={!showSpouseFields}
-                  // disabled={isSpouseFieldsReadonly}
                 />
                 {errors.spousePhoto && (
                   <p className={styles.error}>{errors.spousePhoto}</p>
@@ -570,24 +589,29 @@ return newErrors;
                   url={spousesignatureurl}
                   setUrl={setSpouseSignatureUrl}
                   disabled={!showSpouseFields}
-                  // disabled={isSpouseFieldsReadonly}
                 />
                 {errors.spouseSignature && (
                   <p className={styles.error}>{errors.spouseSignature}</p>
                 )}
               </div>
             </div>
-
             <div className={styles.btn}>
-              <button className={styles.submit} onClick={handleSubmit}>
-                Proceed To Payment
+              <button
+                className={styles.submit}
+                onClick={(e) => {
+                  handleSubmit(e);
+                  nextStep(e);
+                }}
+              >
+                Save & Continue
               </button>
+              {/* <button className={styles.submit} onClick={nextStep}>Next</button> */}
             </div>
           </div>
         </div>
         <ToastContainer />
       </>
-    </>
+    
   );
 };
 

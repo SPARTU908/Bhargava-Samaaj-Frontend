@@ -10,6 +10,23 @@ const Navbar = () => {
   const [isDropdownOpen2, setIsDropdownOpen2] = useState(false);
   const [isDropdownOpen3, setIsDropdownOpen3] = useState(false);
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
+  const [language, setLanguage] = useState("hi");
+
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      const selectedLang = document.querySelector(".goog-te-combo")?.value;
+      if (selectedLang) {
+        setLanguage(selectedLang);
+      }
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   const toggleDropdown1 = () => {
     setIsDropdownOpen1((prev) => !prev);
@@ -22,39 +39,16 @@ const Navbar = () => {
   };
   const toggleHamburger = () => setHamburgerOpen((prev) => !prev);
 
-  // useEffect(() => {
-  //   const addGoogleTranslateScript = () => {
-  //     const script = document.createElement("script");
-  //     script.src =
-  //       "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
-  //     script.async = true;
-  //     document.body.appendChild(script);
-  //   };
-  //   window.googleTranslateElementInit = () => {
-  //     new window.google.translate.TranslateElement(
-  //       {
-  //         pageLanguage: "en",
-  //         includedLanguages: "en,hi",
-  //         layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
-  //       },
-  //       "google_translate_element"
-  //     );
-  //   };
-
-  //   addGoogleTranslateScript();
-  // }, []);
-
-
   const navigate = useNavigate();
 
   const handleNavigate = (path) => {
     navigate(path);
-    setHamburgerOpen(false); // close menu on navigation (mobile)
+    setHamburgerOpen(false);
   };
 
-  const handleHome = () => {
+const handleHome = () => {
     navigate("/home");
-  };
+  };  
   const handleAbout = (sectionId) => {
     navigate("/about");
     setTimeout(() => {
@@ -83,17 +77,20 @@ const Navbar = () => {
   const handleHaridwar = () => {
     navigate("/haridwar");
   };
+  const handleAdmin = () =>{
+    navigate("/admin")
+  }
   const handleSociety = (sectionId) => {
     navigate("/society");
     setTimeout(() => {
       window.location.hash = sectionId;
-    }, 100); // Adjust timeout if needed to ensure the page is loaded first
+    }, 100);
   };
   return (
     <>
       <div className={styles.top_bar}>
+        <div id="google_translate_element"></div>
         <img src={logo} alt="" className={styles.logo} />
-        {/* <div id="google_translate_element" className={styles.translate}></div> */}
         <div className={styles.hamburger} onClick={toggleHamburger}>
           {hamburgerOpen ? <FaTimes /> : <FaBars />}
         </div>
@@ -103,8 +100,8 @@ const Navbar = () => {
       <nav
         className={`${styles.navbar} ${hamburgerOpen ? styles.navOpen : ""}`}
       >
-        <div className={styles.menu} onClick={handleHome}>
-          होम
+        <div className={`${styles.menu} notranslate`} onClick={handleHome}>
+          {language === "en" ? "Home" : "होम"}
         </div>
 
         <div className={styles.dropdown} onClick={toggleDropdown1}>
@@ -113,12 +110,14 @@ const Navbar = () => {
           </div>
           {isDropdownOpen1 && (
             <div className={styles.dropdownContent}>
-              <div onClick={()=>handleAbout("history")}>हमारा इतिहास</div>
-              <div onClick={()=>handleAbout("samvidhaan")}>संविधान</div>
-              <div onClick={()=>handleAbout("sabhayein")}>स्थानीय सभाएं</div>
-              <div onClick={()=>handleAbout("samiti")}>समिति</div>
-              <div onClick={()=>handleAbout("nidhiyan")}>सभा की निधियाँ</div>
-              <div onClick={()=>handleAbout("executive")}>कार्यकारी निकाय</div>
+              <div onClick={() => handleAbout("history")}>हमारा इतिहास</div>
+              <div onClick={() => handleAbout("samvidhaan")}>संविधान</div>
+              <div onClick={() => handleAbout("sabhayein")}>स्थानीय सभाएं</div>
+              <div onClick={() => handleAbout("samiti")}>समिति</div>
+              <div onClick={() => handleAbout("nidhiyan")}>सभा की निधियाँ</div>
+              <div onClick={() => handleAbout("executive")}>
+                कार्यकारी निकाय
+              </div>
             </div>
           )}
         </div>
@@ -160,7 +159,7 @@ const Navbar = () => {
         <div className={styles.menu} onClick={handleMagazine}>
           भार्गव पत्रिका
         </div>
-        {/* <Link to="/bhargava-patrika" className={styles.menu}>Bhargava Patrika</Link> */}
+
         <div className={styles.menu} onClick={handleMatrimonial}>
           {" "}
           वैवाहिक
@@ -177,6 +176,9 @@ const Navbar = () => {
         </div>
         <div className={styles.menu} onClick={handleForm}>
           फ़ॉर्म डाउनलोड करें
+        </div>
+         <div className={styles.menu} onClick={handleAdmin}>
+          Admin Login
         </div>
       </nav>
     </>

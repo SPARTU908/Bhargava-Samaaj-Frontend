@@ -11,11 +11,13 @@
 }
 
 /* Navbar-Section */
-
+.notranslate {
+  translate: no;
+}
 .navbar {
   display: flex;
   align-items: center;
-  gap: 58px;
+  gap: 44px;
   padding: 10px 0px 10px 46px;
 }
 .menu {

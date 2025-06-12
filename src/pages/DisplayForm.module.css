@@ -1,0 +1,192 @@
+.header{
+    display: flex;
+    margin: 50px 0px 0px 100px;
+}
+.headerLeft{
+    font-weight: bold;
+    line-height: 26px;
+    text-align: center;
+    margin-left: 240px;
+}
+.headerRight{
+    border: 2px solid black;
+    line-height: 26px;
+    margin-left: 30px;
+    padding: 10px 20px 0px 30px;
+     
+}
+.age{
+    border: 1px solid black;
+    border-radius: 25px;
+    background-color: black;
+    color: white;
+    margin: 20px 410px 0px 368px;
+    padding: 10px;
+}
+.address{
+    margin: 1px 0px 127px 331px;
+    line-height: 24px;
+}
+.firstline{
+    font-weight: bold;
+}
+.road{
+    font-size: 14px;
+}
+.fees{
+    border: 2px solid black;
+    width: 366px;
+    height: 165px;
+    border-radius: 14px;
+       margin: -127px 0px 0px 305px;
+}
+.feeheading{
+    text-align: center;
+    font-weight: bold;
+    margin-top: 5px;
+}
+.line1{
+    margin: 10px 0px 0px 9px;
+    font-size: 15px;
+}
+.line2{
+    margin: 10px 0px 0px 9px;
+    font-size: 15px;
+}
+.line3{
+    margin: 10px 0px 0px 126px;
+    font-size: 15px;
+}
+.line4{
+    margin: 9px 0px 0px 6px;
+    font-size: 17px;
+    font-weight: bold;
+}
+.six{
+    margin-left: 131px;
+}
+.thousand{
+    margin-left: 61px;
+}
+.bank{
+    margin: 8px 0px 0px 302px;
+    line-height: 21px;
+    font-size: 14px;
+}
+.bankname{
+        font-weight: bold;
+}
+.note{
+    border: 2px solid black;
+    width: 709px;
+    height: 60px;
+    margin: 10px 0px 0px 302px;
+    padding: 5px 0px 13px 8px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 25px;
+}
+.secline{
+    margin-left: 32px;
+}
+.oneline{
+    margin: 10px 0px 0px 306px;
+    font-size: 16px;
+}
+
+
+.table-container {
+  padding: 20px;
+}
+
+.customTable {
+ width: 700px;
+    border-collapse: collapse;
+    border: 1px solid #333;
+    margin: 13px 0px 0px 305px;
+}
+
+.customTable td {
+  border: 1px solid #333;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+}
+.useraddress{
+    margin: 10px 0px 0px 305px;
+    line-height: 32px;
+}
+.mobile{
+    margin: 10px 0px 0px 305px;
+}
+.mobile2{
+    margin: 16px 0px 0px 305px;
+}
+.gotra{
+    margin: 30px 0px 0px 305px;
+    font-weight: bold;
+}
+.cash{
+   margin: 17px 0px 0px 305px;
+   font-weight: bold;
+}
+.cashcol{
+   display: flex;
+    flex-direction: column;
+    margin: -23px 0px 0px 355px;
+    line-height: 30px;
+    font-size: 17px;
+}
+.datesign{
+    display: flex;
+}
+.date{
+   
+    margin: 25px 0px 0px 305px;
+}
+.signature{
+    margin: 25px 0px 0px 384px;
+}
+.shri{
+    margin: 19px 0px 0px 308px;
+}
+.sign{
+    margin: 25px 0px 0px 306px;
+}
+.reference{
+       margin: 20px 0px 0px 305px;
+}
+.referencemobile{
+       margin: 20px 0px 0px 305px;
+       display: flex;
+       gap: 103px;
+}
+.referenceemail{
+    margin: 20px 0px 0px 305px;
+    display: flex;
+    gap: 172px;
+
+}
+.conclusion{
+       margin: 24px 0px 20px 305px;
+}
+.imagesection{
+    display: flex;
+
+}
+.pictures{
+        margin: 17px 0px 0px 82px;
+}
+.couplesign{
+    margin: 20px 0px 0px 305px;
+}
+.submit{
+    margin: 35px 0px 18px 306px;
+    background-color: #e95114;
+    color: white;
+  
+  }
+  .buttons{
+    display: flex;
+  }

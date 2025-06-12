@@ -5,20 +5,15 @@ import styles from './FileUpload.module.css';
 const FileUpload = ({url,setUrl}) => {
   const [file, setFile] = useState(null);
   const fileInputRef = useRef(null); 
- 
-
   const handleChange = (e) => {
     setFile(e.target.files[0]);
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!file) return;
-
-    const formData = new FormData();
+  const formData = new FormData();
     formData.append("file", file);
-
-    try {
+try {
       const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/upload`;
       const res = await axios.post(reqUrl, formData);
       setUrl(res.data.url); 
@@ -32,7 +27,7 @@ const FileUpload = ({url,setUrl}) => {
   return (
     <div>
       <form onSubmit={handleSubmit} encType="multipart/form-data" className={styles.input}>
-        <input type="file" name="file" onChange={handleChange} ref={fileInputRef}/>
+        <input type="file" name="file" onChange={handleChange} ref={fileInputRef} accept="image/png, image/jpeg, image/jpg, "/>
         <input type="submit" value="Upload"  className={styles.btn}/>
       </form>
       <div
