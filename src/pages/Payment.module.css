@@ -20,7 +20,11 @@ margin-left: 28px;
 .btn{
     background-color: #e95114;
     color: white;
-
+}
+.btnupload{
+   background-color: #e95114;
+    color: white;
+    margin: 20px 0px;
 }
 .btns{
  display: flex;
@@ -38,6 +42,7 @@ margin-left: 28px;
 }
 .info{
     font-weight: bold;
+    margin: 20px 0px;
 }
 .number{
     margin: 20px 0px 0px 30px;
@@ -76,7 +81,7 @@ margin-left: 28px;
     border: 1px solid #ccc;
     border-radius: 4px;
     width: 455px;
-    margin: 4px 0px 0px 1px;
+    margin: 5px 0px 0px 1px;
   }
   .plan{
     font-weight: bold;

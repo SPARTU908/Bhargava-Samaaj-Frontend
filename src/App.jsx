@@ -19,7 +19,7 @@ import Admin from "./pages/Admin.jsx";
 import MatrimonialAdminDashboard from "./pages/MatrimonialAdminDashboard";
 import SuperAdminDashboard from "./pages/SuperAdminDashboard.jsx"
 import DisplayForm from "./pages/DisplayForm.jsx";
-import Upload from "./pages/Upload.jsx";
+
 
 function App() {
   
@@ -48,7 +48,7 @@ function App() {
           <Route path="/matrimonialadmin" element={<MatrimonialAdminDashboard/>} />
           <Route path="/superadmin" element={<SuperAdminDashboard/>} />
           <Route path="/displayform" element={<DisplayForm/>} />
-          <Route path="/upload" element={<Upload/>} />
+         
 
         </Routes>
       </BrowserRouter>

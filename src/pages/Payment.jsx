@@ -15,8 +15,8 @@ const Payment = () => {
   const navigate = useNavigate();
 
   const [paymentdata, setPaymentData] = useState({
-    name: name || "",
-    email: email || "",
+    name: localStorage.getItem("memberName") || "",
+    email: localStorage.getItem("memberEmail") || "",
     mobile: "",
     transaction: "",
   });
@@ -57,7 +57,7 @@ const Payment = () => {
 
   const handleUpload = async (e) => {
     e.preventDefault();
-   try {
+    try {
       const response = await updatePaymentForm(paymentId, url);
 
       if (response.success) {
@@ -101,7 +101,7 @@ const Payment = () => {
         );
 
         setIsFormSubmitted(true);
-      
+
         const newPaymentId = response.data.data._id;
         console.log(response.data);
         console.log(newPaymentId);
@@ -255,7 +255,7 @@ const Payment = () => {
               </label>
               <FileUpload url={url} setUrl={setUrl} />
               {errors.upload && <p className={styles.error}>{errors.upload}</p>}
-              <button onClick={handleUpload}>Submit</button>
+              <button onClick={handleUpload} className={styles.btnupload}>Submit</button>
             </div>
           </div>
         )}
