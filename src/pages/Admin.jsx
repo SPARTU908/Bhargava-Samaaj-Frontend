@@ -64,7 +64,7 @@ const Admin = () => {
         } else {
           toast.error("Invalid role. Access denied.");
         }
-      }, 2000); // Wait 2 seconds before navigating
+      }, 4000); // Wait 2 seconds before navigating
     } catch (err) {
       console.error(err);
       toast.error("Login failed. Please check your credentials.");
@@ -73,11 +73,11 @@ const Admin = () => {
 
   return (
     <>
-    <Navbar/>
+      <Navbar />
       <div className={styles.container}>
         <div>
           <div className={styles.heading}>Admin Panel</div>
-            <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}>
             <div className={styles.inputBox}>
               <label htmlFor="email" className={styles.label}>
                 Email <span style={{ color: "red" }}>*</span>
@@ -137,9 +137,7 @@ const Admin = () => {
           {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
         </div>
 
-        <div className={styles.right}>
-
-        </div>
+        <div className={styles.right}></div>
       </div>
 
       <ToastContainer />

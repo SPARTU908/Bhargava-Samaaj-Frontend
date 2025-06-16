@@ -553,14 +553,14 @@ const Membership = ({ nextStep }) => {
           <div className={styles.row1}>
             <div className={styles.inputBox}>
               <label htmlFor="photo" className={styles.label}>
-                Upload Photo<span style={{ color: "red" }}>*</span>
+                Upload Photo (Choose and upload)<span style={{ color: "red" }}>*</span>
               </label>
               <PhotoUpload url={photourl} setUrl={setPhotoUrl} />
               {errors.photo && <p className={styles.error}>{errors.photo}</p>}
             </div>
             <div className={styles.inputBox}>
               <label htmlFor="spousePhoto" className={styles.label}>
-                Upload Spouse Photo
+                Upload Spouse Photo (Choose and upload)
               </label>
               <SpousePhotoUpload
                 url={spousephotourl}
@@ -576,7 +576,7 @@ const Membership = ({ nextStep }) => {
           <div className={styles.row1}>
             <div className={styles.inputBox}>
               <label htmlFor="signature" className={styles.label}>
-                Upload Signature<span style={{ color: "red" }}>*</span>
+                Upload Signature (Choose and upload)<span style={{ color: "red" }}>*</span>
               </label>
               <SignatureUpload url={signatureurl} setUrl={setSignatureUrl} />
               {errors.signature && (
@@ -585,7 +585,7 @@ const Membership = ({ nextStep }) => {
             </div>
             <div className={styles.inputBox}>
               <label htmlFor="spouseSignature" className={styles.label}>
-                Upload Spouse Signature
+                Upload Spouse Signature (Choose and upload)
               </label>
               <SpouseSignatureUpload
                 url={spousesignatureurl}

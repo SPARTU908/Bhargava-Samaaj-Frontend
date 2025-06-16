@@ -11,21 +11,18 @@ import Members from "./pages/Members.jsx";
 import Advertisement from "./pages/Advertisement.jsx";
 import Download from "./pages/Download.jsx";
 import Haridwar from "./pages/Haridwar.jsx";
-import AdminLogin from "./pages/AdminLogin.jsx";
+// import AdminLogin from "./pages/AdminLogin.jsx";
 import PendingForms from "./pages/PendingForms.jsx";
 import Payment from "./pages/Payment.jsx";
 import MemberAdmin from "./pages/MemberAdmin.jsx";
 import Admin from "./pages/Admin.jsx";
 import MatrimonialAdminDashboard from "./pages/MatrimonialAdminDashboard";
-import SuperAdminDashboard from "./pages/SuperAdminDashboard.jsx"
+import SuperAdminDashboard from "./pages/SuperAdminDashboard.jsx";
 import DisplayForm from "./pages/DisplayForm.jsx";
 
-
 function App() {
-  
   return (
     <>
-      
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Navigate to="/home" replace />} />
@@ -40,16 +37,17 @@ function App() {
           <Route path="/advertisement" element={<Advertisement />} />
           <Route path="/society" element={<Society />} />
           <Route path="/members" element={<Members />} />
-          <Route path="/login" element={<AdminLogin />} />
+          {/* <Route path="/login" element={<AdminLogin />} /> */}
           <Route path="/review" element={<PendingForms />} />
           <Route path="/payment" element={<Payment />} />
           <Route path="/memberadmin" element={<MemberAdmin />} />
           <Route path="/admin" element={<Admin />} />
-          <Route path="/matrimonialadmin" element={<MatrimonialAdminDashboard/>} />
-          <Route path="/superadmin" element={<SuperAdminDashboard/>} />
-          <Route path="/displayform" element={<DisplayForm/>} />
-         
-
+          <Route
+            path="/matrimonialadmin"
+            element={<MatrimonialAdminDashboard />}
+          />
+          <Route path="/superadmin" element={<SuperAdminDashboard />} />
+          <Route path="/displayform" element={<DisplayForm />} />
         </Routes>
       </BrowserRouter>
     </>

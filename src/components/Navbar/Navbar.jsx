@@ -115,9 +115,9 @@ const handleHome = () => {
               <div onClick={() => handleAbout("sabhayein")}>स्थानीय सभाएं</div>
               <div onClick={() => handleAbout("samiti")}>समिति</div>
               <div onClick={() => handleAbout("nidhiyan")}>सभा की निधियाँ</div>
-              <div onClick={() => handleAbout("executive")}>
+              {/* <div onClick={() => handleAbout("executive")}>
                 कार्यकारी निकाय
-              </div>
+              </div> */}
             </div>
           )}
         </div>

@@ -100,7 +100,11 @@ const Payment = () => {
           }
         );
 
-        setIsFormSubmitted(true);
+        // setIsFormSubmitted(true);
+
+        setTimeout(() => {
+          setIsFormSubmitted(true);
+        }, 4000);
 
         const newPaymentId = response.data.data._id;
         console.log(response.data);
@@ -255,7 +259,9 @@ const Payment = () => {
               </label>
               <FileUpload url={url} setUrl={setUrl} />
               {errors.upload && <p className={styles.error}>{errors.upload}</p>}
-              <button onClick={handleUpload} className={styles.btnupload}>Submit</button>
+              <button onClick={handleUpload} className={styles.btnupload}>
+                Submit
+              </button>
             </div>
           </div>
         )}

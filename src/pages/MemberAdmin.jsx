@@ -59,11 +59,11 @@ const MemberAdmin = () => {
     navigate("/home");
   };
 
- const filteredMembers = members.filter((member) => {
-                  const status = statusMap[member.email] || "Not Set";
-                  if (filterStatus === "All") return true;
-                  return status === filterStatus;
-                });
+  const filteredMembers = members.filter((member) => {
+    const status = statusMap[member.email] || "Not Set";
+    if (filterStatus === "All") return true;
+    return status === filterStatus;
+  });
 
   return (
     <>
@@ -127,10 +127,9 @@ const MemberAdmin = () => {
               </tr>
             </thead>
             <tbody>
-             {filteredMembers.map((member, index) => {
+              {filteredMembers.map((member, index) => {
                 const memberPayment = findPaymentByMember(member.email);
                 const currentStatus = statusMap[member.email] || "Not Set";
-               
 
                 return (
                   <tr key={index}>

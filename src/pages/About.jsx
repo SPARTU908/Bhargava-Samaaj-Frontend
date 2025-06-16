@@ -123,7 +123,7 @@ const About = () => {
       </div>
 
       {/* executive body */}
-      <div id="executive" className={styles.container}>
+      {/* <div id="executive" className={styles.container}>
         <div className={styles.heading}>कार्यकारी निकाय </div>
         <div>
           <img src={executive} alt="" className={styles.history} />
@@ -140,7 +140,7 @@ const About = () => {
             </a>
           </button>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };
