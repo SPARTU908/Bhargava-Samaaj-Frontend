@@ -88,7 +88,11 @@ const Membership = ({ nextStep }) => {
       newErrors.fatherName = "कृपया पिता का नाम दर्ज करें।";
     if (!memberData.gotra) newErrors.gotra = "कृपया गोत्र दर्ज करें।";
     if (!memberData.kuldevi) newErrors.kuldevi = "कृपया कुलदेवी दर्ज करें।";
-    if (!memberData.mobile) newErrors.mobile = "कृपया मोबाइल नंबर दर्ज करें।";
+   if (!memberData.mobile) {
+  newErrors.mobile = "कृपया मोबाइल नंबर दर्ज करें।";
+} else if (!/^[6-9]\d{9}$/.test(memberData.mobile)) {
+  newErrors.mobile = "कृपया मान्य 10 अंकों का मोबाइल नंबर दर्ज करें।";
+}
     if (!memberData.occupation)
       newErrors.occupation = "कृपया व्यवसाय दर्ज करें।";
     if (!selectedFee)
@@ -108,8 +112,11 @@ const Membership = ({ nextStep }) => {
         else if (!/\S+@\S+\.\S+/.test(memberData.spouseEmail)) {
           newErrors.spouseEmail = "कृपया जीवनसाथी का मान्य ईमेल दर्ज करें।";
         }
-        if (!memberData.spouseMobile)
-          newErrors.spouseMobile = "कृपया जीवनसाथी का मोबाइल नंबर दर्ज करें।";
+        if (!memberData.spouseMobile) {
+  newErrors.spouseMobile = "कृपया जीवनसाथी का मोबाइल नंबर दर्ज करें।";
+} else if (!/^[6-9]\d{9}$/.test(memberData.spouseMobile)) {
+  newErrors.spouseMobile = "कृपया जीवनसाथी का मान्य 10 अंकों का मोबाइल नंबर दर्ज करें।";
+}
         if (!spousephotourl)
           newErrors.spousePhoto = "कृपया जीवनसाथी की फोटो अपलोड करें।";
         if (!spousesignatureurl)

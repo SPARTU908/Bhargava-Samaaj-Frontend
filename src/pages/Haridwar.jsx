@@ -42,10 +42,7 @@ const Haridwar = () => {
             <MdEmail className={styles.icon2} />
           </div>
           <div className={styles.email}>info@yatradham.org</div>
-          {/* <div>
-            <MdOutlineWifiCalling className={styles.iconCall}/>
-            <div className={styles.call}>Toll Free Number - 08069266023.</div>
-          </div> */}
+        
         </div>
 
         <div className={styles.facilities}>

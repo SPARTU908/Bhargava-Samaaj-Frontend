@@ -46,9 +46,9 @@ const Navbar = () => {
     setHamburgerOpen(false);
   };
 
-const handleHome = () => {
+  const handleHome = () => {
     navigate("/home");
-  };  
+  };
   const handleAbout = (sectionId) => {
     navigate("/about");
     setTimeout(() => {
@@ -77,9 +77,9 @@ const handleHome = () => {
   const handleHaridwar = () => {
     navigate("/haridwar");
   };
-  const handleAdmin = () =>{
-    navigate("/admin")
-  }
+  const handleAdmin = () => {
+    navigate("/admin");
+  };
   const handleSociety = (sectionId) => {
     navigate("/society");
     setTimeout(() => {
@@ -115,9 +115,6 @@ const handleHome = () => {
               <div onClick={() => handleAbout("sabhayein")}>स्थानीय सभाएं</div>
               <div onClick={() => handleAbout("samiti")}>समिति</div>
               <div onClick={() => handleAbout("nidhiyan")}>सभा की निधियाँ</div>
-              {/* <div onClick={() => handleAbout("executive")}>
-                कार्यकारी निकाय
-              </div> */}
             </div>
           )}
         </div>
@@ -177,7 +174,7 @@ const handleHome = () => {
         <div className={styles.menu} onClick={handleForm}>
           फ़ॉर्म डाउनलोड करें
         </div>
-         <div className={styles.menu} onClick={handleAdmin}>
+        <div className={styles.menu} onClick={handleAdmin}>
           Admin Login
         </div>
       </nav>

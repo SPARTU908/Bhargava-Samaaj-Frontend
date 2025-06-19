@@ -37,3 +37,25 @@ export const getApprovedMembers = async () => {
   const response = await axios.get(reqUrl); 
   return response.data;
 };
+
+export const getPendingFormCount = async () => {
+  const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/form/pending/count`; 
+  try {
+    const response = await axios.get(reqUrl);
+    return response.data.count; 
+  } catch (error) {
+    console.error("Failed to fetch pending form count:", error);
+    throw error;
+  }
+};
+
+export const getApprovedFormCount = async () => {
+  const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/form/approved/count`; 
+  try {
+    const response = await axios.get(reqUrl);
+    return response.data.count; 
+  } catch (error) {
+    console.error("Failed to fetch pending form count:", error);
+    throw error;
+  }
+};

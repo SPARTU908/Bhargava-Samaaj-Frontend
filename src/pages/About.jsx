@@ -8,15 +8,15 @@ import executive from "../assets/executive.png";
 import React, { useEffect } from "react";
 
 const About = () => {
-   useEffect(() => {
-   const hash = window.location.hash;
-  if (hash) {
-        const section = document.getElementById(hash.slice(1)); 
-        if (section) {
-          section.scrollIntoView({ behavior: 'smooth' });
-        }
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash) {
+      const section = document.getElementById(hash.slice(1));
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth" });
       }
-    }, [window.location.hash]);
+    }
+  }, [window.location.hash]);
   return (
     <>
       <Navbar />
@@ -42,19 +42,19 @@ const About = () => {
 
       {/* Samvidhaan */}
       <div id="samvidhaan" className={styles.container}>
-        <div  className={styles.heading}>संविधान</div>
+        <div className={styles.heading}>संविधान</div>
         <div>
           <img src={samvidhaan} alt="" className={styles.history} />
         </div>
         <div className={styles.btn}>
           <button className={styles.button}>
             <a
-             href="/pdfs/Sabha/Samvidhaan.pdf"
+              href="/pdfs/Sabha/Samvidhaan.pdf"
               className={styles.btn1}
               target="_blank"
               rel="noopener noreferrer"
             >
-            हमारे संविधान के बारे में पढ़े
+              हमारे संविधान के बारे में पढ़े
             </a>
           </button>
         </div>
@@ -74,7 +74,7 @@ const About = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-            स्थानीय सभाएं के बारे में जाने
+              स्थानीय सभाएं के बारे में जाने
             </a>
           </button>
         </div>
@@ -94,7 +94,7 @@ const About = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-            हमारे समितियों के बारे में जानें
+              हमारे समितियों के बारे में जानें
             </a>
           </button>
         </div>
@@ -111,36 +111,15 @@ const About = () => {
           <button className={styles.button}>
             <a
               href="/pdfs/Sabha/nidhiyan.pdf"
-             
               className={styles.btn1}
               target="_blank"
               rel="noopener noreferrer"
             >
-            सभा की निधियाँ के बारे में जानें
+              सभा की निधियाँ के बारे में जानें
             </a>
           </button>
         </div>
       </div>
-
-      {/* executive body */}
-      {/* <div id="executive" className={styles.container}>
-        <div className={styles.heading}>कार्यकारी निकाय </div>
-        <div>
-          <img src={executive} alt="" className={styles.history} />
-        </div>
-        <div className={styles.btn}>
-          <button className={styles.button}>
-            <a
-              href="/pdfs/Sabha/Executive-body.pdf"
-              className={styles.btn1}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-            कार्यकारी निकाय के बारे में जानें
-            </a>
-          </button>
-        </div>
-      </div> */}
     </>
   );
 };

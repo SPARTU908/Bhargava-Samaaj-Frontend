@@ -1,32 +1,136 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import styles from "./MatrimonialAdminDashboard.module.css";
+import PendingForms from "../pages/PendingForms";
+import Members from "../pages/Members";
+import { useNavigate } from "react-router-dom";
+import { IoMdHome } from "react-icons/io";
+import { getPendingFormCount } from "../apis/form";
+import { getApprovedFormCount } from "../apis/form";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const MatrimonialAdminDashboard = () => {
+  const [selectedSection, setSelectedSection] = useState(null);
+  const [pendingCount, setPendingCount] = useState(0);
+  const [approvedCount, setApprovedCount] = useState(0);
   const navigate = useNavigate();
 
-  // Redirect to Review Form
-  const handleReviewForm = () => {
-    navigate("/review"); // or your route for review form
+  useEffect(() => {
+    const fetchPendingCount = async () => {
+      try {
+        const count = await getPendingFormCount();
+        setPendingCount(count);
+      } catch (err) {
+        console.error("Error fetching pending form count:", err);
+      }
+    };
+
+    fetchPendingCount();
+  }, []);
+
+  useEffect(() => {
+    const fetchApprovedCount = async () => {
+      try {
+        const count = await getApprovedFormCount();
+        setApprovedCount(count);
+      } catch (err) {
+        console.error("Error fetching pending form count:", err);
+      }
+    };
+
+    fetchApprovedCount();
+  }, []);
+
+  const renderSection = () => {
+    switch (selectedSection) {
+      case "pending":
+        return <PendingForms />;
+      case "members":
+        return <Members />;
+
+      default:
+        return (
+          <>
+            <div className={styles.renderSection}>
+              <div className={styles.widget}>
+                <div className={styles.widgetTitle}>
+                  Total no. of pending matrimonial form
+                </div>
+                <div className={styles.widgetCount}>{pendingCount}</div>
+              </div>
+
+              <div className={styles.widget}>
+                <div className={styles.widgetTitle}>
+                  Total no. of matrimonial form
+                </div>
+                <div className={styles.widgetCount}>{approvedCount}</div>
+              </div>
+            </div>
+          </>
+        );
+    }
+  };
+  const handleLogout = () => {
+    toast.success("Logged out successfully", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+
+    setTimeout(() => {
+      navigate("/");
+    }, 2000);
   };
 
-  // Redirect to View All Members
-  const handleViewMembers = () => {
-    navigate("/members"); // or the route where all members can be viewed
+  const refreshPage = () => {
+    window.location.reload();
   };
 
   return (
-    <div className={styles.container}>
-      <h2>Welcome Matrimonial Admin</h2>
-      <div className={styles.options}>
-        <button className={styles.optionButton} onClick={handleReviewForm}>
-          Review Form
-        </button>
-        <button className={styles.optionButton} onClick={handleViewMembers}>
-          View All Members
-        </button>
+    <>
+      <div className={styles.container}>
+        <div>
+          <div className={styles.title}>Welcome</div>
+          <div className={styles.dashboard} onClick={refreshPage}>
+            <IoMdHome className={styles.home} />
+            Dashboard
+          </div>
+          <div className={styles.options}>
+            <div>
+              <div
+                className={`${styles.optionButton} ${
+                  selectedSection === "pending" ? styles.activeButton : ""
+                }`}
+                onClick={() => setSelectedSection("pending")}
+              >
+                Pending Matrimonial Form
+              </div>
+              <div
+                className={`${styles.optionButton} ${
+                  selectedSection === "members" ? styles.activeButton : ""
+                }`}
+                onClick={() => setSelectedSection("members")}
+              >
+                Matrimonial Form
+              </div>
+            </div>
+          </div>
+          <div className={styles.logoutWrapper}>
+            <button className={styles.logoutButton} onClick={handleLogout}>
+              Logout
+            </button>
+          </div>
+        </div>
+        <div className={styles.right}>
+          <div className={styles.sectionContent}>{renderSection()}</div>
+        </div>
       </div>
-    </div>
+      <ToastContainer />
+    </>
   );
 };
 

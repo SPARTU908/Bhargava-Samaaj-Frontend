@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../components/Navbar/Navbar";
+
 import styles from "./Members.module.css";
 import { getApprovedMembers } from "../apis/form";
 import MemberInfo from "./MemberInfo";
@@ -67,7 +67,7 @@ const Members = () => {
 
   return (
     <>
-      <Navbar />
+   
       <div className={styles.filterBox}>
         <label className={styles.filter}>
           Filter by Age:

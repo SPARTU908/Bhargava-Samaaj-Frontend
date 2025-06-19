@@ -1,17 +1,8 @@
-/* .container{
-     width: 20vw;
-    min-height: 100vh;
-    background-color: #171e2b;
-    color: white;
-    display: flex;
-} */
-
 .container {
   display: flex;
   min-height: 100vh;
 }
 
-/* sidebar */
 .container > div:first-child {
   width: 20vw;
   background-color: #171e2b;
@@ -111,7 +102,6 @@
 .logoutButton:hover {
   background-color: #c62828;
 }
-
 .renderSection {
   display: flex;
   justify-content: space-between;

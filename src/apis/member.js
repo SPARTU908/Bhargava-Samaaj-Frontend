@@ -37,3 +37,14 @@ export const getAllMembers = async () => {
     console.log(error);
   }
 };
+
+export const getMemberCount = async () => {
+  const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/member/count`; 
+  try {
+    const response = await axios.get(reqUrl);
+    return response.data.count; 
+  } catch (error) {
+    console.error("Failed to fetch pending form count:", error);
+    throw error;
+  }
+};

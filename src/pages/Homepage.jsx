@@ -74,41 +74,30 @@ const Homepage = () => {
       {/* Festival */}
       <div className={styles.festival}>
         <div className={styles.festHead}> अपकमिंग फेस्टिवल्स 2025</div>
-        <div >
+        <div>
           <div className={styles.col1}>
             <div className={styles.festBox1}>
               <div className={styles.day}>गुरुवार, 5 जून – गंगा दशहरा</div>
             </div>
             <div className={styles.festBox1}>
-              <div className={styles.day}>शुक्रवार, 6 जून – एकादशी (निर्जला)</div>
+              <div className={styles.day}>
+                शुक्रवार, 6 जून – एकादशी (निर्जला)
+              </div>
             </div>
             <div className={styles.festBox1}>
               <div className={styles.day}>रविवार, 8 जून – प्रदोष </div>
             </div>
             <div className={styles.festBox1}>
-              <div className={styles.day}>मंगलवार, 10 जून – पूर्णिमा (व्रत)</div>
+              <div className={styles.day}>
+                मंगलवार, 10 जून – पूर्णिमा (व्रत)
+              </div>
             </div>
             <div className={styles.festBox1}>
-              <div className={styles.day}>बुधवार, 11 जून – पूर्णिमा (स्नान) </div>
+              <div className={styles.day}>
+                बुधवार, 11 जून – पूर्णिमा (स्नान){" "}
+              </div>
             </div>
           </div>
-          {/* <div className={styles.col2}>
-            <div className={styles.festBox2}>
-              <div className={styles.day}>रविवार</div>
-              <div className={styles.ganga}>प्रदोष </div>
-              <div className={styles.june}>8 जून</div>
-            </div>
-            <div className={styles.festBox2}>
-              <div className={styles.day}>मंगलवार</div>
-              <div className={styles.ganga}>पूर्णिमा (व्रत) </div>
-              <div className={styles.june}>10 जून</div>
-            </div>
-            <div className={styles.festBox2}>
-              <div className={styles.day}>बुधवार</div>
-              <div className={styles.ganga}>पूर्णिमा (स्नान)</div>
-              <div className={styles.june}>11 जून </div>
-            </div>
-          </div> */}
         </div>
       </div>
 
@@ -119,29 +108,6 @@ const Homepage = () => {
           <div className={styles.imageContainer}>
             <img src={activity} alt="" className={styles.actImg} />
           </div>
-          {/* <div className={styles.rightAct}>
-            <div className={styles.actBox1}>
-              <div className={styles.line}></div>
-              <div className={styles.date}>
-                <div className={styles.three}>30</div>
-                <div className={styles.month}>AUG</div>
-                <div className={styles.year}>2025</div>
-              </div>
-              <div className={styles.actInfo}>
-                <div className={styles.actName}>महाराजा अग्रसेन भवन </div>
-                <div className={styles.actTiming}>
-                  <FaClock className={styles.clockIcon} />
-                  
-                </div>
-                <div className={styles.actTiming}>
-                  <IoLocation className={styles.clockIcon} />
-               आगरा 
-                </div>
-              </div>
-              <div className={styles.actName}>Sunday</div>
-            </div>
-           
-          </div> */}
         </div>
       </div>
 

@@ -340,8 +340,7 @@ const handleNext = () => {
       </div>
 
       <div className={styles.buttons}>
-        {/* <button  className={styles.submit} onClick={prevStep}>Back</button> */}
-        <button
+      <button
           className={styles.submit}
           onClick={() => downloadAsImage(formRef.current)}
         >

@@ -55,9 +55,7 @@ const MemberAdmin = () => {
       [email]: newStatus,
     }));
   };
-  const handleLogout = () => {
-    navigate("/home");
-  };
+  
 
   const filteredMembers = members.filter((member) => {
     const status = statusMap[member.email] || "Not Set";
@@ -71,11 +69,7 @@ const MemberAdmin = () => {
       <div className={styles.container}>
         <div className={styles.header}>
           <div className={styles.heading}>List of all members</div>
-          <div>
-            <button className={styles.logout} onClick={handleLogout}>
-              Log Out
-            </button>
-          </div>
+          
         </div>
         <div className={styles.filterWrapper}>
           <label htmlFor="statusFilter">Filter by Status: </label>
@@ -115,13 +109,13 @@ const MemberAdmin = () => {
                 <th className={styles.title}>Photo</th>
                 <th className={styles.title}>Spouse Photo</th>
                 <th className={styles.title}>Occupation</th>
-                <th className={styles.title}>Reference</th>
-                <th className={styles.title}>ABBS Number of Reference</th>
-                <th className={styles.title}>Phone Number of Reference</th>
+               
+              
                 <th className={styles.title}>Payer Name</th>
                 <th className={styles.title}>Payer Email </th>
                 <th className={styles.title}>Payer Mobile </th>
                 <th className={styles.title}>Transaction ID</th>
+                <th className={styles.title}>Uploaded Form</th>
                 <th className={styles.title}>Action</th>
                 <th className={styles.title}>Status</th>
               </tr>
@@ -197,13 +191,25 @@ const MemberAdmin = () => {
                       )}
                     </td>
                     <td>{member.occupation}</td>
-                    <td>{member.reference}</td>
-                    <td>{member.abbsNumber}</td>
-                    <td>{member.referenceNumber}</td>
+                  
                     <td>{memberPayment?.name || "N/A"}</td>
                     <td>{memberPayment?.email || "N/A"}</td>
                     <td>{memberPayment?.mobile || "N/A"}</td>
                     <td>{memberPayment?.transaction || "N/A"}</td>
+                    <td>
+                      {memberPayment?.uploadForm ? (
+                        <a
+                          href={memberPayment.uploadForm}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          View Form
+                        </a>
+                      ) : (
+                        "N/A"
+                      )}
+                    </td>
+
                     <td>
                       <button
                         className={styles.button}

@@ -10,7 +10,7 @@ const Admin = () => {
   const [admin, setAdmin] = useState({
     email: "",
     password: "",
-    role: "", // default: blank
+    role: "", 
   });
 
   const [error, setError] = useState("");
@@ -36,7 +36,7 @@ const Admin = () => {
       const authToken = res.data.token;
       const user = res.data.user;
 
-      // Store tokens and user data in localStorage
+    
       localStorage.setItem("adminToken", authToken);
       localStorage.setItem("adminRole", user.role);
 
@@ -56,7 +56,7 @@ const Admin = () => {
       setTimeout(() => {
         // Redirect based on user role
         if (user.role === "membershipadmin") {
-          navigate("/memberadmin");
+          navigate("/memberadmindashboard");
         } else if (user.role === "matrimonialadmin") {
           navigate("/matrimonialadmin");
         } else if (user.role === "superadmin") {

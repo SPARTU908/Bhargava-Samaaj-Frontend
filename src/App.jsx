@@ -11,7 +11,6 @@ import Members from "./pages/Members.jsx";
 import Advertisement from "./pages/Advertisement.jsx";
 import Download from "./pages/Download.jsx";
 import Haridwar from "./pages/Haridwar.jsx";
-// import AdminLogin from "./pages/AdminLogin.jsx";
 import PendingForms from "./pages/PendingForms.jsx";
 import Payment from "./pages/Payment.jsx";
 import MemberAdmin from "./pages/MemberAdmin.jsx";
@@ -19,6 +18,8 @@ import Admin from "./pages/Admin.jsx";
 import MatrimonialAdminDashboard from "./pages/MatrimonialAdminDashboard";
 import SuperAdminDashboard from "./pages/SuperAdminDashboard.jsx";
 import DisplayForm from "./pages/DisplayForm.jsx";
+import MembershipAdminDashboard from "./pages/MembershipAdminDashboard.jsx";
+import PrivateRoute from "./components/PrivateRoute.jsx";
 
 function App() {
   return (
@@ -36,17 +37,36 @@ function App() {
           <Route path="/haridwar" element={<Haridwar />} />
           <Route path="/advertisement" element={<Advertisement />} />
           <Route path="/society" element={<Society />} />
-          <Route path="/members" element={<Members />} />
+          <Route
+            path="/members"
+            element={
+              <PrivateRoute>
+                <Members />
+              </PrivateRoute>
+            }
+          />
           {/* <Route path="/login" element={<AdminLogin />} /> */}
-          <Route path="/review" element={<PendingForms />} />
+           <Route
+            path="/review"
+            element={
+              <PrivateRoute>
+                <PendingForms />
+              </PrivateRoute>
+            }
+          />
+          {/* <Route path="/review" element={<PendingForms />} /> */}
           <Route path="/payment" element={<Payment />} />
-          <Route path="/memberadmin" element={<MemberAdmin />} />
+          <Route path="/memberadmin" element={  <PrivateRoute><MemberAdmin /></PrivateRoute>} />
           <Route path="/admin" element={<Admin />} />
           <Route
             path="/matrimonialadmin"
             element={<MatrimonialAdminDashboard />}
           />
           <Route path="/superadmin" element={<SuperAdminDashboard />} />
+          <Route
+            path="/memberadmindashboard"
+            element={<MembershipAdminDashboard />}
+          />
           <Route path="/displayform" element={<DisplayForm />} />
         </Routes>
       </BrowserRouter>

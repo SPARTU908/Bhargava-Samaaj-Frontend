@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { loginUser } from "../apis/login";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import axios from 'axios';
+import axios from "axios";
 
 const Matrimonial = () => {
   const [showModal, setShowModal] = useState(false);
@@ -36,115 +36,71 @@ const Matrimonial = () => {
     return newErrors;
   };
 
+  const handleLoginSubmit = async (e) => {
+    e.preventDefault();
 
-  // const handleLoginSubmit = async (e) => {
-  //   e.preventDefault();
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
 
-  //   const validationErrors = validate();
-  //   if (Object.keys(validationErrors).length > 0) {
-  //     setErrors(validationErrors);
-  //   } else {
-  //     setErrors({});
-  //     const result = await loginUser(userData);
-  //     if (result.status === 200) {
-  //       toast.success(result.data.message, {
-  //         position: "top-center",
-  //         autoClose: 3000,
-  //         hideProgressBar: false,
-  //         closeOnClick: true,
-  //         pauseOnHover: false,
-  //         draggable: true,
-  //         progress: undefined,
-  //         theme: "light",
-  //       });
-  //       setTimeout(() => {
-  //         setShowModal(false);
-  //         handleMembers();
-  //       }, 3000);
-  //     } else {
-  //       toast.error("Invalid Credentials", {
-  //         position: "top-center",
-  //         autoClose: 4000,
-  //         hideProgressBar: false,
-  //         closeOnClick: true,
-  //         pauseOnHover: false,
-  //         draggable: true,
-  //         progress: undefined,
-  //         theme: "light",
-  //       });
-  //     }
-  //   }
-  // };
+    setErrors({});
 
+    try {
+      const result = await loginUser(userData); // your existing login API call
 
+      if (result.status === 200) {
+        // ✅ Use Axios for status check too
+        const statusUrl = `${
+          import.meta.env.VITE_BACKEND_URL
+        }/api/v1/form/status/${encodeURIComponent(userData.email)}`;
+        const statusRes = await axios.get(statusUrl);
 
+        if (statusRes.data.status === "approved") {
+          localStorage.setItem("isLoggedIn", "true");
+          toast.success(result.data.message, {
+            position: "top-center",
+            autoClose: 3000,
+            theme: "light",
+          });
 
-const handleLoginSubmit = async (e) => {
-  e.preventDefault();
-
-  const validationErrors = validate();
-  if (Object.keys(validationErrors).length > 0) {
-    setErrors(validationErrors);
-    return;
-  }
-
-  setErrors({});
-
-  try {
-    const result = await loginUser(userData); // your existing login API call
-
-    if (result.status === 200) {
-      // ✅ Use Axios for status check too
-      const statusUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/form/status/${encodeURIComponent(userData.email)}`;
-      const statusRes = await axios.get(statusUrl);
-
-      if (statusRes.data.status === "approved") {
-        toast.success(result.data.message, {
+          setTimeout(() => {
+            setShowModal(false);
+            handleMembers();
+          }, 3000);
+        } else {
+          toast.info(
+            "Please wait 1–7 days for admin approval before accessing this feature.For more queries, Contact-987654321",
+            {
+              position: "top-center",
+              autoClose: 4000,
+              theme: "light",
+            }
+          );
+        }
+      } else {
+        toast.error("Invalid Credentials", {
           position: "top-center",
-          autoClose: 3000,
+          autoClose: 4000,
           theme: "light",
         });
-
-        setTimeout(() => {
-          setShowModal(false);
-          handleMembers();
-        }, 3000);
-      } else {
-        toast.info(
-          "Please wait 1–7 days for admin approval before accessing this feature.For more queries, Contact-987654321",
-          {
-            position: "top-center",
-            autoClose: 4000,
-            theme: "light",
-          }
-        );
       }
-    } else {
-      toast.error("Invalid Credentials", {
+    } catch (error) {
+      console.error("Login or status check failed:", error);
+      toast.error("Something went wrong. Please try again later.", {
         position: "top-center",
         autoClose: 4000,
         theme: "light",
       });
     }
-  } catch (error) {
-    console.error("Login or status check failed:", error);
-    toast.error("Something went wrong. Please try again later.", {
-      position: "top-center",
-      autoClose: 4000,
-      theme: "light",
-    });
-  }
-};
-
-
-
+  };
 
   const navigate = useNavigate();
 
   const handleMembers = () => {
     navigate("/members");
   };
-
 
   return (
     <>
@@ -203,8 +159,6 @@ const handleLoginSubmit = async (e) => {
           </div>
         </div>
       )}
-
-     
     </>
   );
 };

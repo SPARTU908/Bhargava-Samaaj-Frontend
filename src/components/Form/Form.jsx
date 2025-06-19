@@ -7,7 +7,6 @@ import DatePicker from "react-datepicker";
 import { registerUser } from "../../apis/form";
 import FileUpload from "../FileUpload/FileUpload";
 import BioDataUpload from "../BioDataUpload/BioDataUpload";
-// import html2canvas from "html2canvas";
 
 const Form = () => {
   const [formData, setFormData] = useState({
@@ -45,7 +44,6 @@ const Form = () => {
     city: "",
     pin: "",
     whatsapp: "",
-    // residence: "",
     nri: "",
     remarks: "",
     password: "",
@@ -55,12 +53,11 @@ const Form = () => {
   const [errors, setErrors] = useState({});
   const [url, setUrl] = useState("");
   const [biourl, setbiourl] = useState("");
-  // const formRef = useRef();
+
   const validate = () => {
     let newErrors = {};
 
     const requiredFields = [
-      // "number",
       "name",
       "email",
       "mobile",
@@ -68,37 +65,18 @@ const Form = () => {
       "birthTime",
       "birthPlace",
       "height",
-      // "weight",
       "dob",
-      // "bloodGroup",
-      // "manglik",
       "gotra",
       "kuldevi",
-      "complexion",
-      "education",
-      // "professionQualification",
-      // // "profession",
-      // "company",
-      // "designation",
-      "income",
-      // "hobbies",
-      // "guardianName",
-      "fatherName",
+     "education",
+     "fatherName",
       "fatherProfession",
-      // "fatherIncome",
-      // "fatherDesignation",
-      "otherQualification",
-      "motherName",
+     "motherName",
       "nativePlace",
       "address",
       "city",
       "pin",
-      // "whatsapp",
-
-      // "residence",
-      // "country",
       "nri",
-      // "remarks",
       "password",
       "photo",
       "bioData",
@@ -112,6 +90,9 @@ const Form = () => {
 
     if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = "Email is invalid";
+    }
+    if (formData.mobile && !/^[6-9]\d{9}$/.test(formData.mobile)) {
+      newErrors.mobile = "Mobile number must be 10 digits and valid";
     }
 
     return newErrors;
@@ -187,7 +168,6 @@ const Form = () => {
           city: "",
           pin: "",
           whatsapp: "",
-          // residence: "",
           nri: "",
           remarks: "",
           password: "",
@@ -200,21 +180,9 @@ const Form = () => {
       }
     }
   };
-  // const downloadAsImage = async (element) => {
-  //   const canvas = await html2canvas(element, {
-  //     useCORS: true,
-  //   });
-
-  //   const image = canvas.toDataURL("image/png");
-  //   const link = document.createElement("a");
-  //   link.href = image;
-  //   link.download = "membership-form.png";
-  //   link.click();
-  // };
 
   return (
     <>
-      {/* <div ref={formRef}> */}
       <div className={styles.heading}>वैवाहिक फ़ॉर्म</div>
       <div className={styles.container}>
         <div className={styles.inputBox}>
@@ -475,7 +443,7 @@ const Form = () => {
 
           <div className={styles.inputBox}>
             <label htmlFor="complexion" className={styles.label1}>
-              Complexion <span style={{ color: "red" }}>*</span>
+              Complexion 
             </label>
             <input
               placeholder=""
@@ -591,7 +559,7 @@ const Form = () => {
 
           <div className={styles.inputBox}>
             <label htmlFor="income" className={styles.label1}>
-              Monthly Income<span style={{ color: "red" }}>*</span>
+              Monthly Income 
             </label>
             <input
               placeholder=""
@@ -626,7 +594,7 @@ const Form = () => {
 
           <div className={styles.inputBox}>
             <label htmlFor="otherQualification" className={styles.label1}>
-              Other Qualification<span style={{ color: "red" }}>*</span>
+              Other Qualification 
             </label>
             <input
               placeholder=""
@@ -647,7 +615,7 @@ const Form = () => {
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label htmlFor="guardianName" className={styles.label}>
-              Guardian Name
+              Guardian's Name
             </label>
             <input
               placeholder=""
@@ -665,7 +633,7 @@ const Form = () => {
 
           <div className={styles.inputBox}>
             <label htmlFor="fatherName" className={styles.label1}>
-              Father Name <span style={{ color: "red" }}>*</span>
+              Father's Name <span style={{ color: "red" }}>*</span>
             </label>
             <input
               placeholder=""
@@ -686,7 +654,7 @@ const Form = () => {
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label htmlFor="fatherProfession" className={styles.label}>
-              Father Profession<span style={{ color: "red" }}>*</span>
+              Father's Profession<span style={{ color: "red" }}>*</span>
             </label>
             <input
               placeholder=""
@@ -704,7 +672,7 @@ const Form = () => {
 
           <div className={styles.inputBox}>
             <label htmlFor="fatherIncome" className={styles.label1}>
-              Father Monthly Income
+              Father's Monthly Income
             </label>
             <input
               placeholder=""
@@ -725,7 +693,7 @@ const Form = () => {
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label htmlFor="fatherDesignation" className={styles.label}>
-              Father Designation
+              Father's Designation
             </label>
             <input
               placeholder=""
@@ -742,7 +710,7 @@ const Form = () => {
           </div>
           <div className={styles.inputBox}>
             <label htmlFor="motherName" className={styles.label1}>
-              Mother Name<span style={{ color: "red" }}>*</span>
+              Mother's Name<span style={{ color: "red" }}>*</span>
             </label>
             <input
               placeholder=""
@@ -866,24 +834,6 @@ const Form = () => {
             />
             {errors.remarks && <p className={styles.error}>{errors.remarks}</p>}
           </div>
-
-          {/* <div className={styles.inputBox}>
-            <label htmlFor="residence" className={styles.label1}>
-              Residence Phone No 
-            </label>
-            <input
-              placeholder=""
-              className={styles.input1}
-              type="text"
-              name="residence"
-              id="residence"
-              value={formData.residence}
-              onChange={handleChange}
-            />
-             {errors.residence && (
-              <p className={styles.error1}>{errors.residence}</p>
-            )}
-          </div> */}
         </div>
 
         {/* mobile and nri */}
@@ -923,8 +873,7 @@ const Form = () => {
               <span style={{ color: "red" }}>*</span>
               <span></span>
             </label>
-            {/* <BioDataUpload /> */}
-            {/* <input type="file"  className={styles.input}/> */}
+
             <BioDataUpload url={biourl} setUrl={setbiourl} />
             {errors.bioData && <p className={styles.error}>{errors.bioData}</p>}
           </div>
@@ -955,13 +904,6 @@ const Form = () => {
         </div>
       </div>
       <ToastContainer />
-      {/* </div> */}
-      {/* <button
-        className={styles.submit}
-        onClick={() => downloadAsImage(formRef.current)}
-      >
-        Download the form
-      </button> */}
     </>
   );
 };
