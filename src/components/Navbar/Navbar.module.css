@@ -75,7 +75,13 @@
 @media (max-width: 426px) {
   .hamburger {
     display: block;
+    margin-left: 30px;
   }
+  .logo{
+    margin-left: 100px;
+    margin-top: 20px;
+  }
+  
 
   .navbar {
     display: none;
@@ -126,3 +132,34 @@
 }
 
 
+.subDropdownWrapper {
+  position: relative;
+  white-space: nowrap;
+}
+
+.subDropdownTrigger {
+  cursor: pointer;
+  padding: 8px;
+   margin-left: -10px;
+}
+
+.subDropdown {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  margin-left: 2px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+  min-width: 120px;
+}
+
+.subDropdown div {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.subDropdown div:hover {
+  background-color: #eee;
+}

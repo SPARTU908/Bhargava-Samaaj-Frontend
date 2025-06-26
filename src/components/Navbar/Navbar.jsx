@@ -10,7 +10,18 @@ const Navbar = () => {
   const [isDropdownOpen2, setIsDropdownOpen2] = useState(false);
   const [isDropdownOpen3, setIsDropdownOpen3] = useState(false);
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
+  const [isSamitiDropdownOpen, setIsSamitiDropdownOpen] = useState(false);
   const [language, setLanguage] = useState("hi");
+
+  const handleSamitiToggle = (e) => {
+   e.stopPropagation();
+    setIsSamitiDropdownOpen((prev) => !prev); // Toggle dropdown
+  };
+
+  const handleOptionClick = (option) => {
+    console.log("Selected Option:", option);
+    setShowDropdown(false); // Optional: close after selection
+  };
 
   useEffect(() => {
     const observer = new MutationObserver(() => {
@@ -86,14 +97,14 @@ const Navbar = () => {
       window.location.hash = sectionId;
     }, 100);
   };
+
   return (
     <>
       <div className={styles.top_bar}>
-        <div id="google_translate_element"></div>
-        <img src={logo} alt="" className={styles.logo} />
         <div className={styles.hamburger} onClick={toggleHamburger}>
           {hamburgerOpen ? <FaTimes /> : <FaBars />}
         </div>
+        <img src={logo} alt="" className={styles.logo} />
       </div>
 
       {/* Navbar Section */}
@@ -108,12 +119,289 @@ const Navbar = () => {
           <div className={styles.dropbtn}>
             हमारे बारे में <FaChevronDown className={styles.arrow} />
           </div>
+
           {isDropdownOpen1 && (
             <div className={styles.dropdownContent}>
               <div onClick={() => handleAbout("history")}>हमारा इतिहास</div>
               <div onClick={() => handleAbout("samvidhaan")}>संविधान</div>
               <div onClick={() => handleAbout("sabhayein")}>स्थानीय सभाएं</div>
-              <div onClick={() => handleAbout("samiti")}>समिति</div>
+
+              {/* समिति with nested dropdown */}
+              <div className={styles.subDropdownWrapper}>
+                <div
+                  className={styles.subDropdownTrigger}
+                  onClick={handleSamitiToggle}
+                >
+                  समिति
+                </div>
+
+                {isSamitiDropdownOpen && (
+                  <div className={styles.subDropdown}>
+                    <div onClick={() => handleOptionClick("option1")}>
+                      <a
+                        href="/pdfs/Samiti/1. Samaj Kalyan Samiti.pdf"
+                        className={styles.btn1}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        समाज कल्याण समिति{" "}
+                      </a>
+                    </div>
+                    <div onClick={() => handleOptionClick("option2")}>
+                      <a
+                        href="/pdfs/Samiti/2. Shiksha Samiti.pdf"
+                        className={styles.btn1}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        शिक्षा समिति{" "}
+                      </a>
+                    </div>
+                    <div onClick={() => handleOptionClick("option3")}>
+                      <a
+                        href="/pdfs/Samiti/3. Central Property Committee.pdf"
+                        className={styles.btn1}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        सेंट्रल प्रॉपर्टी समिति{" "}
+                      </a>
+                    </div>
+
+                    <div onClick={() => handleOptionClick("option4")}>
+                      <a
+                        href="/pdfs/Samiti/4. Finance Advisory Committee.pdf"
+                        className={styles.btn1}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        फाइनेंस एडवाइजरी समिति
+                      </a>
+                    </div>
+
+                    <div onClick={() => handleOptionClick("option3")}>
+                      <a
+                        href="/pdfs/Samiti/5. Samanvaya Samiti.pdf"
+                        className={styles.btn1}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        समन्वय समिति
+                      </a>
+                    </div>
+
+                    <div onClick={() => handleOptionClick("option4")}>
+                      <a
+                        href="/pdfs/Samiti/6. Adhiveshan Aayojan avam Prabandh Samiti.pdf"
+                        className={styles.btn1}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        अधिवेशन आयोजन अवं प्रबंध समिति
+                      </a>
+                    </div>
+
+                    <div onClick={() => handleOptionClick("option3")}>
+                      <a
+                        href="/pdfs/Samiti/7. Vavah Paramarsh Samiti.pdf"
+                        className={styles.btn1}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        विवाह परामर्श समिति
+                      </a>
+                    </div>
+
+                    <div onClick={() => handleOptionClick("option4")}>
+                      <a
+                        href="/pdfs/Samiti/8. Kanya Vivah Samiti.pdf"
+                        className={styles.btn1}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        कन्या विवाह समिति
+                      </a>
+                    </div>
+
+                    <div onClick={() => handleOptionClick("option3")}>
+                      <a
+                        href="/pdfs/Samiti/9. Khel Kood Samiti.pdf"
+                        className={styles.btn1}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        खेल कूद समिति
+                      </a>
+                    </div>
+
+                    <div onClick={() => handleOptionClick("option4")}>
+                      <a
+                        href="/pdfs/Samiti/10. Yuva Karyakrama Samiti.pdf"
+                        className={styles.btn1}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        युवा कार्यक्रम समिति
+                      </a>
+                    </div>
+
+                    <div onClick={() => handleOptionClick("option3")}>
+                      <a
+                        href="/pdfs/Samiti/11. Dharmik avam Naitik Shiksha Samiti.pdf"
+                        className={styles.btn1}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        धार्मिक अवं नैतिक शिक्षा समिति
+                      </a>
+                    </div>
+
+                    <div onClick={() => handleOptionClick("option4")}>
+                      <a
+                        href="/pdfs/Samiti/12. Samvidhan Samiksha Samiti.pdf"
+                        className={styles.btn1}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        संविधान समीक्षा समिति
+                      </a>
+                    </div>
+
+                    <div onClick={() => handleOptionClick("option3")}>
+                      <a
+                        href="/pdfs/Samiti/13. Website avam Jangarna Samiti.pdf"
+                        className={styles.btn1}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        वेबसाइट अवं जनगर्ण समिति
+                      </a>
+                    </div>
+
+                    <div onClick={() => handleOptionClick("option4")}>
+                      <a
+                        href="/pdfs/Samiti/14. Takniki Shiksha Samiti.pdf"
+                        className={styles.btn1}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        तकनिकी शिक्षा समिति
+                      </a>
+                    </div>
+
+                    <div onClick={() => handleOptionClick("option3")}>
+                      <a
+                        href="/pdfs/Samiti/15. Carrier Development Samiti.pdf"
+                        className={styles.btn1}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        कर्रिएर डेवलपमेंट समिति
+                      </a>
+                    </div>
+
+                    <div onClick={() => handleOptionClick("option4")}>
+                      <a
+                        href="/pdfs/Samiti/16. Uttam Shiksha Samiti.pdf"
+                        className={styles.btn1}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        उत्तम शिक्षा समिति
+                      </a>
+                    </div>
+
+                    <div onClick={() => handleOptionClick("option3")}>
+                      <a
+                        href="/pdfs/Samiti/17. Maan Samman avam Puraskar Samiti.pdf"
+                        className={styles.btn1}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        मान सम्मान अवं पुरस्कार समिति
+                      </a>
+                    </div>
+
+                    <div onClick={() => handleOptionClick("option4")}>
+                      <a
+                        href="/pdfs/Samiti/18. Sankskritik Samiti.pdf"
+                        className={styles.btn1}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        सांस्कृतिक समिति
+                      </a>
+                    </div>
+
+                    <div onClick={() => handleOptionClick("option3")}>
+                      <a
+                        href="/pdfs/Samiti/19. Heritage avam Dharohar Prabandh Samiti.pdf"
+                        className={styles.btn1}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        हेरिटेज अवं धरोहर प्रबंध समिति
+                      </a>
+                    </div>
+
+                    <div onClick={() => handleOptionClick("option4")}>
+                      <a
+                        href="/pdfs/Samiti/20. Bhargava Ashram avam Ganga Ashram Samiti.pdf"
+                        className={styles.btn1}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        भार्गव आश्रम अवं गंगा आश्रम समिति
+                      </a>
+                    </div>
+
+                    <div onClick={() => handleOptionClick("option3")}>
+                      <a
+                        href="/pdfs/Samiti/21. Bhargava Patrika Salahkar Samiti.pdf"
+                        className={styles.btn1}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        भार्गव पत्रिका सलाहकार समिति
+                      </a>
+                    </div>
+
+                    <div onClick={() => handleOptionClick("option4")}>
+                      <a
+                        href="/pdfs/Samiti/22. Chikitsa Sahayata Salahkar Samiti.pdf"
+                        className={styles.btn1}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        चिकित्सा सहायता सलाहकार समिति
+                      </a>
+                    </div>
+
+                    <div onClick={() => handleOptionClick("option3")}>
+                      <a
+                        href="/pdfs/Samiti/23. Varisth Naagrik avam Punah Sthapana Samiti.pdf"
+                        className={styles.btn1}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        वरिष्ठ नागरिक अवं पुनः स्थापना समिति
+                      </a>
+                    </div>
+
+                    <div onClick={() => handleOptionClick("option4")}>
+                      <a
+                        href="/pdfs/Samiti/24. Kanooni Salahkar Samiti.pdf"
+                        className={styles.btn1}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        कानूनी सलाहकार समिति
+                      </a>
+                    </div>
+                  </div>
+                )}
+              </div>
+
               <div onClick={() => handleAbout("nidhiyan")}>सभा की निधियाँ</div>
             </div>
           )}

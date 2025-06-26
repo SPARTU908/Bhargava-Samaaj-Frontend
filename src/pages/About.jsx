@@ -63,8 +63,8 @@ const About = () => {
       {/* esthaniya sabhayein */}
       <div id="sabhayein" className={styles.container}>
         <div className={styles.heading}>स्थानीय सभाएं</div>
-        <div>
-          <img src={sabha} alt="" className={styles.history} />
+         <div>
+          <img src={samiti} alt="" className={styles.history} />
         </div>
         <div className={styles.btn}>
           <button className={styles.button}>
@@ -74,14 +74,14 @@ const About = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              स्थानीय सभाएं के बारे में जाने
+              हमारे समितियों के बारे में जानें
             </a>
           </button>
         </div>
       </div>
 
       {/* Samiti */}
-      <div id="samiti" className={styles.container}>
+      {/* <div id="samiti" className={styles.container}>
         <div className={styles.heading}>समिति </div>
         <div>
           <img src={samiti} alt="" className={styles.history} />
@@ -98,7 +98,7 @@ const About = () => {
             </a>
           </button>
         </div>
-      </div>
+      </div> */}
 
       {/* nidhiyan */}
 

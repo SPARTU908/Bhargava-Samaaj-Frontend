@@ -52,3 +52,21 @@
   .right{
     background-color: orange;
   }
+
+  @media (max-width: 426px) {
+ 
+  .container{
+  width: 632px;
+  height: 521px;
+  margin:  58px 0px 0px 61px;
+
+}
+
+ 
+
+  
+
+
+  }
+
+
