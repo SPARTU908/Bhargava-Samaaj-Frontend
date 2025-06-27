@@ -4,11 +4,9 @@ import banner from "../assets/banner.jpg";
 import president from "../assets/President.jpeg";
 import sanjay from "../assets/sanjay.jpg";
 import announcement from "../assets/announce.png";
-import activity from "../assets/activity.jpeg";
+import activity from "../assets/newad.jpeg";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
-import { FaClock } from "react-icons/fa";
-import { IoLocation } from "react-icons/io5";
 import anil from "../assets/Anil Bhargava.jpeg";
 import sanjay2 from "../assets/Sanjay Bhargava.jpeg";
 import vijay from "../assets/Vijay Bhargava.jpeg";
@@ -27,7 +25,6 @@ import salil from "../assets/salil.jpg";
 import sanjay3 from "../assets/sanjay2.jpg";
 import sohan from "../assets/sohan.jpg";
 import narayan from "../assets/narayan.jpeg";
-
 import { useNavigate } from "react-router-dom";
 
 const Homepage = () => {
@@ -77,24 +74,27 @@ const Homepage = () => {
         <div>
           <div className={styles.col1}>
             <div className={styles.festBox1}>
-              <div className={styles.day}>गुरुवार, 5 जून – गंगा दशहरा</div>
-            </div>
-            <div className={styles.festBox1}>
               <div className={styles.day}>
-                शुक्रवार, 6 जून – एकादशी (निर्जला)
-              </div>
-            </div>
-            <div className={styles.festBox1}>
-              <div className={styles.day}>रविवार, 8 जून – प्रदोष </div>
-            </div>
-            <div className={styles.festBox1}>
-              <div className={styles.day}>
-                मंगलवार, 10 जून – पूर्णिमा (व्रत)
+                {" "}
+                शुक्रवार, 27 जून – रथयात्रा (श्री जगन्नाथ  जी){" "}
               </div>
             </div>
             <div className={styles.festBox1}>
               <div className={styles.day}>
-                बुधवार, 11 जून – पूर्णिमा (स्नान){" "}
+                रविवार, 6 जुलाई – एकादशी (हरिशयनी )
+              </div>
+            </div>
+            <div className={styles.festBox1}>
+              <div className={styles.day}>मंगलवार , 8 जुलाई – प्रदोष </div>
+            </div>
+            <div className={styles.festBox1}>
+              <div className={styles.day}>
+                गुरुवार, 10 जुलाई – पूर्णिमा (व्रत एवं स्नान )(गुरु पूर्णिमा )
+              </div>
+            </div>
+            <div className={styles.festBox1}>
+              <div className={styles.day}>
+                सोमवार, 14 जुलाई – चतुर्थी (बैल चौथ)
               </div>
             </div>
           </div>

@@ -62,7 +62,7 @@ const Society = () => {
 
       {/* Hamare Mahapurush */}
       <div  id="greatMen" className={styles.container1}>
-        <div className={styles.heading}>हमारे-महापुरुष</div>
+        <div className={styles.heading2}>हमारे-महापुरुष</div>
         <div className={styles.people}>
           <div>
             <img src={img1} alt="" className={styles.img} />
@@ -99,7 +99,7 @@ const Society = () => {
 
       {/* Vanshavali */}
       <div id="genealogy" className={styles.container2}>
-        <div className={styles.heading}>वंशावली</div>
+        <div className={styles.heading3}>वंशावली</div>
         <div className={styles.vanshavali}>
           <div>
             <img src={img5} alt="" className={styles.vanshavali1} />
@@ -128,12 +128,12 @@ const Society = () => {
 
       {/* hmare tirth esthal */}
       <div id="holyPlace" className={styles.container3}>
-        <div className={styles.heading}>हमारे-र्तीथ-स्थल</div>
+        <div className={styles.heading4}>हमारे-र्तीथ-स्थल</div>
       </div>
 
       {/*  hmare sanskar*/}
       <div id="values" className={styles.container4}>
-        <div className={styles.heading}>हमारे-संस्कार</div>
+        <div className={styles.heading5}>हमारे-संस्कार</div>
         <div className={styles.sanskar}>
           संस्कार संसार के विभिन्न भागों में मानव समुदायों ने, व्यक्ति के -
           विकास और समाज से उसका सामंजस्य स्थापित करने के लिए अलग-अलग प्रकार की
@@ -169,7 +169,7 @@ const Society = () => {
 
       {/* hmare tyohar */}
       <div id="festivals" className={styles.container1}>
-        <div className={styles.heading}>हमारे-त्यौहार</div>
+        <div className={styles.heading5}>हमारे-त्यौहार</div>
         <div className={styles.tyohar}>
           हमारी जाति में बहुत से त्योहार और पर्व मनाये जाते हैं। कुछ त्योहार
           वैज्ञानिक होने के साथ-साथ रहस्यपूर्ण भी हैं। कुछ ऐसे भी हैं जिनके

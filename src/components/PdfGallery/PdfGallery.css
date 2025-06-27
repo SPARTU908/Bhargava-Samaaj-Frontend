@@ -25,3 +25,14 @@
   .card-body{
     padding-top: 4px;
   }
+
+   @media (max-width: 426px) {
+    .card{
+    border: 2px solid black;
+    height: auto;
+
+  }
+  .card-img-top{
+    height: auto;
+  }
+   }

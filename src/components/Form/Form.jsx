@@ -68,10 +68,10 @@ const Form = () => {
       "dob",
       "gotra",
       "kuldevi",
-     "education",
-     "fatherName",
+      "education",
+      "fatherName",
       "fatherProfession",
-     "motherName",
+      "motherName",
       "nativePlace",
       "address",
       "city",
@@ -443,7 +443,7 @@ const Form = () => {
 
           <div className={styles.inputBox}>
             <label htmlFor="complexion" className={styles.label1}>
-              Complexion 
+              Complexion
             </label>
             <input
               placeholder=""
@@ -559,7 +559,7 @@ const Form = () => {
 
           <div className={styles.inputBox}>
             <label htmlFor="income" className={styles.label1}>
-              Monthly Income 
+              Monthly Income
             </label>
             <input
               placeholder=""
@@ -594,7 +594,7 @@ const Form = () => {
 
           <div className={styles.inputBox}>
             <label htmlFor="otherQualification" className={styles.label1}>
-              Other Qualification 
+              Other Qualification
             </label>
             <input
               placeholder=""
@@ -840,11 +840,13 @@ const Form = () => {
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label htmlFor="photo" className={styles.label}>
-              Upload Photo (Choose file and then click on upload)
+              Upload Photo (Choose file (image format) and then click on upload)
               <span style={{ color: "red" }}>*</span>
             </label>
+            <div className={styles.fileInput}>
+              <FileUpload url={url} setUrl={setUrl} />
+            </div>
 
-            <FileUpload url={url} setUrl={setUrl} />
             {errors.photo && <p className={styles.error}>{errors.photo}</p>}
           </div>
 
@@ -869,12 +871,15 @@ const Form = () => {
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label htmlFor="bioData" className={styles.label}>
-              Upload Bio Data (Choose file and then click on upload){" "}
+              Upload Bio Data (Choose file (image format)and then click on upload){" "}
               <span style={{ color: "red" }}>*</span>
               <span></span>
             </label>
 
-            <BioDataUpload url={biourl} setUrl={setbiourl} />
+            <div className={styles.fileInput1}>
+              <BioDataUpload url={biourl} setUrl={setbiourl} />
+            </div>
+
             {errors.bioData && <p className={styles.error}>{errors.bioData}</p>}
           </div>
 

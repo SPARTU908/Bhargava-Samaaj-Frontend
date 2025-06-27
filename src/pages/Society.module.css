@@ -1,7 +1,7 @@
-.container{
-    width: 1100px;
-    height: auto;
-   margin:65px 0px 0px 130px;
+.container {
+  width: 1100px;
+  height: auto;
+  margin: 65px 0px 0px 130px;
 }
 /* .heading{
     font-size: 45px;
@@ -10,27 +10,26 @@
     font-weight: bold;
     color: #eb5c22
 } */
-.content{
-    line-height: 30px;
-    text-align: justify;
-    padding: 0px 0px 32px 0px;
+.content {
+  line-height: 30px;
+  text-align: justify;
+  padding: 0px 0px 32px 0px;
 }
-.btnBox{
-    padding: 0px 0px 10px 490px
+.btnBox {
+  padding: 0px 0px 10px 490px;
 }
 
-.btn{
-    background-color: #E94D0D;
-    color: white;
-    font-weight: bold;
-
+.btn {
+  background-color: #e94d0d;
+  color: white;
+  font-weight: bold;
 }
 
 /* Hamare mahapurush */
-.container1{
-    width: auto;
-    height: auto;
-    margin-top: 82px;
+.container1 {
+  width: auto;
+  height: auto;
+  margin-top: 82px;
 }
 /* .heading1{
     font-size: 45px;
@@ -39,116 +38,146 @@
     font-weight: bold;
     color: #eb5c22;
 } */
-.people{
-    display: flex;
-    gap: 3%;
+.people {
+  display: flex;
+  gap: 3%;
 }
-.img{
-    padding: 30px;
+.img {
+  padding: 30px;
 }
-.name{
-    text-align: center;
-    font-size: 17px;
-    padding: 0px 20px 20px;
-    font-weight: bold;
-    line-height: 25px;
+.name {
+  text-align: center;
+  font-size: 17px;
+  padding: 0px 20px 20px;
+  font-weight: bold;
+  line-height: 25px;
 }
-.btnBox1{
-    padding: 0px 0px 0px 628px;
+.btnBox1 {
+  padding: 0px 0px 0px 628px;
 }
-.btn1{
-    background-color: #E94D0D;
-    color: white;
-    font-weight: bold;
+.btn1 {
+  background-color: #e94d0d;
+  color: white;
+  font-weight: bold;
 }
-
-
 
 /* Vanshavali */
-.container2{
-    width: auto;
-    height: auto;
-    margin-top: 82px;
+.container2 {
+  width: auto;
+  height: auto;
+  margin-top: 82px;
 }
-.vanshavali{
-    display: flex;
+.vanshavali {
+  display: flex;
 }
-.vanshavali1{
-    width: 425px;
-    margin: 30px 60px 0px 158px;
-    border: 7px solid black;
+.vanshavali1 {
+  width: 425px;
+  margin: 30px 60px 0px 158px;
+  border: 7px solid black;
 }
-.vanshavali2{
-    width: 495px;
-    height: 311px;
-    border: 7px solid black;
-    margin: 30px 0px 0px 0px;
+.vanshavali2 {
+  width: 495px;
+  height: 311px;
+  border: 7px solid black;
+  margin: 30px 0px 0px 0px;
 }
-.para{
-    margin: 10px 0px 0px 10px;
-    font-weight: 500;
-    width: 473px;
-    line-height: 25px;
+.para {
+  margin: 10px 0px 0px 10px;
+  font-weight: 500;
+  width: 473px;
+  line-height: 25px;
 }
-.btnBox2{
-    padding: 25px 0px 10px 604px;
-}
-
-.btn2{
-    background-color: #E94D0D;
-    color: white;
+.btnBox2 {
+  padding: 25px 0px 10px 604px;
 }
 
+.btn2 {
+  background-color: #e94d0d;
+  color: white;
+}
 
 /* hmare tirth esthl*/
-.container3{
-    width: auto;
-    height: auto;
-    margin-top: 82px;}
-
-
-
- /* hmare sanskar */
-
-.container4{
-    width: auto;
-    height: auto;
-    margin-top: 82px;
-
-}
-.sanskar{
-    line-height: 30px;
-    text-align: justify;
-    padding: 0px 40px 32px 40px;
+.container3 {
+  width: auto;
+  height: auto;
+  margin-top: 82px;
 }
 
- /* hmare tyohar */
+/* hmare sanskar */
 
- .tyohar{
-    line-height: 30px;
-    text-align: justify;
-    padding: 0px 40px 32px 40px;
+.container4 {
+  width: auto;
+  height: auto;
+  margin-top: 82px;
+}
+.sanskar {
+  line-height: 30px;
+  text-align: justify;
+  padding: 0px 40px 32px 40px;
+}
 
- }
+/* hmare tyohar */
 
+.tyohar {
+  line-height: 30px;
+  text-align: justify;
+  padding: 0px 40px 32px 40px;
+}
 
- .heading {
+.heading {
   position: relative;
-  font-family: 'Tiro Devanagari Hindi', serif;
+  font-family: "Tiro Devanagari Hindi", serif;
   font-size: 2.2rem;
   text-align: center;
   color: #ee7b4e;
   margin-bottom: 2rem;
   font-weight: bold;
 }
+.heading2 {
+  position: relative;
+  font-family: "Tiro Devanagari Hindi", serif;
+  font-size: 2.2rem;
+  margin-left: 249px;
+  color: #ee7b4e;
+  margin-bottom: 2rem;
+  font-weight: bold;
+}
+.heading3 {
+  position: relative;
+  font-family: "Tiro Devanagari Hindi", serif;
+  font-size: 2.2rem;
+  margin-left: 249px;
+  color: #ee7b4e;
+  margin-bottom: 2rem;
+  font-weight: bold;
+}
+.heading4 {
+  position: relative;
+  font-family: "Tiro Devanagari Hindi", serif;
+  font-size: 2.2rem;
+  margin-left: 249px;
+  color: #ee7b4e;
+  margin-bottom: 2rem;
+  font-weight: bold;
+}
+.heading5 {
+  position: relative;
+  font-family: "Tiro Devanagari Hindi", serif;
+  font-size: 2.2rem;
+  margin-left: 249px;
+  color: #ee7b4e;
+  margin-bottom: 2rem;
+  font-weight: bold;
+}
+
 
 .heading::after,
 .heading::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #8B0000;
+  background-color: #8b0000;
   height: 2px;
   width: 100px;
 }
@@ -162,16 +191,59 @@
   width: 60px;
 }
 
-.btn1:hover{
-    color: #ed8e67;
-    
+.btn1:hover {
+  color: #ed8e67;
 }
-.dropdownContent:hover{
-    color:#ed8e67;
+.dropdownContent:hover {
+  color: #ed8e67;
 }
 
-
-
-
-
-
+@media (max-width: 426px) {
+  .container {
+    width: 655px;
+    height: auto;
+    margin: 65px 0px 0px 13px;
+  }
+  .btnBox{
+    padding: 0px 0px 10px 285px;
+  }
+  .btnBox1{
+    padding: 0px 0px 0px 332px;
+  }
+  .vanshavali{
+    display: flex;
+    flex-direction: column;
+  }
+  .vanshavali1{
+    width: 425px;
+    margin: 30px 60px 0px 106px;
+    border: 7px solid black;
+  }
+  .vanshavali2{
+    width: 495px;
+    height: 311px;
+    border: 7px solid black;
+    margin: 8px 0px 0px 76px;
+  }
+  .para{
+    margin: 10px 0px 0px 88px;
+    font-weight: 500;
+    width: 473px;
+    line-height: 25px;
+  }
+  .btnBox2{
+    padding: 25px 0px 10px 297px;
+  }
+  .sanskar{
+    line-height: 30px;
+    text-align: justify;
+    padding: 0px 40px 32px 10px;
+    width: 694px;
+  }
+  .tyohar{
+    line-height: 30px;
+    text-align: justify;
+    padding: 0px 30px 32px 16px;
+    width: 681px;
+  }
+}

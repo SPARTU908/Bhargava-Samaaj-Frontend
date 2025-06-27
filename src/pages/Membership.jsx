@@ -88,11 +88,11 @@ const Membership = ({ nextStep }) => {
       newErrors.fatherName = "कृपया पिता का नाम दर्ज करें।";
     if (!memberData.gotra) newErrors.gotra = "कृपया गोत्र दर्ज करें।";
     if (!memberData.kuldevi) newErrors.kuldevi = "कृपया कुलदेवी दर्ज करें।";
-   if (!memberData.mobile) {
-  newErrors.mobile = "कृपया मोबाइल नंबर दर्ज करें।";
-} else if (!/^[6-9]\d{9}$/.test(memberData.mobile)) {
-  newErrors.mobile = "कृपया मान्य 10 अंकों का मोबाइल नंबर दर्ज करें।";
-}
+    if (!memberData.mobile) {
+      newErrors.mobile = "कृपया मोबाइल नंबर दर्ज करें।";
+    } else if (!/^[6-9]\d{9}$/.test(memberData.mobile)) {
+      newErrors.mobile = "कृपया मान्य 10 अंकों का मोबाइल नंबर दर्ज करें।";
+    }
     if (!memberData.occupation)
       newErrors.occupation = "कृपया व्यवसाय दर्ज करें।";
     if (!selectedFee)
@@ -113,10 +113,11 @@ const Membership = ({ nextStep }) => {
           newErrors.spouseEmail = "कृपया जीवनसाथी का मान्य ईमेल दर्ज करें।";
         }
         if (!memberData.spouseMobile) {
-  newErrors.spouseMobile = "कृपया जीवनसाथी का मोबाइल नंबर दर्ज करें।";
-} else if (!/^[6-9]\d{9}$/.test(memberData.spouseMobile)) {
-  newErrors.spouseMobile = "कृपया जीवनसाथी का मान्य 10 अंकों का मोबाइल नंबर दर्ज करें।";
-}
+          newErrors.spouseMobile = "कृपया जीवनसाथी का मोबाइल नंबर दर्ज करें।";
+        } else if (!/^[6-9]\d{9}$/.test(memberData.spouseMobile)) {
+          newErrors.spouseMobile =
+            "कृपया जीवनसाथी का मान्य 10 अंकों का मोबाइल नंबर दर्ज करें।";
+        }
         if (!spousephotourl)
           newErrors.spousePhoto = "कृपया जीवनसाथी की फोटो अपलोड करें।";
         if (!spousesignatureurl)
@@ -125,10 +126,9 @@ const Membership = ({ nextStep }) => {
     }
     return newErrors;
   };
- const handleLogin = () =>{
-    navigate("/payment")
-  }
-
+  const handleLogin = () => {
+    navigate("/payment");
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -239,14 +239,16 @@ const Membership = ({ nextStep }) => {
           हैं
         </div>
         <div>
-          <button className={styles.submit} onClick={handleLogin}>Upload the form </button>
+          <button className={styles.submit} onClick={handleLogin}>
+            Upload the form{" "}
+          </button>
         </div>
       </div>
 
       <div>
         <div className={styles.fees}>
           <div className={styles.memberFees}>सदस्यता शुल्क </div>
-          <label className={styles.row1}>
+          <label className={styles.rows}>
             <input
               type="radio"
               name="membership"
@@ -560,20 +562,27 @@ const Membership = ({ nextStep }) => {
           <div className={styles.row1}>
             <div className={styles.inputBox}>
               <label htmlFor="photo" className={styles.label}>
-                Upload Photo (Choose and upload)<span style={{ color: "red" }}>*</span>
+                Upload Photo (Choose file in image format and upload)
+                <span style={{ color: "red" }}>*</span>
               </label>
-              <PhotoUpload url={photourl} setUrl={setPhotoUrl} />
+              <div className={styles.uploadurl}>
+                <PhotoUpload url={photourl} setUrl={setPhotoUrl} />
+              </div>
+
               {errors.photo && <p className={styles.error}>{errors.photo}</p>}
             </div>
             <div className={styles.inputBox}>
               <label htmlFor="spousePhoto" className={styles.label}>
-                Upload Spouse Photo (Choose and upload)
+                Upload Spouse Photo (Choose file in image format and upload)
               </label>
-              <SpousePhotoUpload
-                url={spousephotourl}
-                setUrl={setSpousePhotoUrl}
-                disabled={!showSpouseFields}
-              />
+              <div className={styles.uploadurl}>
+                <SpousePhotoUpload
+                  url={spousephotourl}
+                  setUrl={setSpousePhotoUrl}
+                  disabled={!showSpouseFields}
+                />
+              </div>
+
               {errors.spousePhoto && (
                 <p className={styles.error}>{errors.spousePhoto}</p>
               )}
@@ -583,22 +592,28 @@ const Membership = ({ nextStep }) => {
           <div className={styles.row1}>
             <div className={styles.inputBox}>
               <label htmlFor="signature" className={styles.label}>
-                Upload Signature (Choose and upload)<span style={{ color: "red" }}>*</span>
+                Upload Signature (Choose file in image format and upload)
+                <span style={{ color: "red" }}>*</span>
               </label>
-              <SignatureUpload url={signatureurl} setUrl={setSignatureUrl} />
-              {errors.signature && (
-                <p className={styles.error}>{errors.signature}</p>
-              )}
+              <div className={styles.uploadurl}>
+                <SignatureUpload url={signatureurl} setUrl={setSignatureUrl} />
+                {errors.signature && (
+                  <p className={styles.error}>{errors.signature}</p>
+                )}
+              </div>
             </div>
             <div className={styles.inputBox}>
               <label htmlFor="spouseSignature" className={styles.label}>
-                Upload Spouse Signature (Choose and upload)
+                Upload Spouse Signature (Choose file in image format and upload)
               </label>
-              <SpouseSignatureUpload
-                url={spousesignatureurl}
-                setUrl={setSpouseSignatureUrl}
-                disabled={!showSpouseFields}
-              />
+              <div className={styles.uploadurl}>
+                <SpouseSignatureUpload
+                  url={spousesignatureurl}
+                  setUrl={setSpouseSignatureUrl}
+                  disabled={!showSpouseFields}
+                />
+              </div>
+
               {errors.spouseSignature && (
                 <p className={styles.error}>{errors.spouseSignature}</p>
               )}
