@@ -10,11 +10,12 @@ const Navbar = () => {
   const [isDropdownOpen2, setIsDropdownOpen2] = useState(false);
   const [isDropdownOpen3, setIsDropdownOpen3] = useState(false);
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
+  const [isMatchDropdownOpen, setIsMatchDropdownOpen] = useState(false);
   const [isSamitiDropdownOpen, setIsSamitiDropdownOpen] = useState(false);
   const [language, setLanguage] = useState("hi");
 
   const handleSamitiToggle = (e) => {
-   e.stopPropagation();
+    e.stopPropagation();
     setIsSamitiDropdownOpen((prev) => !prev); // Toggle dropdown
   };
 
@@ -48,6 +49,8 @@ const Navbar = () => {
   const toggleDropdown3 = () => {
     setIsDropdownOpen3((prev) => !prev);
   };
+
+    const toggleMatchDropdown = () => setIsMatchDropdownOpen((prev) => !prev);
   const toggleHamburger = () => setHamburgerOpen((prev) => !prev);
 
   const navigate = useNavigate();
@@ -91,6 +94,10 @@ const Navbar = () => {
   const handleAdmin = () => {
     navigate("/admin");
   };
+  const handleRegister = () => {
+    navigate("/vivahmemberregister");
+  };
+
   const handleSociety = (sectionId) => {
     navigate("/society");
     setTimeout(() => {
@@ -461,6 +468,21 @@ const Navbar = () => {
         </div>
         <div className={styles.menu} onClick={handleForm}>
           फ़ॉर्म डाउनलोड करें
+        </div>
+        <div className={styles.dropdown} onClick={toggleMatchDropdown}>
+          <div className={styles.dropbtn}>
+            Find a Match <FaChevronDown className={styles.arrow} />
+          </div>
+          {isMatchDropdownOpen && (
+            <div className={styles.dropdownContent}>
+              <div onClick={() => handleNavigate("/findyourmatch")}>
+                Find Your Perfect Match
+              </div>
+              <div onClick={() => handleNavigate("/vivahmemberregister")}>
+                Find a Match for Your Loved One
+              </div>
+            </div>
+          )}
         </div>
         <div className={styles.menu} onClick={handleAdmin}>
           Admin Login

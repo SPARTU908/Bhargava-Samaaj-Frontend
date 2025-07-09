@@ -1,98 +1,103 @@
-.container{
-    display: flex;
-    margin: 40px 0px 0px 20px ;
+.container {
+  display: flex;
+  margin: 40px 0px 0px 20px;
+}
+.payment {
+  font-size: 25px;
+  font-weight: bold;
+  margin-left: 28px;
+}
+.step1 {
+  margin: 30px 0px 0px 40px;
+  display: flex;
+  flex-direction: column;
+}
+.submit {
+  font-size: 25px;
+  font-weight: bold;
+}
+.btn {
+  background-color: #e95114;
+  color: white;
+}
+.btnupload {
+  background-color: #e95114;
+  color: white;
+  margin: 20px 0px;
+}
+.btns {
+  display: flex;
+  gap: 100px;
+}
 
+.step2 {
+  display: flex;
+  flex-direction: column;
+  margin: 30px 0px 0px 220px;
 }
-.payment{
- font-size: 25px;
-font-weight: bold;
-margin-left: 28px;
+.name {
+  margin: 20px 0px 0px 30px;
 }
-.step1{
-    margin: 30px 0px 0px 40px;
-    display: flex;
-    flex-direction: column;
+.info {
+  font-weight: bold;
+  margin: 20px 0px;
 }
-.submit{
-    font-size: 25px;
-    font-weight: bold;
+.number {
+  margin: 20px 0px 0px 30px;
 }
-.btn{
-    background-color: #e95114;
-    color: white;
+.location {
+  margin: 20px 0px 0px 30px;
 }
-.btnupload{
-   background-color: #e95114;
-    color: white;
-    margin: 20px 0px;
+.ifsc {
+  margin: 20px 0px 0px 30px;
 }
-.btns{
- display: flex;
- gap: 100px; 
+.micr {
+  margin: 20px 0px 0px 30px;
 }
-
-
-.step2{
-     display: flex;
-    flex-direction: column;
-    margin: 30px 0px 0px 220px;
-}
-.name{
-    margin: 20px 0px 0px 30px;
-}
-.info{
-    font-weight: bold;
-    margin: 20px 0px;
-}
-.number{
-    margin: 20px 0px 0px 30px;
-}
-.location{
-    margin:20px 0px 0px 30px;
-
-}
-.ifsc{
-     margin:20px 0px 0px 30px;
-}
-.micr{
-     margin:20px 0px 0px 30px;
-}
-.qr{
- 
-   margin: 53px 0px 0px 81px;
-    
+.qr {
+  margin: 53px 0px 0px 81px;
 }
 .inputBox {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1rem;
-  }
-  
-  .label {
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-    font-size: 1rem;
-    color: #333;
-    margin: 36px 0px 8px 1px;
-  }
-   .input {
-    padding: 0.5rem;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 455px;
-    margin: 5px 0px 0px 1px;
-  }
-  .plan{
-    font-weight: bold;
-    margin: 12px 0px 0px 118px;
-  }
-  .planing{
-    margin: 40px 0px 0px 195px;
-  }
-  .error {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.label {
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #333;
+  margin: 36px 0px 8px 3px;
+}
+.input {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 455px;
+  margin: 5px 0px 0px 1px;
+}
+.plan {
+  font-weight: bold;
+  margin: 12px 0px 0px 118px;
+}
+.planing {
+  margin: 40px 0px 0px 195px;
+}
+.error {
   color: red;
   font-size: 0.85rem;
   margin-top: 4px;
 }
-
+.input1 {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 455px;
+  margin: 4px 0px 0px 0px;
+}
+.step3 {
+  margin: 10px 0px 0px 490px;
+}

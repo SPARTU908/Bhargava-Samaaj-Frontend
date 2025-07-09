@@ -10,8 +10,9 @@ import SpousePhotoUpload from "../components/SpousePhotoUpload/SpousePhotoUpload
 import SpouseSignatureUpload from "../components/SpouseSignatureUpload/SpouseSignatureUpload";
 import { registerMember } from "../apis/member";
 import Navbar from "../components/Navbar/Navbar";
+import axios from "axios";
 
-const Membership = ({ nextStep }) => {
+const Membership = () => {
   const [memberData, setMemberData] = useState({
     username: "",
     email: "",
@@ -43,6 +44,10 @@ const Membership = ({ nextStep }) => {
   const [showModal, setShowModal] = useState(false);
   const [userData, setUserData] = useState({ email: "", password: "" });
   const [plan, setPlan] = useState("");
+  const [photoFile, setPhotoFile] = useState(null);
+  const [signatureFile, setSignatureFile] = useState(null);
+  const [spousePhotoFile, setSpousePhotoFile] = useState(null);
+  const [spouseSignatureFile, setSpouseSignatureFile] = useState(null);
 
   const navigate = useNavigate();
   const handleFormChange = (e) => {
@@ -82,8 +87,9 @@ const Membership = ({ nextStep }) => {
     if (!memberData.address) newErrors.address = "कृपया पता दर्ज करें।";
     if (!memberData.dob) newErrors.dob = "कृपया जन्म तिथि चुनें।";
     if (!memberData.pincode) newErrors.pincode = "कृपया पिनकोड दर्ज करें।";
-    if (!photourl) newErrors.photo = "कृपया फोटो अपलोड करें।";
-    if (!signatureurl) newErrors.signature = "कृपया हस्ताक्षर अपलोड करें।";
+  if (!photoFile) newErrors.photo = "कृपया फोटो अपलोड करें।";
+if (!signatureFile) newErrors.signature = "कृपया हस्ताक्षर अपलोड करें।";
+    // if (!signatureurl) newErrors.signature = "कृपया हस्ताक्षर अपलोड करें।";
     if (!memberData.fatherName)
       newErrors.fatherName = "कृपया पिता का नाम दर्ज करें।";
     if (!memberData.gotra) newErrors.gotra = "कृपया गोत्र दर्ज करें।";
@@ -118,10 +124,12 @@ const Membership = ({ nextStep }) => {
           newErrors.spouseMobile =
             "कृपया जीवनसाथी का मान्य 10 अंकों का मोबाइल नंबर दर्ज करें।";
         }
-        if (!spousephotourl)
-          newErrors.spousePhoto = "कृपया जीवनसाथी की फोटो अपलोड करें।";
-        if (!spousesignatureurl)
-          newErrors.spouseSignature = "कृपया जीवनसाथी का हस्ताक्षर अपलोड करें।";
+      if (showSpouseFields) {
+  if (!spousePhotoFile)
+    newErrors.spousePhoto = "कृपया जीवनसाथी की फोटो अपलोड करें।";
+  if (!spouseSignatureFile)
+    newErrors.spouseSignature = "कृपया जीवनसाथी का हस्ताक्षर अपलोड करें।";
+}
       }
     }
     return newErrors;
@@ -134,97 +142,156 @@ const Membership = ({ nextStep }) => {
     const { name, value } = e.target;
     setMemberData({ ...memberData, [name]: value });
   };
+const uploadToCloudinary = async (file) => {
+  const formData = new FormData();
+  formData.append("file", file);
+  const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/upload`, formData);
+  return res.data.url;
+};
+
+
+  // const handleSubmit = async (e) => {
+  //   memberData.photo = photourl;
+  //   memberData.signature = signatureurl;
+  //   memberData.spousePhoto = spousephotourl;
+  //   memberData.spouseSignature = spousesignatureurl;
+  //   memberData.uploadReferenceSignature = referencesignatureurl;
+  //   memberData.membership = selectedFee;
+
+  //   e.preventDefault();
+
+  //   const validationErrors = validate();
+
+  //   if (Object.keys(validationErrors).length > 0) {
+  //     setErrors(validationErrors);
+  //     toast.error("कृपया सभी आवश्यक फ़ील्ड भरें।", {
+  //       position: "top-center",
+  //     });
+  //     return;
+  //   } else {
+  //     setErrors({});
+  //   }
+
+  //   try {
+  //     const result = await registerMember(memberData);
+  //     console.log("result", result);
+  //     localStorage.setItem("memberName", memberData.username);
+  //     localStorage.setItem("memberEmail", memberData.email);
+  //     if (result.success) {
+  //       toast.success(
+  //         result.data.message || "Thanks for submitting your details!",
+  //         {
+  //           position: "top-center",
+  //           autoClose: 3000,
+  //           hideProgressBar: false,
+  //           closeOnClick: true,
+  //           pauseOnHover: false,
+  //           draggable: true,
+  //           progress: undefined,
+  //           theme: "light",
+  //         }
+  //       );
+  //       setPlan(memberData.membership, console.log(memberData.membership));
+
+  //       // Reset form
+  //       setMemberData({
+  //         username: "",
+  //         email: "",
+  //         address: "",
+  //         mobile: "",
+  //         spouse: "",
+  //         dob: "",
+  //         pincode: "",
+  //         photo: "",
+  //         signature: "",
+  //         fatherName: "",
+  //         gotra: "",
+  //         kuldevi: "",
+  //         occupation: "",
+  //         spouseMobile: "",
+  //         spouseEmail: "",
+  //         spousePhoto: "",
+  //         spouseSignature: "",
+  //         membership: "",
+  //       });
+
+  //       setPhotoUrl("");
+  //       setSignatureUrl("");
+  //       setSpousePhotoUrl("");
+  //       setSpouseSignatureUrl("");
+  //       setReferenceSignatureUrl("");
+  //       setSelectedFee("");
+  //       console.log("Member Data Submitted:", memberData);
+  //       setTimeout(() => {
+  //         console.log(plan);
+  //         navigate("/displayform", {
+  //           state: {
+  //             membership: memberData.membership,
+  //             name: memberData.username,
+  //             email: memberData.email,
+  //           },
+  //         });
+  //       }, 2000);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error submitting form:", error);
+  //     toast.error(
+  //       error.response?.data?.message || "फॉर्म सबमिट करते समय कुछ त्रुटि हुई।"
+  //     );
+  //   }
+  // };
+
+
 
   const handleSubmit = async (e) => {
-    memberData.photo = photourl;
-    memberData.signature = signatureurl;
-    memberData.spousePhoto = spousephotourl;
-    memberData.spouseSignature = spousesignatureurl;
-    memberData.uploadReferenceSignature = referencesignatureurl;
-    memberData.membership = selectedFee;
+  e.preventDefault();
 
-    e.preventDefault();
+  const validationErrors = validate();
+  if (Object.keys(validationErrors).length > 0) {
+    setErrors(validationErrors);
+    toast.error("कृपया सभी आवश्यक फ़ील्ड भरें।", {
+      position: "top-center",
+    });
+    return;
+  }
 
-    const validationErrors = validate();
+  try {
+    toast.success("Thanks for submitting the form!", {
+      position: "top-center",
+    });
 
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      toast.error("कृपया सभी आवश्यक फ़ील्ड भरें।", {
-        position: "top-center",
+    const photoUrl = photoFile ? await uploadToCloudinary(photoFile) : "";
+    const signatureUrl = signatureFile ? await uploadToCloudinary(signatureFile) : "";
+    const spousePhotoUrl = spousePhotoFile ? await uploadToCloudinary(spousePhotoFile) : "";
+    const spouseSignatureUrl = spouseSignatureFile ? await uploadToCloudinary(spouseSignatureFile) : "";
+
+    const submissionData = {
+      ...memberData,
+      photo: photoUrl,
+      signature: signatureUrl,
+      spousePhoto: spousePhotoUrl,
+      spouseSignature: spouseSignatureUrl,
+      uploadReferenceSignature: referencesignatureurl,
+      membership: selectedFee,
+    };
+
+    const result = await registerMember(submissionData);
+
+    if (result.success) {
+      toast.success("Form submitted successfully!", { position: "top-center" });
+      navigate("/displayform", {
+        state: {
+          membership: selectedFee,
+          name: memberData.username,
+          email: memberData.email,
+        },
       });
-      return;
-    } else {
-      setErrors({});
     }
-
-    try {
-      const result = await registerMember(memberData);
-      console.log("result", result);
-      localStorage.setItem("memberName", memberData.username);
-      localStorage.setItem("memberEmail", memberData.email);
-      if (result.success) {
-        toast.success(
-          result.data.message || "Thanks for submitting your details!",
-          {
-            position: "top-center",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          }
-        );
-        setPlan(memberData.membership, console.log(memberData.membership));
-
-        // Reset form
-        setMemberData({
-          username: "",
-          email: "",
-          address: "",
-          mobile: "",
-          spouse: "",
-          dob: "",
-          pincode: "",
-          photo: "",
-          signature: "",
-          fatherName: "",
-          gotra: "",
-          kuldevi: "",
-          occupation: "",
-          spouseMobile: "",
-          spouseEmail: "",
-          spousePhoto: "",
-          spouseSignature: "",
-          membership: "",
-        });
-
-        setPhotoUrl("");
-        setSignatureUrl("");
-        setSpousePhotoUrl("");
-        setSpouseSignatureUrl("");
-        setReferenceSignatureUrl("");
-        setSelectedFee("");
-        console.log("Member Data Submitted:", memberData);
-        setTimeout(() => {
-          console.log(plan);
-          navigate("/displayform", {
-            state: {
-              membership: memberData.membership,
-              name: memberData.username,
-              email: memberData.email,
-            },
-          });
-        }, 2000);
-      }
-    } catch (error) {
-      console.error("Error submitting form:", error);
-      toast.error(
-        error.response?.data?.message || "फॉर्म सबमिट करते समय कुछ त्रुटि हुई।"
-      );
-    }
-  };
+  } catch (error) {
+    toast.error("File upload or form submission failed.");
+    console.error("Submission error:", error);
+  }
+};
 
   return (
     <>
@@ -238,8 +305,8 @@ const Membership = ({ nextStep }) => {
           सम्भवत: 18 वर्ष या उससे अधिक आयु के सभी महिला/पुरुष नियमुसार बन सकते
           हैं
         </div>
-        <div>
-          <button className={styles.submit} onClick={handleLogin}>
+        <div className={styles.mobilebtn}>
+          <button className={styles.upload} onClick={handleLogin}>
             Upload the form{" "}
           </button>
         </div>
@@ -562,25 +629,26 @@ const Membership = ({ nextStep }) => {
           <div className={styles.row1}>
             <div className={styles.inputBox}>
               <label htmlFor="photo" className={styles.label}>
-                Upload Photo (Choose file in image format and upload)
+                Upload Photo
                 <span style={{ color: "red" }}>*</span>
               </label>
               <div className={styles.uploadurl}>
-                <PhotoUpload url={photourl} setUrl={setPhotoUrl} />
+              <PhotoUpload file={photoFile} setFile={setPhotoFile} />
               </div>
 
               {errors.photo && <p className={styles.error}>{errors.photo}</p>}
             </div>
             <div className={styles.inputBox}>
               <label htmlFor="spousePhoto" className={styles.label}>
-                Upload Spouse Photo (Choose file in image format and upload)
+                Upload Spouse Photo
               </label>
               <div className={styles.uploadurl}>
-                <SpousePhotoUpload
+                <SpousePhotoUpload file={spousePhotoFile} setFile={setSpousePhotoFile}   disabled={!showSpouseFields}/>
+                {/* <SpousePhotoUpload
                   url={spousephotourl}
                   setUrl={setSpousePhotoUrl}
                   disabled={!showSpouseFields}
-                />
+                /> */}
               </div>
 
               {errors.spousePhoto && (
@@ -592,11 +660,11 @@ const Membership = ({ nextStep }) => {
           <div className={styles.row1}>
             <div className={styles.inputBox}>
               <label htmlFor="signature" className={styles.label}>
-                Upload Signature (Choose file in image format and upload)
+                Upload Signature
                 <span style={{ color: "red" }}>*</span>
               </label>
               <div className={styles.uploadurl}>
-                <SignatureUpload url={signatureurl} setUrl={setSignatureUrl} />
+               <SignatureUpload file={signatureFile} setFile={setSignatureFile} />
                 {errors.signature && (
                   <p className={styles.error}>{errors.signature}</p>
                 )}
@@ -604,14 +672,15 @@ const Membership = ({ nextStep }) => {
             </div>
             <div className={styles.inputBox}>
               <label htmlFor="spouseSignature" className={styles.label}>
-                Upload Spouse Signature (Choose file in image format and upload)
+                Upload Spouse Signature
               </label>
               <div className={styles.uploadurl}>
-                <SpouseSignatureUpload
+                {/* <SpouseSignatureUpload
                   url={spousesignatureurl}
                   setUrl={setSpouseSignatureUrl}
                   disabled={!showSpouseFields}
-                />
+                /> */}
+                <SpouseSignatureUpload file={spouseSignatureFile} setFile={setSpouseSignatureFile}  disabled={!showSpouseFields} />
               </div>
 
               {errors.spouseSignature && (
@@ -629,7 +698,6 @@ const Membership = ({ nextStep }) => {
             >
               Save & Continue
             </button>
-            {/* <button className={styles.submit} onClick={nextStep}>Next</button> */}
           </div>
         </div>
       </div>

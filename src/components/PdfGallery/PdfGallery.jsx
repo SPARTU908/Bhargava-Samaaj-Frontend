@@ -11,9 +11,7 @@ const allMonths = [
 const pdfData = [
   {
     year: 2025,
-    months:["January","February","March","April","May","June"
-
-    ]
+    months: ["January", "February", "March", "April", "May", "June"]
   },
   {
     year: 2024,
@@ -60,46 +58,59 @@ const coverImages = {
   "December-2023": "/covers/dec-2023.png",
 };
 
+// For sorting months in correct order
+const monthOrder = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
+
 const PdfGallery = () => {
+  // Sort years descending
+  const sortedPdfData = [...pdfData].sort((a, b) => b.year - a.year);
+
   return (
     <div className="container">
-      {pdfData.map((yearBlock) => (
-        <div key={yearBlock.year} className="mb-5">
-          <div className="row">
-            {yearBlock.months.map((month, index) => {
-              const fileKey = `${month}-${yearBlock.year}`;
-              const filePath = `/pdfs/${yearBlock.year}/${month}-${yearBlock.year}.pdf`;
-              const imagePath = coverImages[fileKey] || "/covers/default.jpg"; // fallback image
+      {sortedPdfData.map((yearBlock) => {
+        // Sort months in reverse chronological order
+        const sortedMonths = [...yearBlock.months].sort(
+          (a, b) => monthOrder.indexOf(b) - monthOrder.indexOf(a)
+        );
 
-              return (
-                <div className="col-md-3 mb-4" key={index}>
-                  <a
-                    href={filePath}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="card text-decoration-none"
-                  >
-                    <img
-                      src={imagePath}
-                      className="card-img-top"
-                      alt={`${month} ${yearBlock.year}`}
-                    />
-                    <div className="card-body">
-                      <p className="card-text text-dark">{month} {yearBlock.year}</p>
-                    </div>
-                  </a>
-                </div>
-              );
-            })}
+        return (
+          <div key={yearBlock.year} className="mb-5">
+            <div className="row">
+              {sortedMonths.map((month, index) => {
+                const fileKey = `${month}-${yearBlock.year}`;
+                const filePath = `/pdfs/${yearBlock.year}/${month}-${yearBlock.year}.pdf`;
+                const imagePath = coverImages[fileKey] || "/covers/default.jpg";
+
+                return (
+                  <div className="col-md-3 mb-4" key={index}>
+                    <a
+                      href={filePath}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="card text-decoration-none"
+                    >
+                      <img
+                        src={imagePath}
+                        className="card-img-top"
+                        alt={`${month} ${yearBlock.year}`}
+                      />
+                      <div className="card-body">
+                        <p className="card-text text-dark">{month} {yearBlock.year}</p>
+                      </div>
+                    </a>
+                  </div>
+                );
+              })}
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 };
 
 export default PdfGallery;
-
-
-
 

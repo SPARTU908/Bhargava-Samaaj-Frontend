@@ -103,15 +103,19 @@
 .dual {
   margin-left: 40px;
 }
-.rows{
-    display: flex;
-    margin-top: 30px;
-  }
+.rows {
+  display: flex;
+  margin-top: 30px;
+}
+.upload {
+  margin: 30px 0px 18px 49px;
+  background-color: #e95114;
+  color: white;
+}
 .submit {
   margin: 30px 0px 18px 49px;
   background-color: #e95114;
   color: white;
-  /* width: 190px; */
 }
 .error {
   color: red;
@@ -131,31 +135,45 @@
 .reference {
   margin-top: 20px;
 }
+.mobilebtn {
+  margin-left: 100px;
+}
+.btn {
+  margin-left: 100px;
+}
 
-@media (max-width: 426px) {
+@media (max-width: 320px) {
   .logo {
     margin-left: 100px;
     margin-top: 20px;
   }
+  .mobilebtn {
+    margin-left: 100px;
+  }
+  .btn {
+    margin-left: 45px;
+  }
+  .container {
+    margin: 54px 30px;
+  }
   .heading {
-        margin-left: 40px;
-        font-size: 15px;
-        font-weight: bold;
-        margin-top: 45px;
-        color: #ec6e3c;
-        width: 641px;
-        line-height: 23px;
+    margin-left: 13px;
+    font-size: 15px;
+    font-weight: bold;
+    margin-top: 45px;
+    color: #ec6e3c;
+    width: 541px;
+    line-height: 23px;
   }
   .age {
-       margin: 30px 69px 0px 45px;
-        font-weight: bold;
-        width: 620px;
-        line-height: 20px;
+    margin: 30px 69px 0px 0px;
+    font-weight: bold;
+   
   }
   .fees {
     border: 2px solid black;
     width: 500px;
-    margin: 36px 0px 0px 120px;
+    margin: 36px 0px 0px 26px;
     padding: 10px;
     height: auto;
   }
@@ -164,8 +182,8 @@
     flex-direction: column;
     margin-top: 20px;
   }
-  
-  .input{
+
+  .input {
     padding: 0.5rem;
     font-size: 1rem;
     border: 1px solid #ccc;
@@ -173,25 +191,66 @@
     width: 455px;
     margin: 4px 0px 0px 0px;
   }
-  .label{
+  .label {
     margin-bottom: 0.5rem;
     font-weight: 600;
     font-size: 1rem;
     color: #333;
     margin: 0px 0px 8px 0px;
   }
-  .uploadurl{
+  .uploadurl {
     margin-left: -49px;
   }
-  .subheading{
+  .subheading {
     display: flex;
     flex-direction: column;
   }
-  .submit{
+  .submit {
     margin: 32px 0px 0px 245px;
     background-color: #e95114;
     color: white;
   }
+  .upload {
+    margin: 32px 0px 0px 245px;
+    background-color: #e95114;
+    color: white;
+  }
+}
 
- 
+@media (max-width: 375px) {
+  .logo {
+    margin-left: 45px;
+    margin-top: 20px;
+  }
+  .heading {
+    margin-left: 14px;
+    font-size: 17px;
+    font-weight: bold;
+    margin-top: 45px;
+    color: #ec6e3c;
+    width: 518px;
+    line-height: 22px;
+  }
+  .age {
+    margin: 31px 69px 0px 26px;
+    font-weight: bold;
+     width: 521px;
+    line-height: 20px;
+  }
+  .fees {
+    border: 2px solid black;
+    width: 500px;
+    margin: 36px 0px 0px 55px;
+    padding: 10px;
+    height: auto;
+  }
+  .row1 {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+  }
+  .subheading {
+    display: flex;
+    flex-direction: column;
+  }
 }

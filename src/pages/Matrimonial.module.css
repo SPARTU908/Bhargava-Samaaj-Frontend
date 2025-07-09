@@ -1,47 +1,45 @@
 .container {
   display: flex;
- }
-  .heading{
-    font-family: "Merriweather", serif;
-    font-size: 40px;
-    padding-top: 20px;
-    padding-bottom: 15px;
-  }
-  .btn{
-    margin-left: 1000px;
-    margin-top: 20px;
-    width: 179px;
-    line-height: 23px;
-    display: flex;
-    gap: 20px;
-  }
-  .login{
-   background-color: #e95114;
-   color: white;
-    width: 161px;
-
-  }
-  .admin{
-    width: 136px;
-    color: white;
+}
+.heading {
+  font-family: "Merriweather", serif;
+  font-size: 40px;
+  padding-top: 20px;
+  padding-bottom: 15px;
+}
+.btn {
+  margin-left: 1000px;
+  margin-top: 20px;
+  width: 179px;
+  line-height: 23px;
+  display: flex;
+  gap: 20px;
+}
+.login {
+  background-color: #e95114;
+  color: white;
+  width: 161px;
+}
+.admin {
+  width: 136px;
+  color: white;
+  background-color: #e95114;
+}
+@media (max-width: 320px) {
+  .login {
     background-color: #e95114;
+    color: white;
+    width: 161px;
+    margin-left: 390px;
   }
-  @media (max-width: 426px) {
+
   .logo {
     margin-left: 134px;
     margin-top: 20px;
   }
-  .btn{
-    margin-left: 10px;
+  .btn {
+    margin-left: -11px;
     margin-top: 20px;
-    width: 179px;
-    line-height: 23px;
-    display: flex;
-    gap: 20px;
+    width: 216px;
   }
-  
-  
- 
-
- 
 }

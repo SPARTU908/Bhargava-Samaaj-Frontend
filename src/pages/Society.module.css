@@ -94,6 +94,7 @@
 .btn2 {
   background-color: #e94d0d;
   color: white;
+  width: 163px;
 }
 
 /* hmare tirth esthl*/
@@ -170,7 +171,6 @@
   font-weight: bold;
 }
 
-
 .heading::after,
 .heading::before {
   content: "";
@@ -198,52 +198,100 @@
   color: #ed8e67;
 }
 
-@media (max-width: 426px) {
+@media (max-width: 320px) {
+  .logo {
+    margin-left: 45px;
+    margin-top: 20px;
+  }
   .container {
-    width: 655px;
+    width: 543px;
     height: auto;
-    margin: 65px 0px 0px 13px;
+    margin: 65px 0px 0px 0px;
+    padding: 0px 20px;
   }
-  .btnBox{
-    padding: 0px 0px 10px 285px;
+  .btnBox {
+    padding: 0px 0px 10px 200px;
   }
-  .btnBox1{
-    padding: 0px 0px 0px 332px;
+  .btnBox1 {
+    padding: 0px 0px 0px 220px;
   }
-  .vanshavali{
+  .vanshavali {
     display: flex;
     flex-direction: column;
   }
-  .vanshavali1{
+  .vanshavali1 {
     width: 425px;
-    margin: 30px 60px 0px 106px;
+    margin: 0px 60px 0px 76px;
     border: 7px solid black;
   }
-  .vanshavali2{
+  .vanshavali2 {
     width: 495px;
     height: 311px;
     border: 7px solid black;
-    margin: 8px 0px 0px 76px;
+    margin: 8px 0px 0px 37px;
   }
-  .para{
-    margin: 10px 0px 0px 88px;
+  .para {
+    margin: 10px 0px 0px 45px;
     font-weight: 500;
     width: 473px;
     line-height: 25px;
   }
-  .btnBox2{
-    padding: 25px 0px 10px 297px;
+  .btnBox2 {
+    padding: 7px 0px 10px 189px;
   }
-  .sanskar{
+  .sanskar {
     line-height: 30px;
     text-align: justify;
-    padding: 0px 40px 32px 10px;
-    width: 694px;
+    padding: 0px 30px 32px 20px;
+    width: 553px;
   }
-  .tyohar{
+  .tyohar {
     line-height: 30px;
     text-align: justify;
     padding: 0px 30px 32px 16px;
-    width: 681px;
+    width: 560px;
+  }
+  .heading2 {
+    position: relative;
+    font-family: "Tiro Devanagari Hindi", serif;
+    font-size: 2.2rem;
+    margin-left: 185px;
+    color: #ee7b4e;
+    margin-bottom: 2rem;
+    font-weight: bold;
+  }
+  .heading3 {
+    position: relative;
+    font-family: "Tiro Devanagari Hindi", serif;
+    font-size: 2.2rem;
+    margin-left: 225px;
+    color: #ee7b4e;
+    /* margin-bottom: 2rem; */
+    font-weight: bold;
+  }
+  .heading5 {
+    position: relative;
+    font-family: "Tiro Devanagari Hindi", serif;
+    font-size: 2.2rem;
+    margin-left: 180px;
+    color: #ee7b4e;
+    margin-bottom: 2rem;
+    font-weight: bold;
+  }
+  .people {
+    display: flex;
+    flex-direction: column;
+    gap: 3%;
+  }
+  .img {
+    padding: 30px;
+    margin-left: 132px;
+  }
+  .name {
+    font-size: 20px;
+    /* padding: 0px 8px 4px; */
+    /* font-weight: bold; */
+    /* line-height: 25px; */
+    margin-right: 1px;
   }
 }

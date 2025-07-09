@@ -31,7 +31,11 @@ const Admin = () => {
 
     try {
       const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/auth/login`;
-      const res = await axios.post(reqUrl, admin);
+      // const res = await axios.post(reqUrl, admin);
+
+         const res = await axios.post(reqUrl, admin, {
+      withCredentials: true, // ✅ Important for CORS credentials (cookies)
+    });
 
       const authToken = res.data.token;
       const user = res.data.user;

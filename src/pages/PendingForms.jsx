@@ -2,27 +2,46 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "./PendingForms.module.css";
 import MemberInfo from "../pages/MemberInfo";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 const PendingForms = () => {
   const [pendingForms, setPendingForms] = useState([]);
+  const [pendingMembers, setPendingMembers] = useState([]);
   const token = localStorage.getItem("adminToken");
 
+  // ✅ Fetch both forms and members on mount
   useEffect(() => {
     const fetchPendingForms = async () => {
       try {
         const reqUrl = `${
           import.meta.env.VITE_BACKEND_URL
         }/api/v1/form/admin/pending`;
-        const res = await axios.get(reqUrl, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setPendingForms(res.data);
+       const res = await axios.get(reqUrl, {
+      headers: { Authorization: `Bearer ${token}` },
+      withCredentials: true,
+    });
+     setPendingForms(res.data);
       } catch (err) {
         console.error("Failed to fetch pending forms", err);
       }
     };
 
+    const fetchPendingMembers = async () => {
+      try {
+        const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/pending`;
+        const res = await axios.get(reqUrl, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setPendingMembers(res.data.members); // <-- members array is inside `res.data.members`
+      } catch (err) {
+        console.error("Failed to fetch pending members", err);
+      }
+    };
+
     fetchPendingForms();
+    fetchPendingMembers();
   }, [token]);
 
   const handleReview = async (formId, action) => {
@@ -43,52 +62,133 @@ const PendingForms = () => {
     }
   };
 
+  const handleMemberReview = async (memberId, action) => {
+    try {
+      const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/review`;
+      const res = await axios.post(
+        reqUrl,
+        { memberId, action },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      // Update the member status locally
+      const updated = res.data.member;
+      setPendingMembers((prev) =>
+        prev.map((m) => (m._id === updated._id ? updated : m))
+      );
+
+      toast.success(res.data.message, {
+        position: "top-center",
+        autoClose: 3000,
+        theme: "light",
+      });
+    } catch (err) {
+      console.error(err);
+      alert("Error updating member status");
+    }
+  };
+
   return (
-    <>
-      <div className={styles.container}>
-        <h2 className={styles.title}>Pending User Forms</h2>
+    <div className={styles.container}>
+      {/* SECTION: Pending Forms */}
+      <h2 className={styles.title}>Pending User Form</h2>
+      {pendingForms.length === 0 ? (
+        <p>No pending forms found.</p>
+      ) : (
+        pendingForms.map((form) => (
+          <div key={form._id} className={styles.card}>
+            <div className={styles.name}>{form.name}</div>
+            <div className={styles.row1}>
+              <div>
+                {form.photo?.toLowerCase().endsWith(".pdf") ? (
+                  <a
+                    href={form.photo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <button>View Image</button>
+                  </a>
+                ) : (
+                  <img
+                    src={form.photo}
+                    alt="Profile"
+                    className={styles.photoThumb}
+                  />
+                )}
+              </div>
 
-        {pendingForms.length === 0 ? (
-          <p>No pending forms found.</p>
-        ) : (
-          pendingForms.map((form) => (
-            <>
-              <div key={form._id} className={styles.card}>
-                <div className={styles.name}>{form.name}</div>
+              <div className={styles.info}>
+                <MemberInfo member={form} />
+              </div>
+            </div>
 
-                <div className={styles.row1}>
-                  <div>
-                    <img
-                      src={form.photo}
-                      alt="Profile"
-                      className={styles.photoThumb}
-                    />
-                  </div>
+            <div className={styles.buttonGroup}>
+              <button
+                onClick={() => handleReview(form._id, "approve")}
+                className={styles.approveBtn}
+              >
+                Approve
+              </button>
+              <button
+                onClick={() => handleReview(form._id, "reject")}
+                className={styles.rejectBtn}
+              >
+                Reject
+              </button>
+            </div>
+          </div>
+        ))
+      )}
 
-                  <div className={styles.info}>
-                    <MemberInfo member={form} />
-                  </div>
-                </div>
-                <div className={styles.buttonGroup}>
+      {/* SECTION: Pending Vivah Members */}
+      <h2 className={styles.title}>Pending Member Register</h2>
+      {pendingMembers.length === 0 ? (
+        <p>No pending Vivah members found.</p>
+      ) : (
+        <table className={styles.table}>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>City</th>
+              <th>Gender</th>
+              <th>Gotra</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {pendingMembers.map((member) => (
+              <tr key={member._id}>
+                <td>{member.name}</td>
+                <td>{member.email}</td>
+                <td>{member.phone}</td>
+                <td>{member.city}</td>
+                <td>{member.gender}</td>
+                <td>{member.gotra}</td>
+                <td>{member.status}</td>
+                <td>
                   <button
-                    onClick={() => handleReview(form._id, "approve")}
                     className={styles.approveBtn}
+                    onClick={() => handleMemberReview(member._id, "approve")}
                   >
                     Approve
                   </button>
                   <button
-                    onClick={() => handleReview(form._id, "reject")}
                     className={styles.rejectBtn}
+                    onClick={() => handleMemberReview(member._id, "reject")}
                   >
                     Reject
                   </button>
-                </div>
-              </div>
-            </>
-          ))
-        )}
-      </div>
-    </>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+      <ToastContainer />
+    </div>
   );
 };
 

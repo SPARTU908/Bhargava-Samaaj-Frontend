@@ -127,9 +127,9 @@ const Society = () => {
       </div>
 
       {/* hmare tirth esthal */}
-      <div id="holyPlace" className={styles.container3}>
+      {/* <div id="holyPlace" className={styles.container3}>
         <div className={styles.heading4}>हमारे-र्तीथ-स्थल</div>
-      </div>
+      </div> */}
 
       {/*  hmare sanskar*/}
       <div id="values" className={styles.container4}>

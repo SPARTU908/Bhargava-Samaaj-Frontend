@@ -1,12 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./Form.module.css";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import { registerUser } from "../../apis/form";
-import FileUpload from "../FileUpload/FileUpload";
-import BioDataUpload from "../BioDataUpload/BioDataUpload";
+import axios from "axios";
 
 const Form = () => {
   const [formData, setFormData] = useState({
@@ -51,8 +50,14 @@ const Form = () => {
     bioData: "",
   });
   const [errors, setErrors] = useState({});
-  const [url, setUrl] = useState("");
-  const [biourl, setbiourl] = useState("");
+  // const [url, setUrl] = useState(null);
+  // const [biourl, setbiourl] = useState(null);
+  const [photoFile, setPhotoFile] = useState(null);
+  const [biodataFile, setBiodataFile] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const photoInputRef = useRef(null);
+  const biodataInputRef = useRef(null);
 
   const validate = () => {
     let newErrors = {};
@@ -78,8 +83,8 @@ const Form = () => {
       "pin",
       "nri",
       "password",
-      "photo",
-      "bioData",
+      // "photo",
+      // "bioData",
     ];
 
     requiredFields.forEach((field) => {
@@ -88,11 +93,15 @@ const Form = () => {
       }
     });
 
+    if (!photoFile) {
+      newErrors.photo = "Photo is required";
+    }
+    if (!biodataFile) {
+      newErrors.bioData = "Biodata is required";
+    }
+
     if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = "Email is invalid";
-    }
-    if (formData.mobile && !/^[6-9]\d{9}$/.test(formData.mobile)) {
-      newErrors.mobile = "Mobile number must be 10 digits and valid";
     }
 
     return newErrors;
@@ -103,21 +112,199 @@ const Form = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   // Validate form fields first
+  //   const validationErrors = validate();
+  //   if (!photoFile) {
+  //     validationErrors.photo = "Photo is required";
+  //   }
+  //   if (!biodataFile) {
+  //     validationErrors.bioData = "Biodata is required";
+  //   }
+
+  //   if (Object.keys(validationErrors).length > 0) {
+  //     setErrors(validationErrors);
+  //     return;
+  //   }
+
+  //   setErrors({});
+
+  //   try {
+  //     // Upload photo file
+  //     let uploadedPhotoUrl = "";
+  //     if (photoFile) {
+  //       const photoData = new FormData();
+  //       photoData.append("file", photoFile);
+
+  //       const photoUploadRes = await axios.post(
+  //         `${import.meta.env.VITE_BACKEND_URL}/upload`,
+  //         photoData
+  //       );
+
+  //       uploadedPhotoUrl = photoUploadRes.data.url;
+  //     }
+
+  //     // Upload biodata file
+  //     let uploadedBiodataUrl = "";
+  //     if (biodataFile) {
+  //       const biodataData = new FormData();
+  //       biodataData.append("file", biodataFile);
+
+  //       const biodataUploadRes = await axios.post(
+  //         `${import.meta.env.VITE_BACKEND_URL}/upload`,
+  //         biodataData
+  //       );
+
+  //       uploadedBiodataUrl = biodataUploadRes.data.url;
+  //     }
+
+  //     // Submit form with uploaded file URLs
+  //     const finalForm = {
+  //       ...formData,
+  //       photo: uploadedPhotoUrl,
+  //       bioData: uploadedBiodataUrl,
+  //     };
+
+  //     const result = await registerUser(finalForm);
+
+  //     if (result.status === 201) {
+  //       toast.success(
+  //         "Thanks for submitting your details! Your details will go live in 24 to 36 hours.",
+  //         {
+  //           position: "top-center",
+  //           autoClose: 3000,
+  //           hideProgressBar: false,
+  //           closeOnClick: true,
+  //           pauseOnHover: false,
+  //           draggable: true,
+  //           progress: undefined,
+  //           theme: "light",
+  //         }
+  //       );
+
+  //       // Reset form
+  //       setFormData({
+  //         number: "",
+  //         name: "",
+  //         email: "",
+  //         mobile: "",
+  //         gender: "",
+  //         birthTime: "",
+  //         birthPlace: "",
+  //         height: "",
+  //         weight: "",
+  //         dob: "",
+  //         bloodGroup: "",
+  //         manglik: "",
+  //         gotra: "",
+  //         kuldevi: "",
+  //         complexion: "",
+  //         education: "",
+  //         professionQualification: "",
+  //         profession: "",
+  //         company: "",
+  //         designation: "",
+  //         income: "",
+  //         hobbies: "",
+  //         otherQualification: "",
+  //         guardianName: "",
+  //         fatherName: "",
+  //         fatherProfession: "",
+  //         fatherIncome: "",
+  //         fatherDesignation: "",
+  //         motherName: "",
+  //         nativePlace: "",
+  //         address: "",
+  //         city: "",
+  //         pin: "",
+  //         whatsapp: "",
+  //         nri: "",
+  //         remarks: "",
+  //         password: "",
+  //         photo: "",
+  //         bioData: "",
+  //       });
+
+  //       setPhotoFile(null);
+  //       setBiodataFile(null);
+  //       if (photoInputRef.current) {
+  //         photoInputRef.current.value = "";
+  //       }
+  //       if (biodataInputRef.current) {
+  //         biodataInputRef.current.value = "";
+  //       }
+  //     }
+  //   } catch (err) {
+  //     console.error("Form submission failed:", err);
+  //     toast.error("Something went wrong. Please try again.");
+  //   }
+  // };
+
   const handleSubmit = async (e) => {
-    formData.photo = url;
-    formData.bioData = biourl;
-    console.log(formData);
     e.preventDefault();
 
+    if (isSubmitting) return; // Prevent double-clicks
+
+    // Start submitting
+    setIsSubmitting(true);
+
+    // Validate form fields
     const validationErrors = validate();
-    console.log(validationErrors);
+    if (!photoFile) {
+      validationErrors.photo = "Photo is required";
+    }
+    if (!biodataFile) {
+      validationErrors.bioData = "Biodata is required";
+    }
+
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
-    } else {
-      setErrors({});
+      setIsSubmitting(false); // Re-enable submit if validation fails
+      return;
+    }
 
-      const result = await registerUser(formData);
-      console.log("result", result);
+    setErrors({});
+
+    try {
+      // Upload photo file
+      let uploadedPhotoUrl = "";
+      if (photoFile) {
+        const photoData = new FormData();
+        photoData.append("file", photoFile);
+
+        const photoUploadRes = await axios.post(
+          `${import.meta.env.VITE_BACKEND_URL}/upload`,
+          photoData
+        );
+
+        uploadedPhotoUrl = photoUploadRes.data.url;
+      }
+
+      // Upload biodata file
+      let uploadedBiodataUrl = "";
+      if (biodataFile) {
+        const biodataData = new FormData();
+        biodataData.append("file", biodataFile);
+
+        const biodataUploadRes = await axios.post(
+          `${import.meta.env.VITE_BACKEND_URL}/upload`,
+          biodataData
+        );
+
+        uploadedBiodataUrl = biodataUploadRes.data.url;
+      }
+
+      // Final form data
+      const finalForm = {
+        ...formData,
+        photo: uploadedPhotoUrl,
+        bioData: uploadedBiodataUrl,
+      };
+
+      const result = await registerUser(finalForm);
+
       if (result.status === 201) {
         toast.success(
           "Thanks for submitting your details! Your details will go live in 24 to 36 hours.",
@@ -133,6 +320,7 @@ const Form = () => {
           }
         );
 
+        // Reset form and state
         setFormData({
           number: "",
           name: "",
@@ -174,10 +362,16 @@ const Form = () => {
           photo: "",
           bioData: "",
         });
-        setUrl("");
-        setbiourl("");
-        console.log("Form Data Submitted:", formData);
+        setPhotoFile(null);
+        setBiodataFile(null);
+          setIsSubmitting(false);
+        if (photoInputRef.current) photoInputRef.current.value = "";
+        if (biodataInputRef.current) biodataInputRef.current.value = "";
       }
+    } catch (err) {
+      console.error("Form submission failed:", err);
+      toast.error("Something went wrong. Please try again.");
+      setIsSubmitting(false); // Allow retry on error
     }
   };
 
@@ -765,6 +959,7 @@ const Form = () => {
             )}
           </div>
         </div>
+
         {/* city and pin */}
         <div className={styles.row1}>
           <div className={styles.inputBox}>
@@ -840,13 +1035,17 @@ const Form = () => {
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label htmlFor="photo" className={styles.label}>
-              Upload Photo (Choose file (image format) and then click on upload)
-              <span style={{ color: "red" }}>*</span>
+              Upload Photo <span style={{ color: "red" }}>*</span>
             </label>
             <div className={styles.fileInput}>
-              <FileUpload url={url} setUrl={setUrl} />
+              <input
+                type="file"
+                accept="image/png, image/jpeg, image/jpg, application/pdf"
+                onChange={(e) => setPhotoFile(e.target.files[0])}
+                ref={photoInputRef}
+                className={styles.upload}
+              />
             </div>
-
             {errors.photo && <p className={styles.error}>{errors.photo}</p>}
           </div>
 
@@ -871,15 +1070,17 @@ const Form = () => {
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label htmlFor="bioData" className={styles.label}>
-              Upload Bio Data (Choose file (image format)and then click on upload){" "}
-              <span style={{ color: "red" }}>*</span>
-              <span></span>
+              Upload Bio Data <span style={{ color: "red" }}>*</span>
             </label>
-
-            <div className={styles.fileInput1}>
-              <BioDataUpload url={biourl} setUrl={setbiourl} />
+            <div className={styles.fileInput}>
+              <input
+                type="file"
+                accept="image/png, image/jpeg, image/jpg, application/pdf"
+                onChange={(e) => setBiodataFile(e.target.files[0])}
+                ref={biodataInputRef}
+                className={styles.upload}
+              />
             </div>
-
             {errors.bioData && <p className={styles.error}>{errors.bioData}</p>}
           </div>
 
@@ -903,11 +1104,16 @@ const Form = () => {
         </div>
         <div className={styles.row1}></div>
         <div className={styles.btn}>
-          <button className={styles.submit} onClick={handleSubmit}>
-            Submit
+          <button
+            className={styles.submit}
+            onClick={handleSubmit}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Submitting..." : "Submit"}
           </button>
         </div>
       </div>
+
       <ToastContainer />
     </>
   );

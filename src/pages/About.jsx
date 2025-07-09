@@ -2,9 +2,7 @@ import Navbar from "../components/Navbar/Navbar";
 import styles from "./About.module.css";
 import history from "../assets/history.png";
 import samvidhaan from "../assets/samvidhaan.png";
-import sabha from "../assets/sabhayein.png";
 import samiti from "../assets/samiti.png";
-import executive from "../assets/executive.png";
 import React, { useEffect } from "react";
 
 const About = () => {

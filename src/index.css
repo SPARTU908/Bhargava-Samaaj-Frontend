@@ -2,14 +2,22 @@
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   /* background-color: #242424; */
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  
+}
+
+input,
+textarea,
+select {
+  background-color: white;
+  color: black;
+  border: 1px solid #ccc;
+  padding: 0.5em;
+  font-size: 1em;
 }
 
 a {
@@ -58,7 +66,7 @@ button:focus-visible {
     color: #213547;
     background-color: #ffffff;
   }
- 
+
   button {
     background-color: #f9f9f9;
   }

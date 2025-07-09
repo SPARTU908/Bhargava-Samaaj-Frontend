@@ -98,8 +98,8 @@ const Matrimonial = () => {
 
   const navigate = useNavigate();
 
-  const handleMembers = () => {
-    navigate("/members");
+  const handlelogin = () => {
+    navigate("/findyourmatch");
   };
 
   return (
@@ -113,9 +113,10 @@ const Matrimonial = () => {
             </button> */}
           </div>
           <div>
-            <button className={styles.login} onClick={() => setShowModal(true)}>
+            {/* <button className={styles.login} onClick={() => setShowModal(true)}>
               सही जीवनसाथी ढूँढें
-            </button>
+            </button> */}
+            <button className={styles.login} onClick={handlelogin}>सही जीवनसाथी ढूँढें</button>
           </div>
         </div>
       </div>

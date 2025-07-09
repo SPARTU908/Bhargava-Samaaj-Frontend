@@ -1,13 +1,14 @@
 import styles from "./Payment.module.css";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { savePayment } from "../apis/payment";
+import { savePayment, updatePaymentForm } from "../apis/payment";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import qr from "../assets/qrcode.jpg";
 import Navbar from "../components/Navbar/Navbar";
-import FileUpload from "../components/FileUpload/FileUpload";
-import { updatePaymentForm } from "../apis/payment";
+import PhotoUpload from "../components/PhotoUpload/PhotoUpload";
+
+
 
 const Payment = () => {
   const location = useLocation();
@@ -22,6 +23,7 @@ const Payment = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const [file, setFile] = useState(null);
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [paymentId, setPaymentId] = useState("");
   const [url, setUrl] = useState("");
@@ -57,6 +59,20 @@ const Payment = () => {
 
   const handleUpload = async (e) => {
     e.preventDefault();
+
+    if (!file) {
+      setErrors((prev) => ({
+        ...prev,
+        upload: "Please upload your signed form.",
+      }));
+      toast.error("कृपया साइन की गई फ़ॉर्म अपलोड करें।", {
+        position: "top-center",
+      });
+      return;
+    }
+
+    setErrors((prev) => ({ ...prev, upload: "" }));
+
     try {
       const response = await updatePaymentForm(paymentId, url);
 
@@ -74,6 +90,63 @@ const Payment = () => {
       toast.error("Server error occurred.", { position: "top-center" });
     }
   };
+
+
+
+//   const handleUpload = async (e) => {
+//   e.preventDefault();
+
+//   // ❗ Check if file is selected
+//   if (!file) {
+//     setErrors((prev) => ({
+//       ...prev,
+//       upload: "Please upload your signed form.",
+//     }));
+//     toast.error("कृपया साइन की गई फ़ॉर्म अपलोड करें।", {
+//       position: "top-center",
+//     });
+//     return;
+//   }
+
+//   try {
+//     const formData = new FormData();
+//     formData.append("file", file); // ⬅️ Using selected file
+
+//     const response = await axios.post(
+//       "https://bhargava-samaaj-backend-3.onrender.com/upload",
+//       formData,
+//       {
+//         headers: {
+//           "Content-Type": "multipart/form-data",
+//         },
+//       }
+//     );
+
+//     const uploadedUrl = response.data.url;
+//     if (!uploadedUrl) {
+//       throw new Error("Upload failed");
+//     }
+
+//     setUrl(uploadedUrl); // Optional: keep the URL in state
+
+//     const updateResponse = await updatePaymentForm(paymentId, uploadedUrl);
+
+//     if (updateResponse.success) {
+//       toast.success(
+//         updateResponse.data.message || "Form uploaded successfully!",
+//         {
+//           position: "top-center",
+//           autoClose: 3000,
+//         }
+//       );
+//     }
+//   } catch (err) {
+//     console.error(err);
+//     toast.error("Upload failed. Please try again later.", {
+//       position: "top-center",
+//     });
+//   }
+// };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -100,16 +173,11 @@ const Payment = () => {
           }
         );
 
-        // setIsFormSubmitted(true);
-
         setTimeout(() => {
           setIsFormSubmitted(true);
         }, 4000);
 
         const newPaymentId = response.data.data._id;
-        console.log(response.data);
-        console.log(newPaymentId);
-        console.log(paymentId);
         localStorage.setItem("paymentId", newPaymentId);
         setPaymentId(newPaymentId);
         setPaymentData({ ...paymentdata, mobile: "", transaction: "" });
@@ -248,17 +316,28 @@ const Payment = () => {
         ) : (
           // ✅ Step 3 - Upload Signed Form
           <div className={styles.step3}>
-            <h2>Step #3 - Upload Your Signed Form</h2>
-            <p className={styles.info}>
+            <div>Step #3 - Upload Your Signed Form</div>
+            <div className={styles.info}>
               Please upload the signed membership form below:
-            </p>
+            </div>
 
             <div className={styles.inputBox}>
               <label htmlFor="upload" className={styles.label}>
-                Upload Signed Form<span style={{ color: "red" }}>*</span>
+                Upload Signed Form <span style={{ color: "red" }}>*</span>
               </label>
-              <FileUpload url={url} setUrl={setUrl} />
-              {errors.upload && <p className={styles.error}>{errors.upload}</p>}
+              <div>
+                <PhotoUpload
+                  // url={url}
+                  // setUrl={setUrl}
+                  file={file} setFile={setFile}
+                 
+                  className={styles.input1}
+                />
+              </div>
+
+              {errors.upload && (
+                <p className={styles.error}>{errors.upload}</p>
+              )}
               <button onClick={handleUpload} className={styles.btnupload}>
                 Submit
               </button>

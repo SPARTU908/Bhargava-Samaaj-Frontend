@@ -109,8 +109,6 @@ const MemberAdmin = () => {
                 <th className={styles.title}>Photo</th>
                 <th className={styles.title}>Spouse Photo</th>
                 <th className={styles.title}>Occupation</th>
-               
-              
                 <th className={styles.title}>Payer Name</th>
                 <th className={styles.title}>Payer Email </th>
                 <th className={styles.title}>Payer Mobile </th>

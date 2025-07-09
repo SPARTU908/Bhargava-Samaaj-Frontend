@@ -38,7 +38,12 @@ const MemberInfo = ({ member }) => {
                   <b>Birth Place:</b> {member.birthPlace}
                 </div>
                 <div>
-                <b>DOB:</b> {new Date(member.dob).getDate().toString().padStart(2, '0')}/{(new Date(member.dob).getMonth() + 1).toString().padStart(2, '0')}/{new Date(member.dob).getFullYear()}
+                  <b>DOB:</b>{" "}
+                  {new Date(member.dob).getDate().toString().padStart(2, "0")}/
+                  {(new Date(member.dob).getMonth() + 1)
+                    .toString()
+                    .padStart(2, "0")}
+                  /{new Date(member.dob).getFullYear()}
                 </div>
                 <div>
                   <b>Blood Group:</b> {member.bloodGroup}
@@ -199,14 +204,103 @@ const MemberInfo = ({ member }) => {
                 {/* Only show password if really needed */}
                 {/* <div><b>Password:</b> {member.password}</div> */}
                 {/* <div><b>Photo:</b> {member.photo && <a href={member.photo} target="_blank" rel="noreferrer">View</a>}</div> */}
-                <div>
+                {/* <div>
                   <b>BioData:</b>{" "}
                   {member.bioData && (
                     <a href={member.bioData} target="_blank" rel="noreferrer">
                       Download
                     </a>
                   )}
-                </div>
+                </div> */}
+
+                {/* {member.bioData && (
+                  <>
+                    <div>
+                      <a href={member.bioData} target="_blank" rel="noreferrer">
+                        Download
+                      </a>
+                      {" | "}
+                      {member.bioData.includes("/raw/") ||
+                      member.bioData.endsWith(".pdf") ? (
+                        <a
+                          href={member.bioData}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          View
+                        </a>
+                      ) : null}
+                    </div>
+
+                    {member.bioData.includes("/raw/") ||
+                    member.bioData.endsWith(".pdf") ? (
+                      <iframe
+                        src={member.bioData}
+                        width="100%"
+                        height="600px"
+                        title="PDF Preview"
+                        style={{ marginTop: "1rem", border: "1px solid #ccc" }}
+                      />
+                    ) : (
+                      <img
+                        src={member.bioData}
+                        alt="BioData"
+                        style={{
+                          maxWidth: "100%",
+                          marginTop: "1rem",
+                          border: "1px solid #ccc",
+                        }}
+                      />
+                    )}
+                  </>
+                )} */}
+
+                {member.bioData &&
+                  (() => {
+                    const isPdf = member.bioData.endsWith(".pdf");
+                    const fixedUrl = isPdf
+                      ? member.bioData.replace("/image/upload/", "/raw/upload/")
+                      : member.bioData;
+
+                    return (
+                      <>
+                        <div>
+                          <a href={fixedUrl} target="_blank" rel="noreferrer">
+                            Download
+                          </a>
+                          {" | "}
+                          {isPdf && (
+                            <a href={fixedUrl} target="_blank" rel="noreferrer">
+                              View
+                            </a>
+                          )}
+                        </div>
+
+                        {/* {isPdf ? (
+                          <iframe
+                            src={fixedUrl}
+                            width="100%"
+                            height="600px"
+                            title="PDF Preview"
+                            style={{
+                              marginTop: "1rem",
+                              border: "1px solid #ccc",
+                            }}
+                          />
+                        ) : (
+                          <img
+                            src={fixedUrl}
+                            alt="BioData"
+                            style={{
+                              maxWidth: "100%",
+                              marginTop: "1rem",
+                              border: "1px solid #ccc",
+                            }}
+                          />
+                        )} */}
+                      </>
+                    );
+                  })()}
               </div>
             </>
           )}

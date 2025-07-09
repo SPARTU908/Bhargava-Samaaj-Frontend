@@ -10,17 +10,17 @@ const Members = () => {
   const [city, setCity] = useState("");
   const [sortBy, setSortBy] = useState("");
 
-
   useEffect(() => {
-  const fetchMembers = async () => {
-    const result = await getApprovedMembers();
-    console.log(result);
-    const approvedMembers = result.filter((member) => member.status === "approved");
-    setMembers(approvedMembers);
-  };
-  fetchMembers();
-}, []);
-  
+    const fetchMembers = async () => {
+      const result = await getApprovedMembers();
+      console.log(result);
+      const approvedMembers = result.filter(
+        (member) => member.status === "approved"
+      );
+      setMembers(approvedMembers);
+    };
+    fetchMembers();
+  }, []);
 
   const calculateAge = (dob) => {
     const birthDate = new Date(dob);
@@ -34,14 +34,46 @@ const Members = () => {
   };
 
   const cities = [
-    "Mumbai", "Delhi", "Bengaluru", "Hyderabad", "Ahmedabad",
-    "Chennai", "Kolkata", "Pune", "Jaipur", "Surat",
-    "Lucknow", "Kanpur", "Nagpur", "Indore", "Bhopal",
-    "Patna", "Vadodara", "Ludhiana", "Agra", "Nashik",
-    "Faridabad", "Meerut", "Rajkot", "Varanasi", "Srinagar",
-    "Amritsar", "Ranchi", "Coimbatore", "Jodhpur", "Raipur",
-    "Guwahati", "Chandigarh", "Mysore", "Noida", "Gurgaon",
-    "Thiruvananthapuram", "Vijayawada", "Gwalior", "Jalandhar", "Udaipur"
+    "Mumbai",
+    "Delhi",
+    "Bengaluru",
+    "Hyderabad",
+    "Ahmedabad",
+    "Chennai",
+    "Kolkata",
+    "Pune",
+    "Jaipur",
+    "Surat",
+    "Lucknow",
+    "Kanpur",
+    "Nagpur",
+    "Indore",
+    "Bhopal",
+    "Patna",
+    "Vadodara",
+    "Ludhiana",
+    "Agra",
+    "Nashik",
+    "Faridabad",
+    "Meerut",
+    "Rajkot",
+    "Varanasi",
+    "Srinagar",
+    "Amritsar",
+    "Ranchi",
+    "Coimbatore",
+    "Jodhpur",
+    "Raipur",
+    "Guwahati",
+    "Chandigarh",
+    "Mysore",
+    "Noida",
+    "Gurgaon",
+    "Thiruvananthapuram",
+    "Vijayawada",
+    "Gwalior",
+    "Jalandhar",
+    "Udaipur",
   ];
 
   const filteredMembers = members.filter((member) => {
@@ -67,7 +99,6 @@ const Members = () => {
 
   return (
     <>
-   
       <div className={styles.filterBox}>
         <label className={styles.filter}>
           Filter by Age:
@@ -117,8 +148,116 @@ const Members = () => {
           <div key={member.id} className={styles.card1}>
             <div className={styles.name}>{member.name}</div>
             <div className={styles.box}>
-            <div className={styles.imageBox}>
-                <img src={member.photo} alt="" className={styles.img} />
+              <div className={styles.imageBox}>
+                {/* <img src={member.photo} alt="" className={styles.img} /> */}
+
+                {member.bioData &&
+                  (() => {
+                    const isPdf = member.bioData.endsWith(".pdf");
+                    const fixedUrl = isPdf
+                      ? member.bioData.replace("/image/upload/", "/raw/upload/")
+                      : member.bioData;
+
+                    return (
+                      <>
+                        <div>
+                          <a href={fixedUrl} target="_blank" rel="noreferrer">
+                            Download
+                          </a>
+                          {" | "}
+                          {isPdf && (
+                            <a href={fixedUrl} target="_blank" rel="noreferrer">
+                              View
+                            </a>
+                          )}
+                        </div>
+
+                        {isPdf ? (
+                          <iframe
+                            src={fixedUrl}
+                            width="100%"
+                            height="600px"
+                            title="PDF Preview"
+                            style={{
+                              marginTop: "1rem",
+                              border: "1px solid #ccc",
+                            }}
+                          />
+                        ) : (
+                          <img
+                            src={fixedUrl}
+                            alt="BioData"
+                            style={{
+                              maxWidth: "100%",
+                              marginTop: "1rem",
+                              border: "1px solid #ccc",
+                            }}
+                          />
+                        )}
+                      </>
+                    );
+                  })}
+
+                {/* For member.photo */}
+                {/* {member.photo &&
+                  (() => {
+                    const isPdf = member.photo.endsWith(".pdf");
+                    const fixedUrl = isPdf
+                      ? member.photo.replace("/image/upload/", "/raw/upload/")
+                      : member.photo;
+
+                    return (
+                      <div className={styles.imageBox}>
+                        {isPdf ? (
+                          <iframe
+                            src={fixedUrl}
+                            width="100%"
+                            height="600px"
+                            title="Photo PDF Preview"
+                            style={{
+                              marginTop: "1rem",
+                              border: "1px solid #ccc",
+                            }}
+                          />
+                        ) : (
+                          <img
+                            src={fixedUrl}
+                            alt="Photo"
+                            className={styles.img}
+                          />
+                        )}
+                      </div>
+                    );
+                  })} */}
+
+                {member.photo &&
+                  (() => {
+                    const isPdf = member.photo
+                      .split("?")[0]
+                      .toLowerCase()
+                      .endsWith(".pdf");
+                    const fixedUrl = isPdf
+                      ? member.photo.replace("/image/upload/", "/raw/upload/")
+                      : member.photo;
+
+                    return (
+                      <div className={styles.imageBox}>
+                        {isPdf ? (
+                          <div style={{ marginTop: "1rem" }}>
+                            <a href={fixedUrl} target="_blank" rel="noreferrer">
+                              View Image
+                            </a>
+                          </div>
+                        ) : (
+                          <img
+                            src={fixedUrl}
+                            alt="Photo"
+                            className={styles.img}
+                          />
+                        )}
+                      </div>
+                    );
+                  })()}
               </div>
               <MemberInfo member={member} />
             </div>

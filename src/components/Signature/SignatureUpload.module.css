@@ -1,12 +1,33 @@
-.input{
-    padding: 0.5rem;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 455px;
-    margin: 4px 0px 0px 47px;
+.input {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 455px;
+  margin: 4px 0px 0px 47px;
 }
 
-.btn{
-    margin-left: 75px;
+.btn {
+  margin-left: 75px;
+}
+
+.fileLabel {
+  display: inline-block;
+  padding: 12px 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f7f7f7;
+  color: #333;
+  cursor: pointer;
+  text-align: center;
+  width: 100%;
+}
+
+.fileInput {
+  display: none;
+}
+
+.input {
+  text-align: center;
+  margin-top: 10px;
 }

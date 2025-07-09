@@ -21,6 +21,10 @@ import DisplayForm from "./pages/DisplayForm.jsx";
 import MembershipAdminDashboard from "./pages/MembershipAdminDashboard.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
 
+import VivahMemberLogin from "./components/VivahMember/VivahMemberLogin.jsx";
+import VivahMemberRegister from "./components/VivahMember/VivahMemberRegister.jsx";
+import FindYourMatch from "./pages/FindYourMatch.jsx";
+
 function App() {
   return (
     <>
@@ -46,7 +50,7 @@ function App() {
             }
           />
           {/* <Route path="/login" element={<AdminLogin />} /> */}
-           <Route
+          <Route
             path="/review"
             element={
               <PrivateRoute>
@@ -56,7 +60,14 @@ function App() {
           />
           {/* <Route path="/review" element={<PendingForms />} /> */}
           <Route path="/payment" element={<Payment />} />
-          <Route path="/memberadmin" element={  <PrivateRoute><MemberAdmin /></PrivateRoute>} />
+          <Route
+            path="/memberadmin"
+            element={
+              <PrivateRoute>
+                <MemberAdmin />
+              </PrivateRoute>
+            }
+          />
           <Route path="/admin" element={<Admin />} />
           <Route
             path="/matrimonialadmin"
@@ -68,6 +79,13 @@ function App() {
             element={<MembershipAdminDashboard />}
           />
           <Route path="/displayform" element={<DisplayForm />} />
+
+          <Route
+            path="/vivahmemberregister"
+            element={<VivahMemberRegister />}
+          />
+          <Route path="/vivahmemberlogin" element={<VivahMemberLogin />} />
+          <Route path="/findyourmatch" element={<FindYourMatch />} />
         </Routes>
       </BrowserRouter>
     </>
