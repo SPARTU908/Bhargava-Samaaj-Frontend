@@ -5,7 +5,6 @@ import MemberInfo from "../pages/MemberInfo";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
 const PendingForms = () => {
   const [pendingForms, setPendingForms] = useState([]);
   const [pendingMembers, setPendingMembers] = useState([]);
@@ -18,11 +17,11 @@ const PendingForms = () => {
         const reqUrl = `${
           import.meta.env.VITE_BACKEND_URL
         }/api/v1/form/admin/pending`;
-       const res = await axios.get(reqUrl, {
-      headers: { Authorization: `Bearer ${token}` },
-      withCredentials: true,
-    });
-     setPendingForms(res.data);
+        const res = await axios.get(reqUrl, {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        });
+        setPendingForms(res.data);
       } catch (err) {
         console.error("Failed to fetch pending forms", err);
       }
@@ -62,31 +61,68 @@ const PendingForms = () => {
     }
   };
 
-  const handleMemberReview = async (memberId, action) => {
-    try {
-      const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/review`;
-      const res = await axios.post(
-        reqUrl,
-        { memberId, action },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+  // const handleMemberReview = async (memberId, action) => {
+  //   try {
+  //     const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/review`;
+  //     const res = await axios.post(
+  //       reqUrl,
+  //       { memberId, action },
+  //       { headers: { Authorization: `Bearer ${token}` } }
+  //     );
 
-      // Update the member status locally
-      const updated = res.data.member;
+  //     // Update the member status locally
+  //     const updated = res.data.member;
+  //     setPendingMembers((prev) =>
+  //       prev.map((m) => (m._id === updated._id ? updated : m))
+  //     );
+
+  //     toast.success(res.data.message, {
+  //       position: "top-center",
+  //       autoClose: 3000,
+  //       theme: "light",
+  //     });
+  //   } catch (err) {
+  //     console.error(err);
+  //     alert("Error updating member status");
+  //   }
+  // };
+
+const handleMemberReview = async (memberId, action) => {
+  try {
+    const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/review`;
+    const res = await axios.post(
+      reqUrl,
+      { memberId, action },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+
+    const updated = res.data.member;
+
+    // ✅ Remove member from list if status is no longer "pending"
+    if (updated.status !== "pending") {
+      setPendingMembers((prev) =>
+        prev.filter((m) => m._id !== updated._id)
+      );
+    } else {
+      // Otherwise, update the status in place
       setPendingMembers((prev) =>
         prev.map((m) => (m._id === updated._id ? updated : m))
       );
-
-      toast.success(res.data.message, {
-        position: "top-center",
-        autoClose: 3000,
-        theme: "light",
-      });
-    } catch (err) {
-      console.error(err);
-      alert("Error updating member status");
     }
-  };
+
+    toast.success(res.data.message, {
+      position: "top-center",
+      autoClose: 3000,
+      theme: "light",
+    });
+  } catch (err) {
+    console.error(err);
+    alert("Error updating member status");
+  }
+};
+
+
+
 
   return (
     <div className={styles.container}>
@@ -145,47 +181,57 @@ const PendingForms = () => {
       {pendingMembers.length === 0 ? (
         <p>No pending Vivah members found.</p>
       ) : (
-        <table className={styles.table}>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>City</th>
-              <th>Gender</th>
-              <th>Gotra</th>
-              <th>Status</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {pendingMembers.map((member) => (
-              <tr key={member._id}>
-                <td>{member.name}</td>
-                <td>{member.email}</td>
-                <td>{member.phone}</td>
-                <td>{member.city}</td>
-                <td>{member.gender}</td>
-                <td>{member.gotra}</td>
-                <td>{member.status}</td>
-                <td>
-                  <button
-                    className={styles.approveBtn}
-                    onClick={() => handleMemberReview(member._id, "approve")}
-                  >
-                    Approve
-                  </button>
-                  <button
-                    className={styles.rejectBtn}
-                    onClick={() => handleMemberReview(member._id, "reject")}
-                  >
-                    Reject
-                  </button>
-                </td>
+        <div className={styles.tableWrapper}>
+          <table className={styles.table}>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Membership No.</th>
+                <th>City</th>
+                <th>Gender</th>
+                <th>Gotra</th>
+                <th>Kuldevi</th>
+                <th>Status</th>
+                <th>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {pendingMembers.map((member) => (
+                <tr key={member._id}>
+                  <td>{member.name}</td>
+                  <td>{member.email}</td>
+                  <td>{member.phone}</td>
+                  <td>{member.membershipno}</td>
+                  <td>{member.city}</td>
+                  <td>{member.gender}</td>
+                  <td>{member.gotra}</td>
+                  <td>{member.kuldevi}</td>
+                  <td>{member.status}</td>
+                  <td>
+                    <div className={styles.buttonGroup}>
+                      <button
+                        className={styles.approveBtn}
+                        onClick={() =>
+                          handleMemberReview(member._id, "approve")
+                        }
+                      >
+                        Approve
+                      </button>
+                      <button
+                        className={styles.rejectBtn}
+                        onClick={() => handleMemberReview(member._id, "reject")}
+                      >
+                        Reject
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
       <ToastContainer />
     </div>
