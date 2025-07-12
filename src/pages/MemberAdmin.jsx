@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { getAllMembers } from "../apis/member";
 import { getAllPayment } from "../apis/payment";
 import styles from "./MemberAdmin.module.css";
-// import Navbar from "../components/Navbar/Navbar";
 import Table from "react-bootstrap/Table";
 import { useNavigate } from "react-router-dom";
 
@@ -193,11 +192,11 @@ const MemberAdmin = () => {
                     <td>{memberPayment?.name || "N/A"}</td>
                     <td>{memberPayment?.email || "N/A"}</td>
                     <td>{memberPayment?.mobile || "N/A"}</td>
-                    <td>{memberPayment?.transaction || "N/A"}</td>
+                    <td>{memberPayment?.transactionId || "N/A"}</td>
                     <td>
-                      {memberPayment?.uploadForm ? (
+                      {member?.uploadForm ? (
                         <a
-                          href={memberPayment.uploadForm}
+                          href={member.uploadForm}
                           target="_blank"
                           rel="noopener noreferrer"
                         >

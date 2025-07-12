@@ -693,7 +693,7 @@ const uploadToCloudinary = async (file) => {
               className={styles.submit}
               onClick={(e) => {
                 handleSubmit(e);
-                nextStep(e);
+                // nextStep(e);
               }}
             >
               Save & Continue

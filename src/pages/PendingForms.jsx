@@ -127,7 +127,7 @@ const handleMemberReview = async (memberId, action) => {
   return (
     <div className={styles.container}>
       {/* SECTION: Pending Forms */}
-      <h2 className={styles.title}>Pending User Form</h2>
+      <h2 className={styles.title}>Pending User Forms</h2>
       {pendingForms.length === 0 ? (
         <p>No pending forms found.</p>
       ) : (
@@ -177,7 +177,7 @@ const handleMemberReview = async (memberId, action) => {
       )}
 
       {/* SECTION: Pending Vivah Members */}
-      <h2 className={styles.title}>Pending Member Register</h2>
+      <h2 className={styles.title}>Pending Login Request</h2>
       {pendingMembers.length === 0 ? (
         <p>No pending Vivah members found.</p>
       ) : (

@@ -76,25 +76,25 @@ const Homepage = () => {
             <div className={styles.festBox1}>
               <div className={styles.day}>
                 {" "}
-                शुक्रवार, 27 जून – रथयात्रा (श्री जगन्नाथ  जी){" "}
+                   सोमवार, 14 जुलाई – चतुर्थी (बैल चौथ)
               </div>
             </div>
             <div className={styles.festBox1}>
               <div className={styles.day}>
-                रविवार, 6 जुलाई – एकादशी (हरिशयनी )
+               मंगलवार, 15 जुलाई - नागपंचमी (भार्गव में )
               </div>
             </div>
             <div className={styles.festBox1}>
-              <div className={styles.day}>मंगलवार , 8 जुलाई – प्रदोष </div>
+              <div className={styles.day}>सोमवार, 21 जुलाई - एकादशी (कामदा)</div>
             </div>
             <div className={styles.festBox1}>
               <div className={styles.day}>
-                गुरुवार, 10 जुलाई – पूर्णिमा (व्रत एवं स्नान )(गुरु पूर्णिमा )
+                मंगलवार, 22 जुलाई - प्रदोष 
               </div>
             </div>
             <div className={styles.festBox1}>
               <div className={styles.day}>
-                सोमवार, 14 जुलाई – चतुर्थी (बैल चौथ)
+               गुरुवार, 24 जुलाई - अमावस्या ( हरियाली )
               </div>
             </div>
           </div>

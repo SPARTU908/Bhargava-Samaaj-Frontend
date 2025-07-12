@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-
 import styles from "./Members.module.css";
 import { getApprovedMembers } from "../apis/form";
 import MemberInfo from "./MemberInfo";
@@ -9,6 +8,7 @@ const Members = () => {
   const [ageRange, setAgeRange] = useState("");
   const [city, setCity] = useState("");
   const [sortBy, setSortBy] = useState("");
+  const [gender, setGender] = useState("");
 
   useEffect(() => {
     const fetchMembers = async () => {
@@ -86,8 +86,9 @@ const Members = () => {
       })();
 
     const cityMatches = !city || member.city === city;
+    const genderMatches = !gender || member.gender?.toLowerCase() === gender;
 
-    return ageMatches && cityMatches;
+    return ageMatches && cityMatches && genderMatches;
   });
 
   const sortedMembers = [...filteredMembers].sort((a, b) => {
@@ -97,15 +98,37 @@ const Members = () => {
     return 0; // no sorting
   });
 
+  const [tempAgeRange, setTempAgeRange] = useState("");
+  const [tempCity, setTempCity] = useState("");
+  const [tempSortBy, setTempSortBy] = useState("");
+  const [tempGender, setTempGender] = useState("");
+
+ const applyFilters = () => {
+  setAgeRange(tempAgeRange);
+  setCity(tempCity);
+  setSortBy(tempSortBy);
+  setGender(tempGender);
+
+  // Sync temp values with applied filters so the dropdowns stay updated
+  setTempAgeRange(tempAgeRange);
+  setTempCity(tempCity);
+  setTempSortBy(tempSortBy);
+  setTempGender(tempGender);
+};
+
+
   return (
     <>
+      <div className={styles.approvedProfiles}>
+        Our Approved Matrimonial Profiles
+      </div>
       <div className={styles.filterBox}>
         <label className={styles.filter}>
           Filter by Age:
           <select
             className={styles.selectAge}
-            value={ageRange}
-            onChange={(e) => setAgeRange(e.target.value)}
+            value={tempAgeRange}
+            onChange={(e) => setTempAgeRange(e.target.value)}
           >
             <option value="">All</option>
             <option value="20-30">20 - 30</option>
@@ -118,8 +141,8 @@ const Members = () => {
           Filter by City:
           <select
             className={styles.selectCity}
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
+            value={tempCity}
+            onChange={(e) => setTempCity(e.target.value)}
           >
             <option value="">All</option>
             {cities.map((c) => (
@@ -130,17 +153,33 @@ const Members = () => {
           </select>
         </label>
 
+        <label className={styles.filterGender}>
+          Filter by Gender:
+          <select
+            className={styles.selectGender}
+            value={tempGender}
+            onChange={(e) => setTempGender(e.target.value.toLowerCase())}
+          >
+            <option value="">All</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </label>
+
         <label className={styles.filterName}>
           Sort By:
           <select
             className={styles.selectName}
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
+            value={tempSortBy}
+            onChange={(e) => setTempSortBy(e.target.value)}
           >
             <option value="">None</option>
             <option value="name">Name</option>
           </select>
         </label>
+        <button onClick={applyFilters} className={styles.applyButton}>
+          Apply Filters
+        </button>
       </div>
 
       <div className={styles.container}>

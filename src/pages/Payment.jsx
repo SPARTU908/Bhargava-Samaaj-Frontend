@@ -1,32 +1,30 @@
+import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
+import { uploadMemberForm } from "../apis/member";
+import { savePayment } from "../apis/payment";
 import styles from "./Payment.module.css";
-import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { savePayment, updatePaymentForm } from "../apis/payment";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import qr from "../assets/qrcode.jpg";
 import Navbar from "../components/Navbar/Navbar";
 import PhotoUpload from "../components/PhotoUpload/PhotoUpload";
-
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Payment = () => {
-  const location = useLocation();
-  const { membership: plan, name, email } = location.state || {};
-  const navigate = useNavigate();
-
   const [paymentdata, setPaymentData] = useState({
-    name: localStorage.getItem("memberName") || "",
-    email: localStorage.getItem("memberEmail") || "",
+    name: "",
+    email: "",
     mobile: "",
-    transaction: "",
+    transactionId: "",
   });
+  const [isFileUploaded, setIsFileUploaded] = useState(false);
+  const location = useLocation();
+  const { membership: plan } = location.state || {};
 
-  const [errors, setErrors] = useState({});
+  const memberId = location.state?.memberId || localStorage.getItem("memberId");
+
   const [file, setFile] = useState(null);
-  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
-  const [paymentId, setPaymentId] = useState("");
-  const [url, setUrl] = useState("");
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const validate = () => {
     let newErrors = {};
@@ -45,8 +43,8 @@ const Payment = () => {
       newErrors.mobile = "Please enter your mobile number.";
     }
 
-    if (!paymentdata.transaction) {
-      newErrors.transaction = "Please enter the transaction ID.";
+    if (!paymentdata.transactionId) {
+      newErrors.transactionId = "Please enter the transaction ID.";
     }
 
     return newErrors;
@@ -57,96 +55,36 @@ const Payment = () => {
     setPaymentData({ ...paymentdata, [name]: value });
   };
 
-  const handleUpload = async (e) => {
-    e.preventDefault();
-
+  const handleUpload = async () => {
     if (!file) {
-      setErrors((prev) => ({
-        ...prev,
-        upload: "Please upload your signed form.",
-      }));
-      toast.error("कृपया साइन की गई फ़ॉर्म अपलोड करें।", {
-        position: "top-center",
-      });
+      setErrors({ upload: "Please select a file to upload." });
+      return;
+    }
+    if (!memberId) {
+      setErrors({ uploadForm: "Member ID missing in navigation state." });
       return;
     }
 
-    setErrors((prev) => ({ ...prev, upload: "" }));
+    setErrors({});
+    setLoading(true);
 
     try {
-      const response = await updatePaymentForm(paymentId, url);
+      const response = await uploadMemberForm(memberId, file);
+      toast.success("File uploaded successfully!", {
+        position: "top-center",
+      });
+      setIsFileUploaded(true);
 
-      if (response.success) {
-        toast.success(
-          response.data.message || "Thanks for submitting your details!",
-          {
-            position: "top-center",
-            autoClose: 3000,
-            theme: "light",
-          }
-        );
-      }
+      setFile(null);
+      setErrors({});
+      console.log("Upload success:", response.data);
     } catch (err) {
-      toast.error("Server error occurred.", { position: "top-center" });
+      console.error("Upload error:", err.response?.data || err.message);
+      setErrors({ uploadForm: "Upload failed. Please try again." });
+    } finally {
+      setLoading(false);
     }
   };
-
-
-
-//   const handleUpload = async (e) => {
-//   e.preventDefault();
-
-//   // ❗ Check if file is selected
-//   if (!file) {
-//     setErrors((prev) => ({
-//       ...prev,
-//       upload: "Please upload your signed form.",
-//     }));
-//     toast.error("कृपया साइन की गई फ़ॉर्म अपलोड करें।", {
-//       position: "top-center",
-//     });
-//     return;
-//   }
-
-//   try {
-//     const formData = new FormData();
-//     formData.append("file", file); // ⬅️ Using selected file
-
-//     const response = await axios.post(
-//       "https://bhargava-samaaj-backend-3.onrender.com/upload",
-//       formData,
-//       {
-//         headers: {
-//           "Content-Type": "multipart/form-data",
-//         },
-//       }
-//     );
-
-//     const uploadedUrl = response.data.url;
-//     if (!uploadedUrl) {
-//       throw new Error("Upload failed");
-//     }
-
-//     setUrl(uploadedUrl); // Optional: keep the URL in state
-
-//     const updateResponse = await updatePaymentForm(paymentId, uploadedUrl);
-
-//     if (updateResponse.success) {
-//       toast.success(
-//         updateResponse.data.message || "Form uploaded successfully!",
-//         {
-//           position: "top-center",
-//           autoClose: 3000,
-//         }
-//       );
-//     }
-//   } catch (err) {
-//     console.error(err);
-//     toast.error("Upload failed. Please try again later.", {
-//       position: "top-center",
-//     });
-//   }
-// };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -161,35 +99,45 @@ const Payment = () => {
     }
 
     try {
-      const response = await savePayment(paymentdata);
+      const payload = {
+        memberId,
+        transactionId: paymentdata.transactionId,
+      };
+
+      console.log("Sending Payment details:", payload);
+
+      const response = await savePayment(payload);
 
       if (response.success) {
         toast.success(
-          response.data.message || "Thanks for submitting your details!",
+          response.data?.message || "Payment received successfully!",
           {
             position: "top-center",
             autoClose: 3000,
-            theme: "light",
           }
         );
 
-        setTimeout(() => {
-          setIsFormSubmitted(true);
-        }, 4000);
+        const newPaymentId = response.data?.payment?._id;
+        if (newPaymentId) {
+          localStorage.setItem("paymentId", newPaymentId);
+        }
 
-        const newPaymentId = response.data.data._id;
-        localStorage.setItem("paymentId", newPaymentId);
-        setPaymentId(newPaymentId);
-        setPaymentData({ ...paymentdata, mobile: "", transaction: "" });
+        setPaymentData({
+          name: "",
+          email: "",
+          mobile: "",
+          transactionId: "",
+        });
       } else {
-        toast.error(
-          "Failed to save payment: " +
-            (response.error?.message || response.error),
-          { position: "top-center" }
-        );
+        toast.error("Failed to save payment. Please try again.", {
+          position: "top-center",
+        });
       }
     } catch (err) {
-      toast.error("Server error occurred.", { position: "top-center" });
+      console.error("Error saving payment:", err);
+      toast.error("Server error occurred while saving payment.", {
+        position: "top-center",
+      });
     }
   };
 
@@ -197,9 +145,45 @@ const Payment = () => {
     <>
       <Navbar />
       <div className={styles.container}>
-        {!isFormSubmitted ? (
+        {!isFileUploaded && (
+          <div className={styles.card}>
+            <h2 className={styles.title}>Upload Your Signed Form</h2>
+            <p className={styles.subtitle}>
+              Please upload the signed membership form below.
+            </p>
+
+            <div className={styles.formGroup}>
+              <label htmlFor="upload" className={styles.label1}>
+                Upload Signed Form <span className={styles.required}>*</span>
+              </label>
+
+              <PhotoUpload
+                file={file}
+                setFile={setFile}
+                className={styles.uploadInput}
+              />
+
+              {errors.upload && <p className={styles.error}>{errors.upload}</p>}
+              {errors.uploadForm && (
+                <p className={styles.error}>{errors.uploadForm}</p>
+              )}
+            </div>
+
+            <button
+              onClick={handleUpload}
+              className={styles.button}
+              disabled={loading}
+            >
+              {loading ? "Uploading..." : "Submit"}
+            </button>
+          </div>
+        )}
+
+        {isFileUploaded && (
           <>
-            {/* Step 1 */}
+          <div className={styles.container2}>
+
+         
             <div className={styles.step1}>
               <div className={styles.payment}>
                 Step #1 - Scan QR Code & Make Payment
@@ -230,13 +214,12 @@ const Payment = () => {
                 <div className={styles.planing}>
                   आपके द्वारा चुनी गई सदस्यता:
                 </div>
-                <div className={styles.plan}>{plan}</div>
+                <div className={styles.plan}>{plan}</div>{" "}
               </div>
               <div className={styles.qr}>
                 <img src={qr} alt="QR Code" />
               </div>
             </div>
-
             {/* Step 2 */}
             <div className={styles.step2}>
               <div className={styles.submit}>Step #2 - Submit The Details</div>
@@ -251,9 +234,8 @@ const Payment = () => {
                     name="name"
                     value={paymentdata.name}
                     onChange={handleChange}
-                    readOnly
                   />
-                  {errors.name && <p className={styles.error}>{errors.name}</p>}
+                  {errors.name && <p className={styles.error1}>{errors.name}</p>}
                 </div>
 
                 <div className={styles.inputBox}>
@@ -266,10 +248,9 @@ const Payment = () => {
                     name="email"
                     value={paymentdata.email}
                     onChange={handleChange}
-                    readOnly
                   />
                   {errors.email && (
-                    <p className={styles.error}>{errors.email}</p>
+                    <p className={styles.error1}>{errors.email}</p>
                   )}
                 </div>
 
@@ -285,23 +266,23 @@ const Payment = () => {
                     onChange={handleChange}
                   />
                   {errors.mobile && (
-                    <p className={styles.error}>{errors.mobile}</p>
+                    <p className={styles.error1}>{errors.mobile}</p>
                   )}
                 </div>
 
                 <div className={styles.inputBox}>
-                  <label htmlFor="transaction" className={styles.label}>
+                  <label htmlFor="transactionId" className={styles.label}>
                     Transaction ID <span style={{ color: "red" }}>*</span>
                   </label>
                   <input
                     className={styles.input}
                     type="text"
-                    name="transaction"
-                    value={paymentdata.transaction}
+                    name="transactionId"
+                    value={paymentdata.transactionId}
                     onChange={handleChange}
                   />
-                  {errors.transaction && (
-                    <p className={styles.error}>{errors.transaction}</p>
+                  {errors.transactionId && (
+                    <p className={styles.error1}>{errors.transactionId}</p>
                   )}
                 </div>
 
@@ -312,40 +293,10 @@ const Payment = () => {
                 </div>
               </form>
             </div>
+             </div>
           </>
-        ) : (
-          // ✅ Step 3 - Upload Signed Form
-          <div className={styles.step3}>
-            <div>Step #3 - Upload Your Signed Form</div>
-            <div className={styles.info}>
-              Please upload the signed membership form below:
-            </div>
-
-            <div className={styles.inputBox}>
-              <label htmlFor="upload" className={styles.label}>
-                Upload Signed Form <span style={{ color: "red" }}>*</span>
-              </label>
-              <div>
-                <PhotoUpload
-                  // url={url}
-                  // setUrl={setUrl}
-                  file={file} setFile={setFile}
-                 
-                  className={styles.input1}
-                />
-              </div>
-
-              {errors.upload && (
-                <p className={styles.error}>{errors.upload}</p>
-              )}
-              <button onClick={handleUpload} className={styles.btnupload}>
-                Submit
-              </button>
-            </div>
-          </div>
         )}
       </div>
-
       <ToastContainer />
     </>
   );

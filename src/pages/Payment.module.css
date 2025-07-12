@@ -1,6 +1,6 @@
-.container {
-  display: flex;
-  margin: 40px 0px 0px 20px;
+.container2{
+   display: flex;
+  margin: 0px 0px 0px 20px;
 }
 .payment {
   font-size: 25px;
@@ -101,3 +101,99 @@
 .step3 {
   margin: 10px 0px 0px 490px;
 }
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 68px;
+}
+
+.card {
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 612px;
+  text-align: center;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.subtitle {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.formGroup {
+  text-align: left;
+  margin-bottom: 25px;
+}
+
+.label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #444;
+  margin-left: 9px;
+}
+.label1{
+  display: block;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #444;
+  margin-left: 51px;
+}
+
+.required {
+  color: red;
+}
+
+.uploadInput {
+  width: 100%;
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+  margin-top: 8px;
+  margin-left: 48px;
+}
+
+.error1 {
+  color: red;
+  font-size: 14px;
+  margin-top: 8px;
+  margin-left: 10px;
+}
+
+.button {
+  background-color: #ea5a1f;
+  color: white;
+  padding: 12px 25px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:disabled {
+  background-color: #a5c7f7;
+  cursor: not-allowed;
+}
+
+.button:hover:not(:disabled) {
+  background-color: #c84a18;
+}
+
+
+
+

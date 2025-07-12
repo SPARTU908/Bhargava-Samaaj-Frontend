@@ -110,15 +110,26 @@ import axios from "axios";
 
 
 
+
+
 export const savePayment = async (paymentDetails) => {
-  const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/payment/register`;
+  const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/payment/create`;
+
+  const { memberId, transactionId } = paymentDetails;
 
   try {
-    console.log("Payment details:", paymentDetails);
+    console.log("Sending Payment details:", { memberId, transactionId: transactionId });
 
-    const response = await axios.post(reqUrl, paymentDetails, {
-      withCredentials: true,
-    });
+    const response = await axios.post(
+      reqUrl,
+      {
+        memberId,
+        transactionId: transactionId,
+      },
+      {
+        withCredentials: true,
+      }
+    );
 
     if (response.status === 200 || response.status === 201) {
       return {
