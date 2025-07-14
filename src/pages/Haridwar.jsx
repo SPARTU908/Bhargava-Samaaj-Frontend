@@ -15,8 +15,12 @@ import { LuMapPinCheckInside } from "react-icons/lu";
 import { IoBagCheckOutline } from "react-icons/io5";
 import { FaArrowRight } from "react-icons/fa";
 import { MdOutlineWifiCalling } from "react-icons/md";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
 
 const Haridwar = () => {
+  const position = [29.9506, 78.1634];
   return (
     <>
       <Navbar />
@@ -42,7 +46,11 @@ const Haridwar = () => {
             <MdEmail className={styles.icon2} />
           </div>
           <div className={styles.email}>info@yatradham.org</div>
-        
+          <div>
+            {" "}
+            <MdOutlineWifiCalling className={styles.iconCall} />
+          </div>
+          <div className={styles.call}>8069266004</div>
         </div>
 
         <div className={styles.facilities}>
@@ -173,7 +181,23 @@ const Haridwar = () => {
           </div>
         </div>
 
-       
+        {/* Map */}
+        <div className={styles.location}>
+          Location
+          <div style={{ width: "700px", height: "500px" }}>
+            <MapContainer
+              center={position}
+              zoom={15}
+              style={{ height: "100%", width: "100%", margin: "67px 190px" }}
+            >
+              {/* Use OpenStreetMap's tile layer */}
+              <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+              <Marker position={position}>
+                <Popup>Bhargav Ashram, Haridwar</Popup>
+              </Marker>
+            </MapContainer>
+          </div>
+        </div>
       </div>
     </>
   );

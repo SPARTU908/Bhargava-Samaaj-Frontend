@@ -50,8 +50,6 @@ const Form = () => {
     bioData: "",
   });
   const [errors, setErrors] = useState({});
-  // const [url, setUrl] = useState(null);
-  // const [biourl, setbiourl] = useState(null);
   const [photoFile, setPhotoFile] = useState(null);
   const [biodataFile, setBiodataFile] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -83,9 +81,7 @@ const Form = () => {
       "pin",
       "nri",
       "password",
-      // "photo",
-      // "bioData",
-    ];
+     ];
 
     requiredFields.forEach((field) => {
       if (!formData[field]) {
@@ -104,6 +100,13 @@ const Form = () => {
       newErrors.email = "Email is invalid";
     }
 
+    if (formData.mobile && !/^[6-9]\d{9}$/.test(formData.mobile)) {
+    newErrors.mobile = "Please enter a valid 10-digit Indian mobile number";
+  }
+   if (formData.whatsapp && !/^[6-9]\d{9}$/.test(formData.whatsapp)) {
+    newErrors.whatsapp = "Please enter a valid 10-digit Indian mobile number";
+  }
+
     return newErrors;
   };
 
@@ -112,145 +115,13 @@ const Form = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   // Validate form fields first
-  //   const validationErrors = validate();
-  //   if (!photoFile) {
-  //     validationErrors.photo = "Photo is required";
-  //   }
-  //   if (!biodataFile) {
-  //     validationErrors.bioData = "Biodata is required";
-  //   }
-
-  //   if (Object.keys(validationErrors).length > 0) {
-  //     setErrors(validationErrors);
-  //     return;
-  //   }
-
-  //   setErrors({});
-
-  //   try {
-  //     // Upload photo file
-  //     let uploadedPhotoUrl = "";
-  //     if (photoFile) {
-  //       const photoData = new FormData();
-  //       photoData.append("file", photoFile);
-
-  //       const photoUploadRes = await axios.post(
-  //         `${import.meta.env.VITE_BACKEND_URL}/upload`,
-  //         photoData
-  //       );
-
-  //       uploadedPhotoUrl = photoUploadRes.data.url;
-  //     }
-
-  //     // Upload biodata file
-  //     let uploadedBiodataUrl = "";
-  //     if (biodataFile) {
-  //       const biodataData = new FormData();
-  //       biodataData.append("file", biodataFile);
-
-  //       const biodataUploadRes = await axios.post(
-  //         `${import.meta.env.VITE_BACKEND_URL}/upload`,
-  //         biodataData
-  //       );
-
-  //       uploadedBiodataUrl = biodataUploadRes.data.url;
-  //     }
-
-  //     // Submit form with uploaded file URLs
-  //     const finalForm = {
-  //       ...formData,
-  //       photo: uploadedPhotoUrl,
-  //       bioData: uploadedBiodataUrl,
-  //     };
-
-  //     const result = await registerUser(finalForm);
-
-  //     if (result.status === 201) {
-  //       toast.success(
-  //         "Thanks for submitting your details! Your details will go live in 24 to 36 hours.",
-  //         {
-  //           position: "top-center",
-  //           autoClose: 3000,
-  //           hideProgressBar: false,
-  //           closeOnClick: true,
-  //           pauseOnHover: false,
-  //           draggable: true,
-  //           progress: undefined,
-  //           theme: "light",
-  //         }
-  //       );
-
-  //       // Reset form
-  //       setFormData({
-  //         number: "",
-  //         name: "",
-  //         email: "",
-  //         mobile: "",
-  //         gender: "",
-  //         birthTime: "",
-  //         birthPlace: "",
-  //         height: "",
-  //         weight: "",
-  //         dob: "",
-  //         bloodGroup: "",
-  //         manglik: "",
-  //         gotra: "",
-  //         kuldevi: "",
-  //         complexion: "",
-  //         education: "",
-  //         professionQualification: "",
-  //         profession: "",
-  //         company: "",
-  //         designation: "",
-  //         income: "",
-  //         hobbies: "",
-  //         otherQualification: "",
-  //         guardianName: "",
-  //         fatherName: "",
-  //         fatherProfession: "",
-  //         fatherIncome: "",
-  //         fatherDesignation: "",
-  //         motherName: "",
-  //         nativePlace: "",
-  //         address: "",
-  //         city: "",
-  //         pin: "",
-  //         whatsapp: "",
-  //         nri: "",
-  //         remarks: "",
-  //         password: "",
-  //         photo: "",
-  //         bioData: "",
-  //       });
-
-  //       setPhotoFile(null);
-  //       setBiodataFile(null);
-  //       if (photoInputRef.current) {
-  //         photoInputRef.current.value = "";
-  //       }
-  //       if (biodataInputRef.current) {
-  //         biodataInputRef.current.value = "";
-  //       }
-  //     }
-  //   } catch (err) {
-  //     console.error("Form submission failed:", err);
-  //     toast.error("Something went wrong. Please try again.");
-  //   }
-  // };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (isSubmitting) return; // Prevent double-clicks
+    if (isSubmitting) return; 
 
-    // Start submitting
     setIsSubmitting(true);
 
-    // Validate form fields
     const validationErrors = validate();
     if (!photoFile) {
       validationErrors.photo = "Photo is required";
@@ -261,14 +132,14 @@ const Form = () => {
 
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
-      setIsSubmitting(false); // Re-enable submit if validation fails
+      setIsSubmitting(false); 
       return;
     }
 
     setErrors({});
 
     try {
-      // Upload photo file
+    
       let uploadedPhotoUrl = "";
       if (photoFile) {
         const photoData = new FormData();
@@ -282,7 +153,7 @@ const Form = () => {
         uploadedPhotoUrl = photoUploadRes.data.url;
       }
 
-      // Upload biodata file
+   
       let uploadedBiodataUrl = "";
       if (biodataFile) {
         const biodataData = new FormData();
@@ -296,7 +167,7 @@ const Form = () => {
         uploadedBiodataUrl = biodataUploadRes.data.url;
       }
 
-      // Final form data
+     
       const finalForm = {
         ...formData,
         photo: uploadedPhotoUrl,
@@ -320,7 +191,6 @@ const Form = () => {
           }
         );
 
-        // Reset form and state
         setFormData({
           number: "",
           name: "",
@@ -371,7 +241,7 @@ const Form = () => {
     } catch (err) {
       console.error("Form submission failed:", err);
       toast.error("Something went wrong. Please try again.");
-      setIsSubmitting(false); // Allow retry on error
+      setIsSubmitting(false); 
     }
   };
 

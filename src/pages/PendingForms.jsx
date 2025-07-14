@@ -87,42 +87,37 @@ const PendingForms = () => {
   //   }
   // };
 
-const handleMemberReview = async (memberId, action) => {
-  try {
-    const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/review`;
-    const res = await axios.post(
-      reqUrl,
-      { memberId, action },
-      { headers: { Authorization: `Bearer ${token}` } }
-    );
-
-    const updated = res.data.member;
-
-    // ✅ Remove member from list if status is no longer "pending"
-    if (updated.status !== "pending") {
-      setPendingMembers((prev) =>
-        prev.filter((m) => m._id !== updated._id)
+  const handleMemberReview = async (memberId, action) => {
+    try {
+      const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/review`;
+      const res = await axios.post(
+        reqUrl,
+        { memberId, action },
+        { headers: { Authorization: `Bearer ${token}` } }
       );
-    } else {
-      // Otherwise, update the status in place
-      setPendingMembers((prev) =>
-        prev.map((m) => (m._id === updated._id ? updated : m))
-      );
+
+      const updated = res.data.member;
+
+      // ✅ Remove member from list if status is no longer "pending"
+      if (updated.status !== "pending") {
+        setPendingMembers((prev) => prev.filter((m) => m._id !== updated._id));
+      } else {
+        // Otherwise, update the status in place
+        setPendingMembers((prev) =>
+          prev.map((m) => (m._id === updated._id ? updated : m))
+        );
+      }
+
+      toast.success(res.data.message, {
+        position: "top-center",
+        autoClose: 3000,
+        theme: "light",
+      });
+    } catch (err) {
+      console.error(err);
+      alert("Error updating member status");
     }
-
-    toast.success(res.data.message, {
-      position: "top-center",
-      autoClose: 3000,
-      theme: "light",
-    });
-  } catch (err) {
-    console.error(err);
-    alert("Error updating member status");
-  }
-};
-
-
-
+  };
 
   return (
     <div className={styles.container}>

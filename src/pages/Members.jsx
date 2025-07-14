@@ -13,7 +13,6 @@ const Members = () => {
   useEffect(() => {
     const fetchMembers = async () => {
       const result = await getApprovedMembers();
-      console.log(result);
       const approvedMembers = result.filter(
         (member) => member.status === "approved"
       );

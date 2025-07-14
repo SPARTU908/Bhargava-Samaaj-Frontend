@@ -222,7 +222,7 @@ const VivahMemberRegister = () => {
             <form onSubmit={handleSubmit} noValidate className={styles.form}>
               <div className={styles.inputParentBox}>
                 <label htmlFor="name" className={styles.label}>
-                  Full Name
+                  Full Name <span style={{ color: "red" }}>*</span>
                 </label>
                 <input
                   placeholder=""
@@ -238,7 +238,7 @@ const VivahMemberRegister = () => {
 
               <div className={styles.inputParentBox}>
                 <label htmlFor="email" className={styles.label}>
-                  Email
+                  Email <span style={{ color: "red" }}>*</span>
                 </label>
                 <input
                   placeholder=""
@@ -254,7 +254,7 @@ const VivahMemberRegister = () => {
 
               <div className={styles.inputParentBox}>
                 <label htmlFor="phone" className={styles.label}>
-                  Phone
+                  Phone <span style={{ color: "red" }}>*</span>
                 </label>
                 <input
                   placeholder=""
@@ -288,7 +288,7 @@ const VivahMemberRegister = () => {
 
               <div className={styles.inputParentBox}>
                 <label htmlFor="gender" className={styles.label}>
-                  Gender
+                  Gender <span style={{ color: "red" }}>*</span>
                 </label>
                 <select
                   className={styles.input}
@@ -309,7 +309,7 @@ const VivahMemberRegister = () => {
 
               <div className={styles.inputParentBox}>
                 <label htmlFor="city" className={styles.label}>
-                  City
+                  City <span style={{ color: "red" }}>*</span>
                 </label>
                 <input
                   placeholder=""
@@ -325,7 +325,7 @@ const VivahMemberRegister = () => {
 
               <div className={styles.inputParentBox}>
                 <label htmlFor="gotra" className={styles.label}>
-                  Gotra
+                  Gotra <span style={{ color: "red" }}>*</span>
                 </label>
                 <input
                   placeholder=""
@@ -341,7 +341,7 @@ const VivahMemberRegister = () => {
 
               <div className={styles.inputParentBox}>
                 <label htmlFor="kuldevi" className={styles.label}>
-                  Kuldevi
+                  Kuldevi <span style={{ color: "red" }}>*</span>
                 </label>
                 <input
                   placeholder=""
@@ -359,7 +359,7 @@ const VivahMemberRegister = () => {
 
               <div className={styles.inputParentBox}>
                 <label htmlFor="password" className={styles.label}>
-                  Password
+                  Password <span style={{ color: "red" }}>*</span>
                 </label>
                 <input
                   placeholder=""
@@ -378,7 +378,7 @@ const VivahMemberRegister = () => {
 
               <div className={styles.inputParentBox}>
                 <label htmlFor="confirmpassword" className={styles.label}>
-                  Confirm Password
+                  Confirm Password <span style={{ color: "red" }}>*</span>
                 </label>
                 <input
                   placeholder=""

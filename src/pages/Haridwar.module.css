@@ -58,6 +58,7 @@
 }
 .call {
   padding-left: 10px;
+  margin-top: 4px;
 }
 .facilities {
   border: 1px solid black;
@@ -305,6 +306,19 @@
   font-weight: 300;
 }
 
+.location {
+ margin: 23px 247px 0px 115px;
+  font-family: "Merriweather", serif;
+  font-size: 20px;
+  font-weight: 700;
+  margin-top: 21px;
+  margin-left: 115px;
+  border: 1px solid black;
+    border-radius: 15px;
+  padding: 10px;
+
+}
+
 @media (max-width: 320px) {
   .heading {
     font-size: 25px;
@@ -361,7 +375,3 @@
     margin-top: 20px;
   }
 }
-
-
-
-

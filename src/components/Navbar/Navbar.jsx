@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./Navbar.module.css";
 import logo from "../../assets/full-logo.png";
 import { FaChevronDown, FaBars, FaTimes } from "react-icons/fa";
@@ -13,6 +13,12 @@ const Navbar = () => {
   const [isMatchDropdownOpen, setIsMatchDropdownOpen] = useState(false);
   const [isSamitiDropdownOpen, setIsSamitiDropdownOpen] = useState(false);
   const [language, setLanguage] = useState("hi");
+
+  const dropdownRef1 = useRef(null);
+  const dropdownRef2 = useRef(null);
+  const dropdownRef3 = useRef(null);
+  const samitiRef = useRef(null);
+  const matchDropdownRef = useRef(null);
 
   const handleSamitiToggle = (e) => {
     e.stopPropagation();
@@ -40,6 +46,30 @@ const Navbar = () => {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+  const handleClickOutside = (event) => {
+    if (
+      dropdownRef1.current && !dropdownRef1.current.contains(event.target) &&
+      dropdownRef2.current && !dropdownRef2.current.contains(event.target) &&
+      dropdownRef3.current && !dropdownRef3.current.contains(event.target) &&
+      samitiRef.current && !samitiRef.current.contains(event.target) &&
+      matchDropdownRef.current && !matchDropdownRef.current.contains(event.target)
+    ) {
+      setIsDropdownOpen1(false);
+      setIsDropdownOpen2(false);
+      setIsDropdownOpen3(false);
+      setIsMatchDropdownOpen(false);
+      setIsSamitiDropdownOpen(false);
+    }
+  };
+
+  document.addEventListener("click", handleClickOutside);
+  return () => {
+    document.removeEventListener("click", handleClickOutside);
+  };
+}, []);
+
+
   const toggleDropdown1 = () => {
     setIsDropdownOpen1((prev) => !prev);
   };
@@ -50,7 +80,7 @@ const Navbar = () => {
     setIsDropdownOpen3((prev) => !prev);
   };
 
-    const toggleMatchDropdown = () => setIsMatchDropdownOpen((prev) => !prev);
+  const toggleMatchDropdown = () => setIsMatchDropdownOpen((prev) => !prev);
   const toggleHamburger = () => setHamburgerOpen((prev) => !prev);
 
   const navigate = useNavigate();
@@ -122,7 +152,7 @@ const Navbar = () => {
           {language === "en" ? "Home" : "होम"}
         </div>
 
-        <div className={styles.dropdown} onClick={toggleDropdown1}>
+        <div className={styles.dropdown} onClick={toggleDropdown1} ref={dropdownRef1}>
           <div className={styles.dropbtn}>
             हमारे बारे में <FaChevronDown className={styles.arrow} />
           </div>
@@ -134,7 +164,7 @@ const Navbar = () => {
               <div onClick={() => handleAbout("sabhayein")}>स्थानीय सभाएं</div>
 
               {/* समिति with nested dropdown */}
-              <div className={styles.subDropdownWrapper}>
+              <div className={styles.subDropdownWrapper}  ref={samitiRef}>
                 <div
                   className={styles.subDropdownTrigger}
                   onClick={handleSamitiToggle}
@@ -414,7 +444,7 @@ const Navbar = () => {
           )}
         </div>
 
-        <div className={styles.dropdown} onClick={toggleDropdown2}>
+        <div className={styles.dropdown} onClick={toggleDropdown2} ref={dropdownRef2}>
           <div className={styles.dropbtn}>
             हमारा समाज
             <FaChevronDown className={styles.arrow} />
@@ -436,7 +466,7 @@ const Navbar = () => {
             </div>
           )}
         </div>
-        <div className={styles.dropdown} onClick={toggleDropdown3}>
+        <div className={styles.dropdown} onClick={toggleDropdown3} ref={dropdownRef3}>
           <div className={styles.dropbtn}>
             संपत्तियाँ
             <FaChevronDown className={styles.arrow} />
@@ -469,7 +499,7 @@ const Navbar = () => {
         <div className={styles.menu} onClick={handleForm}>
           फ़ॉर्म डाउनलोड करें
         </div>
-        <div className={styles.dropdown} onClick={toggleMatchDropdown}>
+        <div className={styles.dropdown} onClick={toggleMatchDropdown} ref={matchDropdownRef}>
           <div className={styles.dropbtn}>
             Find a Match <FaChevronDown className={styles.arrow} />
           </div>

@@ -86,6 +86,62 @@ const Payment = () => {
     }
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   const validationErrors = validate();
+  //   if (Object.keys(validationErrors).length > 0) {
+  //     setErrors(validationErrors);
+  //     toast.error("कृपया सभी आवश्यक फ़ील्ड भरें।", {
+  //       position: "top-center",
+  //     });
+  //     return;
+  //   }
+
+  //   try {
+  //     const payload = {
+  //       memberId,
+  //       transactionId: paymentdata.transactionId,
+  //     };
+
+  //     console.log("Sending Payment details:", payload);
+
+  //     const response = await savePayment(payload);
+
+  //     if (response.success) {
+  //       toast.success(
+  //         response.data?.message || "Payment received successfully!",
+  //         {
+  //           position: "top-center",
+  //           autoClose: 3000,
+  //         }
+  //       );
+
+  //       const newPaymentId = response.data?.payment?._id;
+  //       if (newPaymentId) {
+  //         localStorage.setItem("paymentId", newPaymentId);
+  //       }
+
+  //       setPaymentData({
+  //         name: "",
+  //         email: "",
+  //         mobile: "",
+  //         transactionId: "",
+  //       });
+  //     } else {
+  //       toast.error("Failed to save payment. Please try again.", {
+  //         position: "top-center",
+  //       });
+  //     }
+  //   } catch (err) {
+  //     console.error("Error saving payment:", err);
+  //     toast.error("Server error occurred while saving payment.", {
+  //       position: "top-center",
+  //     });
+  //   }
+  // };
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -99,9 +155,13 @@ const Payment = () => {
     }
 
     try {
+      // Add memberId to the payload
       const payload = {
-        memberId,
+        memberId, // Include memberId in the payment data
         transactionId: paymentdata.transactionId,
+        name: paymentdata.name,
+        email: paymentdata.email,
+        mobile: paymentdata.mobile,
       };
 
       console.log("Sending Payment details:", payload);
@@ -122,6 +182,7 @@ const Payment = () => {
           localStorage.setItem("paymentId", newPaymentId);
         }
 
+        // Clear form data after successful submission
         setPaymentData({
           name: "",
           email: "",
@@ -139,7 +200,7 @@ const Payment = () => {
         position: "top-center",
       });
     }
-  };
+};
 
   return (
     <>

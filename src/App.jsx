@@ -20,7 +20,6 @@ import SuperAdminDashboard from "./pages/SuperAdminDashboard.jsx";
 import DisplayForm from "./pages/DisplayForm.jsx";
 import MembershipAdminDashboard from "./pages/MembershipAdminDashboard.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
-
 import VivahMemberLogin from "./components/VivahMember/VivahMemberLogin.jsx";
 import VivahMemberRegister from "./components/VivahMember/VivahMemberRegister.jsx";
 import FindYourMatch from "./pages/FindYourMatch.jsx";
@@ -41,15 +40,13 @@ function App() {
           <Route path="/haridwar" element={<Haridwar />} />
           <Route path="/advertisement" element={<Advertisement />} />
           <Route path="/society" element={<Society />} />
-          <Route
-            path="/members"
-            element={
+          <Route path="/members" element={
               <PrivateRoute>
                 <Members />
               </PrivateRoute>
             }
           />
-          {/* <Route path="/login" element={<AdminLogin />} /> */}
+      
           <Route
             path="/review"
             element={
@@ -58,7 +55,7 @@ function App() {
               </PrivateRoute>
             }
           />
-          {/* <Route path="/review" element={<PendingForms />} /> */}
+ 
           <Route path="/payment" element={<Payment />} />
           <Route
             path="/memberadmin"
