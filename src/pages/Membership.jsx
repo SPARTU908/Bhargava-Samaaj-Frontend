@@ -48,6 +48,7 @@ const Membership = () => {
   const [signatureFile, setSignatureFile] = useState(null);
   const [spousePhotoFile, setSpousePhotoFile] = useState(null);
   const [spouseSignatureFile, setSpouseSignatureFile] = useState(null);
+  
 
   const navigate = useNavigate();
   const handleFormChange = (e) => {
