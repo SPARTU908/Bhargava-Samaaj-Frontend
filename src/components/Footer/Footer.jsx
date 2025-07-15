@@ -1,9 +1,6 @@
-import React from "react";
 import styles from "./Footer.module.css";
 import logo2 from "../../assets/samaajlogo.png";
-import { CiFacebook } from "react-icons/ci";
-import { FaInstagram } from "react-icons/fa6";
-import { FaTwitter } from "react-icons/fa";
+
 
 const Footer = () => {
   return (

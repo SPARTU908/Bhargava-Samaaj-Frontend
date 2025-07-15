@@ -307,24 +307,23 @@
 }
 
 .location {
- margin: 23px 247px 0px 115px;
+  margin: 23px 247px 0px 115px;
   font-family: "Merriweather", serif;
   font-size: 20px;
   font-weight: 700;
   margin-top: 21px;
   margin-left: 115px;
   border: 1px solid black;
-    border-radius: 15px;
+  border-radius: 15px;
   padding: 10px;
-
 }
 
-@media (max-width: 320px) {
+@media (max-width: 480px) {
   .heading {
     font-size: 25px;
-    margin-right: 714px;
+    margin-right: 721px;
     color: #ea5a1f;
-    padding-left: 105px;
+    padding-left: 29px;
     font-weight: 500;
     font-family: "Merriweather", serif;
   }
@@ -337,19 +336,25 @@
   .info {
     border: 1px solid black;
     border-radius: 15px;
-    margin: 33px 248px 0px 10px;
+    margin: 29px 248px 0px 0px;
     padding: 7px;
     display: flex;
-    width: 519px;
+    width: 480px;
   }
   .facilities {
     border: 1px solid black;
-    margin: 25px 250px 0px 13px;
+    margin: 25px 250px 0px 2px;
     padding: 10px;
     border-radius: 15px;
     display: flex;
     flex-direction: column;
-    width: 515px;
+    width: 476px;
+  }
+  .facility {
+    font-size: 14px;
+    font-weight: 700;
+    font-family: "Merriweather", serif;
+    margin-left: 17px;
   }
   .icon10 {
     color: #ea5418;
@@ -361,17 +366,172 @@
     border: 1px solid black;
     border-radius: 15px;
     padding: 10px;
-    width: 519px;
+    width: 465px;
   }
   .places {
     margin: 23px 247px 0px 10px;
     border: 1px solid black;
     border-radius: 15px;
     padding: 10px;
-    width: 520px;
+    width: 467px;
   }
   .logo {
     margin-left: 25px;
     margin-top: 20px;
+  }
+  .img1,
+  .img2 {
+    width: 445px;
+    height: 250px;
+    border: 1px solid black;
+  }
+  .room {
+    margin: 23px 247px 0px 3px;
+    border: 1px solid black;
+    border-radius: 15px;
+    padding: 10px;
+    width: 475px;
+  }
+  .location {
+    font-family: "Merriweather", serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-top: 21px;
+    margin-left: 8px;
+    border: 1px solid black;
+    border-radius: 15px;
+    padding: 10px;
+    width: 467px;
+  }
+  .icon1 {
+    font-size: 17px;
+    color: #ea5418;
+    margin-left: 10px;
+    margin-top: 5px;
+  }
+  .address {
+    padding-left: 3px;
+    padding-top: 4px;
+    font-size: 12px;
+    line-height: 15px;
+  }
+  .icon2 {
+    font-size: 16px;
+    color: #ea5418;
+    margin-left: 2px;
+    margin-top: 5px;
+  }
+  .email {
+    padding-left: 4px;
+    padding-top: 5px;
+    font-size: 14px;
+  }
+  .iconCall {
+    font-size: 18px;
+    color: #ea5418;
+    margin-left: 22px;
+    margin-top: 5px;
+  }
+  .call {
+    padding-left: 4px;
+    margin-top: 4px;
+  }
+  .icon3,
+  .icon4,
+  .icon5,
+  .icon6,
+  .icon7,
+  .icon8,
+  .icon9,
+  .icon10,
+  .icon11 {
+    color: #ea5418;
+    font-size: 20px;
+  }
+  .food {
+    padding-left: 10px;
+    padding-top: 5px;
+    font-family: "Merriweather", serif;
+    font-size: 15px;
+  }
+  .water {
+    margin-left: 9px;
+    margin-top: 5px;
+    font-family: "Merriweather", serif;
+    font-size: 15px;
+  }
+  .parking {
+    padding-left: 10px;
+    padding-top: 5px;
+    font-family: "Merriweather", serif;
+    font-size: 15px;
+  }
+  .cctv {
+    margin-left: 9px;
+    font-family: "Merriweather", serif;
+    margin-top: 8px;
+    font-size: 14px;
+  }
+  .water2 {
+    margin: 17px 0px 0px 9px;
+    font-family: "Merriweather", serif;
+    font-size: 15px;
+  }
+  .toilet {
+    margin: 18px 0px 0px 9px;
+    font-family: "Merriweather", serif;
+    font-size: 15px;
+  }
+  .mattress {
+    margin: 18px 0px 0px 11px;
+    font-family: "Merriweather", serif;
+    font-size: 15px;
+  }
+  .checkin {
+    margin: 34px 0px 0px 8px;
+    font-family: "Merriweather", serif;
+    font-size: 15px;
+  }
+  .checkout {
+    margin: 34px 0px 0px 10px;
+    font-family: "Merriweather", serif;
+    font-size: 15px;
+  }
+  .rooms {
+    font-size: 15px;
+    font-weight: 700;
+    font-family: "Merriweather", serif;
+    margin-left: 13px;
+  }
+  .headingReach {
+    font-family: "Merriweather", serif;
+    font-size: 15px;
+    font-weight: 700;
+    margin-top: 9px;
+    margin-left: 11px;
+  }
+  .headingPlace {
+    font-family: "Merriweather", serif;
+    font-size: 15px;
+    font-weight: 700;
+    margin-top: 9px;
+    margin-left: 9px;
+  }
+  .rupee {
+    font-family: "Merriweather", serif;
+    margin-left: 32px;
+    color: #ea5418;
+  }
+  .rupee2 {
+    font-family: "Merriweather", serif;
+    margin-left: 101px;
+    color: #ea5418;
+    margin-top: 20px;
+  }
+  .leafletcontainer{
+        height: 100%;
+    width: 59%;
+    margin: 24px 25px;
+    position: relative;
   }
 }

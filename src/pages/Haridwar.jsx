@@ -185,6 +185,8 @@ const Haridwar = () => {
         <div className={styles.location}>
           Location
           <div style={{ width: "700px", height: "500px" }}>
+            <div className={styles.leafletcontainer}>
+            
             <MapContainer
               center={position}
               zoom={15}
@@ -196,6 +198,8 @@ const Haridwar = () => {
                 <Popup>Bhargav Ashram, Haridwar</Popup>
               </Marker>
             </MapContainer>
+              
+            </div>
           </div>
         </div>
       </div>
