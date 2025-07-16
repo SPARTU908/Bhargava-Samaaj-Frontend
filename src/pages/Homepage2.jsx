@@ -1,12 +1,24 @@
-import React, { useState } from "react";
-import styles from "./Homepage.module.css";
-import banner from "../assets/banner.jpg";
-import president from "../assets/President.jpeg";
-import sanjay from "../assets/sanjay.jpg";
-import announcement from "../assets/announce.png";
-import activity from "../assets/newad.jpeg";
+import React from "react";
+import {
+  Container,
+  Row,
+  Col,
+
+  Nav,
+  NavDropdown,
+  Image,
+  Card,
+  Carousel,
+} from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
+// Image imports
+import banner from "../assets/banner.jpg";
+import announcement from "../assets/announce.png";
+import activity from "../assets/newad.jpeg";
+import president from "../assets/President.jpeg";
+import secretary from "../assets/sanjay.jpg";
 import anil from "../assets/Anil Bhargava.jpeg";
 import sanjay2 from "../assets/Sanjay Bhargava.jpeg";
 import vijay from "../assets/Vijay Bhargava.jpeg";
@@ -25,104 +37,155 @@ import salil from "../assets/salil.jpg";
 import sanjay3 from "../assets/sanjay2.jpg";
 import sohan from "../assets/sohan.jpg";
 import narayan from "../assets/narayan.jpeg";
-import { useNavigate } from "react-router-dom";
+
+// Sample content data
+const festivals = [
+  "सोमवार, 14 जुलाई – चतुर्थी (बैल चौथ)",
+  "मंगलवार, 15 जुलाई - नागपंचमी (भार्गव में )",
+  "सोमवार, 21 जुलाई - एकादशी (कामदा)",
+  "मंगलवार, 22 जुलाई - प्रदोष",
+  "गुरुवार, 24 जुलाई - अमावस्या ( हरियाली )",
+];
+
+const officers = [
+  { src: anil, name: "श्री अनिल भार्गव", role: "अध्यक्ष" },
+  { src: sanjay2, name: "श्री संजय भार्गव", role: "प्रधान सचिव" },
+  { src: vijay, name: "श्री विजय भार्गव", role: "कोषाध्यक्ष" },
+  { src: mohit, name: "श्री मोहित भार्गव", role: "उपाध्यक्ष" },
+  { src: ajay, name: "श्री अजय भार्गव", role: "उपाध्यक्ष" },
+  { src: vivek, name: "डा.श्री विवेक भार्गव", role: "उपाध्यक्ष" },
+  { src: ramesh, name: "श्री रमेश भार्गव", role: "उपाध्यक्ष" },
+  { src: girish, name: "श्री गिरीश भार्गव", role: "उपाध्यक्ष" },
+  { src: harish, name: "श्री हरीश भार्गव", role: "क्षेत्रीय उपाध्यक्ष" },
+  { src: salil, name: "श्री सलिल भार्गव", role: "क्षेत्रीय उपाध्यक्ष" },
+  { src: sanjay3, name: "श्री संजय भार्गव", role: "क्षेत्रीय उपाध्यक्ष" },
+  { src: narayan, name: "श्री नारायण भार्गव", role: "क्षेत्रीय उपाध्यक्ष" },
+  { src: sohan, name: "श्री सोहन भार्गव", role: "क्षेत्रीय उपाध्यक्ष" },
+  { src: pankaj, name: "श्री पंकज भार्गव", role: "सचिव" },
+  { src: sanjeev, name: "श्री संजीव भार्गव", role: "सचिव" },
+  { src: anil2, name: "श्री अनिल भार्गव", role: "सचिव" },
+  { src: saurabh, name: "श्री सौरभ भार्गव", role: "सचिव" },
+  { src: deepesh, name: "श्री दीपेश भार्गव", role: "सचिव" },
+];
 
 const Homepage = () => {
-  const [isExpanded, setIsExpanded] = useState(false);
-
-  const toggleCollapse = () => {
-    setIsExpanded(!isExpanded);
-  };
   const navigate = useNavigate();
-  const handleHaridwar = () => {
-    navigate("/haridwar");
-  };
+
   return (
     <>
+      {/* NAVBAR */}
       <Navbar />
-      <div >
-        <img src={banner} alt="" className={styles.banner} />
-{/* <img src={banner} alt="" className="img-rsponsive img-fluid"/> */}
 
-      </div>
-      <div className={styles.newsWrapper}>
-        <div className={styles.news}>
-          <div className={styles.scrollText}>
-            <span className={styles.latest}>Latest News</span>
-          </div>
-        </div>
-      </div>
+      {/* BANNER */}
+      <Image src={banner} alt="banner" fluid className="w-100" />
 
-      {/* Annoucement Section */}
-      <div className={styles.announceSection}>
-        <div className={styles.announce}>
-          <img src={announcement} alt="" className={styles.announceImg} />
-        </div>
-        <div className={styles.headingAnnounce}>
-          <div className={styles.content}>
-            अखिल भारतीय भार्गव सभा (रजि.) के सत्रा 2025-2027 की कार्यकारिणी की
+      {/* ANNOUNCEMENT */}
+      <Container className="my-5">
+        <Row>
+          <Col md={2}>
+            <Image src={announcement} fluid />
+          </Col>
+          <Col>
+            <p>
+               अखिल भारतीय भार्गव सभा (रजि.) के सत्रा 2025-2027 की कार्यकारिणी की
             द्वितीय बैठक रविवार, दिनांक 20.07.2025 को प्रातः 10.00 बजे से
             ‘NITTTR Auditorium, श्यामला हिल्स, भोपाल’ में आयोजित की जायेगी। साथ
             ही एक दिन पूर्व अर्थात् शनिवार 19.07.2025 को आवश्यकतानुसार समितियों
             की बैठकें होटल विज्ञा श्री/NITTTR Auditorium में रखी जा सकती हैं,
             जिसकी सूचना समितियों द्वारा सम्बन्ध्ति को भेजी जाएगी।
-          </div>
-        </div>
-      </div>
+            </p>
+          </Col>
+        </Row>
+      </Container>
 
-      {/* Festival */}
-      <div className={styles.festival}>
-        <div className={styles.festHead}> अपकमिंग फेस्टिवल्स 2025</div>
-        <div>
-          <div className={styles.col1}>
-            <div className={styles.festBox1}>
-              <div className={styles.day}>
-                {" "}
-                   सोमवार, 14 जुलाई – चतुर्थी (बैल चौथ)
-              </div>
-            </div>
-            <div className={styles.festBox1}>
-              <div className={styles.day}>
-               मंगलवार, 15 जुलाई - नागपंचमी (भार्गव में )
-              </div>
-            </div>
-            <div className={styles.festBox1}>
-              <div className={styles.day}>सोमवार, 21 जुलाई - एकादशी (कामदा)</div>
-            </div>
-            <div className={styles.festBox1}>
-              <div className={styles.day}>
-                मंगलवार, 22 जुलाई - प्रदोष 
-              </div>
-            </div>
-            <div className={styles.festBox1}>
-              <div className={styles.day}>
-               गुरुवार, 24 जुलाई - अमावस्या ( हरियाली )
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* FESTIVALS */}
+     <Container id="festivals" className="my-5">
+  <h3 className="text-center mb-4" style={{ color: "#ea8d0c" }}>
+    अपकमिंग फेस्टिवल्स 2025
+  </h3>
+  <Row xs={1} sm={2} md={3} className="g-4">
+    {festivals.map((fest, index) => (
+      <Col key={index}>
+        <Card
+          className="h-100 text-center shadow"
+          style={{
+            backgroundColor: "#1e1e2f", // dark background
+            color: "#ffffff",           // white text
+            borderRadius: "12px",
+            padding: "20px",
+            border: "1px solid #444",
+            transition: "transform 0.3s ease-in-out",
+          }}
+          onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.02)")}
+          onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+        >
+          <Card.Body>
+            <p style={{ fontSize: "1.1rem", fontWeight: "500", marginBottom: 0 }}>
+              {fest}
+            </p>
+          </Card.Body>
+        </Card>
+      </Col>
+    ))}
+  </Row>
+</Container>
 
-      {/* Activities-Section */}
-      <div className={styles.activities}>
-        <div className={styles.activityHeading}> अपकमिंग एक्टिविटीज 2025</div>
-        <div className={styles.activities_row_1}>
-          <div className={styles.imageContainer}>
-            <img src={activity} alt="" className={styles.actImg} />
-          </div>
-        </div>
+      {/* ACTIVITIES */}
+      <Container id="activities" className="my-5">
+  <h3 className="text-center mb-4" style={{ color: "#ea8d0c" }}>
+    अपकमिंग एक्टिविटीज 2025
+  </h3>
+  <Row className="justify-content-center mt-4">
+    <Col md={8}>
+      <div
+        style={{
+          backgroundColor: "#1e1e2f",
+          padding: "20px",
+          borderRadius: "12px",
+          boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
+          textAlign: "center",
+        }}
+      >
+        <Image
+          src={activity}
+          alt="activity"
+          fluid
+          rounded
+          style={{
+            border: "3px solid #ea8d0c",
+            maxHeight: "400px",
+            objectFit: "cover",
+          }}
+        />
       </div>
+    </Col>
+  </Row>
+</Container>
 
-      {/* Message of President */}
-      <div className={styles.row1}>
-        <div>
-          <img src={president} alt="" className={styles.presImg} />
-        </div>
-        <div className={styles.rightContent}>
-          <div className={styles.heading}>अध्यक्ष</div>
-          <div className={styles.contentPres}>
-            <div className={styles.message}>
+
+      {/* PRESIDENT MESSAGE */}
+      <Container id="president" className="my-5">
+      <Row className="align-items-center">
+        <Col md={4}>
+          <Image src={president} fluid rounded style={{ maxHeight: "250px", objectFit: "cover" }} />
+        </Col>
+        <Col md={8}>
+          <h4>अध्यक्ष का संदेश</h4>
+
+          {/* SCROLLABLE MESSAGE */}
+          <div
+            style={{
+               maxHeight: "250px", 
+              overflowY: "auto",
+              paddingRight: "10px",
+              border: "1px solid #ccc",
+              borderRadius: "8px",
+              whiteSpace: "pre-line",
+            }}
+          >
+            <p>
               प्रधान की कलम से.... <br />
+              
               प्रिय बंधुवर, सादर अभिनन्दन !! सर्वप्रथम में आप सभी स्नेहीजनों,
               बड़े व छोटे भाई. बहनों का का मुझे व मेरी कार्यकारिणी को भारी मतों
               से विजय का आशीर्वाद देने के लिए हृदय से आभार व्यक्त करता हूँ। आप
@@ -180,17 +243,34 @@ const Homepage = () => {
               <br />
               रेवाड़ी <br />
               <br />
-            </div>
+              आपका अपना भवदीय <br />
+              अनिल भार्गव <br />
+              1855, सेक्टर-04, <br />
+              रेवाड़ी <br />
+            </p>
           </div>
-        </div>
-      </div>
+        </Col>
+      </Row>
+    </Container>
 
-      {/* Message of Pradhan Sachiv */}
-      <div className={styles.row2}>
-        <div className={styles.rightContent2}>
-          <div className={styles.heading}>प्रधान सचिव</div>
-          <div className={styles.contentPres2}>
-            <div>
+      {/* SECRETARY MESSAGE */}
+      <Container id="secretary" className="my-5">
+      <Row className="align-items-center">
+        <Col md={8}>
+          <h4>प्रधान सचिव का संदेश</h4>
+
+          <div
+            style={{
+               maxHeight: "250px", 
+              overflowY: "auto",
+              paddingRight: "10px",
+              border: "1px solid #ccc",
+              borderRadius: "8px",
+              whiteSpace: "pre-line",
+            }}
+          >
+            <p>
+              {/* Secretary's full message */}
               सत्र 2025-2027 के लिये जनादेश ने जो उत्तरदायित्व हमारी कार्यकारिणी
               को दिया है, उसे हमने आत्मसात कर कार्य प्रारम्भ कर दिया है।
               कार्यकारिणी की प्रथम बैठक मे सहयोग व समर्पण का जो आभास हुआ, उससे
@@ -245,135 +325,59 @@ const Homepage = () => {
               जय परशुराम
               <br />
               भवदीय,
-            </div>
+            </p>
           </div>
+        </Col>
+        <Col md={4}>
+          <Image src={secretary} fluid rounded style={{ maxHeight: "250px", objectFit: "cover" }}/>
+        </Col>
+      </Row>
+    </Container>
+
+      {/* OFFICERS SECTION */}
+     <Container id="officers" className="my-5">
+  <h3 className="text-center mb-4 text-primary fw-bold">पदाधिकारी</h3>
+  <Row xs={2} sm={3} md={4} lg={6} className="g-4">
+    {officers.map((officer, index) => (
+      <Col key={index} className="text-center">
+        <div
+          className="border rounded shadow-sm p-3 h-100"
+          style={{
+            backgroundColor: "#fdf8f3",
+            borderColor: "#ea8d0c",
+            transition: "transform 0.3s ease",
+          }}
+          onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.03)")}
+          onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+        >
+          <Image
+            src={officer.src}
+            alt={officer.name}
+            className="mb-2 officer-img-square rounded-circle border"
+            style={{
+              width: "100px",
+              height: "100px",
+              objectFit: "cover",
+              borderColor: "#ea8d0c",
+              borderWidth: "3px",
+              borderStyle: "solid",
+            }}
+          />
+          <h6 className="mb-1 fw-semibold">{officer.name}</h6>
+          <p className="text-muted small">{officer.role}</p>
         </div>
-        <div>
-          <img src={sanjay} alt="" className={styles.presImg2} />
-        </div>
-      </div>
+      </Col>
+    ))}
+  </Row>
+</Container>
 
-      {/* Office Bearers */}
-      <div className={styles.office}>
-        <div className={styles.headingOffice}>पदाधिकारी</div>
-        <div className={styles.offrow1}>
-          <div>
-            <img src={anil} alt="" className={styles.anil} />
-            <div className={styles.anilName}> श्री अनिल भार्गव</div>
-            <div className={styles.anilOcc}>अध्यक्ष</div>
-          </div>
-          <div>
-            <img src={sanjay2} alt="" className={styles.sanjay2} />
-            <div className={styles.sanjayName}> श्री संजय भार्गव</div>
-            <div className={styles.sanjayOcc}>प्रधान सचिव</div>
-          </div>
-          <div>
-            <img src={vijay} alt="" className={styles.vijay} />
-            <div className={styles.vijayName}> श्री विजय भार्गव</div>
-            <div className={styles.vijayOcc}>कोषाध्यक्ष</div>
-          </div>
-          <div>
-            <img src={mohit} alt="" className={styles.mohit} />
-            <div className={styles.mohitName}> श्री मोहित भार्गव</div>
-            <div className={styles.mohitOcc}>उपाध्यक्ष</div>
-          </div>
-          <div>
-            <img src={ajay} alt="" className={styles.ajay} />
-            <div className={styles.ajayName}> श्री अजय भार्गव</div>
-            <div className={styles.ajayOcc}>उपाध्यक्ष</div>
-          </div>
-        </div>
-        <div className={styles.offrow2}>
-          <div>
-            <img src={vivek} alt="" className={styles.vivek} />
-            <div className={styles.vivekName}> डा.श्री विवेक भार्गव</div>
-            <div className={styles.vivekOcc}>उपाध्यक्ष</div>
-          </div>
-          <div>
-            <img src={ramesh} alt="" className={styles.ramesh} />
-            <div className={styles.rameshName}> श्री रमेश भार्गव</div>
-            <div className={styles.rameshOcc}>उपाध्यक्ष</div>
-          </div>
-          <div>
-            <img src={girish} alt="" className={styles.girish} />
-            <div className={styles.girishName}> श्री गिरीश भार्गव</div>
-            <div className={styles.girishOcc}>उपाध्यक्ष</div>
-          </div>
 
-          <div>
-            <img src={harish} alt="" className={styles.harish} />
-            <div className={styles.harishName}> श्री हरीश भार्गव</div>
-            <div className={styles.harishOcc}>क्षेत्रीय उपाध्यक्ष</div>
-          </div>
-          <div>
-            <img src={salil} alt="" className={styles.salil} />
-            <div className={styles.salilName}> श्री सलिल भार्गव</div>
-            <div className={styles.salilOcc}>क्षेत्रीय उपाध्यक्ष</div>
-          </div>
-        </div>
+      
 
-        <div className={styles.offrow3}>
-          <div>
-            <img src={sanjay3} alt="" className={styles.sanjay3} />
-            <div className={styles.mohitName}> श्री संजय भार्गव</div>
-            <div className={styles.narayanOcc}>क्षेत्रीय उपाध्यक्ष</div>
-          </div>
-          <div>
-            <img src={sohan} alt="" className={styles.narayan} />
-            <div className={styles.mohitName}> श्री नारायण भार्गव</div>
-            <div className={styles.narayanOcc}>क्षेत्रीय उपाध्यक्ष</div>
-          </div>
-          <div>
-            <img src={narayan} alt="" className={styles.sohan} />
-            <div className={styles.mohitName}> श्री सोहन भार्गव</div>
-            <div className={styles.narayanOcc}>क्षेत्रीय उपाध्यक्ष</div>
-          </div>
-          <div>
-            <img src={pankaj} alt="" className={styles.girish} />
-            <div className={styles.girishName}> श्री पंकज भार्गव</div>
-            <div className={styles.pankajOcc}>सचिव</div>
-          </div>
-          <div>
-            <img src={sanjeev} alt="" className={styles.girish} />
-            <div className={styles.girishName}> श्री संजीव भार्गव</div>
-            <div className={styles.sanjeevOcc}>सचिव</div>
-          </div>
-        </div>
-
-        <div className={styles.offrow4}>
-          <div>
-            <img src={anil2} alt="" className={styles.girish} />
-            <div className={styles.girishName}> श्री अनिल भार्गव</div>
-            <div className={styles.sanjeevOcc}>सचिव</div>
-          </div>
-          <div>
-            <img src={saurabh} alt="" className={styles.girish} />
-            <div className={styles.girishName}> श्री सौरभ भार्गव</div>
-            <div className={styles.sanjeevOcc}>सचिव</div>
-          </div>
-
-          <div>
-            <img src={deepesh} alt="" className={styles.girish} />
-            <div className={styles.girishName}> श्री दीपेश भार्गव</div>
-            <div className={styles.sanjeevOcc}>सचिव</div>
-          </div>
-        </div>
-      </div>
-
-      {/* Event Gallery Section */}
-
-      <div className={styles.gallery}>
-        <div className={styles.galleryHeading}>इवेंट गैलरी </div>
-
-        {/* <ImageSlider images={[img1, img2, img3]} interval={4000} /> */}
-      </div>
-      <Footer />
+      {/* FOOTER */}
+    <Footer/>
     </>
   );
 };
 
 export default Homepage;
-
-
-
-

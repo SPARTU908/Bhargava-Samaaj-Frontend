@@ -624,7 +624,7 @@
     padding-left: 210px;
   }
   .announceSection {
-    width: 100%;
+    /* width: 100%; */
   }
   .headingAnnounce {
     font-size: 20px;
@@ -659,7 +659,7 @@
   .festival {
     background-color: #002560;
     padding-bottom: 20px;
-    width: 104%;
+    /* width: 104%; */
   }
   .festBox1 {
     width: 327px;
@@ -749,12 +749,15 @@
     text-align: center;
     margin-right: 510px;
   }
-  .office {
+  /* .office {
     height: auto;
     margin-top: 97px;
     margin-left: 0px;
     width: 100%;
-  }
+  } */
+   .office{
+    display: none;
+   }
   .offrow1 {
     display: flex;
     margin: 53px 0px 0px 59px;

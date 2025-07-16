@@ -135,19 +135,19 @@
   font-weight: bold;
 }
 .heading2 {
-  position: relative;
-  font-family: "Tiro Devanagari Hindi", serif;
-  font-size: 2.2rem;
-  margin-left: 249px;
-  color: #ee7b4e;
-  margin-bottom: 2rem;
-  font-weight: bold;
+ position: relative;
+    font-family: "Tiro Devanagari Hindi", serif;
+    font-size: 2.2rem;
+    margin-left: 559px;
+    color: #ee7b4e;
+    margin-bottom: 2rem;
+    font-weight: bold;
 }
 .heading3 {
   position: relative;
   font-family: "Tiro Devanagari Hindi", serif;
   font-size: 2.2rem;
-  margin-left: 249px;
+  margin-left: 613px;
   color: #ee7b4e;
   margin-bottom: 2rem;
   font-weight: bold;
@@ -156,7 +156,7 @@
   position: relative;
   font-family: "Tiro Devanagari Hindi", serif;
   font-size: 2.2rem;
-  margin-left: 249px;
+  margin-left: 559px;
   color: #ee7b4e;
   margin-bottom: 2rem;
   font-weight: bold;
@@ -165,7 +165,7 @@
   position: relative;
   font-family: "Tiro Devanagari Hindi", serif;
   font-size: 2.2rem;
-  margin-left: 249px;
+  margin-left: 559px;
   color: #ee7b4e;
   margin-bottom: 2rem;
   font-weight: bold;
@@ -198,7 +198,7 @@
   color: #ed8e67;
 }
 
-@media (max-width: 600px) {
+@media only screen and (max-width: 600px) {
   .logo {
     margin-left: 45px;
     margin-top: 20px;

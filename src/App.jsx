@@ -1,7 +1,7 @@
 import "./App.css";
 import Magazine from "./pages/Magazine";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Homepage from "./pages/Homepage";
+import Homepage2 from "./pages/Homepage2";
 import About from "./pages/About";
 import Census from "./pages/Census";
 import Matrimonial from "./pages/Matrimonial";
@@ -32,7 +32,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Navigate to="/home" replace />} />
-          <Route path="/home" element={<Homepage />} />
+          <Route path="/home" element={<Homepage2 />} />
           <Route path="/about" element={<About />} />
           <Route path="/census" element={<Census />} />
           <Route path="/download" element={<Download />} />
