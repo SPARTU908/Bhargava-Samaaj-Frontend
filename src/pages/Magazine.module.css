@@ -1,19 +1,20 @@
 .container {
- margin: 20px 0px 20px 20px;
+  margin: 20px 0px 20px 20px;
 }
-.heading{
+.heading {
   text-align: center;
   font-family: "Merriweather", serif;
   font-size: 40px;
   padding-top: 20px;
   padding-bottom: 45px;
 }
- @media (max-width: 480px) {
-  .heading{
+
+@media only screen and (max-width: 600px) {
+  .heading {
     text-align: center;
     font-family: "Merriweather", serif;
-    font-size: 20px;
+    font-size: 24px;
     padding-top: 20px;
     padding-bottom: 45px;
   }
- }
+}

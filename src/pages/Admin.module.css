@@ -74,7 +74,7 @@
   }
 }
 
-@media (min-width: 480px) and (max-width: 767px) {
+@media only screen and (max-width: 600px) {
   .container {
     /* width: 632px; */
     height: 521px;

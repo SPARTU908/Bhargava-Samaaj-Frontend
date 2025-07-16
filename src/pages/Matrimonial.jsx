@@ -107,17 +107,9 @@ const Matrimonial = () => {
       <Navbar />
       <div className={styles.container}>
         <div className={styles.btn}>
-          <div>
-            {/* <button  className={styles.admin} onClick={()=>setShowModal(true)}>
-              Register
-            </button> */}
-          </div>
-          <div>
-            {/* <button className={styles.login} onClick={() => setShowModal(true)}>
-              सही जीवनसाथी ढूँढें
-            </button> */}
-            <button className={styles.login} onClick={handlelogin}>सही जीवनसाथी ढूँढें</button>
-          </div>
+          <button className={styles.login} onClick={handlelogin}>
+            सही जीवनसाथी ढूँढें
+          </button>
         </div>
       </div>
 

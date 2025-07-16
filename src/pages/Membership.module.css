@@ -142,7 +142,7 @@
   margin-left: 100px;
 }
 
-@media (max-width: 320px) {
+/* @media (max-width: 320px) {
   .logo {
     margin-left: 100px;
     margin-top: 20px;
@@ -215,32 +215,35 @@
     background-color: #e95114;
     color: white;
   }
-}
+} */
 
-@media (max-width: 375px) {
+@media only screen and (max-width: 600px) {
   .logo {
     margin-left: 45px;
     margin-top: 20px;
   }
   .heading {
-    margin-left: 14px;
+    margin-left: 34px;
     font-size: 17px;
     font-weight: bold;
     margin-top: 45px;
     color: #ec6e3c;
-    width: 518px;
+    width: 100%;
     line-height: 22px;
+  }
+  .mobilebtn {
+    margin-left: 263px;
   }
   .age {
     margin: 31px 69px 0px 26px;
     font-weight: bold;
-     width: 521px;
+    width: 100%;
     line-height: 20px;
   }
   .fees {
     border: 2px solid black;
     width: 500px;
-    margin: 36px 0px 0px 55px;
+    margin: 36px 0px 0px 142px;
     padding: 10px;
     height: auto;
   }
@@ -252,5 +255,8 @@
   .subheading {
     display: flex;
     flex-direction: column;
+  }
+  .container{
+    margin: 48px 113px;
   }
 }

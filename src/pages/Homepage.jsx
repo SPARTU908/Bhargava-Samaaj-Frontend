@@ -40,8 +40,10 @@ const Homepage = () => {
   return (
     <>
       <Navbar />
-      <div>
+      <div className="container-fluid">
         <img src={banner} alt="" className={styles.banner} />
+{/* <img src={banner} alt="" className="img-rsponsive img-fluid"/> */}
+
       </div>
       <div className={styles.newsWrapper}>
         <div className={styles.news}>
@@ -371,3 +373,230 @@ const Homepage = () => {
 };
 
 export default Homepage;
+
+
+
+// src/pages/Homepage.js
+
+
+
+
+
+
+// import React from "react";
+// import {
+//   Container,
+//   Row,
+//   Col,
+//   Navbar,
+//   Nav,
+//   NavDropdown,
+//   Image,
+//   Card,
+//   Carousel,
+// } from "react-bootstrap";
+// import { useNavigate } from "react-router-dom";
+
+// // Image imports
+// import banner from "../assets/banner.jpg";
+// import announcement from "../assets/announce.png";
+// import activity from "../assets/newad.jpeg";
+// import president from "../assets/President.jpeg";
+// import secretary from "../assets/sanjay.jpg";
+// import anil from "../assets/Anil Bhargava.jpeg";
+// import sanjay2 from "../assets/Sanjay Bhargava.jpeg";
+// import vijay from "../assets/Vijay Bhargava.jpeg";
+// import mohit from "../assets/Mohit Bhargava.jpeg";
+// import ajay from "../assets/Ajay Bhargava.jpeg";
+// import vivek from "../assets/Vivek Bhargava.jpeg";
+// import ramesh from "../assets/Ramesh Bhargava.jpeg";
+// import girish from "../assets/Girish.jpg";
+// import pankaj from "../assets/Pankaj.jpg";
+// import sanjeev from "../assets/sanjeev.jpg";
+// import anil2 from "../assets/anil.jpg";
+// import saurabh from "../assets/Saurabh.jpg";
+// import deepesh from "../assets/deepesh.jpg";
+// import harish from "../assets/harish.png";
+// import salil from "../assets/salil.jpg";
+// import sanjay3 from "../assets/sanjay2.jpg";
+// import sohan from "../assets/sohan.jpg";
+// import narayan from "../assets/narayan.jpeg";
+
+// // Sample content data
+// const festivals = [
+//   "सोमवार, 14 जुलाई – चतुर्थी (बैल चौथ)",
+//   "मंगलवार, 15 जुलाई - नागपंचमी (भार्गव में )",
+//   "सोमवार, 21 जुलाई - एकादशी (कामदा)",
+//   "मंगलवार, 22 जुलाई - प्रदोष",
+//   "गुरुवार, 24 जुलाई - अमावस्या ( हरियाली )",
+// ];
+
+// const officers = [
+//   { src: anil, name: "श्री अनिल भार्गव", role: "अध्यक्ष" },
+//   { src: sanjay2, name: "श्री संजय भार्गव", role: "प्रधान सचिव" },
+//   { src: vijay, name: "श्री विजय भार्गव", role: "कोषाध्यक्ष" },
+//   { src: mohit, name: "श्री मोहित भार्गव", role: "उपाध्यक्ष" },
+//   { src: ajay, name: "श्री अजय भार्गव", role: "उपाध्यक्ष" },
+//   { src: vivek, name: "डा.श्री विवेक भार्गव", role: "उपाध्यक्ष" },
+//   { src: ramesh, name: "श्री रमेश भार्गव", role: "उपाध्यक्ष" },
+//   { src: girish, name: "श्री गिरीश भार्गव", role: "उपाध्यक्ष" },
+//   { src: harish, name: "श्री हरीश भार्गव", role: "क्षेत्रीय उपाध्यक्ष" },
+//   { src: salil, name: "श्री सलिल भार्गव", role: "क्षेत्रीय उपाध्यक्ष" },
+//   { src: sanjay3, name: "श्री संजय भार्गव", role: "क्षेत्रीय उपाध्यक्ष" },
+//   { src: narayan, name: "श्री नारायण भार्गव", role: "क्षेत्रीय उपाध्यक्ष" },
+//   { src: sohan, name: "श्री सोहन भार्गव", role: "क्षेत्रीय उपाध्यक्ष" },
+//   { src: pankaj, name: "श्री पंकज भार्गव", role: "सचिव" },
+//   { src: sanjeev, name: "श्री संजीव भार्गव", role: "सचिव" },
+//   { src: anil2, name: "श्री अनिल भार्गव", role: "सचिव" },
+//   { src: saurabh, name: "श्री सौरभ भार्गव", role: "सचिव" },
+//   { src: deepesh, name: "श्री दीपेश भार्गव", role: "सचिव" },
+// ];
+
+// const Homepage = () => {
+//   const navigate = useNavigate();
+
+//   return (
+//     <>
+//       {/* NAVBAR */}
+//       <Navbar bg="light" expand="lg" sticky="top">
+//         <Container>
+//           <Navbar.Brand href="/">भार्गव सभा</Navbar.Brand>
+//           <Navbar.Toggle />
+//           <Navbar.Collapse>
+//             <Nav className="ms-auto">
+//               <Nav.Link onClick={() => navigate("/")}>होम</Nav.Link>
+//               <Nav.Link href="#festivals">त्यौहार</Nav.Link>
+//               <Nav.Link href="#activities">गतिविधियाँ</Nav.Link>
+//               <Nav.Link href="#president">अध्यक्ष संदेश</Nav.Link>
+//               <Nav.Link href="#secretary">प्रधान सचिव</Nav.Link>
+//               <Nav.Link href="#officers">पदाधिकारी</Nav.Link>
+//               <Nav.Link href="#gallery">गैलरी</Nav.Link>
+//               <NavDropdown title="अधिक जानकारी" id="basic-nav-dropdown">
+//                 <NavDropdown.Item onClick={() => navigate("/haridwar")}>
+//                   हरिद्वार
+//                 </NavDropdown.Item>
+//                 <NavDropdown.Item href="#about">हमारे बारे में</NavDropdown.Item>
+//                 <NavDropdown.Item href="#contact">संपर्क करें</NavDropdown.Item>
+//               </NavDropdown>
+//             </Nav>
+//           </Navbar.Collapse>
+//         </Container>
+//       </Navbar>
+
+//       {/* BANNER */}
+//       <Image src={banner} alt="banner" fluid className="w-100" />
+
+//       {/* ANNOUNCEMENT */}
+//       <Container className="my-5">
+//         <Row>
+//           <Col md={2}>
+//             <Image src={announcement} fluid />
+//           </Col>
+//           <Col>
+//             <p>
+//               अखिल भारतीय भार्गव सभा (रजि.) के सत्र 2025-2027 की कार्यकारिणी की
+//               द्वितीय बैठक रविवार, 20.07.2025 को प्रातः 10:00 बजे 'NITTTR Auditorium,
+//               श्यामला हिल्स, भोपाल' में आयोजित की जायेगी। एक दिन पूर्व, शनिवार
+//               19.07.2025 को समितियों की बैठकें होटल विज्ञा श्री/NITTTR में रखी जा
+//               सकती हैं।
+//             </p>
+//           </Col>
+//         </Row>
+//       </Container>
+
+//       {/* FESTIVALS */}
+//       <Container id="festivals" className="my-5">
+//         <h3>अपकमिंग फेस्टिवल्स 2025</h3>
+//         <Row xs={1} sm={2} md={3} className="g-4 mt-3">
+//           {festivals.map((fest, index) => (
+//             <Col key={index}>
+//               <Card className="h-100 text-center p-3">
+//                 <Card.Body>{fest}</Card.Body>
+//               </Card>
+//             </Col>
+//           ))}
+//         </Row>
+//       </Container>
+
+//       {/* ACTIVITIES */}
+//       <Container id="activities" className="my-5">
+//         <h3>अपकमिंग एक्टिविटीज 2025</h3>
+//         <Row className="justify-content-center mt-4">
+//           <Col md={8}>
+//             <Image src={activity} alt="activity" fluid rounded />
+//           </Col>
+//         </Row>
+//       </Container>
+
+//       {/* PRESIDENT MESSAGE */}
+//       <Container id="president" className="my-5">
+//         <Row className="align-items-center">
+//           <Col md={4}>
+//             <Image src={president} fluid rounded />
+//           </Col>
+//           <Col md={8}>
+//             <h4>अध्यक्ष का संदेश</h4>
+//             <p style={{ whiteSpace: "pre-line" }}>
+//               {/* Paste full content of president message here */}
+//               प्रिय बंधुवर, सादर अभिनन्दन !! सर्वप्रथम में आप सभी स्नेहीजनों...
+//             </p>
+//           </Col>
+//         </Row>
+//       </Container>
+
+//       {/* SECRETARY MESSAGE */}
+//       <Container id="secretary" className="my-5">
+//         <Row className="align-items-center">
+//           <Col md={8}>
+//             <h4>प्रधान सचिव का संदेश</h4>
+//             <p style={{ whiteSpace: "pre-line" }}>
+//               {/* Paste full secretary message here */}
+//               सत्र 2025-2027 के लिये जनादेश ने जो उत्तरदायित्व...
+//             </p>
+//           </Col>
+//           <Col md={4}>
+//             <Image src={secretary} fluid rounded />
+//           </Col>
+//         </Row>
+//       </Container>
+
+//       {/* OFFICERS SECTION */}
+//       <Container id="officers" className="my-5">
+//         <h3 className="text-center mb-4">पदाधिकारी</h3>
+//         <Row xs={2} sm={3} md={4} lg={6} className="g-4">
+//           {officers.map((officer, index) => (
+//             <Col key={index} className="text-center">
+//               <Image src={officer.src} roundedCircle fluid className="mb-2" />
+//               <h6 className="mb-1">{officer.name}</h6>
+//               <p className="text-muted">{officer.role}</p>
+//             </Col>
+//           ))}
+//         </Row>
+//       </Container>
+
+//       {/* GALLERY */}
+//       <Container id="gallery" className="my-5">
+//         <h3>इवेंट गैलरी</h3>
+//         <Carousel className="mt-3">
+//           <Carousel.Item>
+//             <Image src={banner} className="d-block w-100" alt="Slide 1" />
+//           </Carousel.Item>
+//           <Carousel.Item>
+//             <Image src={activity} className="d-block w-100" alt="Slide 2" />
+//           </Carousel.Item>
+//         </Carousel>
+//       </Container>
+
+//       {/* FOOTER */}
+//       <Container fluid className="bg-light py-4 mt-5">
+//         <Container>
+//           <p className="text-center mb-0">
+//             &copy; 2025 अखिल भारतीय भार्गव सभा. सर्वाधिकार सुरक्षित.
+//           </p>
+//         </Container>
+//       </Container>
+//     </>
+//   );
+// };
+
+// export default Homepage;

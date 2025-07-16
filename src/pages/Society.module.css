@@ -198,22 +198,28 @@
   color: #ed8e67;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
   .logo {
     margin-left: 45px;
     margin-top: 20px;
   }
   .container {
-    width: 480px;
+    width: 100%;
+    height: auto;
+    margin: 65px 0px 0px 0px;
+    padding: 0px 20px;
+  }
+   .container1 {
+    width: 100%;
     height: auto;
     margin: 65px 0px 0px 0px;
     padding: 0px 20px;
   }
   .btnBox {
-    padding: 0px 0px 10px 180px;
+    padding: 0px 0px 10px 215px;
   }
   .btnBox1 {
-    padding: 0px 0px 0px 174px;
+    padding: 0px 0px 0px 205px;
   }
   .vanshavali {
     display: flex;
@@ -221,41 +227,41 @@
   }
   .vanshavali1 {
     width: 386px;
-    margin: 1px 60px 0px 65px;
+    margin: 1px 60px 0px 117px;
     border: 7px solid black;
   }
   .vanshavali2 {
     width: 460px;
     height: 311px;
     border: 7px solid black;
-    margin: 8px 0px 0px 11px;
+    margin: 8px 0px 0px 71px;
   }
   .para {
-    margin: 9px 0px 0px 11px;
+    margin: 9px 0px 0px 76px;
     font-weight: 500;
     width: 463px;
     line-height: 20px;
   }
   .btnBox2 {
-            padding: 14px 0px 10px 156px
+            padding: 14px 0px 10px 190px
   }
   .sanskar {
     line-height: 30px;
     text-align: justify;
     padding: 0px 30px 32px 14px;
-    width: 480px;
+    width: 100%;
   }
   .tyohar {
     line-height: 30px;
     text-align: justify;
     padding: 0px 30px 32px 16px;
-    width: 480px;
+    width: 100%;
   }
   .heading2 {
     position: relative;
     font-family: "Tiro Devanagari Hindi", serif;
     font-size: 2.2rem;
-    margin-left: 133px;
+    margin-left: 163px;
     color: #ee7b4e;
     margin-bottom: 2rem;
     font-weight: bold;
@@ -264,7 +270,7 @@
     position: relative;
     font-family: "Tiro Devanagari Hindi", serif;
     font-size: 2.2rem;
-    margin-left: 188px;
+    margin-left: 232px;
     color: #ee7b4e;
     /* margin-bottom: 2rem; */
     font-weight: bold;
@@ -273,7 +279,7 @@
     position: relative;
     font-family: "Tiro Devanagari Hindi", serif;
     font-size: 2.2rem;
-    margin-left: 142px;
+    margin-left: 188px;
     color: #ee7b4e;
     margin-bottom: 2rem;
     font-weight: bold;
@@ -285,7 +291,7 @@
   }
   .img {
     padding: 30px;
-    margin-left: 90px;
+    margin-left: 119px;
   }
   .name {
     font-size: 20px;

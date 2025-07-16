@@ -185,7 +185,7 @@ const Haridwar = () => {
         <div className={styles.location}>
           Location
           <div style={{ width: "700px", height: "500px" }}>
-            <div className={styles.leafletcontainer}>
+            
             
             <MapContainer
               center={position}
@@ -199,7 +199,7 @@ const Haridwar = () => {
               </Marker>
             </MapContainer>
               
-            </div>
+            
           </div>
         </div>
       </div>
