@@ -806,7 +806,7 @@ const Payment = () => {
                   </div>
                   <div className={styles.plan}>{plan}</div> {" "}
                 </div>
-                <div className={styles.plan}>{plan}</div>
+               
                 <img src={qr} alt="QR Code" className={styles.qr} />
               </div>
               <div className={styles.step2}>

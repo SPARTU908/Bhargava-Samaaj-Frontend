@@ -34,23 +34,32 @@ const Haridwar = () => {
             <img src={img2} alt="" className={styles.img2} />
           </div>
         </div>
+
         <div className={styles.info}>
-          <div>
-            <IoLocationSharp className={styles.icon1} />
+          <div className={styles.mobile}>
+            <div>
+              <IoLocationSharp className={styles.icon1} />
+            </div>
+            <div className={styles.address}>
+              Bhargav Ashram, Opp. Ramleela Ground, Birla Road, Haridwar,
+              Uttarkhand - 249401
+            </div>
           </div>
-          <div className={styles.address}>
-            Bhargav Ashram, Opp. Ramleela Ground, Birla Road, Haridwar,
-            Uttarkhand - 249401
+
+          <div className={styles.mobile}>
+            <div>
+              <MdEmail className={styles.icon2} />
+            </div>
+            <div className={styles.email}>info@yatradham.org</div>
           </div>
-          <div>
-            <MdEmail className={styles.icon2} />
+
+          <div className={styles.mobile}>
+            <div>
+              {" "}
+              <MdOutlineWifiCalling className={styles.iconCall} />
+            </div>
+            <div className={styles.call}>8069266004</div>
           </div>
-          <div className={styles.email}>info@yatradham.org</div>
-          <div>
-            {" "}
-            <MdOutlineWifiCalling className={styles.iconCall} />
-          </div>
-          <div className={styles.call}>8069266004</div>
         </div>
 
         <div className={styles.facilities}>
@@ -183,24 +192,15 @@ const Haridwar = () => {
 
         {/* Map */}
         <div className={styles.location}>
-          Location
-          <div style={{ width: "700px", height: "500px" }}>
-            
-            
-            <MapContainer
-              center={position}
-              zoom={15}
-              style={{ height: "100%", width: "100%", margin: "67px 190px" }}
-            >
-              {/* Use OpenStreetMap's tile layer */}
-              <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-              <Marker position={position}>
-                <Popup>Bhargav Ashram, Haridwar</Popup>
-              </Marker>
-            </MapContainer>
-              
-            
-          </div>
+          <p>Click the button below to know the exact location:</p>
+          <a
+            href="https://www.google.com/maps/place/Bhargava+Ashram,+Haridwar/@29.950568,78.163441,1325m/data=!3m1!1e3!4m6!3m5!1s0x39094703c19347d3:0x7a2eef53be8f3200!8m2!3d29.9505681!4d78.1634405!16s%2Fg%2F11ckdz3c01?hl=en&entry=ttu&g_ep=EgoyMDI1MDcxMy4wIKXMDSoASAFQAw%3D%3D"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.locationBtn}
+          >
+            View on Google Maps
+          </a>
         </div>
       </div>
     </>
@@ -209,36 +209,26 @@ const Haridwar = () => {
 
 export default Haridwar;
 
-
-
-// import Navbar from "../components/Navbar/Navbar";
-// import styles from "./Haridwar.module.css";
-// import img1 from "../assets/haridwar1.jpg";
-// import img2 from "../assets/haridwar2.jpg";
-// import {
-//   Container,
-//   Row,
-//   Col,
-//   Image,
-// } from "react-bootstrap";
-// import {
-//   IoLocationSharp,
-//   IoFastFoodSharp,
-//   IoBagCheckOutline,
-// } from "react-icons/io5";
-// import { MdEmail, MdOutlineWifiCalling } from "react-icons/md";
-// import {
-//   FaWater,
-//   FaGlassWater,
-//   FaToiletsPortable,
-//   FaMattressPillow,
-//   FaArrowRight,
-// } from "react-icons/fa6";
+// import { Container, Row, Col, Image } from "react-bootstrap";
+// import { IoLocationSharp } from "react-icons/io5";
+// import { MdEmail } from "react-icons/md";
+// import { IoFastFoodSharp } from "react-icons/io5";
+// import { FaWater } from "react-icons/fa6";
 // import { BsSignNoParkingFill } from "react-icons/bs";
 // import { TbDeviceCctvFilled } from "react-icons/tb";
+// import { FaGlassWater } from "react-icons/fa6";
+// import { FaToiletsPortable } from "react-icons/fa6";
+// import { FaMattressPillow } from "react-icons/fa6";
 // import { LuMapPinCheckInside } from "react-icons/lu";
+// import { IoBagCheckOutline } from "react-icons/io5";
+// import { FaArrowRight } from "react-icons/fa";
+// import { MdOutlineWifiCalling } from "react-icons/md"; // You can import separately as before or from "react-icons/all"
 // import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 // import "leaflet/dist/leaflet.css";
+// import Navbar from "../components/Navbar/Navbar"; // Assuming Navbar is imported correctly
+// import img1 from "../assets/haridwar1.jpg";
+// import img2 from "../assets/haridwar2.jpg";
+// import styles from "./Haridwar.module.css"; // Assuming CSS module usage
 
 // const Haridwar = () => {
 //   const position = [29.9506, 78.1634];
@@ -247,106 +237,179 @@ export default Haridwar;
 //     <>
 //       <Navbar />
 //       <Container className={styles.container}>
-//         <h2 className={styles.heading}>Bhargava Ashram - Haridwar</h2>
+//         <h2 className={`text-center my-4 ${styles.heading}`}>
+//           Bhargava Ashram - Haridwar
+//         </h2>
 
-//         <Row className={styles.image}>
-//           <Col><Image src={img1} className={styles.img1} /></Col>
-//           <Col><Image src={img2} className={styles.img2} /></Col>
+//         <Row className="mb-4">
+//           <Col xs={12} md={6} className="mb-3 mb-md-0">
+//             <Image src={img1} alt="Ashram Image 1" fluid rounded />
+//           </Col>
+//           <Col xs={12} md={6}>
+//             <Image src={img2} alt="Ashram Image 2" fluid rounded />
+//           </Col>
 //         </Row>
 
-//         <Row className={styles.info}>
-//           <Col xs="auto"><IoLocationSharp className={styles.icon1} /></Col>
-//           <Col className={styles.address}>Bhargav Ashram, Opp. Ramleela Ground, Birla Road, Haridwar, Uttarkhand - 249401</Col>
-//           <Col xs="auto"><MdEmail className={styles.icon2} /></Col>
-//           <Col className={styles.email}>info@yatradham.org</Col>
-//           <Col xs="auto"><MdOutlineWifiCalling className={styles.iconCall} /></Col>
-//           <Col className={styles.call}>8069266004</Col>
+//         <Row className={`mb-4 ${styles.info}`}>
+//           {/* Address */}
+//           <Col xs={12} sm={6} className="d-flex align-items-start mb-3">
+//             <IoLocationSharp size={30} className="me-2 mt-1 " style={{ color: "#ea8d0c" }} />
+//             <span className="text-break">
+//               Bhargav Ashram, Opp. Ramleela Ground, Birla Road, Haridwar,
+//               Uttarkhand - 249401
+//             </span>
+//           </Col>
+
+//           {/* Email */}
+//           <Col xs={12} sm={6} className="d-flex align-items-start mb-3">
+//             <MdEmail size={30} className="me-2 mt-1" style={{ color: "#ea8d0c" }}/>
+//             <span className="text-break">info@yatradham.org</span>
+//           </Col>
+
+//           {/* Phone */}
+//           <Col xs={12} sm={6} className="d-flex align-items-start">
+//             <MdOutlineWifiCalling
+//               size={30}
+//               className="me-2 mt-1 "
+//             style={{ color: "#ea8d0c" }}
+//             />
+//             <span className="text-break">8069266004</span>
+//           </Col>
 //         </Row>
 
-//         <Row className={styles.facilities}>
-//           <Col>
-//             <div className={styles.facility}>Facilities</div>
-//             <Row className={styles.row1}>
-//               <Col xs="auto"><IoFastFoodSharp className={styles.icon3} /></Col>
-//               <Col className={styles.food}>Food Facility : Yes</Col>
-//               <Col xs="auto"><FaWater className={styles.icon4} /></Col>
-//               <Col className={styles.water}>Hot Water</Col>
+//         <Row className={`mb-4 ${styles.facilities}`}>
+//           <Col xs={12} md={7}>
+//             <h4 className="mb-3">Facilities</h4>
+
+//             <Row className="mb-2 align-items-center">
+//               <Col xs={1} className="text-center">
+//                 <IoFastFoodSharp size={25} style={{ color: "#ea8d0c" }} />
+//               </Col>
+//               <Col xs={5}>Food Facility: Yes</Col>
+//               <Col xs={1} className="text-center">
+//                 <FaWater size={25} style={{ color: "#ea8d0c" }} />
+//               </Col>
+//               <Col xs={5}>Hot Water</Col>
 //             </Row>
-//             <Row className={styles.row2}>
-//               <Col xs="auto" className={styles.icon5}><BsSignNoParkingFill /></Col>
-//               <Col className={styles.parking}>Parking : No</Col>
-//               <Col xs="auto" className={styles.icon6}><TbDeviceCctvFilled /></Col>
-//               <Col className={styles.cctv}>CCTV</Col>
+
+//             <Row className="mb-2 align-items-center">
+//               <Col xs={1} className="text-center">
+//                 <BsSignNoParkingFill size={25} style={{ color: "#ea8d0c" }}/>
+//               </Col>
+//               <Col xs={5}>Parking: No</Col>
+//               <Col xs={1} className="text-center">
+//                 <TbDeviceCctvFilled size={25} style={{ color: "#ea8d0c" }}/>
+//               </Col>
+//               <Col xs={5}>CCTV</Col>
 //             </Row>
-//             <Row className={styles.row3}>
-//               <Col xs="auto" className={styles.icon7}><FaGlassWater /></Col>
-//               <Col className={styles.water2}>Drinking Water</Col>
-//               <Col xs="auto" className={styles.icon8}><FaToiletsPortable /></Col>
-//               <Col className={styles.toilet}>Attached Toilet</Col>
+
+//             <Row className="mb-2 align-items-center">
+//               <Col xs={1} className="text-center">
+//                 <FaGlassWater size={25} style={{ color: "#ea8d0c" }}/>
+//               </Col>
+//               <Col xs={5}>Drinking Water</Col>
+//               <Col xs={1} className="text-center">
+//                 <FaToiletsPortable size={25} style={{ color: "#ea8d0c" }}/>
+//               </Col>
+//               <Col xs={5}>Attached Toilet</Col>
 //             </Row>
-//             <Row className={styles.row4}>
-//               <Col xs="auto" className={styles.icon9}><FaMattressPillow /></Col>
-//               <Col className={styles.mattress}>Extra Mattress Available</Col>
+
+//             <Row className="align-items-center">
+//               <Col xs={1} className="text-center">
+//                 <FaMattressPillow size={25} style={{ color: "#ea8d0c" }} />
+//               </Col>
+//               <Col xs={11}>Extra Mattress Available</Col>
 //             </Row>
 //           </Col>
-//           <Col className={styles.col2}>
-//             <Col xs="auto" className={styles.icon10}><LuMapPinCheckInside /></Col>
-//             <Col className={styles.checkin}>Check-In: 10:00 AM</Col>
-//             <Col xs="auto" className={styles.icon11}><IoBagCheckOutline /></Col>
-//             <Col className={styles.checkout}>Check-Out: 09:00 AM</Col>
+
+//           <Col xs={12} md={5} className="mt-4 mt-md-0">
+//             <Row className="align-items-center mb-3">
+//               <Col xs={1} className="text-center">
+//                 <LuMapPinCheckInside size={25} style={{ color: "#ea8d0c" }} />
+//               </Col>
+//               <Col xs={11}>Check-In: 10:00 AM</Col>
+//             </Row>
+//             <Row className="align-items-center">
+//               <Col xs={1} className="text-center">
+//                 <IoBagCheckOutline size={25} style={{ color: "#ea8d0c" }}/>
+//               </Col>
+//               <Col xs={11}>Check-Out: 09:00 AM</Col>
+//             </Row>
 //           </Col>
 //         </Row>
 
 //         <div className={styles.room}>
-//           <div className={styles.rooms}>Haridwar Ashrams Rooms</div>
-//           <Row className={styles.booking}>
-//             <Col>Name</Col>
-//             <Col>Inclusions</Col>
-//             <Col>Contribution</Col>
-//           </Row>
-//           <Row className={styles.infoRoom}>
-//             <Col className={styles.ac}>2 Bed Deluxe AC Room</Col>
-//             <Col className={styles.inclusions}>
-//               <div>Double Bed</div>
-//               <div>Including GST</div>
-//               <div>Attached Bathrooms</div>
+//           <h4 className="mb-3">Haridwar Ashrams Rooms</h4>
+
+//           <Row className="mb-3 align-items-center">
+//             <Col xs={12} md={4}>
+//               <strong>2 Bed Deluxe AC Room</strong>
 //             </Col>
-//             <Col className={styles.rupee}>Rs.1,000.00</Col>
-//           </Row>
-//           <Row className={styles.deluxRoom}>
-//             <Col className={styles.delux}>2 Bed Super Deluxe AC Room</Col>
-//             <Col className={styles.inclusions2}>
-//               <div>Double Bed</div>
-//               <div>Including GST</div>
-//               <div>Attached Bathrooms</div>
+//             <Col xs={12} md={5} className="text-wrap">
+//               Double Bed, Including GST, Attached Bathrooms
 //             </Col>
-//             <Col className={styles.rupee2}>Rs.1200.00</Col>
+//             <Col xs={12} md={3}>
+//               Rs.1,000.00
+//             </Col>
+//           </Row>
+
+//           <Row className="align-items-center">
+//             <Col xs={12} md={4}>
+//               <strong>2 Bed Super Deluxe AC Room</strong>
+//             </Col>
+//             <Col xs={12} md={5} className="text-wrap">
+//               Double Bed, Including GST, Attached Bathrooms
+//             </Col>
+//             <Col xs={12} md={3}>
+//               Rs.1,200.00
+//             </Col>
 //           </Row>
 //         </div>
 
+//         {/* How to Reach */}
 //         <div className={styles.reach}>
-//           <div className={styles.headingReach}>How To Reach Bhargava Ashrams</div>
-//           <div className={styles.bus}><FaArrowRight /> Haridwar Bus Stand - 1.1 km</div>
-//           <div className={styles.railway}><FaArrowRight /> Haridwar Railway Station - 1.6 km</div>
-//           <div className={styles.airport}><FaArrowRight /> Jolly Grant Airport (Dehradun) - 38.9 km</div>
+//           <h4 className="my-4">How To Reach Bhargava Ashrams</h4>
+//           <p>
+//             <FaArrowRight /> Haridwar Bus Stand - 1.1 km
+//           </p>
+//           <p>
+//             <FaArrowRight /> Haridwar Railway Station - 1.6 km
+//           </p>
+//           <p>
+//             <FaArrowRight /> Jolly Grant Airport (Dehradun) - 38.9 km
+//           </p>
 //         </div>
 
+//         {/* Places to Visit */}
 //         <div className={styles.places}>
-//           <div className={styles.headingPlace}>Places to visit in Haridwar from Bhargav Ashram</div>
-//           <div className={styles.kund}><FaArrowRight /> Bhimgoda Kund - 2.1 km</div>
-//           <div className={styles.kund}><FaArrowRight /> Maa Mansa Devi Mandir - 2.6 km</div>
-//           <div className={styles.kund}><FaArrowRight /> Har Ki Pauri - 3.6 km</div>
-//           <div className={styles.kund}><FaArrowRight /> Bharat Mata Temple - 6.2 km</div>
-//           <div className={styles.kund}><FaArrowRight /> Shanti Kunj - 7.7 km</div>
+//           <h4 className="my-4">
+//             Places to visit in Haridwar from Bhargav Ashram
+//           </h4>
+//           <p>
+//             <FaArrowRight /> Bhimgoda Kund - 2.1 km
+//           </p>
+//           <p>
+//             <FaArrowRight /> Maa Mansa Devi Mandir - 2.6 km
+//           </p>
+//           <p>
+//             <FaArrowRight /> Har Ki Pauri - 3.6 km
+//           </p>
+//           <p>
+//             <FaArrowRight /> Bharat Mata Temple - 6.2 km
+//           </p>
+//           <p>
+//             <FaArrowRight /> Shanti Kunj - 7.7 km
+//           </p>
 //         </div>
 
+//         {/* Map Section */}
 //         <div className={styles.location}>
-//           Location
-//           <div style={{ width: "100%", height: "500px" }}>
+//           <h4 className="my-4">Location</h4>
+//           <div style={{ height: "400px", width: "100%" }}>
 //             <MapContainer
 //               center={position}
 //               zoom={15}
-//               style={{ height: "100%", width: "100%", marginTop: "30px" }}
+//               style={{ height: "100%", width: "100%" }}
 //             >
 //               <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 //               <Marker position={position}>

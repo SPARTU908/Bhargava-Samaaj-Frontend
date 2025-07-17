@@ -48,7 +48,6 @@ const Membership = () => {
   const [signatureFile, setSignatureFile] = useState(null);
   const [spousePhotoFile, setSpousePhotoFile] = useState(null);
   const [spouseSignatureFile, setSpouseSignatureFile] = useState(null);
-  
 
   const navigate = useNavigate();
   const handleFormChange = (e) => {
@@ -233,65 +232,96 @@ const Membership = () => {
       <div>
         <div className={styles.fees}>
           <div className={styles.memberFees}>सदस्यता शुल्क </div>
-          <label className={styles.rows}>
-            <input
-              type="radio"
-              name="membership"
-              value="साधारण सभासद-द्विवार्षिक सत्र के लिए - 300 रुपये"
-              checked={
-                selectedFee ===
-                "साधारण सभासद-द्विवार्षिक सत्र के लिए - 300 रुपये"
-              }
-              onChange={handleSelection}
-            />
 
-            <div className={styles.col1}>
-              साधारण सभासद-द्विवार्षिक सत्र के लिए
+          {/* row1 */}
+
+          <div className={styles.feeCol}>
+            <div className={styles.rowsMember}>
+              <div>
+                <label>
+                  <input
+                    type="radio"
+                    name="membership"
+                    value="साधारण सभासद-द्विवार्षिक सत्र के लिए - 300 रुपये"
+                    checked={
+                      selectedFee ===
+                      "साधारण सभासद-द्विवार्षिक सत्र के लिए - 300 रुपये"
+                    }
+                    onChange={handleSelection}
+                  />
+                </label>
+              </div>
+              <div className={styles.col1}>
+                साधारण सभासद-द्विवार्षिक सत्र के लिए
+              </div>
+              <div className={styles.col2}>300 रुपये</div>
             </div>
 
-            <div className={styles.col2}>300 रुपये</div>
-          </label>
-          <label className={styles.row2}>
-            <input
-              type="radio"
-              name="membership"
-              value="आजीवन सभासद - एकल - 600 रुपये"
-              checked={selectedFee === "आजीवन सभासद - एकल - 600 रुपये"}
-              onChange={handleSelection}
-            />
+            <div className={styles.rowsMember}>
+              <div>
 
-            <div className={styles.sabhasadh}>आजीवन सभासद-</div>
-            <div className={styles.ekal}>एकल</div>
-            <div className={styles.rupees}>600 रुपये</div>
-          </label>
-
-          <label className={styles.row3}>
-            <input
-              type="radio"
-              name="membership"
-              value="आजीवन सभासद - युगल-(पति-पत्नी) - 1000 रुपये"
-              checked={
-                selectedFee === "आजीवन सभासद - युगल-(पति-पत्नी) - 1000 रुपये"
-              }
-              onChange={handleSelection}
-            />
-            <div className={styles.sabhasadh}>आजीवन सभासद-</div>
-            <div className={styles.couple}>युगल-(पति-पत्नी)</div>
-            <div className={styles.rupee}>1,000 रुपये</div>
-          </label>
-          <label className={styles.row4}>
-            <input
-              type="radio"
-              name="membership"
-              value="डुप्लिकेट परिचय शुल्क - ₹50 रुपये"
-              checked={selectedFee === "डुप्लिकेट परिचय शुल्क - ₹50 रुपये"}
-              onChange={handleSelection}
-            />
-            <div className={styles.dual}>
-              डुप्लिकेट परिचय हेतु शुल्क (प्रति सदस्य)
+            
+              <label>
+                <input
+                  type="radio"
+                  name="membership"
+                  value="आजीवन सभासद - एकल - 600 रुपये"
+                  checked={selectedFee === "आजीवन सभासद - एकल - 600 रुपये"}
+                  onChange={handleSelection}
+                />
+             </label>
+                </div>
+                <div className={styles.sabhasadh}>आजीवन सभासद-</div>
+                <div className={styles.ekal}>एकल</div>
+                <div className={styles.rupees}>600 रुपये</div>
             </div>
-            <div className={styles.duplicate}>50 रुपये</div>
-          </label>
+
+
+
+
+            <div className={styles.rowsMember}>
+              <div>
+
+             
+              <label>
+                <input
+                  type="radio"
+                  name="membership"
+                  value="आजीवन सभासद - युगल-(पति-पत्नी) - 1000 रुपये"
+                  checked={
+                    selectedFee ===
+                    "आजीवन सभासद - युगल-(पति-पत्नी) - 1000 रुपये"
+                  }
+                  onChange={handleSelection}
+                />
+                </label>
+               </div>
+               <div className={styles.sabhasadh}>आजीवन सभासद-</div>
+                <div className={styles.couple}>युगल-(पति-पत्नी)</div>
+                <div className={styles.rupee}>1,000 रुपये</div>
+            </div>
+
+            <div className={styles.rowsMember}>
+              <div>
+
+             
+              <label>
+                <input
+                  type="radio"
+                  name="membership"
+                  value="डुप्लिकेट परिचय शुल्क - ₹50 रुपये"
+                  checked={selectedFee === "डुप्लिकेट परिचय शुल्क - ₹50 रुपये"}
+                  onChange={handleSelection}
+                />
+                
+              </label>
+               </div>
+               <div className={styles.dual}>
+                  डुप्लिकेट परिचय हेतु शुल्क (प्रति सदस्य)
+                </div>
+                <div className={styles.duplicate}>50 रुपये</div>
+            </div>
+          </div>
           <div className={styles.result}>
             <strong>आपका चयन:</strong> {selectedFee || "कोई चयन नहीं किया गया"}
           </div>
@@ -544,9 +574,9 @@ const Membership = () => {
             </div>
           </div>
 
-          <div className={styles.row1}>
+          <div className={styles.rowUpload}>
             <div className={styles.inputBox}>
-              <label htmlFor="photo" className={styles.label}>
+              <label htmlFor="photo" className={styles.labelUpload}>
                 Upload Photo
                 <span style={{ color: "red" }}>*</span>
               </label>
@@ -557,7 +587,7 @@ const Membership = () => {
               {errors.photo && <p className={styles.error}>{errors.photo}</p>}
             </div>
             <div className={styles.inputBox}>
-              <label htmlFor="spousePhoto" className={styles.label}>
+              <label htmlFor="spousePhoto" className={styles.labelUpload}>
                 Upload Spouse Photo
               </label>
               <div className={styles.uploadurl}>
@@ -566,7 +596,6 @@ const Membership = () => {
                   setFile={setSpousePhotoFile}
                   disabled={!showSpouseFields}
                 />
-               
               </div>
 
               {errors.spousePhoto && (
@@ -575,9 +604,9 @@ const Membership = () => {
             </div>
           </div>
 
-          <div className={styles.row1}>
+          <div className={styles.rowUpload}>
             <div className={styles.inputBox}>
-              <label htmlFor="signature" className={styles.label}>
+              <label htmlFor="signature" className={styles.labelUpload}>
                 Upload Signature
                 <span style={{ color: "red" }}>*</span>
               </label>
@@ -592,11 +621,10 @@ const Membership = () => {
               </div>
             </div>
             <div className={styles.inputBox}>
-              <label htmlFor="spouseSignature" className={styles.label}>
+              <label htmlFor="spouseSignature" className={styles.labelUpload}>
                 Upload Spouse Signature
               </label>
               <div className={styles.uploadurl}>
-                
                 <SpouseSignatureUpload
                   file={spouseSignatureFile}
                   setFile={setSpouseSignatureFile}

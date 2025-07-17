@@ -40,6 +40,9 @@
 .row1 {
   display: flex;
 }
+.rowUpload {
+  display: flex;
+}
 .inputBox {
   display: flex;
   flex-direction: column;
@@ -47,6 +50,13 @@
 }
 
 .label {
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #333;
+  margin: 0px 0px 8px 50px;
+}
+.labelUpload {
   margin-bottom: 0.5rem;
   font-weight: 600;
   font-size: 1rem;
@@ -141,122 +151,211 @@
 .btn {
   margin-left: 100px;
 }
+.feeCol {
+  display: flex;
+  flex-direction: column;
+}
+.rowsMember {
+  display: flex;
+}
 
-/* @media (max-width: 320px) {
-  .logo {
-    margin-left: 100px;
-    margin-top: 20px;
-  }
-  .mobilebtn {
-    margin-left: 100px;
-  }
-  .btn {
-    margin-left: 45px;
-  }
+@media (max-width: 768px) {
   .container {
-    margin: 54px 30px;
+    margin: 20px;
   }
+
   .heading {
-    margin-left: 13px;
-    font-size: 15px;
-    font-weight: bold;
-    margin-top: 45px;
-    color: #ec6e3c;
-    width: 541px;
-    line-height: 23px;
+    margin-left: 0;
+    font-size: 20px;
+    text-align: center;
+    margin-top: 30px;
   }
-  .age {
-    margin: 30px 69px 0px 0px;
-    font-weight: bold;
-   
-  }
+
   .fees {
-    border: 2px solid black;
-    width: 500px;
-    margin: 36px 0px 0px 26px;
-    padding: 10px;
-    height: auto;
+    width: 100%;
+    max-width: 600px;
+    margin: 36px auto 0 auto;
+    padding: 20px;
+    border: 2px solid #000;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
   }
-  .row1 {
-    display: flex;
+
+  .memberFees {
+    font-size: 18px;
+    padding-left: 0;
+    text-align: center;
+  }
+
+  .subheading {
     flex-direction: column;
+    align-items: center;
+  }
+
+  .age {
+    margin: 20px 10px;
+    text-align: center;
+  }
+
+  .mobilebtn {
+    margin: 10px 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  .upload {
+    margin: 10px 0;
+    width: 90%;
+  }
+
+  .row1,
+  .row2,
+  .row3,
+  .row4,
+  .rows {
+    display: flex;
+    align-items: center;
     margin-top: 20px;
+    padding: 10px;
+
+    border-radius: 6px;
+    gap: 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+   /* .rowUpload {
+    flex-direction: column;
+    margin-left: 0;
+    padding: 0 10px;
+  } */
+  .rows:hover,
+  .row2:hover,
+  .row3:hover,
+  .row4:hover {
+    background-color: #f9f9f9;
   }
 
   .input {
-    padding: 0.5rem;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 455px;
-    margin: 4px 0px 0px 0px;
+    width: 90%;
+    margin: 5px auto;
   }
-  .label {
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-    font-size: 1rem;
-    color: #333;
-    margin: 0px 0px 8px 0px;
-  }
-  .uploadurl {
-    margin-left: -49px;
-  }
-  .subheading {
-    display: flex;
-    flex-direction: column;
-  }
-  .submit {
-    margin: 32px 0px 0px 245px;
-    background-color: #e95114;
-    color: white;
-  }
-  .upload {
-    margin: 32px 0px 0px 245px;
-    background-color: #e95114;
-    color: white;
-  }
-} */
 
-@media only screen and (max-width: 600px) {
-  .logo {
-    margin-left: 45px;
-    margin-top: 20px;
+   .inputBox {
+    width: 100%;
+    margin-bottom: 20px;
   }
+   .labelUpload {
+    margin-left: 0;
+    text-align: left;
+  }
+
+  .uploadurl {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .label {
+    margin-left: 10px;
+  }
+  .labelUpload {
+   margin-left: 30px;
+  }
+
+  .btn {
+    margin-left: 0;
+    text-align: center;
+  }
+
+  .submit {
+    width: 90%;
+    margin: 20px auto;
+  }
+
+  .error {
+    margin-left: 10px;
+  }
+
+  .error1 {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .uploadurl {
+    margin: 10px;
+  }
+
+  .result {
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 14px;
+  }
+
+  .col1,
+  .col2,
+  .sabhasadh,
+  .ekal,
+  .rupees,
+  .rupee,
+  .duplicate,
+  .dual,
+  .couple {
+    margin-left: 0;
+    font-weight: 500;
+    font-size: 16px;
+    color: #333;
+  }
+  .col1,
+  .sabhasadh,
+  .dual {
+    flex: 1;
+  }
+  .feeCol {
+    display: flex;
+    /* flex-direction: column; */
+  }
+  .rowsMember {
+    display: flex;
+  }
+}
+
+@media (max-width: 600px) {
+  .rows,
+  .row2,
+  .row3,
+  .row4 {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .rows input,
+  .row2 input,
+  .row3 input,
+  .row4 input {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 480px) {
   .heading {
-    margin-left: 34px;
-    font-size: 17px;
-    font-weight: bold;
-    margin-top: 45px;
-    color: #ec6e3c;
-    width: 100%;
-    line-height: 22px;
+    font-size: 18px;
   }
-  .mobilebtn {
-    margin-left: 263px;
+
+  .memberFees {
+    font-size: 16px;
   }
+
+  .submit,
+  .upload {
+    font-size: 14px;
+  }
+
+  .result {
+    font-size: 13px;
+  }
+
   .age {
-    margin: 31px 69px 0px 26px;
-    font-weight: bold;
-    width: 100%;
-    line-height: 20px;
-  }
-  .fees {
-    border: 2px solid black;
-    width: 500px;
-    margin: 36px 0px 0px 142px;
-    padding: 10px;
-    height: auto;
-  }
-  .row1 {
-    display: flex;
-    flex-direction: column;
-    margin-top: 20px;
-  }
-  .subheading {
-    display: flex;
-    flex-direction: column;
-  }
-  .container{
-    margin: 48px 113px;
+    font-size: 14px;
   }
 }

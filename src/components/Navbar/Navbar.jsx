@@ -571,7 +571,7 @@ const Navbar = () => {
       <Image
         src={logo}
         alt="Logo"
-        height={40}
+        height={48}
         className="d-block mx-auto mt-3"
       />
       <BootstrapNavbar
@@ -735,21 +735,21 @@ const Navbar = () => {
                 </Nav.Link>
 
                 {/* Find a Match */}
-                <NavDropdown title="Find a Match" id="match-dd">
+                <NavDropdown title="जीवनसाथी खोजें" id="match-dd">
                   <NavDropdown.Item
                     onClick={() => handleNavigate("/findyourmatch")}
                   >
-                    Find Your Perfect Match
+                   अपना मैच खोजें
                   </NavDropdown.Item>
                   <NavDropdown.Item
                     onClick={() => handleNavigate("/vivahmemberregister")}
                   >
-                    Find a Match for Your Loved One
+                    किसी के लिए सही साथी खोजें
                   </NavDropdown.Item>
                 </NavDropdown>
 
                 <Nav.Link onClick={() => handleNavigate("/admin")}>
-                  Admin Login
+                 एडमिन लॉगिन
                 </Nav.Link>
               </Nav>
             </Offcanvas.Body>

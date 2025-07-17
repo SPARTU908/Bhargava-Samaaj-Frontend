@@ -1,4 +1,4 @@
-.input{
+/* .input{
     padding: 0.5rem;
     font-size: 1rem;
     border: 1px solid #ccc;
@@ -31,4 +31,69 @@
 .input {
   text-align: center;
   margin-top: 10px;
+} */
+
+
+.input {
+  width: 455px;
+  margin: 4px 0 0 47px;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
+
+.fileLabel {
+  display: inline-block;
+  padding: 12px 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f7f7f7;
+  color: #333;
+  cursor: pointer;
+  text-align: center;
+  width: 100%;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.fileLabel:hover {
+  background-color: #eaeaea;
+}
+
+.fileInput {
+  display: none;
+}
+
+.btn {
+  margin-left: 75px;
+}
+
+/* ✅ Responsive fix for small screens */
+@media (max-width: 768px) {
+  .input {
+    width: 100%;
+    max-width: 90%;
+    margin: 10px auto;
+    padding: 0.5rem;
+  }
+
+  .fileLabel {
+    font-size: 15px;
+    padding: 10px 14px;
+  }
+}
+@media (max-width: 480px) {
+  .input {
+    margin: 10px auto;
+    width: 100%;
+    max-width: 100%;
+    padding: 0.5rem;
+  }
+
+  .fileLabel {
+    font-size: 14px;
+  }
+}
+

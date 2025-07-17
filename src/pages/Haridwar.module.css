@@ -318,220 +318,190 @@
   padding: 10px;
 }
 
-@media only screen and (max-width: 600px) {
-  .heading {
-    font-size: 25px;
+.location {
+  text-align: center;
+  margin: 50px auto;
+  padding: 25px;
+  border-radius: 12px;
+  background-color: #fff5ed;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+  font-family: "Merriweather", serif;
+  max-width: 550px;
+}
 
-    color: #ea5a1f;
-    padding-left: 29px;
-    font-weight: 500;
-    font-family: "Merriweather", serif;
+.location p {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.locationBtn {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #ea5a1f;
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.locationBtn:hover {
+  background-color: #c94c1a;
+}
+
+
+
+/* Mobile responsive overrides */
+@media screen and (max-width: 768px) {
+  .container {
+    margin: 20px 10px;
   }
+
+  .heading {
+    font-size: 22px;
+    padding-left: 0;
+    text-align: center;
+  }
+
   .image {
-    display: flex;
     flex-direction: column;
-    margin: 35px 0px 0px 82px;
-    gap: 30px;
+    align-items: center;
+    gap: 20px;
+    margin: 20px 0;
   }
-  .info {
-    border: 1px solid black;
-    border-radius: 15px;
-    margin: 29px 248px 0px 38px;
-    padding: 7px;
-    display: flex;
-    width: 100%;
-  }
-  .facilities {
-    border: 1px solid black;
-    margin: 25px 250px 0px 36px;
-    padding: 10px;
-    border-radius: 15px;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-  }
-  .facility {
-    font-size: 14px;
-    font-weight: 700;
-    font-family: "Merriweather", serif;
-    margin-left: 17px;
-  }
-  .icon10 {
-    color: #ea5418;
-    font-size: 25px;
-    margin: 28px 0px 0px 25px;
-  }
-  .reach {
-           margin: 23px 247px 0px 38px;
-        border: 1px solid black;
-        border-radius: 15px;
-        padding: 10px;
-        width: 100%;
-  }
-  .places {
-    margin: 24px 247px 0px 36px;
-    border: 1px solid black;
-    border-radius: 15px;
-    padding: 10px;
-    width: 100%;
-  }
-  .logo {
-    margin-left: 25px;
-    margin-top: 20px;
-  }
+
   .img1,
   .img2 {
-    width: 100%;
-    height: 250px;
-    border: 1px solid black;
+    width: 90%;
+    height: auto;
   }
-  .room {
-    margin: 23px 247px 0px 3px;
-    border: 1px solid black;
-    border-radius: 15px;
+
+  .info {
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 20px;
     padding: 10px;
-    width: 475px;
+    gap: 5px;
   }
-  .location {
-    font-family: "Merriweather", serif;
-    font-size: 20px;
-    font-weight: 700;
-    margin-top: 21px;
-    margin-left: 8px;
-    border: 1px solid black;
-    border-radius: 15px;
+  .mobile{
+    display: flex;
+  }
+
+  .facilities {
+    flex-direction: column;
+    margin: 20px;
     padding: 10px;
-    width: 467px;
   }
-  .icon1 {
-    font-size: 17px;
-    color: #ea5418;
-    margin-left: 10px;
-    margin-top: 5px;
+
+  .row1,
+  .row2,
+  .row3,
+  .row4,
+  .col2 {
+    /* flex-direction: column; */
+    gap: 10px;
+    margin: 10px 0;
   }
-  .address {
-    padding-left: 3px;
-    padding-top: 4px;
-    font-size: 12px;
-    line-height: 15px;
-  }
-  .icon2 {
-    font-size: 16px;
-    color: #ea5418;
-    margin-left: 2px;
-    margin-top: 5px;
-  }
-  .email {
-    padding-left: 4px;
-    padding-top: 5px;
-    font-size: 14px;
-  }
-  .iconCall {
-    font-size: 18px;
-    color: #ea5418;
-    margin-left: 22px;
-    margin-top: 5px;
-  }
-  .call {
-    padding-left: 4px;
-    margin-top: 4px;
-  }
-  .icon3,
-  .icon4,
-  .icon5,
+
   .icon6,
-  .icon7,
   .icon8,
-  .icon9,
   .icon10,
   .icon11 {
-    color: #ea5418;
-    font-size: 20px;
+    margin-left: 0;
   }
-  .food {
-    padding-left: 10px;
-    padding-top: 5px;
-    font-family: "Merriweather", serif;
-    font-size: 15px;
+
+  .room,
+  .reach,
+  .places,
+  .faq,
+  .location {
+    margin: 20px;
+    padding: 10px;
   }
-  .water {
-    margin-left: 9px;
-    margin-top: 5px;
-    font-family: "Merriweather", serif;
-    font-size: 15px;
+
+  .booking {
+    flex-direction: column;
+    gap: 10px;
   }
-  .parking {
-    padding-left: 10px;
-    padding-top: 5px;
-    font-family: "Merriweather", serif;
-    font-size: 15px;
+
+  .infoRoom,
+  .deluxRoom {
+    flex-direction: column;
+    gap: 10px;
+    margin-left: 0;
   }
-  .cctv {
-    margin-left: 9px;
-    font-family: "Merriweather", serif;
-    margin-top: 8px;
-    font-size: 14px;
+
+  .inclusions,
+  .inclusions2 {
+    margin-left: 0;
   }
-  .water2 {
-    margin: 17px 0px 0px 9px;
-    font-family: "Merriweather", serif;
-    font-size: 15px;
-  }
-  .toilet {
-    margin: 18px 0px 0px 9px;
-    font-family: "Merriweather", serif;
-    font-size: 15px;
-  }
-  .mattress {
-    margin: 18px 0px 0px 11px;
-    font-family: "Merriweather", serif;
-    font-size: 15px;
-  }
-  .checkin {
-    margin: 34px 0px 0px 8px;
-    font-family: "Merriweather", serif;
-    font-size: 15px;
-  }
-  .checkout {
-    margin: 34px 0px 0px 10px;
-    font-family: "Merriweather", serif;
-    font-size: 15px;
-  }
-  .rooms {
-    font-size: 15px;
-    font-weight: 700;
-    font-family: "Merriweather", serif;
-    margin-left: 13px;
-  }
-  .headingReach {
-    font-family: "Merriweather", serif;
-    font-size: 15px;
-    font-weight: 700;
-    margin-top: 9px;
-    margin-left: 11px;
-  }
-  .headingPlace {
-    font-family: "Merriweather", serif;
-    font-size: 15px;
-    font-weight: 700;
-    margin-top: 9px;
-    margin-left: 9px;
-  }
-  .rupee {
-    font-family: "Merriweather", serif;
-    margin-left: 32px;
-    color: #ea5418;
-  }
+
+  .rupee,
   .rupee2 {
-    font-family: "Merriweather", serif;
-    margin-left: 101px;
-    color: #ea5418;
-    margin-top: 20px;
+    margin-left: 0;
   }
-  .leafletcontainer {
-    height: 100%;
-    width: 59%;
-    margin: 24px 25px;
-    position: relative;
+
+
+   
+  .icon1{
+    font-size: 25px;
+    color: #ea5418;
+    margin-left: 10px;
+    margin-top: 12px;
+  }
+  .iconCall{
+    font-size: 25px;
+    color: #ea5418;
+    margin-left: 12px;
+  }
+  .water{
+        margin-left: 4px;
+    margin-top: 2px;
+    font-family: "Merriweather", serif;
+  }
+  .parking{
+        padding-left: 0px;
+    padding-top: 11px;
+    font-family: "Merriweather", serif;
+  }
+  .cctv{
+    margin-left: -4px;
+    font-family: "Merriweather", serif;
+    margin-top: 11px;
+  }
+  .icon7{
+        color: #ea5418;
+    font-size: 25px;
+    margin: 11px 0px 0px 0px;
+  }
+  .water2{
+    margin: 21px 0px 0px -4px;
+    font-family: "Merriweather", serif;
+  }
+  .toilet{
+    margin: 20px 0px 0px 0px;
+    font-family: "Merriweather", serif;
+  }
+  .mattress{
+        margin: 21px 0px 0px 0px;
+    font-family: "Merriweather", serif;
+  }
+  .location {
+    padding: 20px 15px;
+    margin: 30px 10px;
+    max-width: 100%;
+  }
+
+  .location p {
+    font-size: 16px;
+  }
+
+  .locationBtn {
+    width: 100%;
+    padding: 14px 0;
+    font-size: 15px;
+    border-radius: 6px;
   }
 }

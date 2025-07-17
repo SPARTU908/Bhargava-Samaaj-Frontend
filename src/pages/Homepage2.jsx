@@ -254,24 +254,34 @@ const Homepage = () => {
     </Container>
 
       {/* SECRETARY MESSAGE */}
-      <Container id="secretary" className="my-5">
-      <Row className="align-items-center">
-        <Col md={8}>
-          <h4>प्रधान सचिव का संदेश</h4>
+   <Container id="secretary" className="my-5">
+  <Row className="align-items-center">
+    {/* Secretary image appears first on mobile (order-1), second on desktop (order-md-2) */}
+    <Col xs={12} md={4} className="order-1 order-md-2 mb-4 mb-md-0">
+      <Image
+        src={secretary}
+        fluid
+        rounded
+        style={{ maxHeight: "250px", objectFit: "cover" }}
+      />
+    </Col>
 
-          <div
-            style={{
-               maxHeight: "250px", 
-              overflowY: "auto",
-              paddingRight: "10px",
-              border: "1px solid #ccc",
-              borderRadius: "8px",
-              whiteSpace: "pre-line",
-            }}
-          >
-            <p>
-              {/* Secretary's full message */}
-              सत्र 2025-2027 के लिये जनादेश ने जो उत्तरदायित्व हमारी कार्यकारिणी
+    {/* Message appears second on mobile (order-2), first on desktop (order-md-1) */}
+    <Col xs={12} md={8} className="order-2 order-md-1">
+      <h4>प्रधान सचिव का संदेश</h4>
+      <div
+        style={{
+          maxHeight: "250px",
+          overflowY: "auto",
+          paddingRight: "10px",
+          border: "1px solid #ccc",
+          borderRadius: "8px",
+          whiteSpace: "pre-line",
+        }}
+      >
+        <p>
+          {/* Your full message here */}
+        सत्र 2025-2027 के लिये जनादेश ने जो उत्तरदायित्व हमारी कार्यकारिणी
               को दिया है, उसे हमने आत्मसात कर कार्य प्रारम्भ कर दिया है।
               कार्यकारिणी की प्रथम बैठक मे सहयोग व समर्पण का जो आभास हुआ, उससे
               मुझे प्रेरणा दी है व नया जोश भरा है। इसीलिये मैं अपके सम्मुख एक
@@ -321,22 +331,25 @@ const Homepage = () => {
               विचारों को अभिव्यक्त करने का अवसर मिलें और समाज का प्रत्येक बन्धु
               अपने को समाज का अभिन्न अंग मान सके। आपके सहयोग और समर्थन के लिए
               मैं आभारी हूँ।
-              <br />
-              जय परशुराम
-              <br />
-              भवदीय,
-            </p>
-          </div>
-        </Col>
-        <Col md={4}>
-          <Image src={secretary} fluid rounded style={{ maxHeight: "250px", objectFit: "cover" }}/>
-        </Col>
-      </Row>
-    </Container>
+          <br />
+          जय परशुराम
+          <br />
+          भवदीय,
+        </p>
+      </div>
+    </Col>
+  </Row>
+</Container>
+
 
       {/* OFFICERS SECTION */}
      <Container id="officers" className="my-5">
-  <h3 className="text-center mb-4 text-primary fw-bold">पदाधिकारी</h3>
+ <h3 
+  className="text-center mb-4 fw-bold" 
+  style={{ color: '#ea8d0c' }}
+>
+  पदाधिकारी
+</h3>
   <Row xs={2} sm={3} md={4} lg={6} className="g-4">
     {officers.map((officer, index) => (
       <Col key={index} className="text-center">

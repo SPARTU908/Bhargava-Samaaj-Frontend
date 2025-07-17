@@ -102,28 +102,30 @@ const Members = () => {
   const [tempSortBy, setTempSortBy] = useState("");
   const [tempGender, setTempGender] = useState("");
 
- const applyFilters = () => {
-  setAgeRange(tempAgeRange);
-  setCity(tempCity);
-  setSortBy(tempSortBy);
-  setGender(tempGender);
+  const applyFilters = () => {
+    setAgeRange(tempAgeRange);
+    setCity(tempCity);
+    setSortBy(tempSortBy);
+    setGender(tempGender);
 
-  // Sync temp values with applied filters so the dropdowns stay updated
-  setTempAgeRange(tempAgeRange);
-  setTempCity(tempCity);
-  setTempSortBy(tempSortBy);
-  setTempGender(tempGender);
-};
-
+    // Sync temp values with applied filters so the dropdowns stay updated
+    setTempAgeRange(tempAgeRange);
+    setTempCity(tempCity);
+    setTempSortBy(tempSortBy);
+    setTempGender(tempGender);
+  };
 
   return (
     <>
       <div className={styles.approvedProfiles}>
         Our Approved Matrimonial Profiles
       </div>
+
+      
+
       <div className={styles.filterBox}>
-        <label className={styles.filter}>
-          Filter by Age:
+        <div className={styles.filterItem}>
+          <label>Filter by Age:</label>
           <select
             className={styles.selectAge}
             value={tempAgeRange}
@@ -134,10 +136,10 @@ const Members = () => {
             <option value="30-40">30 - 40</option>
             <option value="40-50">40 - 50</option>
           </select>
-        </label>
+        </div>
 
-        <label className={styles.filterCity}>
-          Filter by City:
+        <div className={styles.filterItem}>
+          <label>Filter by City:</label>
           <select
             className={styles.selectCity}
             value={tempCity}
@@ -150,10 +152,10 @@ const Members = () => {
               </option>
             ))}
           </select>
-        </label>
+        </div>
 
-        <label className={styles.filterGender}>
-          Filter by Gender:
+        <div className={styles.filterItem}>
+          <label>Filter by Gender:</label>
           <select
             className={styles.selectGender}
             value={tempGender}
@@ -163,10 +165,10 @@ const Members = () => {
             <option value="male">Male</option>
             <option value="female">Female</option>
           </select>
-        </label>
+        </div>
 
-        <label className={styles.filterName}>
-          Sort By:
+        <div className={styles.filterItem}>
+          <label>Sort By:</label>
           <select
             className={styles.selectName}
             value={tempSortBy}
@@ -175,10 +177,13 @@ const Members = () => {
             <option value="">None</option>
             <option value="name">Name</option>
           </select>
-        </label>
-        <button onClick={applyFilters} className={styles.applyButton}>
-          Apply Filters
-        </button>
+        </div>
+
+        <div className={styles.filterItem}>
+          <button onClick={applyFilters} className={styles.applyButton}>
+            Apply Filters
+          </button>
+        </div>
       </div>
 
       <div className={styles.container}>
@@ -235,38 +240,6 @@ const Members = () => {
                       </>
                     );
                   })}
-
-                {/* For member.photo */}
-                {/* {member.photo &&
-                  (() => {
-                    const isPdf = member.photo.endsWith(".pdf");
-                    const fixedUrl = isPdf
-                      ? member.photo.replace("/image/upload/", "/raw/upload/")
-                      : member.photo;
-
-                    return (
-                      <div className={styles.imageBox}>
-                        {isPdf ? (
-                          <iframe
-                            src={fixedUrl}
-                            width="100%"
-                            height="600px"
-                            title="Photo PDF Preview"
-                            style={{
-                              marginTop: "1rem",
-                              border: "1px solid #ccc",
-                            }}
-                          />
-                        ) : (
-                          <img
-                            src={fixedUrl}
-                            alt="Photo"
-                            className={styles.img}
-                          />
-                        )}
-                      </div>
-                    );
-                  })} */}
 
                 {member.photo &&
                   (() => {

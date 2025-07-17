@@ -61,10 +61,7 @@ const SuperAdminDashboard = () => {
     fetchMemberCount();
   }, []);
 
-  
-
-
-  const renderSection = () => {
+   const renderSection = () => {
     switch (selectedSection) {
       case "pending":
         return <PendingForms />;
