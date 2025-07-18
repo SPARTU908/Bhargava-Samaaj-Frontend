@@ -23,6 +23,7 @@ import PrivateRoute from "./components/PrivateRoute.jsx";
 import VivahMemberLogin from "./components/VivahMember/VivahMemberLogin.jsx";
 import VivahMemberRegister from "./components/VivahMember/VivahMemberRegister.jsx";
 import FindYourMatch from "./pages/FindYourMatch.jsx";
+import PendingMemberList from "./pages/PendingMemberList.jsx";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -85,6 +86,7 @@ function App() {
           />
           <Route path="/vivahmemberlogin" element={<VivahMemberLogin />} />
           <Route path="/findyourmatch" element={<FindYourMatch />} />
+          <Route path="/pendingmember" element={<PendingMemberList />} />
         </Routes>
       </BrowserRouter>
     </>

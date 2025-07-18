@@ -10,6 +10,7 @@ import {getApprovedFormCount} from "../apis/form";
 import {getMemberCount} from "../apis/member";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import PendingMemberList from "./PendingMemberList";
 
 
 const SuperAdminDashboard = () => {
@@ -69,6 +70,8 @@ const SuperAdminDashboard = () => {
         return <Members/>;
       case "membership":
         return <MemberAdmin />;
+      case "pendingmembership":
+        return <PendingMemberList />;
       default:
         return (
           <>
@@ -87,6 +90,11 @@ const SuperAdminDashboard = () => {
 
               <div className={styles.widget}>
                 <div className={styles.widgetTitle}>Total no. of membership form</div>
+                <div className={styles.widgetCount}>{memberCount}</div>
+              </div>
+
+              <div className={styles.widget}>
+                <div className={styles.widgetTitle}>Total no. of pending membership form</div>
                 <div className={styles.widgetCount}>{memberCount}</div>
               </div>
             </div>
@@ -140,7 +148,7 @@ const SuperAdminDashboard = () => {
                 }`}
                 onClick={() => setSelectedSection("members")}
               >
-                Matrimonial
+                Approved Matrimonial
               </div>
               <div
                 className={`${styles.optionButton} ${
@@ -148,7 +156,15 @@ const SuperAdminDashboard = () => {
                 }`}
                 onClick={() => setSelectedSection("membership")}
               >
-                Membership
+              Approved Membership
+              </div>
+              <div
+                className={`${styles.optionButton} ${
+                  selectedSection === "pendingmembership" ? styles.activeButton : ""
+                }`}
+                onClick={() => setSelectedSection("pendingmembership")}
+              >
+                Pending Membership
               </div>
             </div>
           </div>

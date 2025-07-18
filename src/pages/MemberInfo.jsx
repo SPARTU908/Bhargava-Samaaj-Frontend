@@ -255,7 +255,12 @@ const MemberInfo = ({ member }) => {
                   </>
                 )} */}
 
-                {member.bioData &&
+                
+              </div>
+            </>
+          )}
+        </div>
+        {member.bioData &&
                   (() => {
                     const isPdf = member.bioData.endsWith(".pdf");
                     const fixedUrl = isPdf
@@ -266,7 +271,7 @@ const MemberInfo = ({ member }) => {
                       <>
                         <div>
                           <a href={fixedUrl} target="_blank" rel="noreferrer">
-                            Download
+                            Download Biodata
                           </a>
                           {" | "}
                           {isPdf && (
@@ -275,36 +280,9 @@ const MemberInfo = ({ member }) => {
                             </a>
                           )}
                         </div>
-
-                        {/* {isPdf ? (
-                          <iframe
-                            src={fixedUrl}
-                            width="100%"
-                            height="600px"
-                            title="PDF Preview"
-                            style={{
-                              marginTop: "1rem",
-                              border: "1px solid #ccc",
-                            }}
-                          />
-                        ) : (
-                          <img
-                            src={fixedUrl}
-                            alt="BioData"
-                            style={{
-                              maxWidth: "100%",
-                              marginTop: "1rem",
-                              border: "1px solid #ccc",
-                            }}
-                          />
-                        )} */}
                       </>
                     );
                   })()}
-              </div>
-            </>
-          )}
-        </div>
       </div>
     </>
   );

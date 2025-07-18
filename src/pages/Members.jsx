@@ -118,7 +118,7 @@ const Members = () => {
   return (
     <>
       <div className={styles.approvedProfiles}>
-        Our Approved Matrimonial Profiles
+      Browse Profiles
       </div>
 
       

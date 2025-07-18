@@ -85,7 +85,7 @@ const MembershipAdminDashboard = () => {
                 }`}
                 onClick={() => setSelectedSection("membership")}
               >
-                Membership Form
+               Approved Membership 
               </div>
               <div
                 className={`${styles.optionButton} ${

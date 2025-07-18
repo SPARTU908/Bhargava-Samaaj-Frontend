@@ -3,7 +3,7 @@ import { getAllMembers } from "../apis/member";
 import { getAllPayment } from "../apis/payment";
 import styles from "./MemberAdmin.module.css";
 import Table from "react-bootstrap/Table";
-import { useNavigate } from "react-router-dom";
+
 
 const MemberAdmin = () => {
   const [members, setMembers] = useState([]);
@@ -12,35 +12,60 @@ const MemberAdmin = () => {
   const [statusMap, setStatusMap] = useState({});
   const [filterStatus, setFilterStatus] = useState("All");
 
-  const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchMembers = async () => {
-      try {
-        const result = await getAllMembers();
-        setMembers(result);
-      } catch (error) {
-        console.error("Error fetching members:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchMembers();
-  }, []);
+  // useEffect(() => {
+  //   const fetchMembers = async () => {
+  //     try {
+  //       const result = await getAllMembers();
+  //       setMembers(result);
+  //     } catch (error) {
+  //       console.error("Error fetching members:", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchMembers();
+  // }, []);
 
-  useEffect(() => {
-    const fetchPayment = async () => {
-      try {
-        const result = await getAllPayment();
-        setPayment(result);
-      } catch (error) {
-        console.error("Error fetching payments:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchPayment();
-  }, []);
+  // useEffect(() => {
+  //   const fetchPayment = async () => {
+  //     try {
+  //       const result = await getAllPayment();
+  //       setPayment(result);
+  //     } catch (error) {
+  //       console.error("Error fetching payments:", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchPayment();
+  // }, []);
+
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const [membersResult, paymentsResult] = await Promise.all([
+        getAllMembers(),
+        getAllPayment(),
+      ]);
+
+      console.log("Fetched members:", membersResult);
+      console.log("Fetched payments:", paymentsResult);
+
+      // Set raw data
+      setMembers(membersResult);
+      setPayment(paymentsResult);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchData();
+}, []);
+
+
 
   const findPaymentByMember = (email) => {
     return payment.find(
@@ -56,10 +81,23 @@ const MemberAdmin = () => {
   };
   
 
-  const filteredMembers = members.filter((member) => {
+  // const filteredMembers = members.filter((member) => {
+  //   const status = statusMap[member.email] || "Not Set";
+  //   if (filterStatus === "All") return true;
+  //   return status === filterStatus;
+  // });
+
+  const filteredMembers = members
+ .filter((member) => member.isFormApproved)
+  .filter((member) => {
+    // Case-insensitive email match
+    return payment.some(
+      (p) => p.email?.toLowerCase().trim() === member.email?.toLowerCase().trim()
+    );
+  })
+  .filter((member) => {
     const status = statusMap[member.email] || "Not Set";
-    if (filterStatus === "All") return true;
-    return status === filterStatus;
+    return filterStatus === "All" || status === filterStatus;
   });
 
   return (
