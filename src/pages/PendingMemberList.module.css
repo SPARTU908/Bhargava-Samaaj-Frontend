@@ -1,0 +1,133 @@
+/* Container styling */
+.container {
+  padding: 1rem;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading style */
+.heading {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+/* Wrapper for horizontal scroll */
+.tableWrapper {
+  overflow-x: auto;
+  width: 100%;
+  margin-top: 1rem;
+  border-radius: 8px;
+  box-shadow: inset 0 0 8px rgba(0,0,0,0.1);
+  background-color: white;
+}
+
+/* Table base styles */
+.table {
+  width: 100%;
+  min-width: 1400px; /* Increase min width to accommodate many columns */
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  color: #444;
+}
+
+/* Table header */
+.table thead tr {
+  background-color: #0077cc;
+  color: white;
+}
+
+.title {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 2px solid #005fa3;
+  white-space: nowrap; /* Prevent header text wrap */
+}
+
+/* Table body rows */
+.table tbody tr {
+  border-bottom: 1px solid #ddd;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #f4f6f8;
+}
+
+.table tbody tr:hover {
+  background-color: #e6f0ff;
+}
+
+/* Table cells */
+.table tbody td {
+  padding: 10px 15px;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+/* Image styles inside table cells */
+.table img {
+  display: block;
+  max-width: 80px;
+  height: auto;
+  border-radius: 4px;
+}
+
+/* Links */
+.table a {
+  color: #0077cc;
+  text-decoration: none;
+}
+
+.table a:hover {
+  text-decoration: underline;
+}
+
+.approveButton {
+  background-color: #28a745;
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.approveButton:hover:enabled {
+  background-color: #218838;
+}
+
+.rejectButton {
+  background-color: #dc3545;
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.rejectButton:hover:enabled {
+  background-color: #c82333;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+/* Responsive font size for smaller devices */
+@media (max-width: 768px) {
+  .heading {
+    font-size: 1.5rem;
+  }
+
+  .table {
+    font-size: 0.8rem;
+  }
+}

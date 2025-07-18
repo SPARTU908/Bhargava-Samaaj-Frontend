@@ -1,40 +1,45 @@
-import { useState ,useEffect} from "react";
+import { useState, useEffect } from "react";
 import styles from "./MembershipAdminDashboard.module.css";
 import MemberAdmin from "../pages/MemberAdmin";
+import PendingMemberList from "../pages/PendingMemberList";
 import { IoMdHome } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
-import {getMemberCount} from "../apis/member";
+import { getMemberCount } from "../apis/member";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const MembershipAdminDashboard = () => {
   const [selectedSection, setSelectedSection] = useState(null);
-  const [ memberCount, setMemberCount] = useState(0);
+  const [memberCount, setMemberCount] = useState(0);
   const navigate = useNavigate();
 
-    useEffect(() => {
-      const fetchMemberCount = async () => {
-        try {
-          const count = await getMemberCount();
-          setMemberCount(count);
-        } catch (err) {
-          console.error("Error fetching pending form count:", err);
-        }
-      };
-  
-      fetchMemberCount();
-    }, []);
+  useEffect(() => {
+    const fetchMemberCount = async () => {
+      try {
+        const count = await getMemberCount();
+        setMemberCount(count);
+      } catch (err) {
+        console.error("Error fetching pending form count:", err);
+      }
+    };
+
+    fetchMemberCount();
+  }, []);
 
   const renderSection = () => {
     switch (selectedSection) {
       case "membership":
         return <MemberAdmin />;
+      case "pending":
+        return <PendingMemberList />;
       default:
         return (
           <>
             <div className={styles.renderSection}>
               <div className={styles.widget}>
-                <div className={styles.widgetTitle}>Total no. of membership form</div>
+                <div className={styles.widgetTitle}>
+                  Total no. of membership form
+                </div>
                 <div className={styles.widgetCount}>{memberCount}</div>
               </div>
             </div>
@@ -43,29 +48,25 @@ const MembershipAdminDashboard = () => {
     }
   };
 
-
-
   const handleLogout = () => {
-  toast.success("Logged out successfully", {
-    position: "top-right",
-    autoClose: 3000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-  });
+    toast.success("Logged out successfully", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
 
-  setTimeout(() => {
-    navigate("/");
-  }, 2000); // Wait for toast to finish before navigating
-};
-
+    setTimeout(() => {
+      navigate("/");
+    }, 2000); // Wait for toast to finish before navigating
+  };
 
   const refreshPage = () => {
     window.location.reload();
   };
-
 
   return (
     <>
@@ -86,6 +87,14 @@ const MembershipAdminDashboard = () => {
               >
                 Membership Form
               </div>
+              <div
+                className={`${styles.optionButton} ${
+                  selectedSection === "pending" ? styles.activeButton : ""
+                }`}
+                onClick={() => setSelectedSection("pending")}
+              >
+                Pending Membership
+              </div>
             </div>
           </div>
           <div className={styles.logoutWrapper}>
@@ -98,7 +107,7 @@ const MembershipAdminDashboard = () => {
           <div className={styles.sectionContent}>{renderSection()}</div>
         </div>
       </div>
-        <ToastContainer /> 
+      <ToastContainer />
     </>
   );
 };

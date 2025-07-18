@@ -121,3 +121,62 @@ export const getMemberCount = async () => {
     throw error;
   }
 };
+
+
+export const getMemberStatus = async (memberId) => {
+  const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/member/${memberId}/status`;
+
+  try {
+    const response = await axios.get(reqUrl, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("memberToken")}`,
+      },
+    });
+
+    if (response.status === 200 && response.data.success) {
+      return {
+        success: true,
+        approved: response.data.data.approved,
+        uploadForm: response.data.data.uploadForm,
+      };
+    } else {
+      return {
+        success: false,
+        error: response.data.message || "Unable to fetch approval status.",
+      };
+    }
+  } catch (error) {
+    console.error("Status check error:", error.response?.data || error.message);
+    return {
+      success: false,
+      error: error.response?.data?.message || "Something went wrong",
+    };
+  }
+};
+
+
+export const updateMemberStatus = async (memberId, data) => {
+  console.log("Updating member status with:", memberId, data);
+  
+  const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/member/members/${memberId}/status`;
+
+  try {
+    const response = await axios.patch(reqUrl, data, {
+      headers: {
+        "Content-Type": "application/json",
+        // Agar authorization chahiye to yeh bhi add karo:
+        // Authorization: `Bearer ${localStorage.getItem("memberToken")}`,
+      },
+    });
+
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error("Failed to update member status");
+    }
+  } catch (error) {
+    console.error("Error updating member status:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
