@@ -12,7 +12,8 @@ import Advertisement from "./pages/Advertisement.jsx";
 import Download from "./pages/Download.jsx";
 import Haridwar from "./pages/Haridwar.jsx";
 import PendingForms from "./pages/PendingForms.jsx";
-import Payment from "./pages/Payment.jsx";
+import Payment from "./pages/Payment.jsx"
+import Payment1 from "./pages/Payment1.jsx"
 import MemberAdmin from "./pages/MemberAdmin.jsx";
 import Admin from "./pages/Admin.jsx";
 import MatrimonialAdminDashboard from "./pages/MatrimonialAdminDashboard";
@@ -68,6 +69,8 @@ function App() {
               </PrivateRoute>
             }
           />
+            <Route path="/payment1" element={<Payment1 />} />
+
           <Route path="/admin" element={<Admin />} />
           <Route
             path="/matrimonialadmin"

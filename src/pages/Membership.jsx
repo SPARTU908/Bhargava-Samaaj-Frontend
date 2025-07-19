@@ -76,66 +76,124 @@ const Membership = () => {
     }
   };
 
+  // const validate = () => {
+  //   let newErrors = {};
+
+  //   if (!memberData.username) newErrors.username = "कृपया नाम दर्ज करें।";
+  //   if (!memberData.email) newErrors.email = "कृपया ईमेल दर्ज करें।";
+  //   else if (!/\S+@\S+\.\S+/.test(memberData.email)) {
+  //     newErrors.email = "कृपया मान्य ईमेल दर्ज करें।";
+  //   }
+  //   if (!memberData.address) newErrors.address = "कृपया पता दर्ज करें।";
+  //   if (!memberData.dob) newErrors.dob = "कृपया जन्म तिथि चुनें।";
+  //   if (!memberData.pincode) newErrors.pincode = "कृपया पिनकोड दर्ज करें।";
+  //   if (!photoFile) newErrors.photo = "कृपया फोटो अपलोड करें।";
+  //   if (!signatureFile) newErrors.signature = "कृपया हस्ताक्षर अपलोड करें।";
+  //   if (!memberData.fatherName)
+  //     newErrors.fatherName = "कृपया पिता का नाम दर्ज करें।";
+  //   if (!memberData.gotra) newErrors.gotra = "कृपया गोत्र दर्ज करें।";
+  //   if (!memberData.kuldevi) newErrors.kuldevi = "कृपया कुलदेवी दर्ज करें।";
+  //   if (!memberData.mobile) {
+  //     newErrors.mobile = "कृपया मोबाइल नंबर दर्ज करें।";
+  //   } else if (!/^[6-9]\d{9}$/.test(memberData.mobile)) {
+  //     newErrors.mobile = "कृपया मान्य 10 अंकों का मोबाइल नंबर दर्ज करें।";
+  //   }
+  //   if (!memberData.occupation)
+  //     newErrors.occupation = "कृपया व्यवसाय दर्ज करें।";
+  //   if (!selectedFee)
+  //     newErrors.membership = "कृपया सदस्यता शुल्क का एक विकल्प चुनें।";
+
+  //   if (showSpouseFields) {
+  //     const skipSpouseValidation =
+  //       selectedFee === "साधारण सभासद-द्विवार्षिक सत्र के लिए - 300 रुपये" ||
+  //       selectedFee === "आजीवन सभासद - एकल - 600 रुपये" ||
+  //       selectedFee === "डुप्लिकेट परिचय शुल्क - ₹50 रुपये";
+
+  //     if (!skipSpouseValidation) {
+  //       if (!memberData.spouse)
+  //         newErrors.spouse = "कृपया जीवनसाथी का नाम दर्ज करें।";
+  //       if (!memberData.spouseEmail)
+  //         newErrors.spouseEmail = "कृपया जीवनसाथी का ईमेल दर्ज करें।";
+  //       else if (!/\S+@\S+\.\S+/.test(memberData.spouseEmail)) {
+  //         newErrors.spouseEmail = "कृपया जीवनसाथी का मान्य ईमेल दर्ज करें।";
+  //       }
+  //       if (!memberData.spouseMobile) {
+  //         newErrors.spouseMobile = "कृपया जीवनसाथी का मोबाइल नंबर दर्ज करें।";
+  //       } else if (!/^[6-9]\d{9}$/.test(memberData.spouseMobile)) {
+  //         newErrors.spouseMobile =
+  //           "कृपया जीवनसाथी का मान्य 10 अंकों का मोबाइल नंबर दर्ज करें।";
+  //       }
+  //       if (showSpouseFields) {
+  //         if (!spousePhotoFile)
+  //           newErrors.spousePhoto = "कृपया जीवनसाथी की फोटो अपलोड करें।";
+  //         if (!spouseSignatureFile)
+  //           newErrors.spouseSignature =
+  //             "कृपया जीवनसाथी का हस्ताक्षर अपलोड करें।";
+  //       }
+  //     }
+  //   }
+  //   return newErrors;
+  // };
+
+
   const validate = () => {
-    let newErrors = {};
+  let newErrors = {};
 
-    if (!memberData.username) newErrors.username = "कृपया नाम दर्ज करें।";
-    if (!memberData.email) newErrors.email = "कृपया ईमेल दर्ज करें।";
-    else if (!/\S+@\S+\.\S+/.test(memberData.email)) {
-      newErrors.email = "कृपया मान्य ईमेल दर्ज करें।";
-    }
-    if (!memberData.address) newErrors.address = "कृपया पता दर्ज करें।";
-    if (!memberData.dob) newErrors.dob = "कृपया जन्म तिथि चुनें।";
-    if (!memberData.pincode) newErrors.pincode = "कृपया पिनकोड दर्ज करें।";
-    if (!photoFile) newErrors.photo = "कृपया फोटो अपलोड करें।";
-    if (!signatureFile) newErrors.signature = "कृपया हस्ताक्षर अपलोड करें।";
-    if (!memberData.fatherName)
-      newErrors.fatherName = "कृपया पिता का नाम दर्ज करें।";
-    if (!memberData.gotra) newErrors.gotra = "कृपया गोत्र दर्ज करें।";
-    if (!memberData.kuldevi) newErrors.kuldevi = "कृपया कुलदेवी दर्ज करें।";
-    if (!memberData.mobile) {
-      newErrors.mobile = "कृपया मोबाइल नंबर दर्ज करें।";
-    } else if (!/^[6-9]\d{9}$/.test(memberData.mobile)) {
-      newErrors.mobile = "कृपया मान्य 10 अंकों का मोबाइल नंबर दर्ज करें।";
-    }
-    if (!memberData.occupation)
-      newErrors.occupation = "कृपया व्यवसाय दर्ज करें।";
-    if (!selectedFee)
-      newErrors.membership = "कृपया सदस्यता शुल्क का एक विकल्प चुनें।";
+  // Main member validations
+  if (!memberData.username) newErrors.username = "कृपया नाम दर्ज करें।";
+  if (!memberData.email) newErrors.email = "कृपया ईमेल दर्ज करें।";
+  else if (!/\S+@\S+\.\S+/.test(memberData.email)) {
+    newErrors.email = "कृपया मान्य ईमेल दर्ज करें।";
+  }
 
-    if (showSpouseFields) {
-      const skipSpouseValidation =
-        selectedFee === "साधारण सभासद-द्विवार्षिक सत्र के लिए - 300 रुपये" ||
-        selectedFee === "आजीवन सभासद - एकल - 600 रुपये" ||
-        selectedFee === "डुप्लिकेट परिचय शुल्क - ₹50 रुपये";
+  if (!memberData.address) newErrors.address = "कृपया पता दर्ज करें।";
+  if (!memberData.dob) newErrors.dob = "कृपया जन्म तिथि चुनें।";
+  if (!memberData.pincode) newErrors.pincode = "कृपया पिनकोड दर्ज करें।";
 
-      if (!skipSpouseValidation) {
-        if (!memberData.spouse)
-          newErrors.spouse = "कृपया जीवनसाथी का नाम दर्ज करें।";
-        if (!memberData.spouseEmail)
-          newErrors.spouseEmail = "कृपया जीवनसाथी का ईमेल दर्ज करें।";
-        else if (!/\S+@\S+\.\S+/.test(memberData.spouseEmail)) {
-          newErrors.spouseEmail = "कृपया जीवनसाथी का मान्य ईमेल दर्ज करें।";
-        }
-        if (!memberData.spouseMobile) {
-          newErrors.spouseMobile = "कृपया जीवनसाथी का मोबाइल नंबर दर्ज करें।";
-        } else if (!/^[6-9]\d{9}$/.test(memberData.spouseMobile)) {
-          newErrors.spouseMobile =
-            "कृपया जीवनसाथी का मान्य 10 अंकों का मोबाइल नंबर दर्ज करें।";
-        }
-        if (showSpouseFields) {
-          if (!spousePhotoFile)
-            newErrors.spousePhoto = "कृपया जीवनसाथी की फोटो अपलोड करें।";
-          if (!spouseSignatureFile)
-            newErrors.spouseSignature =
-              "कृपया जीवनसाथी का हस्ताक्षर अपलोड करें।";
-        }
-      }
+  if (!photoFile) newErrors.photo = "कृपया फोटो अपलोड करें।";
+  if (!signatureFile) newErrors.signature = "कृपया हस्ताक्षर अपलोड करें।";
+
+  if (!memberData.fatherName) newErrors.fatherName = "कृपया पिता का नाम दर्ज करें।";
+  if (!memberData.gotra) newErrors.gotra = "कृपया गोत्र दर्ज करें।";
+  if (!memberData.kuldevi) newErrors.kuldevi = "कृपया कुलदेवी दर्ज करें।";
+
+  if (!memberData.mobile) {
+    newErrors.mobile = "कृपया मोबाइल नंबर दर्ज करें।";
+  } else if (!/^[6-9]\d{9}$/.test(memberData.mobile)) {
+    newErrors.mobile = "कृपया मान्य 10 अंकों का मोबाइल नंबर दर्ज करें।";
+  }
+
+  if (!memberData.occupation) newErrors.occupation = "कृपया व्यवसाय दर्ज करें।";
+
+  if (!selectedFee) newErrors.membership = "कृपया सदस्यता शुल्क का एक विकल्प चुनें।";
+
+  // Spouse validations only if couple membership is selected
+  if (selectedFee === "आजीवन सभासद - युगल-(पति-पत्नी) - 1000 रुपये") {
+    if (!memberData.spouse) newErrors.spouse = "कृपया जीवनसाथी का नाम दर्ज करें।";
+
+    if (!memberData.spouseEmail) {
+      newErrors.spouseEmail = "कृपया जीवनसाथी का ईमेल दर्ज करें।";
+    } else if (!/\S+@\S+\.\S+/.test(memberData.spouseEmail)) {
+      newErrors.spouseEmail = "कृपया जीवनसाथी का मान्य ईमेल दर्ज करें।";
     }
-    return newErrors;
-  };
+
+    if (!memberData.spouseMobile) {
+      newErrors.spouseMobile = "कृपया जीवनसाथी का मोबाइल नंबर दर्ज करें।";
+    } else if (!/^[6-9]\d{9}$/.test(memberData.spouseMobile)) {
+      newErrors.spouseMobile = "कृपया जीवनसाथी का मान्य 10 अंकों का मोबाइल नंबर दर्ज करें।";
+    }
+
+    if (!spousePhotoFile) newErrors.spousePhoto = "कृपया जीवनसाथी की फोटो अपलोड करें।";
+    if (!spouseSignatureFile) newErrors.spouseSignature = "कृपया जीवनसाथी का हस्ताक्षर अपलोड करें।";
+  }
+
+  return newErrors;
+};
+
+
+
   const handleLogin = () => {
-    navigate("/payment");
+    navigate("/payment1");
   };
 
   const handleChange = (e) => {
@@ -224,7 +282,7 @@ const Membership = () => {
         </div>
         <div className={styles.mobilebtn}>
           <button className={styles.upload} onClick={handleLogin}>
-            Upload the form{" "}
+            Click To Pay{" "}
           </button>
         </div>
       </div>
@@ -458,6 +516,7 @@ const Membership = () => {
                 value={memberData.mobile}
                 onChange={handleChange}
               />
+              {/* Change the input color to gray for only those field who is disabled */}
               {errors.mobile && <p className={styles.error}>{errors.mobile}</p>}
             </div>
 

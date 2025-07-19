@@ -1,6 +1,7 @@
 import React from 'react'
 import Navbar from '../components/Navbar/Navbar'
 import styles from "./Census.module.css";
+import Upload from "./Upload";
 
 
 const Census = () => {
@@ -8,6 +9,7 @@ const Census = () => {
     <>
     <Navbar/>
     <div className={styles.heading}>Coming Soon!</div>
+   
     
     </>
     

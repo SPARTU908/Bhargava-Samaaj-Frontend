@@ -127,7 +127,7 @@ useEffect(() => {
           <div className={styles.line1}>1.साधारण सभासद (द्विवार्षिक सत्र के लिए) - 300 रुपये</div>
           <div className={styles.line2}>2. आजीवन सभासद (एकल) - 600 रुपये</div>
           <div className={styles.line3}>युगल (पति-पत्नी) - 1,000 रुपये</div>
-          <hr />
+        
           <div className={styles.line4}>डुप्लिकेट परिचय शुल्क - 50 रुपये</div>
         </div>
 
@@ -189,7 +189,7 @@ useEffect(() => {
         </div>
 
         <div className={styles.gotra}>
-          प्रार्थी / पुरुष सदस्य श्री {member.username} का गोत्र {member.gotra} कुलदेवी {member.kuldevi}
+          कुमारी/श्री/श्रीमती {member.username} का गोत्र {member.gotra} कुलदेवी {member.kuldevi}
         </div>
 
         <div className={styles.cash}>संलग्न :</div>
@@ -215,8 +215,8 @@ useEffect(() => {
         </div>
 
         <div className={styles.shri}>
-          श्री {member.username} के नमूने का हस्ताक्षर &nbsp;&nbsp;
-          श्रीमती / सुश्री {member.spouse} के नमूने के हस्ताक्षर
+          {member.username} के नमूने का हस्ताक्षर &nbsp;&nbsp;
+          {member.spouse} के नमूने के हस्ताक्षर
         </div>
 
         <div className={styles.couplesign}>

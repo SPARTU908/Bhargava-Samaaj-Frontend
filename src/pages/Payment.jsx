@@ -618,7 +618,6 @@
 //   }
 // };
 
-
 //   const handleUpload = async () => {
 //     if (!file) return setErrors({ upload: "Please select a file to upload." });
 //     if (!memberId) {
@@ -819,7 +818,7 @@
 //                   </div>
 //                   <div className={styles.plan}>{plan}</div> {" "}
 //                 </div>
-               
+
 //                 <img src={qr} alt="QR Code" className={styles.qr} />
 //               </div>
 //               <div className={styles.step2}>
@@ -906,8 +905,6 @@
 
 // export default Payment;
 
-
-
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { uploadMemberForm, loginMember, getMemberStatus } from "../apis/member";
@@ -920,7 +917,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Payment = () => {
-  const [showLoginModal, setShowLoginModal] = useState(!localStorage.getItem("memberToken"));
+  const [showLoginModal, setShowLoginModal] = useState(
+    !localStorage.getItem("memberToken")
+  );
   const [loginData, setLoginData] = useState({ username: "", membership: "" });
 
   const [paymentdata, setPaymentData] = useState({
@@ -966,19 +965,44 @@ const Payment = () => {
     if (status.success) {
       setIsApproved(status.approved);
     } else {
-      toast.error("Unable to verify approval status.", { position: "top-center" });
+      toast.error("Unable to verify approval status.", {
+        position: "top-center",
+      });
     }
   };
+
+  // const handleLoginSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const result = await loginMember(loginData);
+  //   if (result.success) {
+  //     toast.success("Login successful!", { position: "top-center" });
+  //     localStorage.setItem("memberToken", result.data.token);
+  //     localStorage.setItem("memberId", result.data.memberId);
+  //     setShowLoginModal(false);
+  //     await checkApprovalStatus();
+  //   } else {
+  //     toast.error("Login failed: " + result.error, { position: "top-center" });
+  //   }
+  // };
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     const result = await loginMember(loginData);
+
     if (result.success) {
       toast.success("Login successful!", { position: "top-center" });
+
       localStorage.setItem("memberToken", result.data.token);
       localStorage.setItem("memberId", result.data.memberId);
       setShowLoginModal(false);
-      await checkApprovalStatus();
+
+      // ✅ Use these values directly without calling getMemberStatus()
+      if (result.data.uploadForm) {
+        setIsFileUploaded(true);
+      }
+      if (result.data.isFormApproved) {
+        setIsApproved(true);
+      }
     } else {
       toast.error("Login failed: " + result.error, { position: "top-center" });
     }
@@ -1153,13 +1177,20 @@ const Payment = () => {
                   Step #1 - Scan QR Code & Make Payment
                 </div>
                 <div className={styles.name}>
-                  Account Name : <span className={styles.info}>Akhil Bhartiya Bhargava Sabha</span>
+                  Account Name :{" "}
+                  <span className={styles.info}>
+                    Akhil Bhartiya Bhargava Sabha
+                  </span>
                 </div>
                 <div className={styles.number}>
-                  SB Account No: <span className={styles.info}>90442010053572</span>
+                  SB Account No:{" "}
+                  <span className={styles.info}>90442010053572</span>
                 </div>
                 <div className={styles.location}>
-                  Bank & Branch : <span className={styles.info}>CANARA BANK, Nehru Place, New Delhi</span>
+                  Bank & Branch :{" "}
+                  <span className={styles.info}>
+                    CANARA BANK, Nehru Place, New Delhi
+                  </span>
                 </div>
                 <div className={styles.ifsc}>
                   IFSC: <span className={styles.info}>CNRB0000390</span>
@@ -1168,14 +1199,18 @@ const Payment = () => {
                   MICR Code: <span className={styles.info}>110015016</span>
                 </div>
                 <div className={styles.amountBox}>
-                  <div className={styles.planing}>आपके द्वारा चुनी गई सदस्यता:</div>
+                  <div className={styles.planing}>
+                    आपके द्वारा चुनी गई सदस्यता:
+                  </div>
                   <div className={styles.plan}>{plan}</div>
                 </div>
                 <img src={qr} alt="QR Code" className={styles.qr} />
               </div>
 
               <div className={styles.step2}>
-                <div className={styles.submit}>Step #2 - Submit The Details</div>
+                <div className={styles.submit}>
+                  Step #2 - Submit The Details
+                </div>
                 <form onSubmit={handleSubmit}>
                   <div className={styles.inputBox}>
                     <label className={styles.label}>Name *</label>
@@ -1186,7 +1221,9 @@ const Payment = () => {
                       value={paymentdata.name}
                       onChange={handleChange}
                     />
-                    {errors.name && <p className={styles.error1}>{errors.name}</p>}
+                    {errors.name && (
+                      <p className={styles.error1}>{errors.name}</p>
+                    )}
                   </div>
 
                   <div className={styles.inputBox}>
@@ -1198,7 +1235,9 @@ const Payment = () => {
                       value={paymentdata.email}
                       onChange={handleChange}
                     />
-                    {errors.email && <p className={styles.error1}>{errors.email}</p>}
+                    {errors.email && (
+                      <p className={styles.error1}>{errors.email}</p>
+                    )}
                   </div>
 
                   <div className={styles.inputBox}>
@@ -1210,7 +1249,9 @@ const Payment = () => {
                       value={paymentdata.mobile}
                       onChange={handleChange}
                     />
-                    {errors.mobile && <p className={styles.error1}>{errors.mobile}</p>}
+                    {errors.mobile && (
+                      <p className={styles.error1}>{errors.mobile}</p>
+                    )}
                   </div>
 
                   <div className={styles.inputBox}>
@@ -1239,8 +1280,14 @@ const Payment = () => {
 
           {isFileUploaded && !isApproved && (
             <div className={styles.waitingApproval}>
-              <h3>Form submitted successfully.</h3>
-              <p>Admin approval is pending. Please wait before proceeding with payment.</p>
+              <h3 className={styles.approvalHeading}>
+                Form Submitted Successfully
+              </h3>
+              <p className={styles.approvalMessage}>
+                Admin approval is pending. Please wait before proceeding with
+                the payment. <br />
+                An email will be sent to you once your form is approved.
+              </p>
             </div>
           )}
         </div>

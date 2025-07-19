@@ -158,6 +158,11 @@
 .rowsMember {
   display: flex;
 }
+input:disabled {
+  background-color: #f0f0f0; /* light gray background */
+  color: #808080; /* gray text */
+  cursor: not-allowed;
+}
 
 @media (max-width: 768px) {
   .container {
@@ -240,6 +245,11 @@
     width: 90%;
     margin: 5px auto;
   }
+  input:disabled {
+  background-color: #f0f0f0; /* light gray background */
+  color: #808080; /* gray text */
+  cursor: not-allowed;
+}
 
    .inputBox {
     width: 100%;
