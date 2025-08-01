@@ -636,7 +636,7 @@ const Membership = () => {
           <div className={styles.rowUpload}>
             <div className={styles.inputBox}>
               <label htmlFor="photo" className={styles.labelUpload}>
-                Upload Photo
+                Upload Photo (Please Upload In Image Format)
                 <span style={{ color: "red" }}>*</span>
               </label>
               <div className={styles.uploadurl}>
@@ -647,7 +647,7 @@ const Membership = () => {
             </div>
             <div className={styles.inputBox}>
               <label htmlFor="spousePhoto" className={styles.labelUpload}>
-                Upload Spouse Photo
+                Upload Spouse Photo (Please Upload In Image Format)
               </label>
               <div className={styles.uploadurl}>
                 <SpousePhotoUpload
@@ -666,7 +666,7 @@ const Membership = () => {
           <div className={styles.rowUpload}>
             <div className={styles.inputBox}>
               <label htmlFor="signature" className={styles.labelUpload}>
-                Upload Signature
+                Upload Signature (Please Upload In Image Format)
                 <span style={{ color: "red" }}>*</span>
               </label>
               <div className={styles.uploadurl}>
@@ -681,7 +681,7 @@ const Membership = () => {
             </div>
             <div className={styles.inputBox}>
               <label htmlFor="spouseSignature" className={styles.labelUpload}>
-                Upload Spouse Signature
+                Upload Spouse Signature (Please Upload In Image Format)
               </label>
               <div className={styles.uploadurl}>
                 <SpouseSignatureUpload
