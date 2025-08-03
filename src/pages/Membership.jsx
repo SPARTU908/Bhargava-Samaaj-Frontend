@@ -196,6 +196,10 @@ const Membership = () => {
     navigate("/payment1");
   };
 
+  const handleUpload = ()=>{
+    navigate("/sign-form-upload");
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setMemberData({ ...memberData, [name]: value });
@@ -283,6 +287,9 @@ const Membership = () => {
         <div className={styles.mobilebtn}>
           <button className={styles.upload} onClick={handleLogin}>
             Click To Pay{" "}
+          </button>
+          <button className={styles.upload} onClick={handleUpload}>
+            Upload the Sign Form{" "}
           </button>
         </div>
       </div>

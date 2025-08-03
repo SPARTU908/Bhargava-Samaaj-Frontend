@@ -26,6 +26,7 @@ import VivahMemberRegister from "./components/VivahMember/VivahMemberRegister.js
 import FindYourMatch from "./pages/FindYourMatch.jsx";
 import PendingMemberList from "./pages/PendingMemberList.jsx";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import SignFormUpload from "./pages/SignFormUpload.jsx";
 
 
 function App() {
@@ -90,6 +91,7 @@ function App() {
           <Route path="/vivahmemberlogin" element={<VivahMemberLogin />} />
           <Route path="/findyourmatch" element={<FindYourMatch />} />
           <Route path="/pendingmember" element={<PendingMemberList />} />
+          <Route path="/sign-form-upload" element={<SignFormUpload />} />
         </Routes>
       </BrowserRouter>
     </>
