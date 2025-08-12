@@ -117,262 +117,262 @@ const Form = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
 
-    if (isSubmitting) return; 
+  //   if (isSubmitting) return; 
 
-    setIsSubmitting(true);
+  //   setIsSubmitting(true);
 
-    const validationErrors = validate();
-    if (!photoFile) {
-      validationErrors.photo = "Photo is required";
-    }
-    if (!biodataFile) {
-      validationErrors.bioData = "Biodata is required";
-    }
+  //   const validationErrors = validate();
+  //   if (!photoFile) {
+  //     validationErrors.photo = "Photo is required";
+  //   }
+  //   if (!biodataFile) {
+  //     validationErrors.bioData = "Biodata is required";
+  //   }
 
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      setIsSubmitting(false); 
-      return;
-    }
+  //   if (Object.keys(validationErrors).length > 0) {
+  //     setErrors(validationErrors);
+  //     setIsSubmitting(false); 
+  //     return;
+  //   }
 
-    setErrors({});
+  //   setErrors({});
 
-    try {
+  //   try {
     
-      let uploadedPhotoUrl = "";
-      if (photoFile) {
-        const photoData = new FormData();
-        photoData.append("file", photoFile);
+  //     let uploadedPhotoUrl = "";
+  //     if (photoFile) {
+  //       const photoData = new FormData();
+  //       photoData.append("file", photoFile);
 
-        const photoUploadRes = await axios.post(
-          `${import.meta.env.VITE_BACKEND_URL}/upload`,
-          photoData
-        );
+  //       const photoUploadRes = await axios.post(
+  //         `${import.meta.env.VITE_BACKEND_URL}/upload`,
+  //         photoData
+  //       );
 
-        uploadedPhotoUrl = photoUploadRes.data.url;
-      }
+  //       uploadedPhotoUrl = photoUploadRes.data.url;
+  //     }
 
    
-      let uploadedBiodataUrl = "";
-      if (biodataFile) {
-        const biodataData = new FormData();
-        biodataData.append("file", biodataFile);
+  //     let uploadedBiodataUrl = "";
+  //     if (biodataFile) {
+  //       const biodataData = new FormData();
+  //       biodataData.append("file", biodataFile);
 
-        const biodataUploadRes = await axios.post(
-          `${import.meta.env.VITE_BACKEND_URL}/upload`,
-          biodataData
-        );
+  //       const biodataUploadRes = await axios.post(
+  //         `${import.meta.env.VITE_BACKEND_URL}/upload`,
+  //         biodataData
+  //       );
 
-        uploadedBiodataUrl = biodataUploadRes.data.url;
-      }
+  //       uploadedBiodataUrl = biodataUploadRes.data.url;
+  //     }
 
      
-      const finalForm = {
-        ...formData,
-        photo: uploadedPhotoUrl,
-        bioData: uploadedBiodataUrl,
-      };
+  //     const finalForm = {
+  //       ...formData,
+  //       photo: uploadedPhotoUrl,
+  //       bioData: uploadedBiodataUrl,
+  //     };
 
-      const result = await registerUser(finalForm);
+  //     const result = await registerUser(finalForm);
 
-      if (result.status === 201) {
-        toast.success(
-          "Thanks for submitting your details! Your details will go live in 24 to 36 hours.",
-          {
-            position: "top-center",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          }
-        );
+  //     if (result.status === 201) {
+  //       toast.success(
+  //         "Thanks for submitting your details! Your details will go live in 24 to 36 hours.",
+  //         {
+  //           position: "top-center",
+  //           autoClose: 3000,
+  //           hideProgressBar: false,
+  //           closeOnClick: true,
+  //           pauseOnHover: false,
+  //           draggable: true,
+  //           progress: undefined,
+  //           theme: "light",
+  //         }
+  //       );
 
-        setFormData({
-          number: "",
-          name: "",
-          email: "",
-          mobile: "",
-          gender: "",
-          birthTime: "",
-          birthPlace: "",
-          height: "",
-          weight: "",
-          dob: "",
-          bloodGroup: "",
-          manglik: "",
-          gotra: "",
-          kuldevi: "",
-          complexion: "",
-          education: "",
-          professionQualification: "",
-          profession: "",
-          company: "",
-          designation: "",
-          income: "",
-          hobbies: "",
-          otherQualification: "",
-          guardianName: "",
-          fatherName: "",
-          fatherProfession: "",
-          fatherIncome: "",
-          fatherDesignation: "",
-          motherName: "",
-          nativePlace: "",
-          address: "",
-          city: "",
-          pin: "",
-          whatsapp: "",
-          nri: "",
-          remarks: "",
-          password: "",
-          photo: "",
-          bioData: "",
-        });
-        setPhotoFile(null);
-        setBiodataFile(null);
-          setIsSubmitting(false);
-        if (photoInputRef.current) photoInputRef.current.value = "";
-        if (biodataInputRef.current) biodataInputRef.current.value = "";
-      }
-    } catch (err) {
-      console.error("Form submission failed:", err);
-      toast.error("Something went wrong. Please try again.");
-      setIsSubmitting(false); 
+  //       setFormData({
+  //         number: "",
+  //         name: "",
+  //         email: "",
+  //         mobile: "",
+  //         gender: "",
+  //         birthTime: "",
+  //         birthPlace: "",
+  //         height: "",
+  //         weight: "",
+  //         dob: "",
+  //         bloodGroup: "",
+  //         manglik: "",
+  //         gotra: "",
+  //         kuldevi: "",
+  //         complexion: "",
+  //         education: "",
+  //         professionQualification: "",
+  //         profession: "",
+  //         company: "",
+  //         designation: "",
+  //         income: "",
+  //         hobbies: "",
+  //         otherQualification: "",
+  //         guardianName: "",
+  //         fatherName: "",
+  //         fatherProfession: "",
+  //         fatherIncome: "",
+  //         fatherDesignation: "",
+  //         motherName: "",
+  //         nativePlace: "",
+  //         address: "",
+  //         city: "",
+  //         pin: "",
+  //         whatsapp: "",
+  //         nri: "",
+  //         remarks: "",
+  //         password: "",
+  //         photo: "",
+  //         bioData: "",
+  //       });
+  //       setPhotoFile(null);
+  //       setBiodataFile(null);
+  //         setIsSubmitting(false);
+  //       if (photoInputRef.current) photoInputRef.current.value = "";
+  //       if (biodataInputRef.current) biodataInputRef.current.value = "";
+  //     }
+  //   } catch (err) {
+  //     console.error("Form submission failed:", err);
+  //     toast.error("Something went wrong. Please try again.");
+  //     setIsSubmitting(false); 
+  //   }
+  // };
+
+
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  if (isSubmitting) return;
+
+  setIsSubmitting(true);
+
+  const validationErrors = validate();
+  if (!photoFile) {
+    validationErrors.photo = "Photo is required";
+  }
+  if (!biodataFile) {
+    validationErrors.bioData = "Biodata is required";
+  }
+
+  if (Object.keys(validationErrors).length > 0) {
+    setErrors(validationErrors);
+    setIsSubmitting(false);
+    return;
+  }
+
+  setErrors({});
+
+  try {
+    // ✅ Upload photo to Cloudinary
+    const uploadToCloudinary = async (file) => {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "matrimony_upload"); // <-- Replace this
+      const res = await fetch("https://api.cloudinary.com/v1_1/doj76lpfe/upload", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await res.json();
+      return data.secure_url;
+    };
+
+    let uploadedPhotoUrl = "";
+    if (photoFile) {
+      uploadedPhotoUrl = await uploadToCloudinary(photoFile);
     }
-  };
 
+    let uploadedBiodataUrl = "";
+    if (biodataFile) {
+      uploadedBiodataUrl = await uploadToCloudinary(biodataFile);
+    }
 
-//   const handleSubmit = async (e) => {
-//   e.preventDefault();
+    const finalForm = {
+      ...formData,
+      photo: uploadedPhotoUrl,
+      bioData: uploadedBiodataUrl,
+    };
 
-//   if (isSubmitting) return;
+    const result = await registerUser(finalForm); // your existing backend API
 
-//   setIsSubmitting(true);
+    if (result.status === 201) {
+      toast.success(
+        "Thanks for submitting your details! Your details will go live in 24 to 36 hours.",
+        {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        }
+      );
 
-//   const validationErrors = validate();
-//   if (!photoFile) {
-//     validationErrors.photo = "Photo is required";
-//   }
-//   if (!biodataFile) {
-//     validationErrors.bioData = "Biodata is required";
-//   }
+      // ✅ Reset form
+      setFormData({
+        number: "",
+        name: "",
+        email: "",
+        mobile: "",
+        gender: "",
+        birthTime: "",
+        birthPlace: "",
+        height: "",
+        weight: "",
+        dob: "",
+        bloodGroup: "",
+        manglik: "",
+        gotra: "",
+        kuldevi: "",
+        complexion: "",
+        education: "",
+        professionQualification: "",
+        profession: "",
+        company: "",
+        designation: "",
+        income: "",
+        hobbies: "",
+        otherQualification: "",
+        guardianName: "",
+        fatherName: "",
+        fatherProfession: "",
+        fatherIncome: "",
+        fatherDesignation: "",
+        motherName: "",
+        nativePlace: "",
+        address: "",
+        city: "",
+        pin: "",
+        whatsapp: "",
+        nri: "",
+        remarks: "",
+        password: "",
+        photo: "",
+        bioData: "",
+      });
 
-//   if (Object.keys(validationErrors).length > 0) {
-//     setErrors(validationErrors);
-//     setIsSubmitting(false);
-//     return;
-//   }
-
-//   setErrors({});
-
-//   try {
-//     // ✅ Upload photo to Cloudinary
-//     const uploadToCloudinary = async (file) => {
-//       const formData = new FormData();
-//       formData.append("file", file);
-//       formData.append("upload_preset", "matrimony_upload"); // <-- Replace this
-//       const res = await fetch("https://api.cloudinary.com/v1_1/dljd7jfp1/upload", {
-//         method: "POST",
-//         body: formData,
-//       });
-//       const data = await res.json();
-//       return data.secure_url;
-//     };
-
-//     let uploadedPhotoUrl = "";
-//     if (photoFile) {
-//       uploadedPhotoUrl = await uploadToCloudinary(photoFile);
-//     }
-
-//     let uploadedBiodataUrl = "";
-//     if (biodataFile) {
-//       uploadedBiodataUrl = await uploadToCloudinary(biodataFile);
-//     }
-
-//     const finalForm = {
-//       ...formData,
-//       photo: uploadedPhotoUrl,
-//       bioData: uploadedBiodataUrl,
-//     };
-
-//     const result = await registerUser(finalForm); // your existing backend API
-
-//     if (result.status === 201) {
-//       toast.success(
-//         "Thanks for submitting your details! Your details will go live in 24 to 36 hours.",
-//         {
-//           position: "top-center",
-//           autoClose: 3000,
-//           hideProgressBar: false,
-//           closeOnClick: true,
-//           pauseOnHover: false,
-//           draggable: true,
-//           progress: undefined,
-//           theme: "light",
-//         }
-//       );
-
-//       // ✅ Reset form
-//       setFormData({
-//         number: "",
-//         name: "",
-//         email: "",
-//         mobile: "",
-//         gender: "",
-//         birthTime: "",
-//         birthPlace: "",
-//         height: "",
-//         weight: "",
-//         dob: "",
-//         bloodGroup: "",
-//         manglik: "",
-//         gotra: "",
-//         kuldevi: "",
-//         complexion: "",
-//         education: "",
-//         professionQualification: "",
-//         profession: "",
-//         company: "",
-//         designation: "",
-//         income: "",
-//         hobbies: "",
-//         otherQualification: "",
-//         guardianName: "",
-//         fatherName: "",
-//         fatherProfession: "",
-//         fatherIncome: "",
-//         fatherDesignation: "",
-//         motherName: "",
-//         nativePlace: "",
-//         address: "",
-//         city: "",
-//         pin: "",
-//         whatsapp: "",
-//         nri: "",
-//         remarks: "",
-//         password: "",
-//         photo: "",
-//         bioData: "",
-//       });
-
-//       setPhotoFile(null);
-//       setBiodataFile(null);
-//       setIsSubmitting(false);
-//       if (photoInputRef.current) photoInputRef.current.value = "";
-//       if (biodataInputRef.current) biodataInputRef.current.value = "";
-//     }
-//   } catch (err) {
-//     console.error("Form submission failed:", err);
-//     toast.error("Something went wrong. Please try again.");
-//     setIsSubmitting(false);
-//   }
-// };
+      setPhotoFile(null);
+      setBiodataFile(null);
+      setIsSubmitting(false);
+      if (photoInputRef.current) photoInputRef.current.value = "";
+      if (biodataInputRef.current) biodataInputRef.current.value = "";
+    }
+  } catch (err) {
+    console.error("Form submission failed:", err);
+    toast.error("Something went wrong. Please try again.");
+    setIsSubmitting(false);
+  }
+};
 
   return (
     <>
@@ -512,7 +512,7 @@ const Form = () => {
               Height <span style={{ color: "red" }}>*</span>
             </label>
             <input
-              placeholder="in cm"
+              placeholder=""
               className={styles.input}
               type="text"
               name="height"

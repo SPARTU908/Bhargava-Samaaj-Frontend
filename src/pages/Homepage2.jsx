@@ -15,13 +15,14 @@ import Footer from "../components/Footer/Footer";
 // Image imports
 import banner from "../assets/banner.jpg";
 import announcement from "../assets/announce.png";
-import activity from "../assets/newad.jpeg";
+import activity from "../assets/event-august.jpeg";
 import president from "../assets/President.jpeg";
 import secretary from "../assets/sanjay.jpg";
 import anil from "../assets/Anil Bhargava.jpeg";
 import sanjay2 from "../assets/Sanjay Bhargava.jpeg";
 import vijay from "../assets/Vijay Bhargava.jpeg";
 import mohit from "../assets/Mohit Bhargava.jpeg";
+
 import ajay from "../assets/Ajay Bhargava.jpeg";
 import vivek from "../assets/Vivek Bhargava.jpeg";
 import ramesh from "../assets/Ramesh Bhargava.jpeg";
@@ -39,18 +40,21 @@ import narayan from "../assets/narayan.jpeg";
 
 // Sample content data
 const festivals = [
- "मंगलवार, 5 अगस्त - एकादशी (पुत्रदा)",
-  "बुधवार, 6 अगस्त - प्रदोष",
-  "शनिवार, 9 अगस्त - पूर्णिमा (व्रत एवं स्नान ),रक्षाबंधन  ",
-  "मंगलवार,12 अगस्त - कजरी तीज ,बहुला चौथ  ",
-  "गुरुवार, 14 अगस्त - हलपष्ठी हलछठ "
+"मंगलवार,12 अगस्त - कजरी तीज ,बहुला चौथ  ",
+"गुरुवार, 14 अगस्त - हलपष्ठी हलछठ ",
+"शनिवार, 16 अगस्त - जन्माष्टमी ",
+"रविवार, 17 अगस्त - रोहिणी व उदयतिथि योग",
+"मंगलवार, 19 अगस्त - एकादशी (जया)",
+
 ];
 
 const officers = [
   { src: anil, name: "श्री अनिल भार्गव", role: "अध्यक्ष" },
   { src: sanjay2, name: "श्री संजय भार्गव", role: "प्रधान सचिव" },
   { src: vijay, name: "श्री विजय भार्गव", role: "कोषाध्यक्ष" },
+  
   { src: mohit, name: "श्री मोहित भार्गव", role: "उपाध्यक्ष" },
+
   { src: ajay, name: "श्री अजय भार्गव", role: "उपाध्यक्ष" },
   { src: vivek, name: "डा.श्री विवेक भार्गव", role: "उपाध्यक्ष" },
   { src: ramesh, name: "श्री रमेश भार्गव", role: "उपाध्यक्ष" },
@@ -149,7 +153,7 @@ const Homepage = () => {
           <Col md={8}>
             <div
               style={{
-                backgroundColor: "#1e1e2f",
+                // backgroundColor: "#1e1e2f",
                 padding: "20px",
                 borderRadius: "12px",
                 boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
@@ -163,7 +167,7 @@ const Homepage = () => {
                 rounded
                 style={{
                   border: "3px solid #ea8d0c",
-                  maxHeight: "400px",
+                  maxHeight: "500px",
                   objectFit: "cover",
                 }}
               />
