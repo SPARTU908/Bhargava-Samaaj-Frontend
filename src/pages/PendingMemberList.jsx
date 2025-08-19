@@ -225,7 +225,7 @@ const PendingMemberList = () => {
                 <th className={styles.title}>Photo</th>
                 <th className={styles.title}>Spouse Photo</th>
                 <th className={styles.title}>Occupation</th>
-                <th className={styles.title}>Uploaded Form</th>
+                <th className={styles.title}>Download Form</th>
                 <th className={styles.title}>Actions</th> 
               </tr>
             </thead>

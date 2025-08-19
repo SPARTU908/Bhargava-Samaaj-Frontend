@@ -76,127 +76,72 @@ const Membership = () => {
     }
   };
 
-  // const validate = () => {
-  //   let newErrors = {};
-
-  //   if (!memberData.username) newErrors.username = "कृपया नाम दर्ज करें।";
-  //   if (!memberData.email) newErrors.email = "कृपया ईमेल दर्ज करें।";
-  //   else if (!/\S+@\S+\.\S+/.test(memberData.email)) {
-  //     newErrors.email = "कृपया मान्य ईमेल दर्ज करें।";
-  //   }
-  //   if (!memberData.address) newErrors.address = "कृपया पता दर्ज करें।";
-  //   if (!memberData.dob) newErrors.dob = "कृपया जन्म तिथि चुनें।";
-  //   if (!memberData.pincode) newErrors.pincode = "कृपया पिनकोड दर्ज करें।";
-  //   if (!photoFile) newErrors.photo = "कृपया फोटो अपलोड करें।";
-  //   if (!signatureFile) newErrors.signature = "कृपया हस्ताक्षर अपलोड करें।";
-  //   if (!memberData.fatherName)
-  //     newErrors.fatherName = "कृपया पिता का नाम दर्ज करें।";
-  //   if (!memberData.gotra) newErrors.gotra = "कृपया गोत्र दर्ज करें।";
-  //   if (!memberData.kuldevi) newErrors.kuldevi = "कृपया कुलदेवी दर्ज करें।";
-  //   if (!memberData.mobile) {
-  //     newErrors.mobile = "कृपया मोबाइल नंबर दर्ज करें।";
-  //   } else if (!/^[6-9]\d{9}$/.test(memberData.mobile)) {
-  //     newErrors.mobile = "कृपया मान्य 10 अंकों का मोबाइल नंबर दर्ज करें।";
-  //   }
-  //   if (!memberData.occupation)
-  //     newErrors.occupation = "कृपया व्यवसाय दर्ज करें।";
-  //   if (!selectedFee)
-  //     newErrors.membership = "कृपया सदस्यता शुल्क का एक विकल्प चुनें।";
-
-  //   if (showSpouseFields) {
-  //     const skipSpouseValidation =
-  //       selectedFee === "साधारण सभासद-द्विवार्षिक सत्र के लिए - 300 रुपये" ||
-  //       selectedFee === "आजीवन सभासद - एकल - 600 रुपये" ||
-  //       selectedFee === "डुप्लिकेट परिचय शुल्क - ₹50 रुपये";
-
-  //     if (!skipSpouseValidation) {
-  //       if (!memberData.spouse)
-  //         newErrors.spouse = "कृपया जीवनसाथी का नाम दर्ज करें।";
-  //       if (!memberData.spouseEmail)
-  //         newErrors.spouseEmail = "कृपया जीवनसाथी का ईमेल दर्ज करें।";
-  //       else if (!/\S+@\S+\.\S+/.test(memberData.spouseEmail)) {
-  //         newErrors.spouseEmail = "कृपया जीवनसाथी का मान्य ईमेल दर्ज करें।";
-  //       }
-  //       if (!memberData.spouseMobile) {
-  //         newErrors.spouseMobile = "कृपया जीवनसाथी का मोबाइल नंबर दर्ज करें।";
-  //       } else if (!/^[6-9]\d{9}$/.test(memberData.spouseMobile)) {
-  //         newErrors.spouseMobile =
-  //           "कृपया जीवनसाथी का मान्य 10 अंकों का मोबाइल नंबर दर्ज करें।";
-  //       }
-  //       if (showSpouseFields) {
-  //         if (!spousePhotoFile)
-  //           newErrors.spousePhoto = "कृपया जीवनसाथी की फोटो अपलोड करें।";
-  //         if (!spouseSignatureFile)
-  //           newErrors.spouseSignature =
-  //             "कृपया जीवनसाथी का हस्ताक्षर अपलोड करें।";
-  //       }
-  //     }
-  //   }
-  //   return newErrors;
-  // };
-
-
   const validate = () => {
-  let newErrors = {};
+    let newErrors = {};
 
-  // Main member validations
-  if (!memberData.username) newErrors.username = "कृपया नाम दर्ज करें।";
-  if (!memberData.email) newErrors.email = "कृपया ईमेल दर्ज करें।";
-  else if (!/\S+@\S+\.\S+/.test(memberData.email)) {
-    newErrors.email = "कृपया मान्य ईमेल दर्ज करें।";
-  }
-
-  if (!memberData.address) newErrors.address = "कृपया पता दर्ज करें।";
-  if (!memberData.dob) newErrors.dob = "कृपया जन्म तिथि चुनें।";
-  if (!memberData.pincode) newErrors.pincode = "कृपया पिनकोड दर्ज करें।";
-
-  if (!photoFile) newErrors.photo = "कृपया फोटो अपलोड करें।";
-  if (!signatureFile) newErrors.signature = "कृपया हस्ताक्षर अपलोड करें।";
-
-  if (!memberData.fatherName) newErrors.fatherName = "कृपया पिता का नाम दर्ज करें।";
-  if (!memberData.gotra) newErrors.gotra = "कृपया गोत्र दर्ज करें।";
-  if (!memberData.kuldevi) newErrors.kuldevi = "कृपया कुलदेवी दर्ज करें।";
-
-  if (!memberData.mobile) {
-    newErrors.mobile = "कृपया मोबाइल नंबर दर्ज करें।";
-  } else if (!/^[6-9]\d{9}$/.test(memberData.mobile)) {
-    newErrors.mobile = "कृपया मान्य 10 अंकों का मोबाइल नंबर दर्ज करें।";
-  }
-
-  if (!memberData.occupation) newErrors.occupation = "कृपया व्यवसाय दर्ज करें।";
-
-  if (!selectedFee) newErrors.membership = "कृपया सदस्यता शुल्क का एक विकल्प चुनें।";
-
-  // Spouse validations only if couple membership is selected
-  if (selectedFee === "आजीवन सभासद - युगल-(पति-पत्नी) - 1000 रुपये") {
-    if (!memberData.spouse) newErrors.spouse = "कृपया जीवनसाथी का नाम दर्ज करें।";
-
-    if (!memberData.spouseEmail) {
-      newErrors.spouseEmail = "कृपया जीवनसाथी का ईमेल दर्ज करें।";
-    } else if (!/\S+@\S+\.\S+/.test(memberData.spouseEmail)) {
-      newErrors.spouseEmail = "कृपया जीवनसाथी का मान्य ईमेल दर्ज करें।";
+    // Main member validations
+    if (!memberData.username) newErrors.username = "कृपया नाम दर्ज करें।";
+    if (!memberData.email) newErrors.email = "कृपया ईमेल दर्ज करें।";
+    else if (!/\S+@\S+\.\S+/.test(memberData.email)) {
+      newErrors.email = "कृपया मान्य ईमेल दर्ज करें।";
     }
 
-    if (!memberData.spouseMobile) {
-      newErrors.spouseMobile = "कृपया जीवनसाथी का मोबाइल नंबर दर्ज करें।";
-    } else if (!/^[6-9]\d{9}$/.test(memberData.spouseMobile)) {
-      newErrors.spouseMobile = "कृपया जीवनसाथी का मान्य 10 अंकों का मोबाइल नंबर दर्ज करें।";
+    if (!memberData.address) newErrors.address = "कृपया पता दर्ज करें।";
+    if (!memberData.dob) newErrors.dob = "कृपया जन्म तिथि चुनें।";
+    if (!memberData.pincode) newErrors.pincode = "कृपया पिनकोड दर्ज करें।";
+
+    if (!photoFile) newErrors.photo = "कृपया फोटो अपलोड करें।";
+    if (!signatureFile) newErrors.signature = "कृपया हस्ताक्षर अपलोड करें।";
+
+    if (!memberData.fatherName)
+      newErrors.fatherName = "कृपया पिता का नाम दर्ज करें।";
+    if (!memberData.gotra) newErrors.gotra = "कृपया गोत्र दर्ज करें।";
+    if (!memberData.kuldevi) newErrors.kuldevi = "कृपया कुलदेवी दर्ज करें।";
+
+    if (!memberData.mobile) {
+      newErrors.mobile = "कृपया मोबाइल नंबर दर्ज करें।";
+    } else if (!/^[6-9]\d{9}$/.test(memberData.mobile)) {
+      newErrors.mobile = "कृपया मान्य 10 अंकों का मोबाइल नंबर दर्ज करें।";
     }
 
-    if (!spousePhotoFile) newErrors.spousePhoto = "कृपया जीवनसाथी की फोटो अपलोड करें।";
-    if (!spouseSignatureFile) newErrors.spouseSignature = "कृपया जीवनसाथी का हस्ताक्षर अपलोड करें।";
-  }
+    if (!memberData.occupation)
+      newErrors.occupation = "कृपया व्यवसाय दर्ज करें।";
 
-  return newErrors;
-};
+    if (!selectedFee)
+      newErrors.membership = "कृपया सदस्यता शुल्क का एक विकल्प चुनें।";
 
+    // Spouse validations only if couple membership is selected
+    if (selectedFee === "आजीवन सभासद - युगल-(पति-पत्नी) - 1000 रुपये") {
+      if (!memberData.spouse)
+        newErrors.spouse = "कृपया जीवनसाथी का नाम दर्ज करें।";
 
+      if (!memberData.spouseEmail) {
+        newErrors.spouseEmail = "कृपया जीवनसाथी का ईमेल दर्ज करें।";
+      } else if (!/\S+@\S+\.\S+/.test(memberData.spouseEmail)) {
+        newErrors.spouseEmail = "कृपया जीवनसाथी का मान्य ईमेल दर्ज करें।";
+      }
+
+      if (!memberData.spouseMobile) {
+        newErrors.spouseMobile = "कृपया जीवनसाथी का मोबाइल नंबर दर्ज करें।";
+      } else if (!/^[6-9]\d{9}$/.test(memberData.spouseMobile)) {
+        newErrors.spouseMobile =
+          "कृपया जीवनसाथी का मान्य 10 अंकों का मोबाइल नंबर दर्ज करें।";
+      }
+
+      if (!spousePhotoFile)
+        newErrors.spousePhoto = "कृपया जीवनसाथी की फोटो अपलोड करें।";
+      if (!spouseSignatureFile)
+        newErrors.spouseSignature = "कृपया जीवनसाथी का हस्ताक्षर अपलोड करें।";
+    }
+
+    return newErrors;
+  };
 
   const handleLogin = () => {
     navigate("/payment1");
   };
 
-  const handleUpload = ()=>{
+  const handleUpload = () => {
     navigate("/sign-form-upload");
   };
 
@@ -204,20 +149,40 @@ const Membership = () => {
     const { name, value } = e.target;
     setMemberData({ ...memberData, [name]: value });
   };
+
+  // const uploadToCloudinary = async (file) => {
+  //   const formData = new FormData();
+  //   formData.append("file", file);
+  //   const res = await axios.post(
+  //     `${import.meta.env.VITE_BACKEND_URL}/upload`,
+  //     formData
+  //   );
+  //   return res.data.url;
+  // };
+
   const uploadToCloudinary = async (file) => {
     const formData = new FormData();
     formData.append("file", file);
-    const res = await axios.post(
-      `${import.meta.env.VITE_BACKEND_URL}/upload`,
-      formData
-    );
-    return res.data.url;
+    formData.append("upload_preset", "<your_upload_preset>");
+
+    try {
+      const res = await axios.post(
+        "https://api.cloudinary.com/v1_1/<your_cloud_name>/image/upload",
+        formData
+      );
+      return res.data.secure_url;
+    } catch (error) {
+      console.error("Cloudinary upload error:", error);
+      throw error;
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const validationErrors = validate();
+    console.log(validationErrors);
+
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       toast.error("कृपया सभी आवश्यक फ़ील्ड भरें।", {
@@ -227,48 +192,116 @@ const Membership = () => {
     }
 
     try {
-      toast.success("Thanks for submitting the form!", {
-        position: "top-center",
-      });
+      // ✅ Upload to Cloudinary (helper function)
+      const uploadToCloudinary = async (file) => {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("upload_preset", "matrimony_upload"); // <-- your Cloudinary preset
 
-      const photoUrl = photoFile ? await uploadToCloudinary(photoFile) : "";
-      const signatureUrl = signatureFile
-        ? await uploadToCloudinary(signatureFile)
-        : "";
-      const spousePhotoUrl = spousePhotoFile
-        ? await uploadToCloudinary(spousePhotoFile)
-        : "";
-      const spouseSignatureUrl = spouseSignatureFile
-        ? await uploadToCloudinary(spouseSignatureFile)
-        : "";
+        const res = await fetch(
+          "https://api.cloudinary.com/v1_1/doj76lpfe/upload",
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
 
-      const submissionData = {
+        if (!res.ok) {
+          throw new Error("Cloudinary upload failed");
+        }
+
+        const data = await res.json();
+        return data.secure_url;
+      };
+
+      // ✅ Upload photo and biodata (if provided)
+      let uploadedPhotoUrl = "";
+      let uploadedSignatureUrl = "";
+      let uploadedSpousePhotoUrl = "";
+      let uploadedSpouseSignatureUrl = "";
+
+      if (photoFile) {
+        uploadedPhotoUrl = await uploadToCloudinary(photoFile);
+      }
+      if (signatureFile) {
+        uploadedSignatureUrl = await uploadToCloudinary(signatureFile);
+      }
+      if (spousePhotoFile) {
+        uploadedSpousePhotoUrl = await uploadToCloudinary(spousePhotoFile);
+      }
+      if (spouseSignatureFile) {
+        uploadedSpouseSignatureUrl = await uploadToCloudinary(
+          spouseSignatureFile
+        );
+      }
+      // ✅ Prepare final form data
+      const finalForm = {
         ...memberData,
-        photo: photoUrl,
-        signature: signatureUrl,
-        spousePhoto: spousePhotoUrl,
-        spouseSignature: spouseSignatureUrl,
-        uploadReferenceSignature: referencesignatureurl,
+        photo: uploadedPhotoUrl,
+        signature: uploadedSignatureUrl,
+        spousePhoto: uploadedSpousePhotoUrl,
+        spouseSignature: uploadedSpouseSignatureUrl,
         membership: selectedFee,
       };
 
-      const result = await registerMember(submissionData);
+      // ✅ Submit the form to backend
+      const result = await registerMember(finalForm);
+      console.log("API Response from registerMember:", result);
 
       if (result.success) {
-        toast.success("Form submitted successfully!", {
+        toast.success("Thanks for submitting your details!.", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+
+        // ✅ Reset the form
+        setMemberData({
+          username: "",
+          email: "",
+          address: "",
+          mobile: "",
+          spouse: "",
+          dob: "",
+          pincode: "",
+          photo: "",
+          signature: "",
+          fatherName: "",
+          gotra: "",
+          kuldevi: "",
+          occupation: "",
+          spouseMobile: "",
+          spouseEmail: "",
+          spousePhoto: "",
+          spouseSignature: "",
+          membership: "",
+        });
+        setSelectedFee("");
+        setPhotoFile(null);
+        setSignatureFile(null);
+        setSpousePhotoFile(null);
+        setSpouseSignatureFile(null);
+        // if (photoInputRef.current) photoInputRef.current.value = "";
+        // if (biodataInputRef.current) biodataInputRef.current.value = "";
+
+        setTimeout(() => {
+          navigate("/payment1");
+        }, 3000);
+      } else {
+        toast.error(result.error || "Something went wrong. Please try again.", {
           position: "top-center",
         });
-        navigate("/displayform", {
-          state: {
-            membership: selectedFee,
-            name: memberData.username,
-            email: memberData.email,
-          },
-        });
       }
-    } catch (error) {
-      toast.error("File upload or form submission failed.");
-      console.error("Submission error:", error);
+    } catch (err) {
+      console.error("Form submission failed:", err);
+      toast.error("Something went wrong. Please try again.", {
+        position: "top-center",
+      });
     }
   };
 
@@ -324,67 +357,59 @@ const Membership = () => {
 
             <div className={styles.rowsMember}>
               <div>
-
-            
-              <label>
-                <input
-                  type="radio"
-                  name="membership"
-                  value="आजीवन सभासद - एकल - 600 रुपये"
-                  checked={selectedFee === "आजीवन सभासद - एकल - 600 रुपये"}
-                  onChange={handleSelection}
-                />
-             </label>
-                </div>
-                <div className={styles.sabhasadh}>आजीवन सभासद-</div>
-                <div className={styles.ekal}>एकल</div>
-                <div className={styles.rupees}>600 रुपये</div>
-            </div>
-
-
-
-
-            <div className={styles.rowsMember}>
-              <div>
-
-             
-              <label>
-                <input
-                  type="radio"
-                  name="membership"
-                  value="आजीवन सभासद - युगल-(पति-पत्नी) - 1000 रुपये"
-                  checked={
-                    selectedFee ===
-                    "आजीवन सभासद - युगल-(पति-पत्नी) - 1000 रुपये"
-                  }
-                  onChange={handleSelection}
-                />
+                <label>
+                  <input
+                    type="radio"
+                    name="membership"
+                    value="आजीवन सभासद - एकल - 600 रुपये"
+                    checked={selectedFee === "आजीवन सभासद - एकल - 600 रुपये"}
+                    onChange={handleSelection}
+                  />
                 </label>
-               </div>
-               <div className={styles.sabhasadh}>आजीवन सभासद-</div>
-                <div className={styles.couple}>युगल-(पति-पत्नी)</div>
-                <div className={styles.rupee}>1,000 रुपये</div>
+              </div>
+              <div className={styles.sabhasadh}>आजीवन सभासद-</div>
+              <div className={styles.ekal}>एकल</div>
+              <div className={styles.rupees}>600 रुपये</div>
             </div>
 
             <div className={styles.rowsMember}>
               <div>
+                <label>
+                  <input
+                    type="radio"
+                    name="membership"
+                    value="आजीवन सभासद - युगल-(पति-पत्नी) - 1000 रुपये"
+                    checked={
+                      selectedFee ===
+                      "आजीवन सभासद - युगल-(पति-पत्नी) - 1000 रुपये"
+                    }
+                    onChange={handleSelection}
+                  />
+                </label>
+              </div>
+              <div className={styles.sabhasadh}>आजीवन सभासद-</div>
+              <div className={styles.couple}>युगल-(पति-पत्नी)</div>
+              <div className={styles.rupee}>1,000 रुपये</div>
+            </div>
 
-             
-              <label>
-                <input
-                  type="radio"
-                  name="membership"
-                  value="डुप्लिकेट परिचय शुल्क - ₹50 रुपये"
-                  checked={selectedFee === "डुप्लिकेट परिचय शुल्क - ₹50 रुपये"}
-                  onChange={handleSelection}
-                />
-                
-              </label>
-               </div>
-               <div className={styles.dual}>
-                  डुप्लिकेट परिचय हेतु शुल्क (प्रति सदस्य)
-                </div>
-                <div className={styles.duplicate}>50 रुपये</div>
+            <div className={styles.rowsMember}>
+              <div>
+                <label>
+                  <input
+                    type="radio"
+                    name="membership"
+                    value="डुप्लिकेट परिचय शुल्क - ₹50 रुपये"
+                    checked={
+                      selectedFee === "डुप्लिकेट परिचय शुल्क - ₹50 रुपये"
+                    }
+                    onChange={handleSelection}
+                  />
+                </label>
+              </div>
+              <div className={styles.dual}>
+                डुप्लिकेट परिचय हेतु शुल्क (प्रति सदस्य)
+              </div>
+              <div className={styles.duplicate}>50 रुपये</div>
             </div>
           </div>
           <div className={styles.result}>
