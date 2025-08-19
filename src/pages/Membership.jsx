@@ -288,9 +288,17 @@ const Membership = () => {
         setSpouseSignatureFile(null);
         // if (photoInputRef.current) photoInputRef.current.value = "";
         // if (biodataInputRef.current) biodataInputRef.current.value = "";
-
+console.log(result.data);
         setTimeout(() => {
-          navigate("/payment1");
+          navigate("/payment1", {
+            state: {
+              membership: selectedFee,
+              memberId: result.data?.memberId, // assuming backend returns memberId
+              email: memberData.email,
+              name: memberData.username,
+              mobile: memberData.mobile,
+            },
+          });
         }, 3000);
       } else {
         toast.error(result.error || "Something went wrong. Please try again.", {
