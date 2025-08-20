@@ -137,13 +137,7 @@ const Membership = () => {
     return newErrors;
   };
 
-  const handleLogin = () => {
-    navigate("/payment1");
-  };
 
-  const handleUpload = () => {
-    navigate("/sign-form-upload");
-  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -325,14 +319,7 @@ console.log(result.data);
           सम्भवत: 18 वर्ष या उससे अधिक आयु के सभी महिला/पुरुष नियमुसार बन सकते
           हैं
         </div>
-        <div className={styles.mobilebtn}>
-          <button className={styles.upload} onClick={handleLogin}>
-            Click To Pay{" "}
-          </button>
-          <button className={styles.upload} onClick={handleUpload}>
-            Upload the Sign Form{" "}
-          </button>
-        </div>
+        
       </div>
 
       <div>
