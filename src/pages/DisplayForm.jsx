@@ -1,77 +1,39 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import html2canvas from "html2canvas";
-import Navbar from "../components/Navbar/Navbar";
+import React from "react";
 import styles from "./DisplayForm.module.css";
-import { getAllMembers } from "../apis/member";
 
-const DisplayForm = () => {
-  const [member, setMember] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const formRef = useRef();
-  const location = useLocation();
-  const navigate = useNavigate();
+const DisplayForm = ({ member }) => {
+  const resizeImage = (src, maxWidth = 600, maxHeight = 800) => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        let width = img.width;
+        let height = img.height;
 
-  const { membership, name, email ,memberId,} = location.state || {};
-  const userEmail = email;
+        if (width > maxWidth || height > maxHeight) {
+          const ratio = Math.min(maxWidth / width, maxHeight / height);
+          width *= ratio;
+          height *= ratio;
+        }
 
-useEffect(() => {
-  const fetchData = async () => {
-    try {
-      const allMembers = await getAllMembers();
-      const matchedMember = allMembers.find(
-        (m) => m.email?.toLowerCase().trim() === userEmail?.toLowerCase().trim()
-      );
-
-      if (matchedMember) {
-        setMember(matchedMember);
-        localStorage.setItem("memberId", matchedMember._id); // ✅ save fallback
-      }
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-    if (userEmail) {
-      fetchData();
-    }
-  }, [userEmail]);
-
-  const handleNext = () => {
-    navigate("/payment", {
-      state: {
-        membership,
-        name,
-        email,
-       memberId: member._id,
-      },
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, width, height);
+        resolve(canvas.toDataURL("image/jpeg", 0.7)); // 0.7 = quality
+      };
+      img.src = src;
     });
   };
-
-  const downloadAsImage = async (element) => {
-    const canvas = await html2canvas(element, {
-      useCORS: true,
-    });
-
-    const image = canvas.toDataURL("image/png");
-    const link = document.createElement("a");
-    link.href = image;
-    link.download = "membership-form.png";
-    link.click();
-  };
-
-  if (loading) return <div>Loading form...</div>;
-  if (!member) return <div>Member data not found.</div>;
 
   return (
-    <>
-      <Navbar />
-      <div ref={formRef}>
+    <div className={styles.printContainer} id="print-area">
+      <div className={styles.pdfPage}>
         <div className={styles.header}>
           <div className={styles.headerLeft}>
-            अखिल भारतीय भार्गव सभा (रजि.) के सभासद बनने <br /> एवं लिमिटेड परिचय-पत्र प्राप्त करने हेतु <br /> आवेदन-पत्र का प्रारूप
+            अखिल भारतीय भार्गव सभा (रजि.) के सभासद बनने <br /> एवं लिमिटेड
+            परिचय-पत्र प्राप्त करने हेतु <br /> आवेदन-पत्र का प्रारूप
           </div>
           <div className={styles.headerRight}>
             <div>R/No. _____ dt. _____ /____/___ Rs.____</div>
@@ -80,7 +42,8 @@ useEffect(() => {
         </div>
 
         <div className={styles.age}>
-          सम्भवत: 18 वर्ष या उससे अधिक आयु के सभी महिला/पुरुष नियमुसार बन सकते हैं |
+          सम्भवत: 18 वर्ष या उससे अधिक आयु के सभी महिला/पुरुष नियमुसार बन सकते
+          हैं |
         </div>
 
         <div className={styles.imagesection}>
@@ -89,62 +52,85 @@ useEffect(() => {
               प्रधान सचिव , अखिल भारतीय भार्गव सभा{" "}
             </span>{" "}
             <br /> 401, 3rd Floor,{" "}
-            <span className={styles.road}>एम्पायर एस्टेट, मेहरौली–गुड़गांव रोड,</span>{" "}
+            <span className={styles.road}>
+              एम्पायर एस्टेट, मेहरौली–गुड़गांव रोड,
+            </span>{" "}
             <br />
             <span className={styles.road}>सुल्तानपुर, नई दिल्ली – </span>
             110030
           </div>
 
-          <div className={styles.pictures}>
-            {member.photo && (
-              <img
-                src={member.photo}
-                alt=""
-                style={{
-                  width: "150px",
-                  height: "200px",
-                  border: "2px solid black",
-                }}
-              />
-            )}
-            {member.spousePhoto && (
-              <img
-                src={member.spousePhoto}
-                alt=""
-                style={{
-                  width: "150px",
-                  height: "200px",
-                  marginLeft: "20px",
-                  border: "2px solid black",
-                }}
-              />
-            )}
+          <div className={styles.row}>
+
+            <div className={styles.fees}>
+              <div className={styles.feeheading}>सदस्यता शुल्क:</div>
+              <div className={styles.line1}>
+                1.साधारण सभासद (द्विवार्षिक सत्र के लिए) - 300 रुपये
+              </div>
+              <div className={styles.line2}>
+                2. आजीवन सभासद (एकल) - 600 रुपये
+              </div>
+              <div className={styles.line3}>युगल (पति-पत्नी) - 1,000 रुपये</div>
+
+              <div className={styles.line4}>
+                डुप्लिकेट परिचय शुल्क - 50 रुपये
+              </div>
+            </div>
+            <div className={styles.pictures}>
+              {member.photo && (
+                <img
+                  src={member.photo}
+                  alt=""
+                  style={{
+                    width: "150px",
+                    height: "200px",
+                    border: "2px solid black",
+                  }}
+                />
+              )}
+              {member.spousePhoto && (
+                <img
+                  src={member.spousePhoto}
+                  alt=""
+                  style={{
+                    width: "150px",
+                    height: "200px",
+                    marginLeft: "20px",
+                    border: "2px solid black",
+                  }}
+                />
+              )}
+            </div>
+
+            
           </div>
         </div>
 
-        <div className={styles.fees}>
-          <div className={styles.feeheading}>सदस्यता शुल्क:</div>
-          <div className={styles.line1}>1.साधारण सभासद (द्विवार्षिक सत्र के लिए) - 300 रुपये</div>
-          <div className={styles.line2}>2. आजीवन सभासद (एकल) - 600 रुपये</div>
-          <div className={styles.line3}>युगल (पति-पत्नी) - 1,000 रुपये</div>
-        
-          <div className={styles.line4}>डुप्लिकेट परिचय शुल्क - 50 रुपये</div>
-        </div>
-
         <div className={styles.bank}>
-          <span className={styles.bankname}>शुल्क जमा करने हेतु बैंक खाता:</span>
-          A/c Name: <span className={styles.bankname}>AKHIL BHARTIYA BHARGAVA SABHA</span>
-          &nbsp; SB A/c no: <span className={styles.bankname}>90442010053572</span> <br />
-          Bank: <span className={styles.bankname}>CANARA BANK, Nehru Place, New Delhi</span> &nbsp;
-          IFSC: <span className={styles.bankname}>CNRB0000390</span> &nbsp; MICR: <span className={styles.bankname}>110015016</span>
+          <span className={styles.bankname}>
+            शुल्क जमा करने हेतु बैंक खाता:
+          </span>
+          A/c Name:{" "}
+          <span className={styles.bankname}>AKHIL BHARTIYA BHARGAVA SABHA</span>
+          &nbsp; SB A/c no:{" "}
+          <span className={styles.bankname}>90442010053572</span> <br />
+          Bank:{" "}
+          <span className={styles.bankname}>
+            CANARA BANK, Nehru Place, New Delhi
+          </span>{" "}
+          &nbsp; IFSC: <span className={styles.bankname}>CNRB0000390</span>{" "}
+          &nbsp; MICR: <span className={styles.bankname}>110015016</span>
         </div>
 
         <div className={styles.note}>
-          नोट: सदस्यता प्राप्त करने हेतु निर्धारित शुल्क के साथ, प्रपत्र पत्र पूर्ण रूप से भरा हुआ, हस्ताक्षरित एवं आवश्यक सत्यापन तथा फोटोग्राफ सहित सभा कार्यालय में पहुंचाना अनिवार्य है।
+          नोट: सदस्यता प्राप्त करने हेतु निर्धारित शुल्क के साथ, प्रपत्र पत्र
+          पूर्ण रूप से भरा हुआ, हस्ताक्षरित एवं आवश्यक सत्यापन तथा फोटोग्राफ
+          सहित सभा कार्यालय में पहुंचाना अनिवार्य है।
         </div>
 
         <div className={styles.oneline}>
-          कृपया मुझे / हमें साधारण / आजीवन सदस्यता प्रदान कर लेमिनेटेड परिचय-पत्र उपलब्ध कराने का कष्ट करें।
+          कृपया मुझे / हमें साधारण / आजीवन सदस्यता प्रदान कर लेमिनेटेड
+          परिचय-पत्र उपलब्ध कराने का कष्ट करें।
         </div>
 
         <div className="table-container">
@@ -161,9 +147,7 @@ useEffect(() => {
               <tr>
                 <td>1. {member.username}</td>
                 <td>{member.fatherName}</td>
-                <td>
-                  {new Date(member.dob).toLocaleDateString("en-GB")}
-                </td>
+                <td>{new Date(member.dob).toLocaleDateString("en-GB")}</td>
                 <td>{member.occupation}</td>
               </tr>
               <tr>
@@ -189,20 +173,18 @@ useEffect(() => {
         </div>
 
         <div className={styles.gotra}>
-          कुमारी/श्री/श्रीमती {member.username} का गोत्र {member.gotra} कुलदेवी {member.kuldevi}
+          कुमारी/श्री/श्रीमती {member.username} का गोत्र {member.gotra} कुलदेवी{" "}
+          {member.kuldevi}
         </div>
 
         <div className={styles.cash}>संलग्न :</div>
         <div className={styles.cashcol}>
+          <div>1. सत्यापन किया गया आवेदन पत्र</div>
           <div>
-            1. सत्यापन किया गया आवेदन पत्र
+            2. सदस्यता शुल्क राशि ₹__________ की रसीद या चेक संख्या __________
+            दिनांक __________
           </div>
-          <div>
-            2. सदस्यता शुल्क राशि ₹__________ की रसीद या चेक संख्या __________ दिनांक __________
-          </div>
-          <div>
-            3. प्रत्येक सदस्य की फोटो संलग्न की गई है
-          </div>
+          <div>3. प्रत्येक सदस्य की फोटो संलग्न की गई है</div>
         </div>
 
         <div className={styles.datesign}>
@@ -237,11 +219,13 @@ useEffect(() => {
         </div>
 
         <div className={styles.sign}>
-          सत्यपनकर्ता (1) नाम ______________________ &nbsp; सत्यपनकर्ता (2) नाम ______________________
+          सत्यपनकर्ता (1) नाम ______________________ &nbsp; सत्यपनकर्ता (2) नाम
+          ______________________
         </div>
 
         <div className={styles.reference}>
-          सदस्य संख्या (1) _________________ &nbsp; सदस्य संख्या (2) _________________
+          सदस्य संख्या (1) _________________ &nbsp; सदस्य संख्या (2)
+          _________________
         </div>
 
         <div className={styles.referencemobile}>
@@ -255,22 +239,11 @@ useEffect(() => {
         </div>
 
         <div className={styles.conclusion}>
-          (स्थानीय भार्गव सभा के अध्यक्ष / सचिव अथवा अखिल भारतीय सभा के दो कार्यकारी सदस्यों के हस्ताक्षर)
+          (स्थानीय भार्गव सभा के अध्यक्ष / सचिव अथवा अखिल भारतीय सभा के दो
+          कार्यकारी सदस्यों के हस्ताक्षर)
         </div>
       </div>
-
-      <div className={styles.buttons}>
-        <button
-          className={styles.submit}
-          onClick={() => downloadAsImage(formRef.current)}
-        >
-          Download the form
-        </button>
-        <button className={styles.submit} onClick={handleNext}>
-          Next
-        </button>
-      </div>
-    </>
+    </div>
   );
 };
 

@@ -52,3 +52,22 @@
     color: white;
     width: 100px;
 }
+
+.membershipText {
+  font-family: 'Arial', sans-serif; /* or any consistent font */
+  letter-spacing: normal;
+  font-weight: 500; /* optional for clarity */
+  font-size: 16px;  /* adjust as needed */
+}
+
+.printContainer {
+  width: 794px; /* ~210mm at 96dpi */
+  margin: 0 auto;
+  padding: 20px;
+  background: white;
+  color: black;
+  font-family: 'Noto Sans Devanagari', sans-serif;
+  box-sizing: border-box;
+}
+
+

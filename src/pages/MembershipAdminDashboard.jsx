@@ -79,22 +79,23 @@ const MembershipAdminDashboard = () => {
           </div>
           <div className={styles.options}>
             <div>
+                <div
+                className={`${styles.optionButton} ${
+                  selectedSection === "pending" ? styles.activeButton : ""
+                }`}
+                onClick={() => setSelectedSection("pending")}
+              >
+              
+              </div>
               <div
                 className={`${styles.optionButton} ${
                   selectedSection === "membership" ? styles.activeButton : ""
                 }`}
                 onClick={() => setSelectedSection("membership")}
               >
-               Approved Membership 
+               All Membership Form 
               </div>
-              <div
-                className={`${styles.optionButton} ${
-                  selectedSection === "pending" ? styles.activeButton : ""
-                }`}
-                onClick={() => setSelectedSection("pending")}
-              >
-                Pending Membership
-              </div>
+              
             </div>
           </div>
           <div className={styles.logoutWrapper}>

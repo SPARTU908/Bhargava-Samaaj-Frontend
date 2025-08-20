@@ -102,9 +102,19 @@ const Form = () => {
       newErrors.email = "Email is invalid";
     }
 
-    if (formData.mobile && !/^[6-9]\d{9}$/.test(formData.mobile)) {
-    newErrors.mobile = "Please enter a valid 10-digit Indian mobile number";
-  }
+  //   if (formData.mobile && !/^[6-9]\d{9}$/.test(formData.mobile)) {
+  //   newErrors.mobile = "Please enter a valid 10-digit Indian mobile number";
+  // }
+
+  if (
+  formData.mobile &&
+  !/^((\+91)?[6-9]\d{9}|(\+1)?\d{10})$/.test(formData.mobile)
+)
+ {
+  newErrors.mobile = "Please enter a valid 10-digit Indian or US Mobile Number";
+}
+
+
    if (formData.whatsapp && !/^[6-9]\d{9}$/.test(formData.whatsapp)) {
     newErrors.whatsapp = "Please enter a valid 10-digit Indian mobile number";
   }
@@ -117,138 +127,8 @@ const Form = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   if (isSubmitting) return; 
-
-  //   setIsSubmitting(true);
-
-  //   const validationErrors = validate();
-  //   if (!photoFile) {
-  //     validationErrors.photo = "Photo is required";
-  //   }
-  //   if (!biodataFile) {
-  //     validationErrors.bioData = "Biodata is required";
-  //   }
-
-  //   if (Object.keys(validationErrors).length > 0) {
-  //     setErrors(validationErrors);
-  //     setIsSubmitting(false); 
-  //     return;
-  //   }
-
-  //   setErrors({});
-
-  //   try {
-    
-  //     let uploadedPhotoUrl = "";
-  //     if (photoFile) {
-  //       const photoData = new FormData();
-  //       photoData.append("file", photoFile);
-
-  //       const photoUploadRes = await axios.post(
-  //         `${import.meta.env.VITE_BACKEND_URL}/upload`,
-  //         photoData
-  //       );
-
-  //       uploadedPhotoUrl = photoUploadRes.data.url;
-  //     }
-
-   
-  //     let uploadedBiodataUrl = "";
-  //     if (biodataFile) {
-  //       const biodataData = new FormData();
-  //       biodataData.append("file", biodataFile);
-
-  //       const biodataUploadRes = await axios.post(
-  //         `${import.meta.env.VITE_BACKEND_URL}/upload`,
-  //         biodataData
-  //       );
-
-  //       uploadedBiodataUrl = biodataUploadRes.data.url;
-  //     }
-
-     
-  //     const finalForm = {
-  //       ...formData,
-  //       photo: uploadedPhotoUrl,
-  //       bioData: uploadedBiodataUrl,
-  //     };
-
-  //     const result = await registerUser(finalForm);
-
-  //     if (result.status === 201) {
-  //       toast.success(
-  //         "Thanks for submitting your details! Your details will go live in 24 to 36 hours.",
-  //         {
-  //           position: "top-center",
-  //           autoClose: 3000,
-  //           hideProgressBar: false,
-  //           closeOnClick: true,
-  //           pauseOnHover: false,
-  //           draggable: true,
-  //           progress: undefined,
-  //           theme: "light",
-  //         }
-  //       );
-
-  //       setFormData({
-  //         number: "",
-  //         name: "",
-  //         email: "",
-  //         mobile: "",
-  //         gender: "",
-  //         birthTime: "",
-  //         birthPlace: "",
-  //         height: "",
-  //         weight: "",
-  //         dob: "",
-  //         bloodGroup: "",
-  //         manglik: "",
-  //         gotra: "",
-  //         kuldevi: "",
-  //         complexion: "",
-  //         education: "",
-  //         professionQualification: "",
-  //         profession: "",
-  //         company: "",
-  //         designation: "",
-  //         income: "",
-  //         hobbies: "",
-  //         otherQualification: "",
-  //         guardianName: "",
-  //         fatherName: "",
-  //         fatherProfession: "",
-  //         fatherIncome: "",
-  //         fatherDesignation: "",
-  //         motherName: "",
-  //         nativePlace: "",
-  //         address: "",
-  //         city: "",
-  //         pin: "",
-  //         whatsapp: "",
-  //         nri: "",
-  //         remarks: "",
-  //         password: "",
-  //         photo: "",
-  //         bioData: "",
-  //       });
-  //       setPhotoFile(null);
-  //       setBiodataFile(null);
-  //         setIsSubmitting(false);
-  //       if (photoInputRef.current) photoInputRef.current.value = "";
-  //       if (biodataInputRef.current) biodataInputRef.current.value = "";
-  //     }
-  //   } catch (err) {
-  //     console.error("Form submission failed:", err);
-  //     toast.error("Something went wrong. Please try again.");
-  //     setIsSubmitting(false); 
-  //   }
-  // };
-
-
-  const handleSubmit = async (e) => {
+ 
+const handleSubmit = async (e) => {
   e.preventDefault();
 
   if (isSubmitting) return;

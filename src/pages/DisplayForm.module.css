@@ -1,4 +1,4 @@
-.header {
+/* .header {
   display: flex;
   margin: 50px 0px 0px 100px;
 }
@@ -262,4 +262,205 @@
 
 .submitBtn:hover {
   background-color: #0660c6;
+}
+
+
+.pdfPage {
+  width: 794px;        
+  min-height: 1123px;  
+  padding: 20px;
+  box-sizing: border-box;
+  background: white;
+  font-size: 14px;
+  color: black;
+  font-family: 'Noto Sans Devanagari', sans-serif;
+}
+ */
+
+
+
+.pdfPage {
+  width: 794px; /* A4 width */
+  padding: 40px;
+  margin: 0 auto;
+  background: white;
+  box-sizing: border-box;
+  font-size: 14px;
+  color: black;
+  font-family: 'Noto Sans Devanagari', sans-serif;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.headerLeft {
+  font-weight: bold;
+  text-align: center;
+  flex: 1;
+}
+
+.headerRight {
+  border: 2px solid black;
+  padding: 10px 20px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.age {
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 25px;
+  margin: 10px auto;
+  text-align: center;
+  width: fit-content;
+}
+
+.address {
+  margin: 10px auto;
+  line-height: 24px;
+  text-align: center;
+  max-width: 600px;
+}
+
+.fees {
+  border: 2px solid black;
+  border-radius: 14px;
+  margin: 10px auto;
+  width: 100%;
+  max-width: 300px;
+  padding: 10px;
+  box-sizing: border-box;
+  margin-left: 50px;
+}
+
+.feeheading {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.line1,
+.line2,
+.line3,
+.line4 {
+  font-size: 15px;
+  margin-top: 8px;
+}
+
+.line4 {
+  font-weight: bold;
+}
+
+.bank {
+  margin: 10px auto;
+  font-size: 14px;
+  text-align: center;
+  max-width: 600px;
+}
+
+.note {
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px auto;
+  width: 100%;
+  max-width: 700px;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 25px;
+  box-sizing: border-box;
+}
+
+.table-container {
+  padding: 20px 0;
+  max-width: 700px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.customTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 auto;
+}
+
+.customTable td {
+  border: 1px solid #333;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.useraddress,
+.mobile,
+.mobile2,
+.gotra,
+.cash,
+.date,
+.signature,
+.shri,
+.sign,
+.reference,
+.referencemobile,
+.referenceemail,
+.conclusion,
+.couplesign {
+  margin: 10px auto;
+  width: 100%;
+  max-width: 600px;
+  box-sizing: border-box;
+}
+
+.cashcol {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  font-size: 17px;
+  line-height: 30px;
+  text-align: left;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.datesign {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-width: 600px;
+  margin: 10px auto;
+  box-sizing: border-box;
+}
+
+.imagesection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.pictures {
+  margin-left: 10px;
+}
+
+.row{
+  display: flex;
+}
+
+
+@media print {
+  .pdfPage {
+    page-break-after: always; /* each .pdfPage starts on a new page */
+  }
+
+  .no-break {
+    page-break-inside: avoid; /* keep elements (tables, boxes) together */
+  }
 }

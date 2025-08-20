@@ -180,3 +180,80 @@ export const updateMemberStatus = async (memberId, data) => {
   }
 };
 
+
+// ✅ Update Dispatch Status of a Member
+export const updateMemberDispatch = async (memberId, data) => {
+  console.log("Updating member dispatch with:", memberId, data);
+
+  const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/member/members/${memberId}/dispatch`;
+
+  try {
+    const response = await axios.patch(reqUrl, data, {
+      headers: {
+        "Content-Type": "application/json",
+        // If backend requires login token, uncomment below:
+        // Authorization: `Bearer ${localStorage.getItem("memberToken")}`,
+      },
+    });
+
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error("Failed to update member dispatch");
+    }
+  } catch (error) {
+    console.error("Error updating member dispatch:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
+// ✅ Get Dispatch Status of a Member
+export const getMemberDispatchStatus = async (memberId) => {
+  const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/member/${memberId}/dispatch`;
+
+  try {
+    const response = await axios.get(reqUrl, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("memberToken")}`,
+      },
+    });
+
+    if (response.status === 200 && response.data.success) {
+      return {
+        success: true,
+        isDispatched: response.data.data.isDispatched,
+        dispatchedAt: response.data.data.dispatchedAt,
+      };
+    } else {
+      return {
+        success: false,
+        error: response.data.message || "Unable to fetch dispatch status.",
+      };
+    }
+  } catch (error) {
+    console.error("Dispatch status error:", error.response?.data || error.message);
+    return {
+      success: false,
+      error: error.response?.data?.message || "Something went wrong",
+    };
+  }
+};
+
+export const updateDispatchStatus = async (id) => {
+  try {
+    const res = await axios.put(
+      `${import.meta.env.VITE_BACKEND_URL}/api/v1/member/dispatch/${id}`,
+      {}, // backend sets isDispatched & dispatchedAt
+      {
+        withCredentials: true,
+      }
+    );
+    return res.data;
+  } catch (error) {
+    console.error(
+      "Error updating dispatch status:",
+      error.response?.data || error.message
+    );
+    throw error;
+  }
+};
