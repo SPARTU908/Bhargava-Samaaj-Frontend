@@ -254,35 +254,33 @@ const MemberInfo = ({ member }) => {
                     )}
                   </>
                 )} */}
-
-                
               </div>
             </>
           )}
         </div>
         {member.bioData &&
-                  (() => {
-                    const isPdf = member.bioData.endsWith(".pdf");
-                    const fixedUrl = isPdf
-                      ? member.bioData.replace("/image/upload/", "/raw/upload/")
-                      : member.bioData;
+          (() => {
+            const isPdf = member.bioData.endsWith(".pdf");
+            const fixedUrl = isPdf
+              ? member.bioData.replace("/image/upload/", "/raw/upload/")
+              : member.bioData;
 
-                    return (
-                      <>
-                        <div>
-                          <a href={fixedUrl} target="_blank" rel="noreferrer">
-                            Download Biodata
-                          </a>
-                          {" | "}
-                          {isPdf && (
-                            <a href={fixedUrl} target="_blank" rel="noreferrer">
-                              View
-                            </a>
-                          )}
-                        </div>
-                      </>
-                    );
-                  })()}
+            return (
+              <>
+                <div>
+                  <a href={fixedUrl} target="_blank" rel="noreferrer">
+                    Download Biodata
+                  </a>
+                  {" | "}
+                  {isPdf && (
+                    <a href={fixedUrl} target="_blank" rel="noreferrer">
+                      View
+                    </a>
+                  )}
+                </div>
+              </>
+            );
+          })()}
       </div>
     </>
   );

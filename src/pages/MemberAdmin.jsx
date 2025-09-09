@@ -17,6 +17,10 @@ const MemberAdmin = () => {
   const [payment, setPayment] = useState([]);
   const [statusMap, setStatusMap] = useState({});
   const [filterStatus, setFilterStatus] = useState("All");
+  const [deletedMemberIds, setDeletedMemberIds] = useState(() => {
+    const stored = localStorage.getItem("deletedMemberIds");
+    return stored ? JSON.parse(stored) : [];
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,12 +29,7 @@ const MemberAdmin = () => {
           getAllMembers(),
           getAllPayment(),
         ]);
-
-        console.log("Fetched members:", membersResult);
-        console.log("Fetched payments:", paymentsResult);
-
-        // Set raw data
-        setMembers(membersResult);
+      setMembers(membersResult);
         setPayment(paymentsResult);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -118,25 +117,10 @@ const MemberAdmin = () => {
     );
   };
 
-  //   const handleStatusChange = async (memberId) => {
-  //   try {
-  //     await updateDispatchStatus(memberId);
-  //     setStatusMap((prev) => ({
-  //       ...prev,
-  //       [memberId]: "Dispatched",
-  //     }));
-  //     alert("Status updated to Dispatched");
-  //   } catch (error) {
-  //     console.error("Error updating dispatch status:", error);
-  //     alert("Failed to update dispatch status.");
-  //   }
-  // };
-
   const handleStatusChange = async (memberId) => {
     try {
       await updateDispatchStatus(memberId);
 
-      // Update both local statusMap and members array
       setStatusMap((prev) => ({
         ...prev,
         [memberId]: "Dispatched",
@@ -153,11 +137,27 @@ const MemberAdmin = () => {
     }
   };
 
-  const filteredMembers = members.filter((member) => {
-    const status =
-      statusMap[member._id] || (member.isDispatched ? "Dispatched" : "Not Set");
-    return filterStatus === "All" || status === filterStatus;
-  });
+  
+
+  const handleResetDeleted = () => {
+    localStorage.removeItem("deletedMemberIds");
+    setDeletedMemberIds([]);
+  };
+
+  // const filteredMembers = members.filter((member) => {
+  //   const status =
+  //     statusMap[member._id] || (member.isDispatched ? "Dispatched" : "Not Set");
+  //   return filterStatus === "All" || status === filterStatus;
+  // });
+
+  const filteredMembers = members
+    .filter((member) => !deletedMemberIds.includes(member._id)) // <-- Exclude deleted
+    .filter((member) => {
+      const status =
+        statusMap[member._id] ||
+        (member.isDispatched ? "Dispatched" : "Not Set");
+      return filterStatus === "All" || status === filterStatus;
+    });
 
   return (
     <>
@@ -166,7 +166,7 @@ const MemberAdmin = () => {
         <div className={styles.header}>
           <div className={styles.heading}>List of all members</div>
         </div>
-        <div className={styles.filterWrapper}>
+        {/* <div className={styles.filterWrapper}>
           <label htmlFor="statusFilter">Filter by Status: </label>
           <select
             id="statusFilter"
@@ -178,156 +178,195 @@ const MemberAdmin = () => {
             <option value="Dispatched">Dispatched</option>
             <option value="Pending">Pending</option>
           </select>
+
+          <button className="btn btn-secondary" onClick={handleResetDeleted}>
+            Reset Deleted Members
+          </button>
+        </div> */}
+
+        <div className="d-flex justify-content-between align-items-center mb-3">
+          <div className={styles.filterWrapper}>
+            <label htmlFor="statusFilter">Filter by Status: </label>
+            <select
+              id="statusFilter"
+              value={filterStatus}
+              onChange={(e) => setFilterStatus(e.target.value)}
+            >
+              <option value="All">All</option>
+              <option value="Not Set">Not Set</option>
+              <option value="Dispatched">Dispatched</option>
+              <option value="Pending">Pending</option>
+            </select>
+          </div>
+
+          <button className="btn btn-secondary" onClick={handleResetDeleted}>
+            Reset All Deleted Members
+          </button>
         </div>
 
         {loading ? (
           <p>Loading members...</p>
         ) : (
-          <Table className={styles.table} responsive>
-            <thead>
-              <tr>
-                <th className={styles.title}>Name</th>
-                <th className={styles.title}>Spouse Name</th>
-                <th className={styles.title}>Email</th>
-                <th className={styles.title}>Spouse Email</th>
-                <th className={styles.title}>Mobile</th>
-                <th className={styles.title}>Spouse Mobile</th>
-                <th className={styles.title}>DOB</th>
-                <th className={styles.title}>Address</th>
-                <th className={styles.title}>Membership</th>
-                <th className={styles.title}>Father Name</th>
-                <th className={styles.title}>Pin Code</th>
-                <th className={styles.title}>Gotra</th>
-                <th className={styles.title}>Kuldevi</th>
-                <th className={styles.title}>Signature</th>
-                <th className={styles.title}>Spouse Signature</th>
-                <th className={styles.title}>Photo</th>
-                <th className={styles.title}>Spouse Photo</th>
-                <th className={styles.title}>Occupation</th>
-                <th className={styles.title}>Payer Name</th>
-                <th className={styles.title}>Payer Email </th>
-                <th className={styles.title}>Payer Mobile </th>
-                <th className={styles.title}>Transaction ID</th>
-                <th className={styles.title}>Download Form </th>
+          <div className={styles.tableWrapper}>
+            <Table className={styles.table} responsive>
+              <thead>
+                <tr>
+                  <th className={styles.title}>Name</th>
+                  <th className={styles.title}>Spouse Name</th>
+                  <th className={styles.title}>Email</th>
+                  <th className={styles.title}>Spouse Email</th>
+                  <th className={styles.title}>Mobile</th>
+                  <th className={styles.title}>Spouse Mobile</th>
+                  <th className={styles.title}>DOB</th>
+                  <th className={styles.title}>Address</th>
+                  <th className={styles.title}>Membership</th>
+                  <th className={styles.title}>Father Name</th>
+                  <th className={styles.title}>Pin Code</th>
+                  <th className={styles.title}>Gotra</th>
+                  <th className={styles.title}>Kuldevi</th>
+                  <th className={styles.title}>Signature</th>
+                  <th className={styles.title}>Spouse Signature</th>
+                  <th className={styles.title}>Photo</th>
+                  <th className={styles.title}>Spouse Photo</th>
+                  <th className={styles.title}>Occupation</th>
+                  <th className={styles.title}>User Aadhar Card </th>
+                  <th className={styles.title}>Spouse Aadhar Card</th>
+                  <th className={styles.title}>Payer Name</th>
+                  <th className={styles.title}>Payer Email </th>
+                  <th className={styles.title}>Payer Mobile </th>
+                  <th className={styles.title}>Transaction ID</th>
+                  <th className={styles.title}>Download Form </th>
+                  <th className={styles.title}>Action</th>
+                  <th className={styles.title}>Status</th>
+                  <th className={styles.title}>Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredMembers.map((member, index) => {
+                  const memberPayment = findPaymentByMember(member.email);
+                  const currentStatus = statusMap[member.email] || "Not Set";
 
-                <th className={styles.title}>Action</th>
-                <th className={styles.title}>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredMembers.map((member, index) => {
-                const memberPayment = findPaymentByMember(member.email);
-                const currentStatus = statusMap[member.email] || "Not Set";
+                  const membershipText =
+                    membershipTranslations[member.membership] ||
+                    member.membership;
 
-                const membershipText =
-                  membershipTranslations[member.membership] ||
-                  member.membership;
+                  return (
+                    <tr key={index}>
+                      <td className={styles.tableData}>{member.username}</td>
+                      <td>{member.spouse}</td>
+                      <td>{member.email}</td>
+                      <td>{member.spouseEmail}</td>
+                      <td>{member.mobile}</td>
+                      <td>{member.spouseMobile}</td>
+                      <td>
+                        {new Date(member.dob).toLocaleDateString("en-GB", {
+                          day: "2-digit",
+                          month: "2-digit",
+                          year: "numeric",
+                        })}
+                      </td>
+                      <td>{member.address}</td>
+                      <td>{membershipText}</td>
+                      <td>{member.fatherName}</td>
+                      <td>{member.pincode}</td>
+                      <td>{member.gotra}</td>
+                      <td>{member.kuldevi}</td>
+                      <td>
+                        {member.signature && (
+                          <img
+                            src={member.signature}
+                            alt="Signature"
+                            style={{ width: "80px", height: "auto" }}
+                          />
+                        )}
+                      </td>
+                      <td>
+                        {member.spouseSignature && (
+                          <img
+                            src={member.spouseSignature}
+                            alt="Spouse Signature"
+                            style={{ width: "80px", height: "auto" }}
+                          />
+                        )}
+                      </td>
+                      <td>
+                        {member.photo && (
+                          <img
+                            src={member.photo}
+                            alt="Photo"
+                            style={{
+                              width: "80px",
+                              height: "auto",
+                              borderRadius: "4px",
+                            }}
+                          />
+                        )}
+                      </td>
+                      <td>
+                        {member.spousePhoto && (
+                          <img
+                            src={member.spousePhoto}
+                            alt="Spouse Photo"
+                            style={{
+                              width: "80px",
+                              height: "auto",
+                              borderRadius: "4px",
+                            }}
+                          />
+                        )}
+                      </td>
+                      <td>{member.occupation}</td>
+                      <td>{member.uploadAadharUser}</td>
+                      <td>{member.uploadAadharSpouse}</td>
 
-                return (
-                  <tr key={index}>
-                    <td className={styles.tableData}>{member.username}</td>
-                    <td>{member.spouse}</td>
-                    <td>{member.email}</td>
-                    <td>{member.spouseEmail}</td>
-                    <td>{member.mobile}</td>
-                    <td>{member.spouseMobile}</td>
-                    <td>
-                      {new Date(member.dob).toLocaleDateString("en-GB", {
-                        day: "2-digit",
-                        month: "2-digit",
-                        year: "numeric",
-                      })}
-                    </td>
-                    <td>{member.address}</td>
-                    <td>{membershipText}</td>
-                    <td>{member.fatherName}</td>
-                    <td>{member.pincode}</td>
-                    <td>{member.gotra}</td>
-                    <td>{member.kuldevi}</td>
-                    <td>
-                      {member.signature && (
-                        <img
-                          src={member.signature}
-                          alt="Signature"
-                          style={{ width: "80px", height: "auto" }}
-                        />
-                      )}
-                    </td>
-                    <td>
-                      {member.spouseSignature && (
-                        <img
-                          src={member.spouseSignature}
-                          alt="Spouse Signature"
-                          style={{ width: "80px", height: "auto" }}
-                        />
-                      )}
-                    </td>
-                    <td>
-                      {member.photo && (
-                        <img
-                          src={member.photo}
-                          alt="Photo"
-                          style={{
-                            width: "80px",
-                            height: "auto",
-                            borderRadius: "4px",
-                          }}
-                        />
-                      )}
-                    </td>
-                    <td>
-                      {member.spousePhoto && (
-                        <img
-                          src={member.spousePhoto}
-                          alt="Spouse Photo"
-                          style={{
-                            width: "80px",
-                            height: "auto",
-                            borderRadius: "4px",
-                          }}
-                        />
-                      )}
-                    </td>
-                    <td>{member.occupation}</td>
-
-                    <td>{memberPayment?.name || "N/A"}</td>
-                    <td>{memberPayment?.email || "N/A"}</td>
-                    <td>{memberPayment?.mobile || "N/A"}</td>
-                    <td>{memberPayment?.transactionId || "N/A"}</td>
-                    <td>
-                      <button
-                        className={styles.downloadButton}
-                        onClick={() => generateStyledPDF(member)}
-                      >
-                        Download
-                      </button>
-                    </td>
-
-                    <td>
-                      {member.isDispatched ||
-                      statusMap[member._id] === "Dispatched" ? (
-                        <button className="btn btn-success" disabled>
-                          Dispatched
-                        </button>
-                      ) : (
+                      <td>{memberPayment?.name || "N/A"}</td>
+                      <td>{memberPayment?.email || "N/A"}</td>
+                      <td>{memberPayment?.mobile || "N/A"}</td>
+                      <td>{memberPayment?.transactionId || "N/A"}</td>
+                      <td>
                         <button
-                          className="btn btn-warning"
-                          onClick={() => handleStatusChange(member._id)}
+                          className={styles.downloadButton}
+                          onClick={() => generateStyledPDF(member)}
                         >
-                          Pending
+                          Download
                         </button>
-                      )}
-                    </td>
+                      </td>
 
-                    <td>
-                      {statusMap[member._id] ||
-                        (member.isDispatched ? "Dispatched" : "Not Set")}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </Table>
+                      <td>
+                        {member.isDispatched ||
+                        statusMap[member._id] === "Dispatched" ? (
+                          <button className="btn btn-success" disabled>
+                            Dispatched
+                          </button>
+                        ) : (
+                          <button
+                            className="btn btn-warning"
+                            onClick={() => handleStatusChange(member._id)}
+                          >
+                            Pending
+                          </button>
+                        )}
+                      </td>
+
+                      <td>
+                        {statusMap[member._id] ||
+                          (member.isDispatched ? "Dispatched" : "Not Set")}
+                      </td>
+
+                      <td>
+                        <button
+                          className="btn btn-danger"
+                          onClick={() => handleDeleteMember(member._id)}
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </Table>
+          </div>
         )}
       </div>
     </>

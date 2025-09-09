@@ -1,10 +1,11 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./Form.module.css";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import { registerUser } from "../../apis/form";
+import {useNavigate} from "react-router-dom";
 import axios from "axios";
 
 const Form = () => {
@@ -57,7 +58,7 @@ const Form = () => {
   const photoInputRef = useRef(null);
   const biodataInputRef = useRef(null);
 
-  
+  const navigate = useNavigate();
 
   const validate = () => {
     let newErrors = {};
@@ -127,7 +128,11 @@ const Form = () => {
     setFormData({ ...formData, [name]: value });
   };
 
- 
+ const handleEditProfile = ()=>{
+  navigate("/user-dashboard")
+ }
+
+
 const handleSubmit = async (e) => {
   e.preventDefault();
 
@@ -257,6 +262,7 @@ const handleSubmit = async (e) => {
   return (
     <>
       <div className={styles.heading}>वैवाहिक फ़ॉर्म</div>
+      <button  className={styles.submit} onClick={handleEditProfile}>Edit Profile</button>
       <div className={styles.container}>
         <div className={styles.inputBox}>
           <label htmlFor="number" className={styles.label}>

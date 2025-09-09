@@ -4,15 +4,19 @@ import PendingForms from "../pages/PendingForms";
 import Members from "../pages/Members";
 import { useNavigate } from "react-router-dom";
 import { IoMdHome } from "react-icons/io";
-import { getPendingFormCount } from "../apis/form";
+import { getPendingFormCount,getRejectedFormCount } from "../apis/form";
 import { getApprovedFormCount } from "../apis/form";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import RejectedForm from "./RejectedForm";
+import DeletedUser from "./DeletedUser";
 
 const MatrimonialAdminDashboard = () => {
   const [selectedSection, setSelectedSection] = useState(null);
   const [pendingCount, setPendingCount] = useState(0);
+  const [rejectedCount, setRejectedCount] = useState(0)
   const [approvedCount, setApprovedCount] = useState(0);
+  
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,6 +30,19 @@ const MatrimonialAdminDashboard = () => {
     };
 
     fetchPendingCount();
+  }, []);
+
+  useEffect(() => {
+    const fetchRejectedCount = async () => {
+      try {
+        const count = await getRejectedFormCount();
+        setRejectedCount(count);
+      } catch (err) {
+        console.error("Error fetching rejected form count:", err);
+      }
+    };
+
+    fetchRejectedCount();
   }, []);
 
   useEffect(() => {
@@ -47,6 +64,10 @@ const MatrimonialAdminDashboard = () => {
         return <PendingForms />;
       case "members":
         return <Members />;
+        case "rejected":
+          return <RejectedForm/>
+       
+      
 
       default:
         return (
@@ -65,6 +86,20 @@ const MatrimonialAdminDashboard = () => {
                 </div>
                 <div className={styles.widgetCount}>{approvedCount}</div>
               </div>
+
+              <div className={styles.widget}>
+                <div className={styles.widgetTitle}>
+                  Total no. of rejected form
+                </div>
+                <div className={styles.widgetCount}>{rejectedCount}</div>
+              </div>
+
+              {/* <div className={styles.widget}>
+                <div className={styles.widgetTitle}>
+                  Total no. of deleted form
+                </div>
+                <div className={styles.widgetCount}>{deleteduserCount}</div>
+              </div> */}
             </div>
           </>
         );
@@ -117,6 +152,24 @@ const MatrimonialAdminDashboard = () => {
               >
                 Matrimonial Form
               </div>
+              <div
+                className={`${styles.optionButton} ${
+                  selectedSection === "rejected" ? styles.activeButton : ""
+                }`}
+                onClick={() => setSelectedSection("rejected")}
+              >
+                Rejected Form
+              </div>
+
+              {/* <div
+                className={`${styles.optionButton} ${
+                  selectedSection === "deleteduser" ? styles.activeButton : ""
+                }`}
+                onClick={() => setSelectedSection("deleteduser")}
+              >
+                Delete Form
+              </div> */}
+             
             </div>
           </div>
           <div className={styles.logoutWrapper}>

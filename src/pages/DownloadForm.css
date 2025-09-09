@@ -1,0 +1,27 @@
+.biodata-card {
+  border-radius: 15px;
+  background: #fff;
+}
+
+.biodata-photo {
+  max-width: 180px;
+  border: 5px solid #eee;
+  padding: 5px;
+}
+
+.biodata-name {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #b52e2e;
+}
+
+.section-title {
+  margin-top: 30px;
+  margin-bottom: 15px;
+  font-weight: bold;
+  color: #444;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 5px;
+}
+
+

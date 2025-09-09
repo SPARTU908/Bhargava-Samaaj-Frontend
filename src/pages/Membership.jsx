@@ -32,6 +32,8 @@ const Membership = () => {
     spousePhoto: "",
     spouseSignature: "",
     membership: "",
+    uploadAadharUser: "",
+    uploadAadharSpouse: "",
   });
   const [selectedFee, setSelectedFee] = useState("");
   const [errors, setErrors] = useState({});
@@ -48,6 +50,9 @@ const Membership = () => {
   const [signatureFile, setSignatureFile] = useState(null);
   const [spousePhotoFile, setSpousePhotoFile] = useState(null);
   const [spouseSignatureFile, setSpouseSignatureFile] = useState(null);
+  const [uploadAadharUser, setUploadAadharUser] = useState(null);
+  const [uploadAadharSpouse, setUploadAadharSpouse] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const navigate = useNavigate();
   const handleFormChange = (e) => {
@@ -70,6 +75,8 @@ const Membership = () => {
         spouseMobile: "",
         spousePhoto: "",
         spouseSignature: "",
+        uploadAadharUser: "",
+        uploadAadharSpouse: "",
       }));
       setSpousePhotoUrl("");
       setSpouseSignatureUrl("");
@@ -110,6 +117,9 @@ const Membership = () => {
     if (!selectedFee)
       newErrors.membership = "कृपया सदस्यता शुल्क का एक विकल्प चुनें।";
 
+    if (!uploadAadharUser)
+      newErrors.uploadAadharUser = "कृपया आधार कार्ड अपलोड करें।";
+
     // Spouse validations only if couple membership is selected
     if (selectedFee === "आजीवन सभासद - युगल-(पति-पत्नी) - 1000 रुपये") {
       if (!memberData.spouse)
@@ -132,47 +142,24 @@ const Membership = () => {
         newErrors.spousePhoto = "कृपया जीवनसाथी की फोटो अपलोड करें।";
       if (!spouseSignatureFile)
         newErrors.spouseSignature = "कृपया जीवनसाथी का हस्ताक्षर अपलोड करें।";
+      if (!uploadAadharSpouse)
+        newErrors.uploadAadharSpouse =
+          "कृपया जीवनसाथी का आधार कार्ड अपलोड करें।";
     }
 
     return newErrors;
   };
-
-
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setMemberData({ ...memberData, [name]: value });
   };
 
-  // const uploadToCloudinary = async (file) => {
-  //   const formData = new FormData();
-  //   formData.append("file", file);
-  //   const res = await axios.post(
-  //     `${import.meta.env.VITE_BACKEND_URL}/upload`,
-  //     formData
-  //   );
-  //   return res.data.url;
-  // };
-
-  const uploadToCloudinary = async (file) => {
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", "<your_upload_preset>");
-
-    try {
-      const res = await axios.post(
-        "https://api.cloudinary.com/v1_1/<your_cloud_name>/image/upload",
-        formData
-      );
-      return res.data.secure_url;
-    } catch (error) {
-      console.error("Cloudinary upload error:", error);
-      throw error;
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (isSubmitting) return;
+    setIsSubmitting(true);
 
     const validationErrors = validate();
     console.log(validationErrors);
@@ -182,6 +169,7 @@ const Membership = () => {
       toast.error("कृपया सभी आवश्यक फ़ील्ड भरें।", {
         position: "top-center",
       });
+      setIsSubmitting(false);
       return;
     }
 
@@ -213,6 +201,8 @@ const Membership = () => {
       let uploadedSignatureUrl = "";
       let uploadedSpousePhotoUrl = "";
       let uploadedSpouseSignatureUrl = "";
+      let uploadedAadharUserUrl = "";
+      let uploadedAadharSpouseUrl = "";
 
       if (photoFile) {
         uploadedPhotoUrl = await uploadToCloudinary(photoFile);
@@ -228,6 +218,12 @@ const Membership = () => {
           spouseSignatureFile
         );
       }
+      if (uploadAadharUser) {
+        uploadedAadharUserUrl = await uploadToCloudinary(uploadAadharUser);
+      }
+      if (uploadAadharSpouse) {
+        uploadedAadharSpouseUrl = await uploadToCloudinary(uploadAadharSpouse);
+      }
       // ✅ Prepare final form data
       const finalForm = {
         ...memberData,
@@ -235,8 +231,11 @@ const Membership = () => {
         signature: uploadedSignatureUrl,
         spousePhoto: uploadedSpousePhotoUrl,
         spouseSignature: uploadedSpouseSignatureUrl,
+        uploadAadharUser: uploadedAadharUserUrl,
+        uploadAadharSpouse: uploadedAadharSpouseUrl,
         membership: selectedFee,
       };
+      console.log("Final Form Data Submitted:", finalForm);
 
       // ✅ Submit the form to backend
       const result = await registerMember(finalForm);
@@ -273,6 +272,7 @@ const Membership = () => {
           spouseEmail: "",
           spousePhoto: "",
           spouseSignature: "",
+
           membership: "",
         });
         setSelectedFee("");
@@ -280,9 +280,11 @@ const Membership = () => {
         setSignatureFile(null);
         setSpousePhotoFile(null);
         setSpouseSignatureFile(null);
+        setUploadAadharUser(null);
+        setUploadAadharSpouse(null);
         // if (photoInputRef.current) photoInputRef.current.value = "";
         // if (biodataInputRef.current) biodataInputRef.current.value = "";
-console.log(result.data);
+        console.log(result.data);
         setTimeout(() => {
           navigate("/payment1", {
             state: {
@@ -298,12 +300,14 @@ console.log(result.data);
         toast.error(result.error || "Something went wrong. Please try again.", {
           position: "top-center",
         });
+        setIsSubmitting(false);
       }
     } catch (err) {
       console.error("Form submission failed:", err);
       toast.error("Something went wrong. Please try again.", {
         position: "top-center",
       });
+      setIsSubmitting(false);
     }
   };
 
@@ -319,7 +323,6 @@ console.log(result.data);
           सम्भवत: 18 वर्ष या उससे अधिक आयु के सभी महिला/पुरुष नियमुसार बन सकते
           हैं
         </div>
-        
       </div>
 
       <div>
@@ -723,13 +726,95 @@ console.log(result.data);
               )}
             </div>
           </div>
+
+          {/* <div className={styles.rowUpload}>
+            <div className={styles.inputBox}>
+              <label className={styles.labelUpload}>
+                Upload Aadhar Card
+                <span style={{ color: "red" }}>*</span>
+              </label>
+              <input
+                type="file"
+                accept="image/*,application/pdf"
+                onChange={(e) => setUploadAadharUser(e.target.files[0])}
+              />
+              {errors.uploadAadharUser && (
+                <p className={styles.error}>{errors.uploadAadharUser}</p>
+              )}
+            </div> */}
+
+         
+            {/* <div className={styles.inputBox}>
+              <label className={styles.labelUpload}>
+                Upload Spouse Aadhar Card
+                <span style={{ color: "red" }}>*</span>
+              </label>
+              <input
+                type="file"
+                accept="image/*,application/pdf"
+                disabled={!showSpouseFields}
+                onChange={(e) => setUploadAadharSpouse(e.target.files[0])}
+               
+              />
+              {errors.uploadAadharSpouse && (
+                <p className={styles.error}>{errors.uploadAadharSpouse}</p>
+              )}
+            </div> */}
+          {/* </div> */}
+
+          <div className={styles.rowUpload}>
+            {/* Aadhar Card - Member */}
+            <div className={styles.inputBox}>
+              <label className={styles.labelUpload}>
+                Upload Aadhar Card
+                <span style={{ color: "red" }}>*</span>
+              </label>
+              <div className={styles.uploadurl}>
+                <input
+                  type="file"
+                  accept="image/*,application/pdf"
+                  onChange={(e) => setUploadAadharUser(e.target.files[0])}
+                  className={styles.input}
+                />
+              </div>
+              {errors.uploadAadharUser && (
+                <p className={styles.error}>{errors.uploadAadharUser}</p>
+              )}
+            </div>
+
+            {/* Aadhar Card - Spouse */}
+            <div className={styles.inputBox}>
+              <label className={styles.labelUpload}>
+                Upload Spouse Aadhar Card 
+                <span style={{ color: "red" }}>*</span>
+              </label>
+              <div className={styles.uploadurl}>
+                <input
+                  type="file"
+                  accept="image/*,application/pdf"
+                  disabled={!showSpouseFields}
+                  onChange={(e) => setUploadAadharSpouse(e.target.files[0])}
+                  className={styles.input}
+                  style={{
+                    backgroundColor: !showSpouseFields ? "#f0f0f0" : "white",
+                    cursor: !showSpouseFields ? "not-allowed" : "pointer",
+                  }}
+                />
+              </div>
+              {errors.uploadAadharSpouse && (
+                <p className={styles.error}>{errors.uploadAadharSpouse}</p>
+              )}
+            </div>
+          </div>
+
           <div className={styles.btn}>
             <button
               className={styles.submit}
               onClick={(e) => {
                 handleSubmit(e);
-                // nextStep(e);
+                // nextStep(e); // You can keep this if needed
               }}
+              disabled={isSubmitting} // Add this line to disable the button
             >
               Save & Continue
             </button>

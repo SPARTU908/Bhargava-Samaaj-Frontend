@@ -74,3 +74,12 @@ body {
   padding: 0.5rem 1rem;
   white-space: nowrap;
 }
+
+
+
+
+.scrollable-dropdown .dropdown-menu {
+  max-height: 400px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}

@@ -1,6 +1,6 @@
 import "./App.css";
-import Magazine from "./pages/Magazine";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Magazine from "./pages/Magazine";
 import Homepage2 from "./pages/Homepage2";
 import About from "./pages/About";
 import Census from "./pages/Census";
@@ -25,8 +25,16 @@ import VivahMemberLogin from "./components/VivahMember/VivahMemberLogin.jsx";
 import VivahMemberRegister from "./components/VivahMember/VivahMemberRegister.jsx";
 import FindYourMatch from "./pages/FindYourMatch.jsx";
 import PendingMemberList from "./pages/PendingMemberList.jsx";
+import RejectedForm from "./pages/RejectedForm.jsx";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SignFormUpload from "./pages/SignFormUpload.jsx";
+import UserDashboard from "./pages/UserDashboard.jsx";
+import DeletedUser from "./pages/DeletedUser.jsx";
+import BiodataUser from "./pages/BiodataUser.jsx";
+import EditUserForm from "./pages/EditUserForm.jsx";
+import UserProfile from "./pages/UserProfile.jsx";
+import DownloadForm from "./pages/DownloadForm.jsx";
+
 
 
 function App() {
@@ -91,7 +99,16 @@ function App() {
           <Route path="/vivahmemberlogin" element={<VivahMemberLogin />} />
           <Route path="/findyourmatch" element={<FindYourMatch />} />
           <Route path="/pendingmember" element={<PendingMemberList />} />
+          <Route path = "/rejected" element = {<RejectedForm/>}/>
           <Route path="/sign-form-upload" element={<SignFormUpload />} />
+          <Route path="/user-dashboard" element={<UserDashboard/>} />
+          <Route path="/delete-user" element={<DeletedUser/>} />
+          <Route path="/biodata-user" element={<BiodataUser/>} />
+          <Route path="/edit-user" element={<EditUserForm/>} />
+          <Route path="/my-profile" element={<UserProfile/>} />
+          <Route path="/download-form/:id" element={<DownloadForm />} />
+          
+
         </Routes>
       </BrowserRouter>
     </>

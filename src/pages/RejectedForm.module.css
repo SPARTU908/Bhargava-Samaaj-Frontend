@@ -1,0 +1,74 @@
+.container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  font-family: "Segoe UI", sans-serif;
+}
+
+.heading {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.statusMessage {
+  text-align: center;
+  font-size: 18px;
+  color: #555;
+}
+
+.errorMessage {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+
+.formList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.formItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 15px 20px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.formItem:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.formInfo h4 {
+  margin: 0;
+  color: #222;
+  font-size: 18px;
+}
+
+.email {
+  font-size: 14px;
+  color: #666;
+}
+
+.statusBox {
+  text-align: right;
+}
+
+.rejected {
+  color: #dc3545;
+  background-color: #f8d7da;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: bold;
+}

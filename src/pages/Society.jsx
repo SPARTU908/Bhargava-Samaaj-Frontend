@@ -7,7 +7,7 @@ import img3 from "../assets/chav.jpg";
 import img4 from "../assets/hemu.jpg";
 import img5 from "../assets/vanshavali-1.png";
 import img6 from "../assets/vanshavali-2.png";
-// For any custom styles (optional)
+
 
 const Society = () => {
   useEffect(() => {

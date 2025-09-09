@@ -1,135 +1,11 @@
-// import Navbar from "../components/Navbar/Navbar";
-// import styles from "./About.module.css";
-// import history from "../assets/history.png";
-// import samvidhaan from "../assets/samvidhaan.png";
-// import samiti from "../assets/samiti.png";
-// import React, { useEffect } from "react";
-
-// const About = () => {
-//   useEffect(() => {
-//     const hash = window.location.hash;
-//     if (hash) {
-//       const section = document.getElementById(hash.slice(1));
-//       if (section) {
-//         section.scrollIntoView({ behavior: "smooth" });
-//       }
-//     }
-//   }, [window.location.hash]);
-//   return (
-//     <>
-//       <Navbar />
-//       {/* Hmare Etihaas */}
-//       <div id="history" className={styles.container}>
-//         <div className={styles.heading}> इतिहास</div>
-//         <div>
-//           <img src={history} alt="" className={styles.history} />
-//         </div>
-//         <div className={styles.btn}>
-//           <button className={styles.button}>
-//             <a
-//               href="/pdfs/Sabha/History-1989-2014.pdf"
-//               className={styles.btn1}
-//               target="_blank"
-//               rel="noopener noreferrer"
-//             >
-//               हमारे इतिहास के बारे में पढ़े
-//             </a>
-//           </button>
-//         </div>
-//       </div>
-
-//       {/* Samvidhaan */}
-//       <div id="samvidhaan" className={styles.container}>
-//         <div className={styles.heading}>संविधान</div>
-//         <div>
-//           <img src={samvidhaan} alt="" className={styles.history} />
-//         </div>
-//         <div className={styles.btn}>
-//           <button className={styles.button}>
-//             <a
-//               href="/pdfs/Sabha/Samvidhaan.pdf"
-//               className={styles.btn1}
-//               target="_blank"
-//               rel="noopener noreferrer"
-//             >
-//               हमारे संविधान के बारे में पढ़े
-//             </a>
-//           </button>
-//         </div>
-//       </div>
-
-//       {/* esthaniya sabhayein */}
-//       <div id="sabhayein" className={styles.container}>
-//         <div className={styles.heading}>स्थानीय सभाएं</div>
-//          <div>
-//           <img src={samiti} alt="" className={styles.history} />
-//         </div>
-//         <div className={styles.btn}>
-//           <button className={styles.button}>
-//             <a
-//               href="/pdfs/Sabha/Localsabha.pdf"
-//               className={styles.btn1}
-//               target="_blank"
-//               rel="noopener noreferrer"
-//             >
-//               हमारे समितियों के बारे में जानें
-//             </a>
-//           </button>
-//         </div>
-//       </div>
-
-//       {/* Samiti */}
-//       {/* <div id="samiti" className={styles.container}>
-//         <div className={styles.heading}>समिति </div>
-//         <div>
-//           <img src={samiti} alt="" className={styles.history} />
-//         </div>
-//         <div className={styles.btn}>
-//           <button className={styles.button}>
-//             <a
-//               href="/pdfs/Sabha/updated-samiti.pdf"
-//               className={styles.btn1}
-//               target="_blank"
-//               rel="noopener noreferrer"
-//             >
-//               हमारे समितियों के बारे में जानें
-//             </a>
-//           </button>
-//         </div>
-//       </div> */}
-
-//       {/* nidhiyan */}
-
-//       <div id="nidhiyan" className={styles.container}>
-//         <div className={styles.heading}>सभा की निधियाँ </div>
-//         <div>
-//           <img src={samiti} alt="" className={styles.history} />
-//         </div>
-//         <div className={styles.btn}>
-//           <button className={styles.button}>
-//             <a
-//               href="/pdfs/Sabha/nidhiyan.pdf"
-//               className={styles.btn1}
-//               target="_blank"
-//               rel="noopener noreferrer"
-//             >
-//               सभा की निधियाँ के बारे में जानें
-//             </a>
-//           </button>
-//         </div>
-//       </div>
-//     </>
-//   );
-// };
-
-// export default About;
-
 import React, { useEffect } from "react";
 import Navbar from "../components/Navbar/Navbar";
 import { Container, Row, Col, Button, Image } from "react-bootstrap";
 import history from "../assets/history.png";
 import samvidhaan from "../assets/samvidhaan.png";
-import samiti from "../assets/samiti.png";
+import samiti1 from "../assets/samiti1.png";
+import samiti from "../assets/New Samiti.PNG";
+import shiksha from "../assets/shiksha samiti new.PNG";
 
 const About = () => {
   useEffect(() => {
@@ -160,16 +36,23 @@ const About = () => {
     {
       id: "sabhayein",
       title: "स्थानीय सभाएं",
-      image: samiti,
+      image: samiti1,
       pdf: "/pdfs/Sabha/Localsabha.pdf",
-      buttonText: "हमारे समितियों के बारे में जानें",
+      buttonText: "स्थानीय सभाएं के बारे में जानें",
     },
     {
       id: "nidhiyan",
-      title: "सभा की निधियाँ",
+      title: "समाज कल्याण निधि",
       image: samiti,
-      pdf: "/pdfs/Sabha/nidhiyan.pdf",
-      buttonText: "सभा की निधियाँ के बारे में जानें",
+      pdf: "/pdfs/Samiti/1. Samiti Kalyan Samiti 25-26.pdf",
+      buttonText: "समाज कल्याण निधि के बारे में जानें",
+    },
+    {
+      id: "nidhiyan2",
+      title: "शिक्षा निधि",
+      image: shiksha,
+      pdf: "/pdfs/Samiti/2. Shiksha Samiti 25-26.pdf",
+      buttonText: "शिक्षा निधि के बारे में जानें",
     },
   ];
 
@@ -215,6 +98,8 @@ const About = () => {
               </Button>
             </Col>
           </Row>
+
+           
         </Container>
       ))}
     </>

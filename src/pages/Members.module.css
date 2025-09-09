@@ -80,6 +80,7 @@
   text-align: center;
   font-size: 20px;
   font-family: Itim;
+   margin-top: 40px;
 }
 
 .applyButton {
@@ -201,6 +202,7 @@
   .approvedProfiles {
     font-size: 18px;
     padding: 0 10px;
+   
   }
 
   .name {
@@ -217,4 +219,86 @@
   .selectName {
     font-size: 13px;
   }
+}
+
+.searchBox {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.searchInput {
+  width: 100%;
+  max-width: 400px;  /* Adjust to desired width */
+  padding: 12px 20px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 25px; /* Rounded corners */
+  outline: none;
+  transition: all 0.3s ease; /* Smooth transition for hover/focus effect */
+}
+
+.searchInput::placeholder {
+  color: #aaa;
+  font-style: italic;
+}
+
+.searchInput:focus {
+  border-color: #007bff; /* Blue border on focus */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Light blue glow effect */
+}
+
+.searchInput:hover {
+  border-color: #0056b3; /* Darker border on hover */
+}
+
+/* Optional: Add a small icon inside the search box */
+.searchInput::before {
+  content: '🔍';
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: #aaa;
+}
+
+
+.buttonGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 12px;
+  gap: 10px; /* Space between Delete and Download buttons */
+}
+
+
+.deleteButton {
+  background-color: #c0392b;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.deleteButton:hover {
+  background-color: #a83226;
+}
+
+.downloadButton {
+  background-color: #007bff;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.downloadButton:hover {
+  background-color: #0056b3;
 }

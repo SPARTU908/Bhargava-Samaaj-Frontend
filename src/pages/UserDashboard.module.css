@@ -1,0 +1,108 @@
+.container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 20vw;
+  background-color: #171e2b;
+  color: white;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+  padding: 40px 20px 20px;
+}
+
+.dashboard {
+  padding: 20px;
+  text-align: center;
+  font-size: 18px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.homeIcon {
+  margin-right: 8px;
+}
+
+.options {
+  padding: 10px 20px;
+}
+
+.optionButton {
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  width: 100%;
+  margin-bottom: 12px;
+  cursor: pointer;
+  background-color: transparent;
+  text-align: left;
+  transition: background 0.3s;
+}
+
+.optionButton:hover,
+.activeButton {
+  background-color: #2e3b4e;
+}
+
+.logoutWrapper {
+  padding: 20px;
+  margin-top: auto;
+}
+
+.logoutButton {
+  width: 100%;
+  background-color: #e53935;
+  border: none;
+  color: white;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.logoutButton:hover {
+  background-color: #c62828;
+}
+
+.right {
+  flex: 1;
+  padding: 30px;
+  background-color: #f5f5f5;
+}
+
+.sectionContent {
+  background-color: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.4s ease-in-out;
+  min-height: 400px;
+}
+
+.welcomeText {
+  font-size: 20px;
+  color: #333;
+  font-weight: 500;
+  text-align: center;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
