@@ -14,6 +14,8 @@ const UserDashboard = () => {
   const [selectedSection, setSelectedSection] = useState("home");
 
   const handleLogout = () => {
+    localStorage.removeItem("isLoggedIn");
+     localStorage.removeItem("userEmail");
     toast.success("Logged out successfully");
     setTimeout(() => {
       window.location.href = "/";

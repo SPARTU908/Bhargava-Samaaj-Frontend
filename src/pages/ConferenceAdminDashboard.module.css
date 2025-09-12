@@ -1,0 +1,145 @@
+
+.container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* sidebar */
+.container > div:first-child {
+  width: 20vw;
+  background-color: #171e2b;
+  color: white;
+}
+.title{
+  font-size: 30px;
+  font-family: "Merriweather", serif;
+  font-weight: bold;
+  padding: 50px;
+  text-align: center;
+}
+.dashboard{
+    padding: 20px;
+    text-align: center;
+    font-size: 20px;
+    font-family: "Merriweather", serif;
+}
+.home{
+      margin: 0px 5px 5px 0px;
+}
+
+.optionButton{
+   color: white;
+  border: none;
+  padding: 15px 18px;
+  font-size: 17px;
+  font-weight: 600;
+  border-radius: 8px;
+  width: 100%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+    font-family: "Merriweather", serif;
+}
+.right {
+  flex: 1;
+  background: #f5f5f5; /* optional */
+  padding: 20px;
+  width: 79vw;
+}
+.sectionContent {
+  width: 100%;
+    height: 100%;
+  /* max-width: 900px; */
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  animation: fadeIn 0.4s ease-in-out;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+
+  .optionButton {
+    font-size: 1rem;
+    padding: 12px 20px;
+  }
+
+  .sectionContent {
+    padding: 15px;
+  }
+}
+.logoutWrapper {
+  margin-top: 40px;
+  padding: 0 20px;
+}
+
+.logoutButton {
+  width: 100%;
+  background-color: #e53935;
+  border: none;
+  color: white;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.logoutButton:hover {
+  background-color: #c62828;
+}
+
+.renderSection {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 30px;
+  gap: 20px;
+}
+
+.widget {
+  background-color: #1f2937;
+  color: white;
+  flex: 1 1 30%;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  text-align: center;
+  min-width: 250px;
+}
+
+.widget:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+.widgetTitle {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #f5f5f5;
+}
+
+.widgetCount {
+  font-size: 32px;
+  font-weight: bold;
+  color: #e95114;
+}
+

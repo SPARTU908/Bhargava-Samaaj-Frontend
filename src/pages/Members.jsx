@@ -537,19 +537,19 @@ const Members = () => {
 
                 {/* Buttons BELOW the photo */}
                 <div className={styles.buttonGroup}>
-                  {/* <button
+                   <button
                     onClick={() => handleDelete(member.email)}
                     className={styles.deleteButton}
                   >
                     Delete
-                  </button> */}
+                  </button> 
 
-                  {/* <button
+                   <button
                     onClick={() => navigate(`/download-form/${member._id}`)}
                     className={styles.downloadButton}
                   >
                     Download
-                  </button> */}
+                  </button> 
                 </div>
               </div>
 

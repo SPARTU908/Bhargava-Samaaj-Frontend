@@ -34,6 +34,8 @@ import BiodataUser from "./pages/BiodataUser.jsx";
 import EditUserForm from "./pages/EditUserForm.jsx";
 import UserProfile from "./pages/UserProfile.jsx";
 import DownloadForm from "./pages/DownloadForm.jsx";
+import Registration from "./pages/Registration.jsx";
+import ConferenceAdminDashboard from "./pages/ConferenceAdminDashboard.jsx";
 
 
 
@@ -86,6 +88,7 @@ function App() {
             element={<MatrimonialAdminDashboard />}
           />
           <Route path="/superadmin" element={<SuperAdminDashboard />} />
+             <Route path="/conference-admin" element={<ConferenceAdminDashboard />} />
           <Route
             path="/memberadmindashboard"
             element={<MembershipAdminDashboard />}
@@ -107,6 +110,7 @@ function App() {
           <Route path="/edit-user" element={<EditUserForm/>} />
           <Route path="/my-profile" element={<UserProfile/>} />
           <Route path="/download-form/:id" element={<DownloadForm />} />
+          <Route path="/registration" element={<Registration/>} />
           
 
         </Routes>

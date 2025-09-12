@@ -246,8 +246,8 @@ const Navbar = () => {
                 <Nav.Link onClick={() => handleNavigate("/membership")}>
                   सदस्यता
                 </Nav.Link>
-                <Nav.Link onClick={() => handleNavigate("/download")}>
-                  फ़ॉर्म डाउनलोड करें
+                <Nav.Link onClick={() => handleNavigate("/registration")}>
+                रजिस्ट्रेशन
                 </Nav.Link>
 
                 {/* Find a Match */}

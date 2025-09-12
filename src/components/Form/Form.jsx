@@ -262,7 +262,7 @@ const handleSubmit = async (e) => {
   return (
     <>
       <div className={styles.heading}>वैवाहिक फ़ॉर्म</div>
-      <button  className={styles.submit} onClick={handleEditProfile}>Edit Profile</button>
+     
       <div className={styles.container}>
         <div className={styles.inputBox}>
           <label htmlFor="number" className={styles.label}>
