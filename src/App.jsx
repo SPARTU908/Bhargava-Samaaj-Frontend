@@ -36,7 +36,8 @@ import UserProfile from "./pages/UserProfile.jsx";
 import DownloadForm from "./pages/DownloadForm.jsx";
 import Registration from "./pages/Registration.jsx";
 import ConferenceAdminDashboard from "./pages/ConferenceAdminDashboard.jsx";
-
+import AwardForm from "./components/Registration/AwardForm.jsx";
+import ConferenceRegistration from "./components/Registration/ConferenceRegistration.jsx";
 
 
 function App() {
@@ -111,6 +112,9 @@ function App() {
           <Route path="/my-profile" element={<UserProfile/>} />
           <Route path="/download-form/:id" element={<DownloadForm />} />
           <Route path="/registration" element={<Registration/>} />
+          <Route path="/award-form" element={<AwardForm/>} />
+          <Route path="/conference-registration" element={<ConferenceRegistration/>} />
+
           
 
         </Routes>

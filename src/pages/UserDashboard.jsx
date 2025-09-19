@@ -3,9 +3,6 @@ import styles from "./UserDashboard.module.css";
 import { IoMdHome } from "react-icons/io";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-// Components (you can create these)
-
 import BiodataUser from "./BiodataUser";
 import EditUserForm from "./EditUserForm";
 import UserProfile from "./UserProfile";
@@ -23,11 +20,7 @@ const UserDashboard = () => {
   };
 
 
-//   const handleLogout = () => {
-//   localStorage.removeItem("isLoggedIn");
-//   localStorage.removeItem("userEmail");
-//   navigate("/login"); // or homepage
-// };
+
 
   const renderSection = () => {
     switch (selectedSection) {

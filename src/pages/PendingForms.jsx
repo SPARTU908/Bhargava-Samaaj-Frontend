@@ -10,6 +10,8 @@ const PendingForms = () => {
   const [pendingMembers, setPendingMembers] = useState([]);
   const token = localStorage.getItem("adminToken");
 
+   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
+
   // ✅ Fetch both forms and members on mount
   useEffect(() => {
     const fetchPendingForms = async () => {
@@ -133,7 +135,7 @@ const PendingForms = () => {
               <div>
                 {form.photo?.toLowerCase().endsWith(".pdf") ? (
                   <a
-                    href={form.photo}
+                   href={`${form.photo.replace(/\\/g, "/")}`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -141,7 +143,8 @@ const PendingForms = () => {
                   </a>
                 ) : (
                   <img
-                    src={form.photo}
+                  //  src={`${form.photo.replace(/\\/g, "/")}`}
+                  src={form.photo}
                     alt="Profile"
                     className={styles.photoThumb}
                   />
@@ -172,8 +175,8 @@ const PendingForms = () => {
       )}
 
       {/* SECTION: Pending Vivah Members */}
-      <h2 className={styles.title}>Pending Login Request</h2>
-      {pendingMembers.length === 0 ? (
+    
+      {/* {pendingMembers.length === 0 ? (
         <p>No pending Vivah members found.</p>
       ) : (
         <div className={styles.tableWrapper}>
@@ -227,7 +230,7 @@ const PendingForms = () => {
             </tbody>
           </table>
         </div>
-      )}
+      )} */}
       <ToastContainer />
     </div>
   );

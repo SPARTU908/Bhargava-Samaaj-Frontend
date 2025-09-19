@@ -246,9 +246,9 @@ const Navbar = () => {
                 <Nav.Link onClick={() => handleNavigate("/membership")}>
                   सदस्यता
                 </Nav.Link>
-                {/* <Nav.Link onClick={() => handleNavigate("/registration")}>
+                 <Nav.Link onClick={() => handleNavigate("/registration")}>
                 रजिस्ट्रेशन
-                </Nav.Link> */}
+                </Nav.Link> 
 
                 {/* Find a Match */}
                 <NavDropdown title="जीवनसाथी खोजें" id="match-dd">

@@ -1,0 +1,9 @@
+.card {
+  border-radius: 12px;
+  border: 1px solid #eee;
+}
+
+h5 {
+  border-left: 4px solid #0d6efd;
+  padding-left: 12px;
+}

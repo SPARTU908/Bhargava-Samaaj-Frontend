@@ -1,91 +1,11 @@
-/* .footer {
-  display: flex;
-  align-items: center;
-  background-color: #ea8d0c;
-  height: 170px;
-}
-.footerLogo {
-  padding: 5px 0px 0px 89px;
-}
-.footercol2 {
-  display: flex;
-  flex-direction: column;
-}
-.footercol3 {
-  display: flex;
-  flex-direction: column;
-  margin-left: 495px;
-}
-.socialIcons {
-  display: flex;
-  align-items: center;
-  color: white;
-  gap: 20px;
-  padding: 15px 0px 0px 411px;
-}
-.social {
-  font-family: "Merriweather", serif;
-  color: white;
-  padding: 0px 0px 0px 400px;
-  font-size: large;
-}
-.contact {
-  font-family: "Merriweather", serif;
-  color: white;
-  font-size: 30px;
-  padding-left: 240px;
-}
-
-.phone {
-  color: white;
-  padding-left: 270px;
-  padding-top: 10px;
-}
-.address {
-  color: white;
-  padding-left: 220px;
-  padding-top: 10px;
-  line-height: 25px;
-}
-
-@media (max-width: 320px) {
-  .footer {
-    display: flex;
-    align-items: center;
-    background-color: #ea8d0c;
-    height: 170px;
-    width: 326px;
-  }
-  .footerLogo {
-    padding: 0px 0px 71px 5px;
-  }
-  .logo {
-    width: 70px;
-    height: 70px;
-  }
-  .footercol3 {
-    display: flex;
-    flex-direction: column;
-    margin: 53px 0px 0px 76px;
-  }
-  .contact {
-    font-family: "Merriweather", serif;
-    color: white;
-    font-size: 18px;
-  }
-  .address {
-    color: white;
-  }
-} */
-
 .footer {
   display: flex;
   align-items: center;
   background-color: #ea8d0c;
   height: 170px;
-  padding: 0 10px; /* added padding to prevent content from touching edges */
-  flex-wrap: wrap; /* allow content to wrap in smaller screens */
-  justify-content: center; /* center the content horizontally */
+  padding: 0 10px; 
+  flex-wrap: wrap; 
+  justify-content: center; 
 }
 
 .footerLogo {
@@ -98,7 +18,7 @@
 .logo {
   width: 150px;
   height: 150px;
-  object-fit: contain; /* ensure the logo is well-contained */
+  object-fit: contain; 
 }
 
 .footercol3 {
@@ -106,7 +26,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  margin-left: 20px; /* reduced margin for smaller screens */
+  margin-left: 20px; 
 }
 
 .contact {
@@ -124,7 +44,7 @@
 }
 
 .address {
-  line-height: 20px; /* reduce line height to keep address compact */
+  line-height: 20px;
 }
 
 @media (max-width: 325px) {
@@ -133,12 +53,12 @@
     height: auto;
     flex-direction: column;
     align-items: center;
-    width: 340px; /* center the content vertically */
+    width: 340px; 
   }
 
   .footerLogo {
     padding: 5px;
-    margin-bottom: 10px; /* space between logo and content */
+    margin-bottom: 10px; 
   }
 
   .logo {
@@ -148,23 +68,23 @@
 
   .footercol3 {
     margin-left: 0;
-    align-items: center; /* center align footer content */
+    align-items: center;
   }
 
   .contact {
-    font-size: 18px; /* smaller font size for small screens */
-    padding-left: 0; /* no left padding */
+    font-size: 18px; 
+    padding-left: 0; 
   }
 
   .phone,
   .address {
-    font-size: 14px; /* reduce font size for better visibility on small screens */
+    font-size: 14px; 
     padding-left: 0;
   }
 
   .address {
-    text-align: center; /* center address for mobile */
-    line-height: 18px; /* reduce line height to avoid unnecessary spacing */
+    text-align: center; 
+    line-height: 18px; 
   }
 }
 
@@ -172,7 +92,7 @@
   .footer {
     margin-top: 30px;
     height: 200px;
-    /* flex-direction: column; */
+   
     align-items: center;
     width: 480px;
     gap: 50%;
@@ -181,7 +101,7 @@
 
   .footerLogo {
     padding: 5px;
-    margin-bottom: 10px; /* space between logo and content */
+    margin-bottom: 10px; 
   }
 
   .logo {
@@ -191,22 +111,22 @@
 
   .footercol3 {
     margin-left: 0;
-    align-items: center; /* center align footer content */
+    align-items: center; 
   }
 
   .contact {
-    font-size: 18px; /* smaller font size for small screens */
-    padding-left: 0; /* no left padding */
+    font-size: 18px; 
+    padding-left: 0; 
   }
 
   .phone,
   .address {
-    font-size: 14px; /* reduce font size for better visibility on small screens */
+    font-size: 14px; 
     padding-left: 0;
   }
 
   .address {
-    text-align: center; /* center address for mobile */
-    line-height: 18px; /* reduce line height to avoid unnecessary spacing */
+    text-align: center; 
+    line-height: 18px; 
   }
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Container, Card, Row, Col, Spinner } from "react-bootstrap";
+import { Container, Card, Row, Col, Spinner , Image } from "react-bootstrap";
 
 const UserProfile = () => {
   const userEmail = localStorage.getItem("userEmail");
@@ -15,7 +15,7 @@ const UserProfile = () => {
     axios
       .get(`${BACKEND_URL}/api/v1/form/${userEmail}`)
       .then((res) => {
-        const { _id, __v, password, photo,bioData,status,submittedAt,createdAt, updatedAt, ...cleaned } = res.data;
+        const { _id, __v, password,status,submittedAt,createdAt, updatedAt, ...cleaned } = res.data;
         setProfile(cleaned);
         setLoading(false);
       })
@@ -38,15 +38,51 @@ const UserProfile = () => {
   }
 
   return (
-    <Container className="py-4">
+    // <Container className="py-4">
+    //   <Card className="shadow-lg h-auto">
+    //     <Card.Header className="text-white bg-primary text-center">
+    //       <h4 style={{ margin: 0 }}>My Profile</h4>
+    //     </Card.Header>
+    //     <Card.Body>
+    //       <Row className="g-3">
+    //         {Object.entries(profile).map(([key, value]) => {
+    //           if (!value || key === "photo" || key === "bioData") return null;
+
+    //           const label = key
+    //             .replace(/([A-Z])/g, " $1")
+    //             .replace(/^./, (str) => str.toUpperCase());
+
+    //           return (
+    //             <Col sm={6} key={key}>
+    //               <div>
+    //                 <strong>{label}: </strong>
+    //                 <span>{value}</span>
+    //               </div>
+    //             </Col>
+    //           );
+    //         })}  
+    //       </Row>
+    //     </Card.Body>
+    //   </Card>
+    // </Container>
+
+
+     <Container className="py-4">
       <Card className="shadow-lg h-auto">
         <Card.Header className="text-white bg-primary text-center">
           <h4 style={{ margin: 0 }}>My Profile</h4>
         </Card.Header>
         <Card.Body>
-          <Row className="g-3">
+          <Row className="g-4">
+            {/* Display photo if available */}
+            
+
+            {/* Display BioData link if available */}
+            
+
+            {/* Display other profile fields */}
             {Object.entries(profile).map(([key, value]) => {
-              if (!value || key === "photo" || key === "bioData") return null;
+              if (!value || ["photo", "bioData"].includes(key)) return null;
 
               const label = key
                 .replace(/([A-Z])/g, " $1")
@@ -60,7 +96,41 @@ const UserProfile = () => {
                   </div>
                 </Col>
               );
-            })}  
+            })}
+
+            {profile.photo && (
+              <Col sm={12} md={4} className="text-center">
+                <Image
+                  src={profile.photo}
+                  fluid
+                  alt="Profile Photo"
+                  style={{
+                    maxHeight: "200px",
+                    width: "100%",
+                    objectFit: "cover",
+                    border: "2px solid #ccc",
+                    borderRadius: "5px"
+                  }}
+                />
+                <div className="mt-2"><strong>Photo</strong></div>
+              </Col>
+            )}
+
+            {profile.bioData && (
+              <Col sm={12} md={8}>
+                <div className="d-flex flex-column justify-content-center h-100">
+                  <strong>Biodata:</strong>
+                  <a
+                    href={profile.bioData}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-outline-primary mt-2"
+                  >
+                    View / Download Biodata
+                  </a>
+                </div>
+              </Col>
+            )}
           </Row>
         </Card.Body>
       </Card>

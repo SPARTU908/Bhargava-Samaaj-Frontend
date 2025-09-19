@@ -6,7 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import { registerUser } from "../../apis/form";
 import {useNavigate} from "react-router-dom";
-import axios from "axios";
+
 
 const Form = () => {
   const [formData, setFormData] = useState({
@@ -103,10 +103,6 @@ const Form = () => {
       newErrors.email = "Email is invalid";
     }
 
-  //   if (formData.mobile && !/^[6-9]\d{9}$/.test(formData.mobile)) {
-  //   newErrors.mobile = "Please enter a valid 10-digit Indian mobile number";
-  // }
-
   if (
   formData.mobile &&
   !/^((\+91)?[6-9]\d{9}|(\+1)?\d{10})$/.test(formData.mobile)
@@ -128,25 +124,149 @@ const Form = () => {
     setFormData({ ...formData, [name]: value });
   };
 
- const handleEditProfile = ()=>{
-  navigate("/user-dashboard")
- }
+
+
+
+// const handleSubmit = async (e) => {
+//   e.preventDefault();
+
+//   if (isSubmitting) return;
+
+//   setIsSubmitting(true);
+
+//   const validationErrors = validate();
+//   if (!photoFile) {
+//     validationErrors.photo = "Photo is required";
+//   }
+//   if (!biodataFile) {
+//     validationErrors.bioData = "Biodata is required";
+//   }
+
+//   if (Object.keys(validationErrors).length > 0) {
+//     setErrors(validationErrors);
+//     setIsSubmitting(false);
+//     return;
+//   }
+
+//   setErrors({});
+
+//   try {
+//     // ✅ Upload photo to Cloudinary
+//     const uploadToCloudinary = async (file) => {
+//       const formData = new FormData();
+//       formData.append("file", file);
+//       formData.append("upload_preset", "matrimony_upload"); // <-- Replace this
+//       const res = await fetch("https://api.cloudinary.com/v1_1/doj76lpfe/upload", {
+//         method: "POST",
+//         body: formData,
+//       });
+//       const data = await res.json();
+//       return data.secure_url;
+//     };
+
+//     let uploadedPhotoUrl = "";
+//     if (photoFile) {
+//       uploadedPhotoUrl = await uploadToCloudinary(photoFile);
+//     }
+
+//     let uploadedBiodataUrl = "";
+//     if (biodataFile) {
+//       uploadedBiodataUrl = await uploadToCloudinary(biodataFile);
+//     }
+
+//     const finalForm = {
+//       ...formData,
+//       photo: uploadedPhotoUrl,
+//       bioData: uploadedBiodataUrl,
+//     };
+
+//     const result = await registerUser(finalForm); // your existing backend API
+
+//     if (result.status === 201) {
+//       toast.success(
+//         "Thanks for submitting your details! Your details will go live in 24 to 36 hours.",
+//         {
+//           position: "top-center",
+//           autoClose: 3000,
+//           hideProgressBar: false,
+//           closeOnClick: true,
+//           pauseOnHover: false,
+//           draggable: true,
+//           progress: undefined,
+//           theme: "light",
+//         }
+//       );
+
+//       // ✅ Reset form
+//       setFormData({
+//         number: "",
+//         name: "",
+//         email: "",
+//         mobile: "",
+//         gender: "",
+//         birthTime: "",
+//         birthPlace: "",
+//         height: "",
+//         weight: "",
+//         dob: "",
+//         bloodGroup: "",
+//         manglik: "",
+//         gotra: "",
+//         kuldevi: "",
+//         complexion: "",
+//         education: "",
+//         professionQualification: "",
+//         profession: "",
+//         company: "",
+//         designation: "",
+//         income: "",
+//         hobbies: "",
+//         otherQualification: "",
+//         guardianName: "",
+//         fatherName: "",
+//         fatherProfession: "",
+//         fatherIncome: "",
+//         fatherDesignation: "",
+//         motherName: "",
+//         nativePlace: "",
+//         address: "",
+//         city: "",
+//         pin: "",
+//         whatsapp: "",
+//         nri: "",
+//         remarks: "",
+//         password: "",
+//         photo: "",
+//         bioData: "",
+//       });
+
+//       setPhotoFile(null);
+//       setBiodataFile(null);
+//       setIsSubmitting(false);
+//       if (photoInputRef.current) photoInputRef.current.value = "";
+//       if (biodataInputRef.current) biodataInputRef.current.value = "";
+//     }
+//   } catch (err) {
+//     console.error("Form submission failed:", err);
+//     toast.error("Something went wrong. Please try again.");
+//     setIsSubmitting(false);
+//   }
+// };
+
+
+
 
 
 const handleSubmit = async (e) => {
   e.preventDefault();
 
   if (isSubmitting) return;
-
   setIsSubmitting(true);
 
   const validationErrors = validate();
-  if (!photoFile) {
-    validationErrors.photo = "Photo is required";
-  }
-  if (!biodataFile) {
-    validationErrors.bioData = "Biodata is required";
-  }
+
+  if (!photoFile) validationErrors.photo = "Photo is required";
+  if (!biodataFile) validationErrors.bioData = "Biodata is required";
 
   if (Object.keys(validationErrors).length > 0) {
     setErrors(validationErrors);
@@ -157,40 +277,23 @@ const handleSubmit = async (e) => {
   setErrors({});
 
   try {
-    // ✅ Upload photo to Cloudinary
-    const uploadToCloudinary = async (file) => {
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("upload_preset", "matrimony_upload"); // <-- Replace this
-      const res = await fetch("https://api.cloudinary.com/v1_1/doj76lpfe/upload", {
-        method: "POST",
-        body: formData,
-      });
-      const data = await res.json();
-      return data.secure_url;
-    };
+    const formPayload = new FormData();
 
-    let uploadedPhotoUrl = "";
-    if (photoFile) {
-      uploadedPhotoUrl = await uploadToCloudinary(photoFile);
-    }
+    // Append text fields
+    Object.entries(formData).forEach(([key, value]) => {
+      formPayload.append(key, value);
+    });
 
-    let uploadedBiodataUrl = "";
-    if (biodataFile) {
-      uploadedBiodataUrl = await uploadToCloudinary(biodataFile);
-    }
+    // Append files
+    if (photoFile) formPayload.append("photo", photoFile);
+    if (biodataFile) formPayload.append("bioData", biodataFile);
 
-    const finalForm = {
-      ...formData,
-      photo: uploadedPhotoUrl,
-      bioData: uploadedBiodataUrl,
-    };
+    const result = await registerUser(formPayload);
 
-    const result = await registerUser(finalForm); // your existing backend API
-
+    // ✅ Success
     if (result.status === 201) {
       toast.success(
-        "Thanks for submitting your details! Your details will go live in 24 to 36 hours.",
+        "Thanks for submitting your details! Your profile will go live within 24–36 hours.",
         {
           position: "top-center",
           autoClose: 3000,
@@ -198,12 +301,11 @@ const handleSubmit = async (e) => {
           closeOnClick: true,
           pauseOnHover: false,
           draggable: true,
-          progress: undefined,
           theme: "light",
         }
       );
 
-      // ✅ Reset form
+      // Reset form
       setFormData({
         number: "",
         name: "",
@@ -248,16 +350,28 @@ const handleSubmit = async (e) => {
 
       setPhotoFile(null);
       setBiodataFile(null);
-      setIsSubmitting(false);
       if (photoInputRef.current) photoInputRef.current.value = "";
       if (biodataInputRef.current) biodataInputRef.current.value = "";
+    } else {
+      toast.error(result?.response?.data?.message || "Submission failed");
     }
+
   } catch (err) {
     console.error("Form submission failed:", err);
-    toast.error("Something went wrong. Please try again.");
+
+    // ✅ Check for 409 error (email exists)
+    if (err?.response?.status === 409) {
+      toast.error(err.response.data.errorMessage || "Email already exists");
+    } else {
+      toast.error("Something went wrong. Please try again.");
+    }
+  } finally {
     setIsSubmitting(false);
   }
 };
+
+
+
 
   return (
     <>

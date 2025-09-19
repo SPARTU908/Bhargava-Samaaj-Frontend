@@ -1,8 +1,25 @@
-.left-card {
-margin-top:10px
+.hover-shadow:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2) !important;
+  transform: translateY(-4px);
 }
 
-.right-card {
-    margin-top: -197px;
-    MARGIN-LEFT: 35PX;
+
+.registration-card {
+  border: none;
+  border-radius: 12px;
+  transition: all 0.3s ease-in-out;
+}
+
+.registration-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* Specific card themes */
+.award-card {
+  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+}
+
+.conference-card {
+  background: linear-gradient(135deg, #ff5f6d 0%, #ffc371 100%);
 }

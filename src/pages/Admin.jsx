@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Navbar from "../components/Navbar/Navbar";
+import "./Admin.css";
 
 const Admin = () => {
   const [admin, setAdmin] = useState({
@@ -66,6 +67,7 @@ const Admin = () => {
   return (
     <>
       <Navbar />
+      <div className="layout">
       <Container className="mt-5">
         <Row className="justify-content-center">
           <Col xs={12} sm={10} md={8} lg={6}>
@@ -128,6 +130,7 @@ const Admin = () => {
           </Col>
         </Row>
       </Container>
+      </div>
       <ToastContainer />
     </>
   );

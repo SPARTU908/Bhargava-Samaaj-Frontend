@@ -311,6 +311,96 @@ const Membership = () => {
     }
   };
 
+
+
+ 
+
+
+//   const handleSubmit = async (e) => {
+//   e.preventDefault();
+
+//   if (isSubmitting) return;
+//   setIsSubmitting(true);
+
+//   const validationErrors = validate();
+//   if (Object.keys(validationErrors).length > 0) {
+//     setErrors(validationErrors);
+//     toast.error("कृपया सभी आवश्यक फ़ील्ड भरें।", {
+//       position: "top-center",
+//     });
+//     setIsSubmitting(false);
+//     return;
+//   }
+
+//   try {
+//     // ✅ Step 1: Submit basic data (without photo URLs yet)
+//     const result = await registerMember({
+//       ...memberData,
+//       membership: selectedFee,
+//       photo: "", signature: "", spousePhoto: "", spouseSignature: "",
+//       uploadAadharUser: "", uploadAadharSpouse: ""
+//     });
+
+//     if (!result.success) {
+//       toast.error("सदस्य पंजीकरण असफल।", { position: "top-center" });
+//       setIsSubmitting(false);
+//       return;
+//     }
+
+//     const memberId = result.data.memberId;
+
+//     // ✅ Step 2: Upload each file to backend (DigitalOcean via multer-s3)
+//     const uploadedPhotoUrl = photoFile
+//       ? await uploadFileToServer(photoFile, memberId)
+//       : "";
+//     const uploadedSignatureUrl = signatureFile
+//       ? await uploadFileToServer(signatureFile, memberId)
+//       : "";
+//     const uploadedSpousePhotoUrl = spousePhotoFile
+//       ? await uploadFileToServer(spousePhotoFile, memberId)
+//       : "";
+//     const uploadedSpouseSignatureUrl = spouseSignatureFile
+//       ? await uploadFileToServer(spouseSignatureFile, memberId)
+//       : "";
+//     const uploadedAadharUserUrl = uploadAadharUser
+//       ? await uploadFileToServer(uploadAadharUser, memberId)
+//       : "";
+//     const uploadedAadharSpouseUrl = uploadAadharSpouse
+//       ? await uploadFileToServer(uploadAadharSpouse, memberId)
+//       : "";
+
+//     // ✅ Step 3: Update member with uploaded file URLs (you need this backend route)
+//   await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/member/members/${memberId}/status`, {
+//       photo: uploadedPhotoUrl,
+//       signature: uploadedSignatureUrl,
+//       spousePhoto: uploadedSpousePhotoUrl,
+//       spouseSignature: uploadedSpouseSignatureUrl,
+//       uploadAadharUser: uploadedAadharUserUrl,
+//       uploadAadharSpouse: uploadedAadharSpouseUrl,
+//     });
+
+//     // ✅ Step 4: Show success and redirect
+//     toast.success("पंजीकरण सफल!", { position: "top-center" });
+
+//     setTimeout(() => {
+//       navigate("/payment1", {
+//         state: {
+//           membership: selectedFee,
+//           memberId: memberId,
+//           email: memberData.email,
+//           name: memberData.username,
+//           mobile: memberData.mobile,
+//         },
+//       });
+//     }, 2000);
+//   } catch (error) {
+//     console.error("Error:", error);
+//     toast.error("कुछ गलत हो गया।", { position: "top-center" });
+//   } finally {
+//     setIsSubmitting(false);
+//   }
+// };
+
   return (
     <>
       <Navbar />

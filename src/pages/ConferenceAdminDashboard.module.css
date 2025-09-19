@@ -1,14 +1,17 @@
-
 .container {
   display: flex;
   min-height: 100vh;
 }
 
-/* sidebar */
+/* Sticky Sidebar */
 .container > div:first-child {
   width: 20vw;
   background-color: #171e2b;
   color: white;
+  position: sticky;  /* <- MAKE IT STICKY */
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
 }
 .title{
   font-size: 30px;

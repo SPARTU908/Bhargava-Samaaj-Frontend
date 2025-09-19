@@ -7,6 +7,7 @@ const MemberInfo = ({ member }) => {
   const [isFamilyOpen, setFamilyOpen] = useState(false);
   const [isContactOpen, setContactOpen] = useState(false);
   const [isOtherOpen, setOtherOpen] = useState(false);
+  const [showBioPreview, setShowBioPreview] = useState(false);
 
   const toggle = (setter) => () => setter((prev) => !prev);
 
@@ -201,86 +202,73 @@ const MemberInfo = ({ member }) => {
                 <div>
                   <b>Remarks:</b> {member.remarks}
                 </div>
-                {/* Only show password if really needed */}
-                {/* <div><b>Password:</b> {member.password}</div> */}
-                {/* <div><b>Photo:</b> {member.photo && <a href={member.photo} target="_blank" rel="noreferrer">View</a>}</div> */}
-                {/* <div>
-                  <b>BioData:</b>{" "}
-                  {member.bioData && (
-                    <a href={member.bioData} target="_blank" rel="noreferrer">
-                      Download
-                    </a>
-                  )}
-                </div> */}
-
-                {/* {member.bioData && (
-                  <>
-                    <div>
-                      <a href={member.bioData} target="_blank" rel="noreferrer">
-                        Download
-                      </a>
-                      {" | "}
-                      {member.bioData.includes("/raw/") ||
-                      member.bioData.endsWith(".pdf") ? (
-                        <a
-                          href={member.bioData}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          View
-                        </a>
-                      ) : null}
-                    </div>
-
-                    {member.bioData.includes("/raw/") ||
-                    member.bioData.endsWith(".pdf") ? (
-                      <iframe
-                        src={member.bioData}
-                        width="100%"
-                        height="600px"
-                        title="PDF Preview"
-                        style={{ marginTop: "1rem", border: "1px solid #ccc" }}
-                      />
-                    ) : (
-                      <img
-                        src={member.bioData}
-                        alt="BioData"
-                        style={{
-                          maxWidth: "100%",
-                          marginTop: "1rem",
-                          border: "1px solid #ccc",
-                        }}
-                      />
-                    )}
-                  </>
-                )} */}
+              
               </div>
             </>
           )}
         </div>
-        {member.bioData &&
-          (() => {
-            const isPdf = member.bioData.endsWith(".pdf");
-            const fixedUrl = isPdf
-              ? member.bioData.replace("/image/upload/", "/raw/upload/")
-              : member.bioData;
+       {member.bioData &&
+  (() => {
+    const isCloudinary = member.bioData.startsWith("http");
+    const isPdf = member.bioData.toLowerCase().endsWith(".pdf");
 
-            return (
-              <>
-                <div>
-                  <a href={fixedUrl} target="_blank" rel="noreferrer">
-                    Download Biodata
-                  </a>
-                  {" | "}
-                  {isPdf && (
-                    <a href={fixedUrl} target="_blank" rel="noreferrer">
-                      View
-                    </a>
-                  )}
-                </div>
-              </>
-            );
-          })()}
+    const fixedUrl = isCloudinary
+      ? isPdf
+        ? member.bioData.replace("/image/upload/", "/raw/upload/")
+        : member.bioData
+      : `${import.meta.env.VITE_BACKEND_URL}/${member.bioData.replace(/\\/g, "/")}`;
+
+    return (
+      <>
+        <div>
+          <a href={fixedUrl} download target="_blank" rel="noreferrer">
+            Download
+          </a>
+          {" | "}
+          <button
+            onClick={() => setShowBioPreview(!showBioPreview)}
+            style={{
+              background: "none",
+              border: "none",
+              color: "blue",
+              textDecoration: "underline",
+              cursor: "pointer",
+              padding: 0,
+            }}
+          >
+            {showBioPreview ? "Hide Preview" : "View"}
+          </button>
+        </div>
+
+        {showBioPreview && (
+          <>
+            {isPdf ? (
+              <iframe
+                src={fixedUrl}
+                width="100%"
+                height="600px"
+                title="PDF Preview"
+                style={{
+                  marginTop: "1rem",
+                  border: "1px solid #ccc",
+                }}
+              />
+            ) : (
+              <img
+                src={fixedUrl}
+                alt="BioData"
+                style={{
+                  maxWidth: "100%",
+                  marginTop: "1rem",
+                  border: "1px solid #ccc",
+                }}
+              />
+            )}
+          </>
+        )}
+      </>
+    );
+  })()}
       </div>
     </>
   );

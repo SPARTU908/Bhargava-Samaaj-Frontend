@@ -1,28 +1,3 @@
-// import styles from "./Footer.module.css";
-// import logo2 from "../../assets/samaajlogo.png";
-
-// const Footer = () => {
-//   return (
-//     <>
-//       <div className={styles.footer}>
-//         <div className={styles.footerLogo}>
-//           <img src={logo2} width={150} height={150} className={styles.logo} />
-//         </div>
-
-//         <div className={styles.footercol3}>
-//           <div className={styles.contact}>Contact Details</div>
-//           <div className={styles.phone}>Phone no:9414076842</div>
-//           <div className={styles.address}>
-//             401, 3rd Floor,Empire Apartment Mehroli,<br />Gurgaon Road,Sultanpur,New Delhi-30
-//           </div>
-//         </div>
-//       </div>
-//     </>
-//   );
-// };
-
-// export default Footer;
-
 import { Container, Row, Col, Image } from "react-bootstrap";
 import logo2 from "../../assets/samaajlogo.png";
 import "bootstrap/dist/css/bootstrap.min.css";

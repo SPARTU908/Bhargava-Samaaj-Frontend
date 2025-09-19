@@ -1,19 +1,37 @@
 import axios from "axios";
 
-export const registerUser = async (userDetails) => {
+// export const registerUser = async (userDetails) => {
+//   const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/form/submit`;
+//   try {
+//     const response = await axios.post(reqUrl, userDetails, {
+//       withCredentials: true,
+//     });
+//     if (response) {
+//       return response;
+//     } else {
+//       throw new Error("Registration failed: No email returned from server");
+//     }
+//   } catch (error) {
+//     console.log(error);
+//     return error;
+//   }
+// };
+
+
+export const registerUser = async (formData) => {
   const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/form/submit`;
   try {
-    const response = await axios.post(reqUrl, userDetails, {
+    const response = await axios.post(reqUrl, formData, {
       withCredentials: true,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     });
-    if (response) {
-      return response;
-    } else {
-      throw new Error("Registration failed: No email returned from server");
-    }
+
+    return response;
   } catch (error) {
-    console.log(error);
-    return error;
+    console.error("Registration failed:", error);
+    throw error;
   }
 };
 

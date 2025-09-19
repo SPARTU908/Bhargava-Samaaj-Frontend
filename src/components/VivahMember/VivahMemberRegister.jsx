@@ -38,6 +38,7 @@ const VivahMemberRegister = () => {
       "name",
       "email",
       "phone",
+      "membershipno",
       "gender",
       "city",
       "gotra",
@@ -223,7 +224,7 @@ const VivahMemberRegister = () => {
 
               {/* Membership No */}
               <Form.Group className="mb-3" controlId="membershipno">
-                <Form.Label>Membership No</Form.Label>
+                <Form.Label>Membership No<span className="text-danger">*</span></Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Enter membership no"

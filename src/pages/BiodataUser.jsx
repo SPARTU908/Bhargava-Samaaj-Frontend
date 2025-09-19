@@ -3,14 +3,13 @@ import styles from "./Members.module.css";
 import { getApprovedMembers } from "../apis/form";
 import MemberInfo from "./MemberInfo";
 
-
 const BiodataUser = () => {
   const [members, setMembers] = useState([]);
   const [ageRange, setAgeRange] = useState("");
   const [city, setCity] = useState("");
   const [sortBy, setSortBy] = useState("");
   const [gender, setGender] = useState("");
-  const [searchQuery, setSearchQuery] = useState(""); 
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const fetchMembers = async () => {
@@ -88,7 +87,9 @@ const BiodataUser = () => {
 
     const cityMatches = !city || member.city === city;
     const genderMatches = !gender || member.gender?.toLowerCase() === gender;
-    const nameMatches = !searchQuery || member.name.toLowerCase().includes(searchQuery.toLowerCase()); // Search by name
+    const nameMatches =
+      !searchQuery ||
+      member.name.toLowerCase().includes(searchQuery.toLowerCase()); // Search by name
 
     return ageMatches && cityMatches && genderMatches && nameMatches; // Apply search filter
   });
@@ -119,9 +120,7 @@ const BiodataUser = () => {
   };
 
   return (
-  
     <>
- 
       <div className={styles.approvedProfiles}>Browse Profiles</div>
 
       {/* Search Box - Added search by name */}
@@ -204,7 +203,7 @@ const BiodataUser = () => {
             <div className={styles.name}>{member.name}</div>
             <div className={styles.box}>
               <div className={styles.imageBox}>
-               {member.bioData &&
+                {member.bioData &&
                   (() => {
                     const isPdf = member.bioData.endsWith(".pdf");
                     const fixedUrl = isPdf
@@ -253,13 +252,19 @@ const BiodataUser = () => {
 
                 {member.photo &&
                   (() => {
+                    const isCloudinary = member.photo.startsWith("http");
                     const isPdf = member.photo
                       .split("?")[0]
                       .toLowerCase()
                       .endsWith(".pdf");
-                    const fixedUrl = isPdf
-                      ? member.photo.replace("/image/upload/", "/raw/upload/")
-                      : member.photo;
+
+                    const fixedUrl = isCloudinary
+                      ? isPdf
+                        ? member.photo.replace("/image/upload/", "/raw/upload/")
+                        : member.photo
+                      : `${
+                          import.meta.env.VITE_BACKEND_URL
+                        }/${member.photo.replace(/\\/g, "/")}`;
 
                     return (
                       <div className={styles.imageBox}>
