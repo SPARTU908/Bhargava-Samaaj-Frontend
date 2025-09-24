@@ -10,12 +10,9 @@ import "react-toastify/dist/ReactToastify.css";
 const Payment1 = () => {
   const location = useLocation();
 
-  // ✅ Get data from Membership form (passed via navigate state)
   const { membership: plan, email, name, mobile } = location.state || {};
   const memberId = location.state?.memberId ;
  
-
-  // ✅ Pre-fill payment form with data from Membership
   const [paymentdata, setPaymentData] = useState({
     name: name || "",
     email: email || "",

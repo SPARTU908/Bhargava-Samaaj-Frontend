@@ -6,8 +6,6 @@ import Table from "react-bootstrap/Table";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import DisplayForm from "./DisplayForm";
-import ReactDOMServer from "react-dom/server";
-import ReactDOM from "react-dom";
 import { createRoot } from "react-dom/client";
 import { updateDispatchStatus } from "../apis/member";
 
@@ -29,7 +27,7 @@ const MemberAdmin = () => {
           getAllMembers(),
           getAllPayment(),
         ]);
-      setMembers(membersResult);
+        setMembers(membersResult);
         setPayment(paymentsResult);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -136,8 +134,6 @@ const MemberAdmin = () => {
       alert("Failed to update dispatch status.");
     }
   };
-
-  
 
   const handleResetDeleted = () => {
     localStorage.removeItem("deletedMemberIds");
@@ -316,8 +312,99 @@ const MemberAdmin = () => {
                         )}
                       </td>
                       <td>{member.occupation}</td>
-                      <td>{member.uploadAadharUser}</td>
-                      <td>{member.uploadAadharSpouse}</td>
+
+                      {/* <td>
+                        {member.uploadAadharUser && (
+                          <img
+                            src={member.uploadAadharUser}
+                            alt=""
+                            style={{
+                              width: "80px",
+                              height: "auto",
+                              borderRadius: "4px",
+                            }}
+                            
+                          />
+                        )}
+                      </td>
+
+                      <td>
+                        {member.uploadAadharSpouse && (
+                          <img
+                            src={member.uploadAadharSpouse}
+                            alt=""
+                            style={{
+                              width: "80px",
+                              height: "auto",
+                              borderRadius: "4px",
+                            }}
+                          />
+                        )}
+                      </td> */}
+
+                      <td>
+                        {member.uploadAadharUser &&
+                          (() => {
+                            const url = member.uploadAadharUser;
+                            const isPdf = url.toLowerCase().endsWith(".pdf");
+                            if (isPdf) {
+                              // Show a PDF link or embed
+                              return (
+                                <a
+                                  href={url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  View PDF
+                                </a>
+                              );
+                            } else {
+                              // Show image preview
+                              return (
+                                <img
+                                  src={url}
+                                  alt="User Aadhaar"
+                                  style={{
+                                    width: "80px",
+                                    height: "auto",
+                                    borderRadius: "4px",
+                                  }}
+                                />
+                              );
+                            }
+                          })()}
+                      </td>
+
+                      <td>
+                        {member.uploadAadharSpouse &&
+                          (() => {
+                            const url = member.uploadAadharSpouse;
+                            const isPdf = url.toLowerCase().endsWith(".pdf");
+                            if (isPdf) {
+                              return (
+                                <a
+                                  href={url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  View PDF
+                                </a>
+                              );
+                            } else {
+                              return (
+                                <img
+                                  src={url}
+                                  alt="Spouse Aadhaar"
+                                  style={{
+                                    width: "80px",
+                                    height: "auto",
+                                    borderRadius: "4px",
+                                  }}
+                                />
+                              );
+                            }
+                          })()}
+                      </td>
 
                       <td>{memberPayment?.name || "N/A"}</td>
                       <td>{memberPayment?.email || "N/A"}</td>

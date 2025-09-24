@@ -1,12 +1,45 @@
 import axios from "axios";
 
 
-export const registerMember = async (memberDetails) => {
+// export const registerMember = async (memberDetails) => {
+//   const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/member/register`;
+//   try {
+//     const response = await axios.post(reqUrl, memberDetails, {
+//       withCredentials: true, 
+//     });
+
+//     if (response.status === 201) {
+//       return {
+//         success: true,
+//         data: response.data,
+//       };
+//     } else {
+//       return {
+//         success: false,
+//         error: response.message,
+//       };
+//     }
+//   } catch (error) {
+//     console.error("Registration error:", error.response?.data || error.message);
+//     return {
+//       success: false,
+//       error: error.response?.data || "Something went wrong",
+//     };
+//   }
+// };
+
+
+export const registerMember = async (formData) => {
   const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/member/register`;
+
   try {
-    const response = await axios.post(reqUrl, memberDetails, {
-      withCredentials: true, // Required for CORS with cookies/sessions
+    const response = await axios.post(reqUrl, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data", 
+      },
+      withCredentials: true,
     });
+     
 
     if (response.status === 201) {
       return {
@@ -16,20 +49,17 @@ export const registerMember = async (memberDetails) => {
     } else {
       return {
         success: false,
-        error: response.message,
+        error: response.data?.message || "Registration failed",
       };
     }
   } catch (error) {
     console.error("Registration error:", error.response?.data || error.message);
     return {
       success: false,
-      error: error.response?.data || "Something went wrong",
+      error: error.response?.data?.message || "Something went wrong",
     };
   }
 };
-
-
-
 
 export const loginMember = async ({ username, membership }) => {
   const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/member/login/member`;

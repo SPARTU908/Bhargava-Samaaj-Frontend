@@ -159,6 +159,7 @@ const ConferenceAdminDashboard = () => {
                   <th>Name</th>
                   <th>DOB</th>
                   <th>Email</th>
+                  <th>Address</th>
                   <th>Mobile</th>
                   <th>Pincode</th>
                   <th>Qualification</th>
@@ -166,8 +167,8 @@ const ConferenceAdminDashboard = () => {
                   <th>Mother's Name</th>
                   <th>Spouse Name</th>
                   <th>Photo</th>
-                  <th>Document1</th>
-                  <th>Document2</th>
+                  <th>Upload documents of your achievements{" "}</th>
+                  <th>Upload documents of your achievements{" "}</th>
                   <th>Proposer Name</th>
                   <th>Proposer Email</th>
                   <th>Proposer Mobile</th>
@@ -184,6 +185,7 @@ const ConferenceAdminDashboard = () => {
                     <td>{users.name}</td>
                   <td>{new Date(users.dob).toLocaleDateString()}</td>
                     <td>{users.email}</td>
+                    <td>{users.address}</td>
                     <td>{users.mobile}</td>
                     <td>{users.pin}</td>
                     <td>{users.academicQualification}</td>

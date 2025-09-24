@@ -14,7 +14,7 @@ export const registerUser = async (formData) => {
     return response;
   } catch (error) {
     console.error("Registration API Error:", error);
-    throw error; // Better to throw so you can handle in `catch` of calling function
+    throw error; 
   }
 };
 

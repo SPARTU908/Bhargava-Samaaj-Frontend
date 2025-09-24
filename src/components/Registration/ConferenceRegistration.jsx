@@ -45,9 +45,7 @@ const ConferenceRegistration = () => {
     const pincodeRegex = /^\d{6}$/;
     const today = new Date().toISOString().split("T")[0];
 
-    if (!formData.abbsMembershipNo.trim()) {
-      errors.abbsMembershipNo = "Membership number is required";
-    }
+  
 
     if (!formData.name.trim()) {
       errors.name = "Name is required";
@@ -227,7 +225,7 @@ const ConferenceRegistration = () => {
                   <p>Greetings of the Day</p>
                   <p>
                     The form for Online Registration for the upcoming Adhiveshan
-                    at Rewari on the 20th, 21st and 22nd of December has been
+                    at Ujjain on the 20th, 21st and 22nd of December has been
                     uploaded on the Website. You may register on the website
                     depending on your plans to attend the Adhiveshan.
                   </p>
@@ -236,8 +234,10 @@ const ConferenceRegistration = () => {
                     Registration and Rs.100 per person for the On Spot
                     Registration at the Adhiveshan Venue.
                   </p>
+                  <p>The charge for each form for On Spot Registration will be Rs.10</p>
 
                   <p>Upload the slip of payment in online form.</p>
+                  <p>For any query, please contact at ABBS Office number-9521276842</p>
                 </div>
 
                 {/* Barcode image */}
@@ -267,14 +267,13 @@ const ConferenceRegistration = () => {
                     <Form.Group className="mb-3">
                       <Form.Label>
                         ABBS Membership No
-                        <span style={{ color: "red" }}>*</span>
-                      </Form.Label>
-                      <Form.Control
+                        </Form.Label>
+                       <Form.Control
                         type="text"
                         name="abbsMembershipNo"
                         value={formData.abbsMembershipNo}
                         onChange={handleChange}
-                        required
+                       
                         placeholder="Enter membership number"
                         isInvalid={!!formErrors.abbsMembershipNo}
                       />
