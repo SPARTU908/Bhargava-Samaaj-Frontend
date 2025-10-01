@@ -30,6 +30,8 @@ const AwardForm = () => {
     father: "",
     mother: "",
     spouse: "",
+    spousedob: "",
+    spouseOccupation: "",
     proposerName: "",
     proposerEmail: "",
     proposerMobile: "",
@@ -99,8 +101,7 @@ const AwardForm = () => {
       }
     });
 
-   
-   if (!files.photo) {
+    if (!files.photo) {
       newErrors.photo = "Photograph is required";
     }
 
@@ -108,13 +109,11 @@ const AwardForm = () => {
       newErrors.document1 = "At least one achievement document is required";
     }
 
- 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (formData.email && !emailRegex.test(formData.email)) {
       newErrors.email = "Invalid email format";
     }
 
- 
     const mobileRegex = /^[6-9]\d{9}$/;
     if (formData.mobile && !mobileRegex.test(formData.mobile)) {
       newErrors.mobile = "Invalid mobile number";
@@ -123,103 +122,107 @@ const AwardForm = () => {
     return newErrors;
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("handleSubmit triggered");
 
+    console.log("Current formData:", formData);
+    console.log("Current files:", files);
 
+    const validationErrors = validateForm();
+    console.log("validationErrors:", validationErrors);
+    setErrors(validationErrors);
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  console.log("handleSubmit triggered");
+    if (Object.keys(validationErrors).length > 0) {
+      console.log("Validation failed - aborting submit");
+      return;
+    }
 
-  console.log("Current formData:", formData);
-  console.log("Current files:", files);
+    console.log("Validation passed, building FormData");
 
-  const validationErrors = validateForm();
-  console.log("validationErrors:", validationErrors);
-  setErrors(validationErrors);
+    const data = new FormData();
+    for (let key in formData) {
+      data.append(key, formData[key]);
+      console.log(`Appended field ${key}:`, formData[key]);
+    }
+    if (files.photo) {
+      data.append("photo", files.photo);
+      console.log("Appended file photo:", files.photo.name || files.photo);
+    }
+    if (files.document1) {
+      data.append("document1", files.document1);
+      console.log(
+        "Appended file document1:",
+        files.document1.name || files.document1
+      );
+    }
+    if (files.document2) {
+      data.append("document2", files.document2);
+      console.log(
+        "Appended file document2:",
+        files.document2.name || files.document2
+      );
+    }
 
-  if (Object.keys(validationErrors).length > 0) {
-    console.log("Validation failed - aborting submit");
-    return;
-  }
+    console.log("Sending API request with FormData");
 
-  console.log("Validation passed, building FormData");
+    try {
+      const res = await submitAwardForm(data);
+      console.log("API response:", res);
 
-  const data = new FormData();
-  for (let key in formData) {
-    data.append(key, formData[key]);
-    console.log(`Appended field ${key}:`, formData[key]);
-  }
-  if (files.photo) {
-    data.append("photo", files.photo);
-    console.log("Appended file photo:", files.photo.name || files.photo);
-  }
-  if (files.document1) {
-    data.append("document1", files.document1);
-    console.log("Appended file document1:", files.document1.name || files.document1);
-  }
-  if (files.document2) {
-    data.append("document2", files.document2);
-    console.log("Appended file document2:", files.document2.name || files.document2);
-  }
-
-  console.log("Sending API request with FormData");
-
-  try {
-    const res = await submitAwardForm(data);
-    console.log("API response:", res);
-
-    if (res?.data?.message) {
-      console.log("Submission succeeded:", res.data.message);
+      if (res?.data?.message) {
+        console.log("Submission succeeded:", res.data.message);
+        setStatus({
+          loading: false,
+          message: res.data.message,
+          error: false,
+        });
+        // Reset
+        setFormData({
+          code1: "",
+          code2: "",
+          code3: "",
+          name: "",
+          dob: "",
+          mobile: "",
+          email: "",
+          address: "",
+          pin: "",
+          academicQualification: "",
+          occupation: "",
+          father: "",
+          mother: "",
+          spouse: "",
+          spouseOccupation: "",
+          spousedob: "",
+          proposerName: "",
+          proposerEmail: "",
+          proposerMobile: "",
+          proposerAddress: "",
+        });
+        setFiles({ photo: null, document1: null, document2: null });
+        setErrors({});
+      } else {
+        console.log("API did not return expected message:", res.data);
+        setStatus({
+          loading: false,
+          message: res?.data?.error || "Something went wrong.",
+          error: true,
+        });
+      }
+    } catch (err) {
+      console.error("Error during submission:", err);
+      if (err.response) {
+        console.error("Error response data:", err.response.data);
+      }
       setStatus({
         loading: false,
-        message: res.data.message,
-        error: false,
-      });
-      // Reset
-      setFormData({
-        code1: "",
-        code2: "",
-        code3: "",
-        name: "",
-        dob: "",
-        mobile: "",
-        email: "",
-        address: "",
-        pin: "",
-        academicQualification: "",
-        occupation: "",
-        father: "",
-        mother: "",
-        spouse: "",
-        proposerName: "",
-        proposerEmail: "",
-        proposerMobile: "",
-        proposerAddress: "",
-      });
-      setFiles({ photo: null, document1: null, document2: null });
-      setErrors({});
-    } else {
-      console.log("API did not return expected message:", res.data);
-      setStatus({
-        loading: false,
-        message: res?.data?.error || "Something went wrong.",
+        message:
+          err?.response?.data?.message || "Server error. Please try again.",
         error: true,
       });
     }
-  } catch (err) {
-    console.error("Error during submission:", err);
-    if (err.response) {
-      console.error("Error response data:", err.response.data);
-    }
-    setStatus({
-      loading: false,
-      message: err?.response?.data?.message || "Server error. Please try again.",
-      error: true,
-    });
-  }
-};
-
-
+  };
 
   return (
     <>
@@ -289,7 +292,11 @@ const handleSubmit = async (e) => {
                 </Alert>
               )}
 
-              <Form onSubmit={handleSubmit} encType="multipart/form-data" noValidate> 
+              <Form
+                onSubmit={handleSubmit}
+                encType="multipart/form-data"
+                noValidate
+              >
                 {/* Section: Nominee Codes */}
                 <h5 className="text-secondary mb-3">Preference for award</h5>
                 <Row>
@@ -314,7 +321,6 @@ const handleSubmit = async (e) => {
                     <Form.Group className="mb-3">
                       <Form.Label>2. Code No.</Form.Label>
                       <Form.Control
-                     
                         name="code2"
                         value={formData.code2}
                         onChange={handleChange}
@@ -327,7 +333,6 @@ const handleSubmit = async (e) => {
                         Award applied for special Achievemnets 3. Code No.{" "}
                       </Form.Label>
                       <Form.Control
-                   
                         name="code3"
                         value={formData.code3}
                         onChange={handleChange}
@@ -474,12 +479,10 @@ const handleSubmit = async (e) => {
                     <Form.Group className="mb-3">
                       <Form.Label>Occupation</Form.Label>
                       <Form.Control
-                  
                         name="occupation"
                         value={formData.occupation}
                         onChange={handleChange}
                       />
-                      
                     </Form.Group>
                   </Col>
                 </Row>
@@ -523,13 +526,49 @@ const handleSubmit = async (e) => {
                     <Form.Group className="mb-3">
                       <Form.Label>Spouse's Name</Form.Label>
                       <Form.Control
-                      
                         name="spouse"
                         value={formData.spouse}
                         onChange={handleChange}
                       />
                     </Form.Group>
                   </Col>
+                </Row>
+
+                <Row>
+                  <Col md={6}>
+                    <Form.Group className="mb-3">
+                      <Form.Label>
+                        Spouse DOB 
+                      </Form.Label>
+                      <Form.Control
+                      type="date"
+                        name="spousedob"
+                        value={formData.spousedob}
+                        onChange={handleChange}
+                        isInvalid={!!errors.spousedob}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.spousedob}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                  <Col md={6}>
+                    <Form.Group className="mb-3">
+                      <Form.Label>
+                        Spouse Occupation 
+                      </Form.Label>
+                      <Form.Control
+                        name="spouseOccupation"
+                        value={formData.spouseOccupation}
+                        onChange={handleChange}
+                        isInvalid={!!errors.spouseOccupation}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.spouseOccupation}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                  
                 </Row>
 
                 {/* Section: Proposer Info */}
@@ -627,7 +666,6 @@ const handleSubmit = async (e) => {
                         Upload documents of your achievements{" "}
                       </Form.Label>
                       <Form.Control
-                      
                         type="file"
                         name="document2"
                         onChange={handleFileChange}

@@ -28,13 +28,13 @@ const Registration = () => {
                   🏅 Puruskar & <br/> Maan Samman Form <br/> 2024–2025
                 </Card.Title>
                 <Card.Text>
-                  {/* Nominate individuals for awards and recognition in this prestigious annual form. */}
+                
                 </Card.Text>
               </Card.Body>
             </Card>
           </Col>
 
-          <Col md={5}>
+          {/* <Col md={5}>
             <Card
               onClick={() => handleNavigate('/conference-registration')}
               className="registration-card conference-card text-white"
@@ -49,7 +49,7 @@ const Registration = () => {
                 </Card.Text>
               </Card.Body>
             </Card>
-          </Col>
+          </Col> */}
         </Row>
       </Container>
     </>

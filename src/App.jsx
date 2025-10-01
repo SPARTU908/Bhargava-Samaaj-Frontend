@@ -38,6 +38,7 @@ import Registration from "./pages/Registration.jsx";
 import ConferenceAdminDashboard from "./pages/ConferenceAdminDashboard.jsx";
 import AwardForm from "./components/Registration/AwardForm.jsx";
 import ConferenceRegistration from "./components/Registration/ConferenceRegistration.jsx";
+import NewRegistration from "./pages/NewRegistration.jsx";
 
 
 function App() {
@@ -114,6 +115,7 @@ function App() {
           <Route path="/registration" element={<Registration/>} />
           <Route path="/award-form" element={<AwardForm/>} />
           <Route path="/conference-registration" element={<ConferenceRegistration/>} />
+          <Route path="/new-registration" element={<NewRegistration/>} />
 
           
 
