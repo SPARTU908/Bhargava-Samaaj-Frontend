@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Modal } from "react-bootstrap";
 import {
   Container,
   Form,
@@ -11,6 +12,7 @@ import {
 } from "react-bootstrap";
 import { searchLifeMember, updateLifeMember } from "../apis/lifemember";
 import Navbar from "../components/Navbar/Navbar.jsx";
+import { FaEdit, FaCheck, FaTimes } from "react-icons/fa";
 
 const requiredFields = [
   "member_name",
@@ -33,15 +35,28 @@ const requiredFields = [
 const NewRegistration = () => {
   const [lm_no, setLmNo] = useState("");
   const [member, setMember] = useState(null);
+  const [originalMember, setOriginalMember] = useState(null);
   const [photo, setPhoto] = useState(null);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [formErrors, setFormErrors] = useState({});
+  const [editingFields, setEditingFields] = useState({});
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [submitting, setSubmitting] = useState(false); 
+
 
   const handleSearch = async () => {
+    if (!lm_no.trim()) {
+      setError("Please enter a Life Member No.");
+      setMember(null);
+      setOriginalMember(null);
+      setSuccess("");
+      return;
+    }
+
     try {
       const data = await searchLifeMember(lm_no);
-      setMember({
+      const normalized = {
         ...data,
         gotra: data.gotra || "",
         kuldevi: data.kuldevi || "",
@@ -59,16 +74,22 @@ const NewRegistration = () => {
         col_y: data.col_y || "",
         year: data.year || "",
         card_issue: data.card_issue || "",
-      });
+        photo: data.photo || "/placeholder.jpg",
+        lm_no: data.lm_no || lm_no,
+      };
+      setMember(normalized);
+      setOriginalMember(normalized);
       setError("");
       setSuccess("");
       setFormErrors({});
+      setEditingFields({});
+      setPhoto(null);
     } catch (err) {
       setError(
         <>
           <div style={{ marginTop: "1rem", lineHeight: "1.6" }}>
             <strong style={{ color: "#d9534f" }}>Member not found.</strong>
-            <p>
+            {/* <p>
               Please fill the Life Membership form here:&nbsp;
               <a
                 href="https://bhargavasamajglobal.org/membership"
@@ -90,14 +111,19 @@ const NewRegistration = () => {
                   Membership Form
                 </button>
               </a>
-            </p>
+            </p> */}
           </div>
         </>
       );
-
       setMember(null);
+      setOriginalMember(null);
+      setSuccess("");
+      setFormErrors({});
+      setEditingFields({});
+      setPhoto(null);
     }
   };
+
 
   const handleChange = (field, value) => {
     setMember((prev) => ({
@@ -111,86 +137,241 @@ const NewRegistration = () => {
     }));
   };
 
+
+  const toggleEdit = (field) => {
+    setEditingFields((prev) => ({
+      ...prev,
+      [field]: !prev[field],
+    }));
+
+   
+    if (!editingFields[field]) {
+      setFormErrors((prev) => ({
+        ...prev,
+        [field]: "",
+      }));
+    }
+  };
+
+ 
+  const validate = () => {
+    const errors = {};
+    requiredFields.forEach((field) => {
+      if (!member[field] || member[field].toString().trim() === "") {
+        errors[field] = "This field is required";
+      } else {
+        
+        if (field === "email") {
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(member[field])) {
+            errors[field] = "Invalid email address";
+          }
+        }
+        if (field === "contact_no") {
+          const phoneRegex = /^[0-9]{10,15}$/;
+          if (!phoneRegex.test(member[field])) {
+            errors[field] = "Invalid contact number";
+          }
+        }
+        if (field === "pin") {
+          if (!/^\d{6}$/.test(member[field])) {
+            errors[field] = "PIN code must be 6 digits";
+          }
+        }
+      }
+    });
+
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  // Check if any field changed vs original
+  const isChanged = () => {
+    if (photo) return true;
+    return Object.entries(member).some(([key, value]) => {
+      return value !== originalMember[key];
+    });
+  };
+
   const handlePhotoChange = (e) => {
     if (e.target.files && e.target.files[0]) {
       setPhoto(e.target.files[0]);
     }
   };
 
+  const confirmSubmit = async () => {
+  setShowConfirm(false); // Hide modal
+  setSubmitting(true);
+
+  const formData = new FormData();
+  Object.entries(member).forEach(([key, value]) => {
+    if (value !== undefined && value !== null && value !== "") {
+      formData.append(key, value);
+    }
+  });
+
+  if (photo) {
+    formData.append("photo", photo);
+     console.log("Photo appended:", photo.name);
+  }
+
+  try {
+    await updateLifeMember(lm_no, formData);
+    setSuccess("Member updated successfully!");
+    setOriginalMember(member);
+    setEditingFields({});
+    setPhoto(null);
+  } catch (err) {
+    setError(err.message || "Error updating member.");
+  } finally {
+    setSubmitting(false);
+  }
+};
+
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
-    setSuccess("");
-    const errors = {};
-    requiredFields.forEach((field) => {
-      if (!member[field] || member[field].trim() === "") {
-        errors[field] = "This field is required";
-      }
-    });
+  e.preventDefault();
+  setError("");
+  setSuccess("");
 
-    if (Object.keys(errors).length > 0) {
-      setFormErrors(errors);
-      setError("Please fill all required fields.");
-      return;
-    }
+  if (!member) {
+    setError("Please search a member first.");
+    return;
+  }
 
-    const formData = new FormData();
-    Object.entries(member).forEach(([key, value]) => {
-      if (value !== undefined && value !== null) {
-        formData.append(key, value);
-      }
-    });
+  if (!validate()) {
+    setError("Please fix the errors before submitting.");
+    return;
+  }
 
-    if (photo) {
-      formData.append("photo", photo);
-    }
+  if (!isChanged()) {
+    setError("No changes to update.");
+    return;
+  }
 
-    try {
-      await updateLifeMember(lm_no, formData);
-      setSuccess("Member updated successfully!");
-    } catch (err) {
-      setError(err.message || "Error updating member.");
-    }
+  setShowConfirm(true); // Show modal FIRST
+};
+
+  
+  
+  const renderEditableField = (
+    label,
+    field,
+    type = "text",
+    options = null,
+    required = false
+  ) => {
+    const isEditing = editingFields[field];
+    const value = member?.[field] ?? "";
+
+    const commonInputProps = {
+      value: value,
+      onChange: (e) => handleChange(field, e.target.value),
+      onBlur: () => toggleEdit(field),
+      onKeyDown: (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          toggleEdit(field);
+        } else if (e.key === "Escape") {
+          e.preventDefault();
+          // Reset value on escape
+          handleChange(field, originalMember[field] || "");
+          toggleEdit(field);
+        }
+      },
+      isInvalid: !!formErrors[field],
+      autoFocus: true,
+    };
+
+    return (
+      <Form.Group
+        as={Col}
+        md={6}
+        className="mb-3"
+        key={field}
+        controlId={field}
+      >
+        <Form.Label>
+          <strong>{label}</strong>{" "}
+          {required && <span style={{ color: "red" }}>*</span>}
+        </Form.Label>
+        <div className="d-flex align-items-center">
+          {isEditing ? (
+            options ? (
+              <Form.Select {...commonInputProps}>
+                <option value="">Select</option>
+                {options.map((opt) => (
+                  <option key={opt} value={opt}>
+                    {opt}
+                  </option>
+                ))}
+              </Form.Select>
+            ) : (
+              <Form.Control
+                type={type}
+                {...commonInputProps}
+                style={{ flexGrow: 1 }}
+              />
+            )
+          ) : (
+            <div
+              style={{
+                flexGrow: 1,
+                padding: "0.375rem 0.75rem",
+                border: "1px solid #ced4da",
+                borderRadius: "0.25rem",
+                backgroundColor: "#e9ecef",
+                cursor: "default",
+                userSelect: "none",
+              }}
+            >
+              {value || <i className="text-muted"></i>}
+            </div>
+          )}
+          <Button
+            variant="link"
+            size="sm"
+            onClick={() => toggleEdit(field)}
+            style={{ marginLeft: "0.5rem" }}
+            aria-label={isEditing ? "Stop editing" : "Edit field"}
+          >
+            {isEditing ? <FaCheck color="green" /> : <FaEdit />}
+          </Button>
+        </div>
+        {formErrors[field] && (
+          <Form.Control.Feedback type="invalid" style={{ display: "block" }}>
+            {formErrors[field]}
+          </Form.Control.Feedback>
+        )}
+      </Form.Group>
+    );
   };
-
-  const renderField = (label, field, type = "text", required = false) => (
-    <Form.Group as={Col} md={6} className="mb-3" controlId={field}>
-      <Form.Label>
-        <strong>{label}</strong>{" "}
-        {required && <span style={{ color: "red" }}>*</span>}
-      </Form.Label>
-      <Form.Control
-        type={type}
-        value={member[field] || ""}
-        onChange={(e) => handleChange(field, e.target.value)}
-        isInvalid={!!formErrors[field]}
-      />
-      <Form.Control.Feedback type="invalid">
-        {formErrors[field]}
-      </Form.Control.Feedback>
-    </Form.Group>
-  );
 
   return (
     <>
       <Navbar />
       <Container className="py-5">
         <h2 className="text-center mb-4">
-          {" "}
           Registration for 134<sup>th</sup> Annual Conference at Ujjain
         </h2>
 
         <Row className="justify-content-center mb-4">
           <Col md={6}>
-            <Form className="d-flex" onSubmit={(e) => e.preventDefault()}>
+            <Form
+              className="d-flex"
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleSearch();
+              }}
+            >
               <Form.Control
                 type="text"
                 value={lm_no}
                 onChange={(e) => setLmNo(e.target.value)}
                 placeholder="Enter Life Member No."
                 className="me-2"
+                autoFocus
               />
-              <Button variant="primary" onClick={handleSearch}>
+              <Button variant="primary" type="submit">
                 Search
               </Button>
             </Form>
@@ -228,10 +409,14 @@ const NewRegistration = () => {
                 <Row>
                   <Col md={4} className="text-center">
                     <Image
-                      src={member.photo}
+                      src={
+                        photo
+                          ? URL.createObjectURL(photo)
+                          : member.photo || "/placeholder.jpg"
+                      }
                       rounded
                       fluid
-                      alt="Photo Not Uploaded"
+                      alt="Member Photo"
                       style={{ maxHeight: "200px", border: "1px solid #ccc" }}
                       onError={(e) => (e.target.src = "/placeholder.jpg")}
                     />
@@ -243,33 +428,107 @@ const NewRegistration = () => {
 
                   <Col md={8}>
                     <Row>
-                      {renderField("Life Membership No", "lm_no")}
-                      {renderField(
+                      {renderEditableField(
+                        "Life Membership No",
+                        "lm_no",
+                        "text",
+                        null,
+                        false
+                      )}
+                      {renderEditableField(
                         "Title (Mr/Mrs/Miss)",
                         "col_y",
                         "text",
+                        null,
                         true
                       )}
-                      {renderField("Member Name", "member_name", "text", true)}
-                      {renderField("Year", "year", "text", true)}
-                      {renderField("Date of Birth", "dob", "date", true)}
-                      {renderField("Gotra", "gotra", "text", true)}
-                      {renderField("Kuldevi", "kuldevi", "text", true)}
-                      {renderField("Gender", "gender", "text", true)}
-                      {renderField("Email", "email", "email", true)}
-                      {renderField("Mobile No", "contact_no", "text", true)}
-                      {renderField("Address Line 1", "add", "text", true)}
-                      {renderField("Address Line 2", "address1", "text", true)}
-                      {renderField(
+                      {renderEditableField(
+                        "Member Name",
+                        "member_name",
+                        "text",
+                        null,
+                        true
+                      )}
+                      {renderEditableField("Year", "year", "text", null, true)}
+                      {renderEditableField(
+                        "Date of Birth",
+                        "dob",
+                        "date",
+                        null,
+                        true
+                      )}
+                      {renderEditableField(
+                        "Gotra",
+                        "gotra",
+                        "text",
+                        null,
+                        true
+                      )}
+                      {renderEditableField(
+                        "Kuldevi",
+                        "kuldevi",
+                        "text",
+                        null,
+                        true
+                      )}
+                      {renderEditableField(
+                        "Gender",
+                        "gender",
+                        "text",
+                        null,
+                        true
+                      )}
+                      {renderEditableField(
+                        "Email",
+                        "email",
+                        "email",
+                        null,
+                        true
+                      )}
+                      {renderEditableField(
+                        "Mobile No",
+                        "contact_no",
+                        "text",
+                        null,
+                        true
+                      )}
+                      {renderEditableField(
+                        "Address Line 1",
+                        "add",
+                        "text",
+                        null,
+                        true
+                      )}
+                      {renderEditableField(
+                        "Address Line 2",
+                        "address1",
+                        "text",
+                        null,
+                        true
+                      )}
+                      {renderEditableField(
                         "Extra Address Info",
                         "address_extra",
                         "text",
+                        null,
                         true
                       )}
-                      {renderField("City", "city", "text", true)}
-                      {renderField("PIN Code", "pin", "text", true)}
+                      {renderEditableField("City", "city", "text", null, true)}
+                      {renderEditableField(
+                        "PIN Code",
+                        "pin",
+                        "text",
+                        null,
+                        true
+                      )}
 
-                      <Form.Group as={Col} md={6} className="mb-3">
+                      {/* card_issue select */}
+                      <Form.Group
+                        as={Col}
+                        md={6}
+                        className="mb-3"
+                        controlId="card_issue"
+                      >
                         <Form.Label>
                           <strong>Card Issued</strong>
                         </Form.Label>
@@ -285,38 +544,94 @@ const NewRegistration = () => {
                         </Form.Select>
                       </Form.Group>
 
-                      <Form.Group as={Col} md={6} className="mb-3">
+                      {/* category select with inline edit */}
+                      <Form.Group
+                        as={Col}
+                        md={6}
+                        className="mb-3"
+                        controlId="category"
+                      >
                         <Form.Label>
                           <strong>Category</strong>{" "}
                           <span style={{ color: "red" }}>*</span>
                         </Form.Label>
-                        <Form.Select
-                          value={member.category || ""}
-                          onChange={(e) =>
-                            handleChange("category", e.target.value)
-                          }
-                          isInvalid={!!formErrors["category"]}
-                        >
-                          <option value="">Select</option>
-                          <option value="Delegate">Delegate</option>
-                          <option value="Parent of Marriageable Candidate">
-                            Parent of Marriageable Candidate
-                          </option>
-                          <option value="Marriageable Candidate">
-                            Marriageable Candidate
-                          </option>
-                        </Form.Select>
-                        <Form.Control.Feedback type="invalid">
-                          {formErrors["category"]}
-                        </Form.Control.Feedback>
+                        <div className="d-flex align-items-center">
+                          {editingFields["category"] ? (
+                            <Form.Select
+                              value={member.category || ""}
+                              onChange={(e) =>
+                                handleChange("category", e.target.value)
+                              }
+                              onBlur={() => toggleEdit("category")}
+                              isInvalid={!!formErrors["category"]}
+                              autoFocus
+                            >
+                              <option value="">Select</option>
+                              <option value="Delegate">Delegate</option>
+                              <option value="Parent of Marriageable Candidate">
+                                Parent of Marriageable Candidate
+                              </option>
+                              <option value="Marriageable Candidate">
+                                Marriageable Candidate
+                              </option>
+                            </Form.Select>
+                          ) : (
+                            <div
+                              style={{
+                                flexGrow: 1,
+                                padding: "0.375rem 0.75rem",
+                                border: "1px solid #ced4da",
+                                borderRadius: "0.25rem",
+                                backgroundColor: "#e9ecef",
+                                cursor: "default",
+                                userSelect: "none",
+                              }}
+                            >
+                              {member.category || (
+                                <i className="text-muted">Not set</i>
+                              )}
+                            </div>
+                          )}
+
+                          <Button
+                            variant="link"
+                            size="sm"
+                            onClick={() => toggleEdit("category")}
+                            style={{ marginLeft: "0.5rem" }}
+                            aria-label={
+                              editingFields["category"]
+                                ? "Stop editing"
+                                : "Edit field"
+                            }
+                          >
+                            {editingFields["category"] ? (
+                              <FaCheck color="green" />
+                            ) : (
+                              <FaEdit />
+                            )}
+                          </Button>
+                        </div>
+                        {formErrors["category"] && (
+                          <Form.Control.Feedback
+                            type="invalid"
+                            style={{ display: "block" }}
+                          >
+                            {formErrors["category"]}
+                          </Form.Control.Feedback>
+                        )}
                       </Form.Group>
                     </Row>
                   </Col>
                 </Row>
 
                 <div className="text-center mt-4">
-                  <Button type="submit" variant="success">
-                    Update Member Info
+                  <Button
+                    type="submit"
+                    variant="success"
+                    size="lg"
+                    // disabled={!isChanged()}
+                  >
+                    Submit
                   </Button>
                 </div>
               </Form>
@@ -324,6 +639,28 @@ const NewRegistration = () => {
           </Card>
         )}
       </Container>
+
+      <Modal show={showConfirm} onHide={() => setShowConfirm(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Submission</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure the information is correct and you want to submit the
+          form?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowConfirm(false)}>
+            I want to edit my information
+          </Button>
+          <Button
+            variant="primary"
+            onClick={confirmSubmit}
+            disabled={submitting}
+          >
+            Yes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };

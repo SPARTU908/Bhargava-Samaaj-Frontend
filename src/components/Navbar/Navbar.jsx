@@ -82,7 +82,6 @@ const Navbar = () => {
     { label: "कानूनी सलाहकार समिति", file: "24. Kanooni Salahkar Samiti.pdf" },
   ];
 
-  /* Detect Google‑Translate language switch */
   useEffect(() => {
     const observer = new MutationObserver(() => {
       const selectedLang = document.querySelector(".goog-te-combo")?.value;
@@ -92,7 +91,6 @@ const Navbar = () => {
     return () => observer.disconnect();
   }, []);
 
-  /** Helpers **/
   const handleNavigate = (path) => {
     navigate(path);
     setShowOffcanvas(false);
@@ -234,24 +232,16 @@ const Navbar = () => {
                 <Nav.Link onClick={() => handleNavigate("/magazine")}>
                   भार्गव पत्रिका
                 </Nav.Link>
-                <Nav.Link onClick={() => handleNavigate("/matrimonial")}>
+                {/* <Nav.Link onClick={() => handleNavigate("/matrimonial")}>
                   वैवाहिक
-                </Nav.Link>
-                <Nav.Link onClick={() => handleNavigate("/census")}>
-                  जनगणना
-                </Nav.Link>
-                <Nav.Link onClick={() => handleNavigate("/advertisement")}>
-                  विज्ञापन
-                </Nav.Link>
-                <Nav.Link onClick={() => handleNavigate("/membership")}>
-                  सदस्यता
-                </Nav.Link>
-                 <Nav.Link onClick={() => handleNavigate("/registration")}>
-                रजिस्ट्रेशन
-                </Nav.Link> 
+                </Nav.Link> */}
 
-                {/* Find a Match */}
-                <NavDropdown title="जीवनसाथी खोजें" id="match-dd">
+                <NavDropdown title="वैवाहिक" id="vaivahik-dd">
+                  <NavDropdown.Item
+                    onClick={() => handleNavigate("/matrimonial")}
+                  >
+                    वैवाहिक फ़ॉर्म
+                  </NavDropdown.Item>
                   <NavDropdown.Item
                     onClick={() => handleNavigate("/findyourmatch")}
                   >
@@ -263,6 +253,23 @@ const Navbar = () => {
                     किसी के लिए सही साथी खोजें
                   </NavDropdown.Item>
                 </NavDropdown>
+
+                <Nav.Link onClick={() => handleNavigate("/census")}>
+                  जनगणना
+                </Nav.Link>
+                <Nav.Link onClick={() => handleNavigate("/advertisement")}>
+                  विज्ञापन
+                </Nav.Link>
+                <Nav.Link onClick={() => handleNavigate("/membership")}>
+                  सदस्यता
+                </Nav.Link>
+                <Nav.Link onClick={() => handleNavigate("/registration")}>
+                  रजिस्ट्रेशन
+                </Nav.Link>
+
+                <Nav.Link onClick={() => handleNavigate("/registration")}>
+                  डाउनलोड
+                </Nav.Link>
 
                 <Nav.Link onClick={() => handleNavigate("/admin")}>
                   एडमिन लॉगिन

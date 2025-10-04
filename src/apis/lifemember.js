@@ -11,24 +11,6 @@ export const searchLifeMember = async (lm_no) => {
   }
 };
 
-export const updateLifeMember = async (lm_no, formData) => {
-  try {
-    const response = await axios.patch(
-      `${BASE_URL}/api/v1/register/lifemember/update/${lm_no}`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-    return response.data;
-  } catch (error) {
-    throw error.response?.data || { message: "Error updating member" };
-  }
-};
-
-
 export const getAllLifeMembers = async () => {
   try {
     const response = await axios.get(`${BASE_URL}/api/v1/register/lifemembers`);
@@ -37,5 +19,20 @@ export const getAllLifeMembers = async () => {
     throw new Error(
       error.response?.data?.message || "Failed to fetch life members"
     );
+  }
+};
+
+export const updateLifeMember = async (lm_no, updateData) => {
+  try {
+    const response = await axios.patch(
+      `${BASE_URL}/api/v1/register/life-members/${lm_no}`,
+      updateData
+    );
+
+    return response.data; 
+  } catch (error) {
+    console.error("Error in updateLifeMember:", error);
+    const message = error.response?.data?.message || "Update failed";
+    throw new Error(message);
   }
 };
