@@ -12,28 +12,89 @@ import {
 import { searchLifeMember, updateLifeMember } from "../apis/lifemember";
 import Navbar from "../components/Navbar/Navbar.jsx";
 
+const requiredFields = [
+  "member_name",
+  "year",
+  "col_y",
+  "dob",
+  "gotra",
+  "kuldevi",
+  "gender",
+  "add",
+  "address1",
+  "address_extra",
+  "city",
+  "pin",
+  "contact_no",
+  "email",
+  "category",
+];
+
 const NewRegistration = () => {
   const [lm_no, setLmNo] = useState("");
   const [member, setMember] = useState(null);
+  const [photo, setPhoto] = useState(null);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [formErrors, setFormErrors] = useState({});
 
-const handleSearch = async () => {
+  const handleSearch = async () => {
     try {
       const data = await searchLifeMember(lm_no);
-      const enrichedData = {
+      setMember({
         ...data,
         gotra: data.gotra || "",
         kuldevi: data.kuldevi || "",
         category: data.category || "",
-        gender:data.gender||"",
-      };
-
-      setMember(enrichedData);
+        gender: data.gender || "",
+        email: data.email || "",
+        member_name: data.member_name || "",
+        city: data.city || "",
+        pin: data.pin || "",
+        dob: data.dob ? data.dob.split("T")[0] : "",
+        add: data.add || "",
+        address1: data.address1 || "",
+        address_extra: data.address_extra || "",
+        contact_no: data.contact_no || "",
+        col_y: data.col_y || "",
+        year: data.year || "",
+        card_issue: data.card_issue || "",
+      });
       setError("");
       setSuccess("");
+      setFormErrors({});
     } catch (err) {
-      setError(err.message || "Error fetching member.");
+      setError(
+        <>
+          <div style={{ marginTop: "1rem", lineHeight: "1.6" }}>
+            <strong style={{ color: "#d9534f" }}>Member not found.</strong>
+            <p>
+              Please fill the Life Membership form here:&nbsp;
+              <a
+                href="https://bhargavasamajglobal.org/membership"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-decoration-underline"
+                style={{ textDecoration: "none" }}
+              >
+                <button
+                  style={{
+                    padding: "8px 16px",
+                    backgroundColor: "#d9534f",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: "4px",
+                    cursor: "pointer",
+                  }}
+                >
+                  Membership Form
+                </button>
+              </a>
+            </p>
+          </div>
+        </>
+      );
+
       setMember(null);
     }
   };
@@ -43,56 +104,81 @@ const handleSearch = async () => {
       ...prev,
       [field]: value,
     }));
+
+    setFormErrors((prev) => ({
+      ...prev,
+      [field]: "",
+    }));
+  };
+
+  const handlePhotoChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setPhoto(e.target.files[0]);
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+    setSuccess("");
+    const errors = {};
+    requiredFields.forEach((field) => {
+      if (!member[field] || member[field].trim() === "") {
+        errors[field] = "This field is required";
+      }
+    });
+
+    if (Object.keys(errors).length > 0) {
+      setFormErrors(errors);
+      setError("Please fill all required fields.");
+      return;
+    }
 
     const formData = new FormData();
-    // Append only fields that were empty and are now filled
     Object.entries(member).forEach(([key, value]) => {
-      if (value && value !== "") {
+      if (value !== undefined && value !== null) {
         formData.append(key, value);
       }
     });
 
-    if (e.target.photo?.files[0]) {
-      formData.append("photo", e.target.photo.files[0]);
+    if (photo) {
+      formData.append("photo", photo);
     }
 
     try {
-      const res = await updateLifeMember(lm_no, formData);
+      await updateLifeMember(lm_no, formData);
       setSuccess("Member updated successfully!");
-      setError("");
     } catch (err) {
       setError(err.message || "Error updating member.");
-      setSuccess("");
     }
   };
 
-  const renderInputField = (label, field, type = "text") => {
-    const isEditable = member[field] === "";
-    return (
-      <Form.Group as={Col} md={6} className="mb-3" controlId={field}>
-        <Form.Label>
-          <strong>{label}</strong>
-        </Form.Label>
-        <Form.Control
-          type={type}
-          value={member[field]}
-          onChange={(e) => handleChange(field, e.target.value)}
-          placeholder={isEditable ? `Enter ${label}` : ""}
-          disabled={!isEditable}
-        />
-      </Form.Group>
-    );
-  };
+  const renderField = (label, field, type = "text", required = false) => (
+    <Form.Group as={Col} md={6} className="mb-3" controlId={field}>
+      <Form.Label>
+        <strong>{label}</strong>{" "}
+        {required && <span style={{ color: "red" }}>*</span>}
+      </Form.Label>
+      <Form.Control
+        type={type}
+        value={member[field] || ""}
+        onChange={(e) => handleChange(field, e.target.value)}
+        isInvalid={!!formErrors[field]}
+      />
+      <Form.Control.Feedback type="invalid">
+        {formErrors[field]}
+      </Form.Control.Feedback>
+    </Form.Group>
+  );
 
   return (
     <>
       <Navbar />
       <Container className="py-5">
-        <h2 className="text-center mb-4">Enter Your ABBS Membership No.</h2>
+        <h2 className="text-center mb-4">
+          {" "}
+          Registration for 134<sup>th</sup> Annual Conference at Ujjain
+        </h2>
 
         <Row className="justify-content-center mb-4">
           <Col md={6}>
@@ -101,7 +187,7 @@ const handleSearch = async () => {
                 type="text"
                 value={lm_no}
                 onChange={(e) => setLmNo(e.target.value)}
-                placeholder="Enter LM No"
+                placeholder="Enter Life Member No."
                 className="me-2"
               />
               <Button variant="primary" onClick={handleSearch}>
@@ -113,8 +199,12 @@ const handleSearch = async () => {
 
         {error && (
           <Row className="justify-content-center">
-            <Col md={6}>
-              <Alert variant="danger" className="text-center">
+            <Col md={8}>
+              <Alert
+                variant="danger"
+                className="text-center"
+                style={{ fontSize: "1.1rem" }}
+              >
                 {error}
               </Alert>
             </Col>
@@ -136,75 +226,78 @@ const handleSearch = async () => {
             <Card.Body>
               <Form onSubmit={handleSubmit}>
                 <Row>
-                  <Col md={4} className="text-center mb-4 mb-md-0">
+                  <Col md={4} className="text-center">
                     <Image
                       src={member.photo}
                       rounded
                       fluid
-                      alt="Member"
-                      style={{ maxHeight: "200px", border: "1px solid #ddd" }}
+                      alt="Photo Not Uploaded"
+                      style={{ maxHeight: "200px", border: "1px solid #ccc" }}
                       onError={(e) => (e.target.src = "/placeholder.jpg")}
                     />
                     <Form.Group controlId="photo" className="mt-3">
-                      <Form.Label>Update Photo </Form.Label>
-                      <Form.Control type="file" name="photo" />
+                      <Form.Label>Upload New Photo</Form.Label>
+                      <Form.Control type="file" onChange={handlePhotoChange} />
                     </Form.Group>
                   </Col>
 
                   <Col md={8}>
                     <Row>
-                      {renderInputField("Life Membership No.", "lm_no")}
-                      {renderInputField("Year", "year")}
-                      {renderInputField("Mr/Mrs/Miss", "col_y")}
-                      {renderInputField("Member Name", "member_name")}
-                      <Form.Group
-                        as={Col}
-                        md={6}
-                        className="mb-3"
-                        controlId="card_issue"
-                      >
+                      {renderField("Life Membership No", "lm_no")}
+                      {renderField(
+                        "Title (Mr/Mrs/Miss)",
+                        "col_y",
+                        "text",
+                        true
+                      )}
+                      {renderField("Member Name", "member_name", "text", true)}
+                      {renderField("Year", "year", "text", true)}
+                      {renderField("Date of Birth", "dob", "date", true)}
+                      {renderField("Gotra", "gotra", "text", true)}
+                      {renderField("Kuldevi", "kuldevi", "text", true)}
+                      {renderField("Gender", "gender", "text", true)}
+                      {renderField("Email", "email", "email", true)}
+                      {renderField("Mobile No", "contact_no", "text", true)}
+                      {renderField("Address Line 1", "add", "text", true)}
+                      {renderField("Address Line 2", "address1", "text", true)}
+                      {renderField(
+                        "Extra Address Info",
+                        "address_extra",
+                        "text",
+                        true
+                      )}
+                      {renderField("City", "city", "text", true)}
+                      {renderField("PIN Code", "pin", "text", true)}
+
+                      <Form.Group as={Col} md={6} className="mb-3">
                         <Form.Label>
-                          <strong>Card Issue</strong>
+                          <strong>Card Issued</strong>
                         </Form.Label>
                         <Form.Select
-                          value={member.card_issue}
+                          value={member.card_issue || ""}
                           onChange={(e) =>
                             handleChange("card_issue", e.target.value)
                           }
-                          disabled={member.card_issue !== ""}
                         >
                           <option value="">Select</option>
                           <option value="Yes">Yes</option>
                           <option value="No">No</option>
                         </Form.Select>
                       </Form.Group>
-                      {renderInputField("DOB", "dob", "date")}
-                      {renderInputField("Address Line-1", "add")}
-                      {renderInputField("Address Line-2", "address1")}
-                      {renderInputField("Extra Address", "address_extra")}
-                      {renderInputField("City", "city")}
-                      {renderInputField("PIN Code", "pin")}
-                      {renderInputField("Contact No", "contact_no")}
-                      {renderInputField("Email", "email")}
-                      {renderInputField("Gotra", "gotra")}
-                      {renderInputField("Kuldevi", "kuldevi")}
-                      {renderInputField("Gender", "gender")}
-                      <Form.Group
-                        as={Col}
-                        md={6}
-                        className="mb-3"
-                        controlId="category"
-                      >
+
+                      <Form.Group as={Col} md={6} className="mb-3">
                         <Form.Label>
-                          <strong>Category</strong>
+                          <strong>Category</strong>{" "}
+                          <span style={{ color: "red" }}>*</span>
                         </Form.Label>
                         <Form.Select
-                          value={member.category}
+                          value={member.category || ""}
                           onChange={(e) =>
                             handleChange("category", e.target.value)
                           }
+                          isInvalid={!!formErrors["category"]}
                         >
-                          <option value="">Select Category</option>
+                          <option value="">Select</option>
                           <option value="Delegate">Delegate</option>
                           <option value="Parent of Marriageable Candidate">
                             Parent of Marriageable Candidate
@@ -213,14 +306,17 @@ const handleSearch = async () => {
                             Marriageable Candidate
                           </option>
                         </Form.Select>
+                        <Form.Control.Feedback type="invalid">
+                          {formErrors["category"]}
+                        </Form.Control.Feedback>
                       </Form.Group>
                     </Row>
                   </Col>
                 </Row>
 
                 <div className="text-center mt-4">
-                  <Button variant="success" type="submit">
-                    Save Changes
+                  <Button type="submit" variant="success">
+                    Update Member Info
                   </Button>
                 </div>
               </Form>

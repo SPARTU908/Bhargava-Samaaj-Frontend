@@ -12,7 +12,6 @@ import {
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
-// Image imports
 import banner from "../assets/banner.jpg";
 import announcement from "../assets/announce.png";
 import activity from "../assets/new event.PNG";
@@ -40,15 +39,15 @@ import announcement2 from "../assets/announcement.jpeg";
 
 // Sample content data
 const festivals = [
- "बुधवार, 1 अक्टूबर- महानवमी",
-  "गुरुवार, 2 अक्टूबर- विजयादशमी (दशहरा), हेमचन्द्र जयंती",
-  "शुक्रवार, 3 अक्टूबर - एकादशी",
   "शनिवार, 4 अक्टूबर - प्रदोष",
   "सोमवार, 6 अक्टूबर - शरदपूर्णिमा (व्रत एवं स्नान )",
   "शुक्रवार, 10 अक्टूबर - करवा चौथ ",
   "सोमवार, 13 अक्टूबर - अहोई अष्टमी ",
   "शुक्रवार, 17 अक्टूबर - एकादशी रम्भा ",
-"शनिवार, 18 अक्टूबर -धनतेरस / प्रदोष ",
+  "शनिवार, 18 अक्टूबर -धनतेरस / प्रदोष ",
+  "रविवार, 19 अक्टूबर - नरक चतुर्दशी  ",
+  "सोमवार, 20 अक्टूबर -  दीपावली, (हनुमान जयंती) ",
+  "मंगलवार, 21 अक्टूबर - अमावस्या ",
 
   // "मंगलवार, 9 सितम्बर - द्वितीया श्राद्ध  से",
   // "गुरुवार, 11 सितम्बर- चतुर्थी श्राद्ध तक ",

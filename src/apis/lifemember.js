@@ -1,8 +1,7 @@
 import axios from "axios";
-
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
-// 🔍 Search member by lm_no
+
 export const searchLifeMember = async (lm_no) => {
   try {
      const response = await axios.get(`${BASE_URL}/api/v1/register/lifemember/${lm_no}`);
@@ -12,7 +11,6 @@ export const searchLifeMember = async (lm_no) => {
   }
 };
 
-// ✏️ Update empty fields (with optional photo)
 export const updateLifeMember = async (lm_no, formData) => {
   try {
     const response = await axios.patch(
@@ -27,5 +25,17 @@ export const updateLifeMember = async (lm_no, formData) => {
     return response.data;
   } catch (error) {
     throw error.response?.data || { message: "Error updating member" };
+  }
+};
+
+
+export const getAllLifeMembers = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/api/v1/register/lifemembers`);
+    return response.data;
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message || "Failed to fetch life members"
+    );
   }
 };

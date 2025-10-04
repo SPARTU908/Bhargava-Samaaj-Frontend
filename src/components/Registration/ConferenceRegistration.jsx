@@ -45,9 +45,7 @@ const ConferenceRegistration = () => {
     const pincodeRegex = /^\d{6}$/;
     const today = new Date().toISOString().split("T")[0];
 
-  
-
-    if (!formData.name.trim()) {
+  if (!formData.name.trim()) {
       errors.name = "Name is required";
     }
 
@@ -173,7 +171,7 @@ const ConferenceRegistration = () => {
     }
   };
 
-  return (
+return (
     <>
       <Navbar />
       <div
@@ -244,7 +242,7 @@ const ConferenceRegistration = () => {
                 <div className="text-center">
                   <Card.Title className="mb-3">Scan This Barcode</Card.Title>
                   <Image
-                    src={barcode} // Replace with your barcode image path
+                    src={barcode} 
                     alt="Barcode"
                     fluid
                     rounded

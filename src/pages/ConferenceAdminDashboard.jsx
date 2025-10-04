@@ -5,7 +5,8 @@ import { IoMdHome } from "react-icons/io";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getAllUsers } from "../apis/registration";
-import { getAllAwardUsers } from "../apis/awardForm";  
+import { getAllAwardUsers } from "../apis/awardForm";
+import { getAllLifeMembers } from "../apis/lifemember";
 import { Table } from "react-bootstrap";
 
 const ConferenceAdminDashboard = () => {
@@ -16,9 +17,17 @@ const ConferenceAdminDashboard = () => {
   const [awardForms, setAwardForms] = useState([]);
   const [totalAwardForms, setTotalAwardForms] = useState(0);
 
-  const navigate = useNavigate();
+  const [lifeMembers, setLifeMembers] = useState([]);
+  const [totalLifeMembers, setTotalLifeMembers] = useState(0);
 
-  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
+  const [lifeMemberSearch, setLifeMemberSearch] = useState({
+    lmNo: "",
+    name: "",
+  });
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 20;
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -45,8 +54,21 @@ const ConferenceAdminDashboard = () => {
       }
     };
 
+    const fetchLifeMembers = async () => {
+      try {
+        const res = await getAllLifeMembers();
+        if (res) {
+          setLifeMembers(res);
+          setTotalLifeMembers(res.length);
+        }
+      } catch (err) {
+        console.error("Error fetching life members:", err);
+      }
+    };
+
     fetchUsers();
     fetchAwardForms();
+    fetchLifeMembers();
   }, []);
 
   const handleLogout = () => {
@@ -63,6 +85,26 @@ const ConferenceAdminDashboard = () => {
   const refreshPage = () => {
     window.location.reload();
   };
+
+  // Filter by LM No and Name
+  const filteredLifeMembers = lifeMembers.filter((member) => {
+    const matchesLmNo = member.lm_no
+      .toLowerCase()
+      .includes(lifeMemberSearch.lmNo.toLowerCase());
+    const matchesName = member.member_name
+      .toLowerCase()
+      .includes(lifeMemberSearch.name.toLowerCase());
+    return matchesLmNo && matchesName;
+  });
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentMembers = filteredLifeMembers.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
+
+  const totalPages = Math.ceil(filteredLifeMembers.length / itemsPerPage);
 
   const renderSection = () => {
     switch (selectedSection) {
@@ -167,8 +209,8 @@ const ConferenceAdminDashboard = () => {
                   <th>Mother's Name</th>
                   <th>Spouse Name</th>
                   <th>Photo</th>
-                  <th>Upload documents of your achievements{" "}</th>
-                  <th>Upload documents of your achievements{" "}</th>
+                  <th>Upload documents of your achievements </th>
+                  <th>Upload documents of your achievements </th>
                   <th>Proposer Name</th>
                   <th>Proposer Email</th>
                   <th>Proposer Mobile</th>
@@ -183,7 +225,7 @@ const ConferenceAdminDashboard = () => {
                     <td>{users.code2}</td>
                     <td>{users.code3}</td>
                     <td>{users.name}</td>
-                  <td>{new Date(users.dob).toLocaleDateString()}</td>
+                    <td>{new Date(users.dob).toLocaleDateString()}</td>
                     <td>{users.email}</td>
                     <td>{users.address}</td>
                     <td>{users.mobile}</td>
@@ -195,7 +237,7 @@ const ConferenceAdminDashboard = () => {
                     <td>
                       {users.photo ? (
                         <img
-                         src={users.photo}
+                          src={users.photo}
                           alt="Form Photo"
                           style={{
                             width: "60px",
@@ -210,12 +252,12 @@ const ConferenceAdminDashboard = () => {
                     <td>
                       {users.document1 ? (
                         <a
-                         href={users.document1}
+                          href={users.document1}
                           target="_blank"
                           rel="noopener noreferrer"
                         >
                           <img
-                               src={users.document1}
+                            src={users.document1}
                             alt="Document 1"
                             style={{
                               width: "60px",
@@ -231,12 +273,12 @@ const ConferenceAdminDashboard = () => {
                     <td>
                       {users.document2 ? (
                         <a
-                           href={users.document2}
+                          href={users.document2}
                           target="_blank"
                           rel="noopener noreferrer"
                         >
                           <img
-                               src={users.document2}
+                            src={users.document2}
                             alt="Document 2"
                             style={{
                               width: "60px",
@@ -251,8 +293,8 @@ const ConferenceAdminDashboard = () => {
                     </td>
                     <td>{users.proposerName}</td>
                     <td>{users.proposalEmail}</td>
-                   <td>{users.proposalMobile}</td>
-                   <td>{users.proposalAddress}</td>
+                    <td>{users.proposalMobile}</td>
+                    <td>{users.proposalAddress}</td>
                   </tr>
                 ))}
               </tbody>
@@ -260,20 +302,135 @@ const ConferenceAdminDashboard = () => {
           </div>
         );
 
+      case "lifeMembers":
+        return (
+          <>
+            <div className={styles.userTableWrapper}>
+              <h4 className="mb-3">ABBS Life Members</h4>
+              <div className={styles.searchWrapper}>
+                <input
+                  type="text"
+                  placeholder="Search by LM No"
+                  value={lifeMemberSearch.lmNo}
+                  onChange={(e) =>
+                    setLifeMemberSearch({
+                      ...lifeMemberSearch,
+                      lmNo: e.target.value,
+                    })
+                  }
+                  className={styles.searchInput}
+                />
+                <input
+                  type="text"
+                  placeholder="Search by Name"
+                  value={lifeMemberSearch.name}
+                  onChange={(e) =>
+                    setLifeMemberSearch({
+                      ...lifeMemberSearch,
+                      name: e.target.value,
+                    })
+                  }
+                  className={styles.searchInput}
+                />
+              </div>
+
+              <Table striped bordered hover responsive>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>LM No</th>
+                    <th>Year</th>
+                    <th>Title</th>
+                    <th>Name</th>
+                    <th>Card Issue</th>
+                    <th>Address</th>
+                    <th>Full Address</th>
+                    <th>Contact</th>
+                    <th>DOB</th>
+                    <th>Gotra</th>
+                    <th>Kuldevi</th>
+                    <th>City</th>
+                    <th>Gender</th>
+                    <th>Category</th>
+                    <th>Photo</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {currentMembers.map((member, index) => (
+                    <tr key={member._id}>
+                      <td>{indexOfFirstItem + index + 1}</td>
+                      <td>{member.lm_no}</td>
+                      <td>{member.year}</td>
+                      <td>{member.col_y}</td>
+                      <td>{member.member_name}</td>
+                      <td>{member.card_issue}</td>
+                      <td>{member.add}</td>
+                      <td>{member.address1}</td>
+                      <td>{member.contact_no}</td>
+                      <td>{member.dob}</td>
+                      <td>{member.gotra}</td>
+                      <td>{member.kuldevi}</td>
+                      <td>{member.city}</td>
+                      <td>{member.gender}</td>
+                      <td>{member.category}</td>
+                      <td>
+                        {member.photo ? (
+                          <img
+                            src={member.photo}
+                            alt="Photo"
+                            style={{
+                              width: "60px",
+                              height: "60px",
+                              objectFit: "cover",
+                            }}
+                          />
+                        ) : (
+                          "N/A"
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+              <div className={styles.pagination}>
+                <button
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.max(prev - 1, 1))
+                  }
+                  disabled={currentPage === 1}
+                >
+                  Previous
+                </button>
+                <span>
+                  Page {currentPage} of {totalPages}
+                </span>
+                <button
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                  }
+                  disabled={currentPage === totalPages}
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+          </>
+        );
+
       default:
         return (
           <div className={styles.renderSection}>
-            <div className={styles.widget}>
-              <div className={styles.widgetTitle}>
-                Total number of registered conference users
-              </div>
-              <div className={styles.widgetCount}>{totalUsers}</div>
-            </div>
             <div className={styles.widget} style={{ marginTop: "20px" }}>
               <div className={styles.widgetTitle}>
                 Total number of Award Form submissions
               </div>
               <div className={styles.widgetCount}>{totalAwardForms}</div>
+            </div>
+            <div className={styles.widget} style={{ marginTop: "20px" }}>
+              <div className={styles.widgetTitle}>
+                Total number of ABBS Life Members
+              </div>
+              <div className={styles.widgetCount}>{totalLifeMembers}</div>
             </div>
           </div>
         );
@@ -293,21 +450,21 @@ const ConferenceAdminDashboard = () => {
             <div>
               <div
                 className={`${styles.optionButton} ${
-                  selectedSection === "allUsers" ? styles.activeButton : ""
-                }`}
-                onClick={() => setSelectedSection("allUsers")}
-              >
-                All Registered Users
-              </div>
-            </div>
-            <div>
-              <div
-                className={`${styles.optionButton} ${
                   selectedSection === "awardForms" ? styles.activeButton : ""
                 }`}
                 onClick={() => setSelectedSection("awardForms")}
               >
                 Award Form Submissions
+              </div>
+            </div>
+            <div>
+              <div
+                className={`${styles.optionButton} ${
+                  selectedSection === "lifeMembers" ? styles.activeButton : ""
+                }`}
+                onClick={() => setSelectedSection("lifeMembers")}
+              >
+                ABBS Life Members
               </div>
             </div>
           </div>
