@@ -5,7 +5,7 @@ import styles from "./Form.module.css";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import { registerUser } from "../../apis/form";
-import {useNavigate} from "react-router-dom";
+
 
 
 const Form = () => {
@@ -58,7 +58,6 @@ const Form = () => {
   const photoInputRef = useRef(null);
   const biodataInputRef = useRef(null);
 
-  const navigate = useNavigate();
 
   const validate = () => {
     let newErrors = {};

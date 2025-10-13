@@ -107,12 +107,41 @@ const Navbar = () => {
 
   return (
     <>
-      <Image
+      {/* <Image
         src={logo}
         alt="Logo"
         height={48}
         className="d-block mx-auto mt-3"
-      />
+      /> */}
+
+      <div className="position-relative py-3 bg-white">
+        {/* Centered Logo */}
+        <div className="text-center">
+          <Image
+            src={logo}
+            alt="Logo"
+            height={48}
+            role="button"
+            onClick={() => handleNavigate("/home")}
+            style={{ cursor: "pointer" }}
+          />
+        </div>
+
+        {/* Rightmost Blinking Button */}
+        {/* <div
+    className="position-absolute top-50 end-0 translate-middle-y pe-3"
+    style={{ zIndex: 10 }}
+  >
+    <button
+      onClick={() => handleNavigate("/new-registration")}
+      className="btn btn-primary px-4 py-2 rounded-pill fw-semibold shadow-sm blinking-button"
+      style={{ whiteSpace: "nowrap" }}
+    >
+      📝 Conference Registration Form 
+    </button>
+  </div> */}
+      </div>
+
       <BootstrapNavbar
         bg="light"
         expand="lg"

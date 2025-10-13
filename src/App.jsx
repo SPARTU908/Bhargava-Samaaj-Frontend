@@ -12,8 +12,8 @@ import Advertisement from "./pages/Advertisement.jsx";
 import Download from "./pages/Download.jsx";
 import Haridwar from "./pages/Haridwar.jsx";
 import PendingForms from "./pages/PendingForms.jsx";
-import Payment from "./pages/Payment.jsx"
-import Payment1 from "./pages/Payment1.jsx"
+import Payment from "./pages/Payment.jsx";
+import Payment1 from "./pages/Payment1.jsx";
 import MemberAdmin from "./pages/MemberAdmin.jsx";
 import Admin from "./pages/Admin.jsx";
 import MatrimonialAdminDashboard from "./pages/MatrimonialAdminDashboard";
@@ -26,7 +26,7 @@ import VivahMemberRegister from "./components/VivahMember/VivahMemberRegister.js
 import FindYourMatch from "./pages/FindYourMatch.jsx";
 import PendingMemberList from "./pages/PendingMemberList.jsx";
 import RejectedForm from "./pages/RejectedForm.jsx";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 import SignFormUpload from "./pages/SignFormUpload.jsx";
 import UserDashboard from "./pages/UserDashboard.jsx";
 import DeletedUser from "./pages/DeletedUser.jsx";
@@ -39,12 +39,14 @@ import ConferenceAdminDashboard from "./pages/ConferenceAdminDashboard.jsx";
 import AwardForm from "./components/Registration/AwardForm.jsx";
 import ConferenceRegistration from "./components/Registration/ConferenceRegistration.jsx";
 import NewRegistration from "./pages/NewRegistration.jsx";
-
+import MagazineForm from "./pages/MagazineForm.jsx";
+import { AuthProvider } from "./components/AuthContext.jsx";
 
 function App() {
   return (
     <>
       <BrowserRouter>
+      <AuthProvider> 
         <Routes>
           <Route path="/" element={<Navigate to="/home" replace />} />
           <Route path="/home" element={<Homepage2 />} />
@@ -63,7 +65,7 @@ function App() {
               </PrivateRoute>
             }
           />
-      
+         
           <Route
             path="/review"
             element={
@@ -72,7 +74,6 @@ function App() {
               </PrivateRoute>
             }
           />
- 
           <Route path="/payment" element={<Payment />} />
           <Route
             path="/memberadmin"
@@ -82,21 +83,22 @@ function App() {
               </PrivateRoute>
             }
           />
-            <Route path="/payment1" element={<Payment1 />} />
-
+          <Route path="/payment1" element={<Payment1 />} />
           <Route path="/admin" element={<Admin />} />
           <Route
             path="/matrimonialadmin"
             element={<MatrimonialAdminDashboard />}
           />
           <Route path="/superadmin" element={<SuperAdminDashboard />} />
-             <Route path="/conference-admin" element={<ConferenceAdminDashboard />} />
+          <Route
+            path="/conference-admin"
+            element={<ConferenceAdminDashboard />}
+          />
           <Route
             path="/memberadmindashboard"
             element={<MembershipAdminDashboard />}
           />
           <Route path="/displayform" element={<DisplayForm />} />
-
           <Route
             path="/vivahmemberregister"
             element={<VivahMemberRegister />}
@@ -104,22 +106,24 @@ function App() {
           <Route path="/vivahmemberlogin" element={<VivahMemberLogin />} />
           <Route path="/findyourmatch" element={<FindYourMatch />} />
           <Route path="/pendingmember" element={<PendingMemberList />} />
-          <Route path = "/rejected" element = {<RejectedForm/>}/>
+          <Route path="/rejected" element={<RejectedForm />} />
           <Route path="/sign-form-upload" element={<SignFormUpload />} />
-          <Route path="/user-dashboard" element={<UserDashboard/>} />
-          <Route path="/delete-user" element={<DeletedUser/>} />
-          <Route path="/biodata-user" element={<BiodataUser/>} />
-          <Route path="/edit-user" element={<EditUserForm/>} />
-          <Route path="/my-profile" element={<UserProfile/>} />
+          <Route path="/user-dashboard" element={<UserDashboard />} />
+          <Route path="/delete-user" element={<DeletedUser />} />
+          <Route path="/biodata-user" element={<BiodataUser />} />
+          <Route path="/edit-user" element={<EditUserForm />} />
+          <Route path="/my-profile" element={<UserProfile />} />
           <Route path="/download-form/:id" element={<DownloadForm />} />
-          <Route path="/registration" element={<Registration/>} />
-          <Route path="/award-form" element={<AwardForm/>} />
-          <Route path="/conference-registration" element={<ConferenceRegistration/>} />
-          <Route path="/new-registration" element={<NewRegistration/>} />
-
-          
-
+          <Route path="/registration" element={<Registration />} />
+          <Route path="/award-form" element={<AwardForm />} />
+          <Route
+            path="/conference-registration"
+            element={<ConferenceRegistration />}
+          />
+          <Route path="/new-registration" element={<NewRegistration />} />
+          <Route path="/patrika-form" element={<MagazineForm />} />
         </Routes>
+        </AuthProvider> 
       </BrowserRouter>
     </>
   );

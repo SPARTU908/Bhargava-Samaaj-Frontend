@@ -10,6 +10,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import RejectedForm from "./RejectedForm";
 import DeletedUser from "./DeletedUser";
+import { useAuth } from "../components/AuthContext";
 
 const MatrimonialAdminDashboard = () => {
   const [selectedSection, setSelectedSection] = useState(null);
@@ -18,7 +19,7 @@ const MatrimonialAdminDashboard = () => {
   const [approvedCount, setApprovedCount] = useState(0);
   
   const navigate = useNavigate();
-
+const { setIsLoggedIn } = useAuth();
   useEffect(() => {
     const fetchPendingCount = async () => {
       try {
@@ -105,21 +106,27 @@ const MatrimonialAdminDashboard = () => {
         );
     }
   };
-  const handleLogout = () => {
-    toast.success("Logged out successfully", {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
+const handleLogout = () => {
+ 
+  setIsLoggedIn(false);
+  localStorage.setItem("isLoggedIn", "false");
 
-    setTimeout(() => {
-      navigate("/");
-    }, 2000);
-  };
+
+  toast.success("Logged out successfully", {
+    position: "top-right",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+
+
+  setTimeout(() => {
+    navigate("/");
+  }, 2000);
+};
 
   const refreshPage = () => {
     window.location.reload();

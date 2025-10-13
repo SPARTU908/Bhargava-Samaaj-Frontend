@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { Modal } from "react-bootstrap";
 import {
   Container,
@@ -10,9 +10,13 @@ import {
   Alert,
   Image,
 } from "react-bootstrap";
-import { searchLifeMember, updateLifeMember } from "../apis/lifemember";
+import {
+  searchLifeMember,
+  updateLifeMember,
+  createLifeMember,
+} from "../apis/lifemember";
 import Navbar from "../components/Navbar/Navbar.jsx";
-import { FaEdit, FaCheck, FaTimes } from "react-icons/fa";
+import { FaEdit, FaCheck } from "react-icons/fa";
 
 const requiredFields = [
   "member_name",
@@ -42,8 +46,17 @@ const NewRegistration = () => {
   const [formErrors, setFormErrors] = useState({});
   const [editingFields, setEditingFields] = useState({});
   const [showConfirm, setShowConfirm] = useState(false);
-  const [submitting, setSubmitting] = useState(false); 
+  const [submitting, setSubmitting] = useState(false);
+  const [isCreating, setIsCreating] = useState(false);
 
+  const photoPreview = useMemo(() => {
+    if (photo) {
+      return URL.createObjectURL(photo);
+    } else if (member?.photo) {
+      return member.photo;
+    }
+    return null;
+  }, [photo, member]);
 
   const handleSearch = async () => {
     if (!lm_no.trim()) {
@@ -74,7 +87,7 @@ const NewRegistration = () => {
         col_y: data.col_y || "",
         year: data.year || "",
         card_issue: data.card_issue || "",
-        photo: data.photo || "/placeholder.jpg",
+        photo: data.photo,
         lm_no: data.lm_no || lm_no,
       };
       setMember(normalized);
@@ -86,44 +99,43 @@ const NewRegistration = () => {
       setPhoto(null);
     } catch (err) {
       setError(
-        <>
-          <div style={{ marginTop: "1rem", lineHeight: "1.6" }}>
-            <strong style={{ color: "#d9534f" }}>Member not found.</strong>
-            {/* <p>
-              Please fill the Life Membership form here:&nbsp;
-              <a
-                href="https://bhargavasamajglobal.org/membership"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-decoration-underline"
-                style={{ textDecoration: "none" }}
-              >
-                <button
-                  style={{
-                    padding: "8px 16px",
-                    backgroundColor: "#d9534f",
-                    color: "#fff",
-                    border: "none",
-                    borderRadius: "4px",
-                    cursor: "pointer",
-                  }}
-                >
-                  Membership Form
-                </button>
-              </a>
-            </p> */}
-          </div>
-        </>
+        <div style={{ marginTop: "1rem", lineHeight: "1.6" }}>
+          <strong style={{ color: "#d9534f" }}>Member not found.</strong>
+          <br />
+          Please fill out the form to register.
+        </div>
       );
-      setMember(null);
-      setOriginalMember(null);
+
+      const blankMember = {
+        lm_no: lm_no,
+        year: "",
+        col_y: "",
+        member_name: "",
+        card_issue: "",
+        add: "",
+        dob: "",
+        address1: "",
+        address_extra: "",
+        city: "",
+        pin: "",
+        contact_no: "",
+        email: "",
+        gotra: "",
+        kuldevi: "",
+        gender: "",
+        category: "",
+        photo: "",
+      };
+
+      setMember(blankMember);
+      setOriginalMember(blankMember);
+      setIsCreating(true);
       setSuccess("");
       setFormErrors({});
       setEditingFields({});
       setPhoto(null);
     }
   };
-
 
   const handleChange = (field, value) => {
     setMember((prev) => ({
@@ -137,14 +149,12 @@ const NewRegistration = () => {
     }));
   };
 
-
   const toggleEdit = (field) => {
     setEditingFields((prev) => ({
       ...prev,
       [field]: !prev[field],
     }));
 
-   
     if (!editingFields[field]) {
       setFormErrors((prev) => ({
         ...prev,
@@ -153,14 +163,12 @@ const NewRegistration = () => {
     }
   };
 
- 
   const validate = () => {
     const errors = {};
     requiredFields.forEach((field) => {
       if (!member[field] || member[field].toString().trim() === "") {
         errors[field] = "This field is required";
       } else {
-        
         if (field === "email") {
           const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
           if (!emailRegex.test(member[field])) {
@@ -185,7 +193,6 @@ const NewRegistration = () => {
     return Object.keys(errors).length === 0;
   };
 
-  // Check if any field changed vs original
   const isChanged = () => {
     if (photo) return true;
     return Object.entries(member).some(([key, value]) => {
@@ -200,59 +207,86 @@ const NewRegistration = () => {
   };
 
   const confirmSubmit = async () => {
-  setShowConfirm(false); // Hide modal
-  setSubmitting(true);
+    setShowConfirm(false);
+    setSubmitting(true);
 
-  const formData = new FormData();
-  Object.entries(member).forEach(([key, value]) => {
-    if (value !== undefined && value !== null && value !== "") {
-      formData.append(key, value);
+    const formData = new FormData();
+    Object.entries(member).forEach(([key, value]) => {
+      if (value !== undefined && value !== null && value !== "") {
+        formData.append(key, value);
+      }
+    });
+
+    if (photo) {
+      formData.append("photo", photo);
     }
-  });
+    for (let pair of formData.entries()) {
+      console.log(pair[0] + ": " + pair[1]);
+    }
+    try {
+      if (isCreating) {
+        await createLifeMember(member, photo);
+        setSuccess("Member created successfully!");
+      } else {
+        await updateLifeMember(lm_no, member, photo);
+        setSuccess("Member updated successfully!");
+      }
 
-  if (photo) {
-    formData.append("photo", photo);
-     console.log("Photo appended:", photo.name);
-  }
+      setMember({
+        lm_no: "",
+        year: "",
+        col_y: "",
+        member_name: "",
+        card_issue: "",
+        add: "",
+        dob: "",
+        address1: "",
+        address_extra: "",
+        city: "",
+        pin: "",
+        contact_no: "",
+        email: "",
+        gotra: "",
+        kuldevi: "",
+        gender: "",
+        category: "",
+        photo: "",
+      });
 
-  try {
-    await updateLifeMember(lm_no, formData);
-    setSuccess("Member updated successfully!");
-    setOriginalMember(member);
-    setEditingFields({});
-    setPhoto(null);
-  } catch (err) {
-    setError(err.message || "Error updating member.");
-  } finally {
-    setSubmitting(false);
-  }
-};
-
+      setOriginalMember(member);
+      setEditingFields({});
+      setPhoto(null);
+      setError("");
+    } catch (err) {
+      console.error("Error during submission:", err);
+      setError(err.message || "Error submitting form.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  setError("");
-  setSuccess("");
+    e.preventDefault();
+    setError("");
+    setSuccess("");
 
-  if (!member) {
-    setError("Please search a member first.");
-    return;
-  }
+    if (!member) {
+      setError("Please search a member first.");
+      return;
+    }
 
-  if (!validate()) {
-    setError("Please fix the errors before submitting.");
-    return;
-  }
+    if (!validate()) {
+      setError("Please fix the errors before submitting.");
+      return;
+    }
 
-  if (!isChanged()) {
-    setError("No changes to update.");
-    return;
-  }
+    if (!isChanged()) {
+      setError("No changes to update.");
+      return;
+    }
 
-  setShowConfirm(true); // Show modal FIRST
-};
+    setShowConfirm(true);
+  };
 
-  
-  
   const renderEditableField = (
     label,
     field,
@@ -328,13 +362,21 @@ const NewRegistration = () => {
             </div>
           )}
           <Button
-            variant="link"
+            variant="outline-secondary"
             size="sm"
             onClick={() => toggleEdit(field)}
-            style={{ marginLeft: "0.5rem" }}
-            aria-label={isEditing ? "Stop editing" : "Edit field"}
+            style={{
+              marginLeft: "0.5rem",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.25rem",
+              fontSize: "0.85rem",
+              padding: "4px 8px",
+            }}
+            aria-label={isEditing ? "Save field" : "Edit field"}
           >
             {isEditing ? <FaCheck color="green" /> : <FaEdit />}
+            {isEditing ? "Save" : "Edit"}
           </Button>
         </div>
         {formErrors[field] && (
@@ -354,9 +396,69 @@ const NewRegistration = () => {
           Registration for 134<sup>th</sup> Annual Conference at Ujjain
         </h2>
 
+        {/* <p>
+          <strong>Respected ABBS Member,</strong>
+        </p>
+        <p>Greetings of the Day</p>
+        <p>
+          The form for Online Registration for the upcoming Adhiveshan at Ujjain
+          on the 20th, 21st and 22nd of December has been uploaded on the
+          Website. You may register on the website depending on your plans to
+          attend the Adhiveshan.
+        </p>
+        <p>
+          The Registration Charges are Rs.50 per person for Online Registration
+          and Rs.100 per person for the On Spot Registration at the Adhiveshan
+          Venue.
+        </p>
+        <p>The charge for each form for On Spot Registration will be Rs.10</p>
+
+        <p>Upload the slip of payment in online form.</p>
+        <p>For any query, please contact at ABBS Office number-9521276842</p> */}
+
+        <Card className="p-4 shadow-sm border-0 bg-light h-auto">
+          <Card.Body>
+            <p className="fw-bold text-primary fs-5 mb-2">
+              Respected ABBS Member,
+            </p>
+            <p className="mb-4">🙏 Greetings of the Day!</p>
+
+            <p className="mb-3">
+              The form for <strong>Online Registration</strong> for the upcoming
+              <em> Adhiveshan at Ujjain </em> on the
+              <strong>
+                {" "}
+                20<sup>th</sup>, 21<sup>st</sup>, and 22<sup>nd</sup> of
+                December{" "}
+              </strong>
+              has been uploaded on the website. <br />
+              You may register depending on your plans to attend the Adhiveshan.
+            </p>
+
+            <div className="mb-3 p-3 bg-white rounded border">
+              <h5 className="text-decoration-underline text-secondary mb-3">
+                🧾 Registration Charges:
+              </h5>
+              <ul className="mb-0 ps-3">
+                The Registration Charges are Rs.50 per person for Online
+                Registration and Rs.100 per person for the On Spot Registration
+                at the Adhiveshan Venue.
+                <li>
+                  The charge for each form for On Spot Registration will be
+                  Rs.10
+                </li>
+              </ul>
+            </div>
+            <p className="mb-0">
+              For any queries, contact the ABBS Office at:{" "}
+              <strong className="text-dark">9251276842</strong>
+            </p>
+          </Card.Body>
+        </Card>
+
         <Row className="justify-content-center mb-4">
           <Col md={6}>
-            <Form
+            {/* <Form
               className="d-flex"
               onSubmit={(e) => {
                 e.preventDefault();
@@ -374,6 +476,31 @@ const NewRegistration = () => {
               <Button variant="primary" type="submit">
                 Search
               </Button>
+            </Form> */}
+
+            <Form
+              className="d-flex flex-column mt-5"
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleSearch();
+              }}
+            >
+              <Form.Label className="mb-2  fw-semibold">
+                Enter your ABBS Life Membership Number:
+              </Form.Label>
+              <div className="d-flex">
+                <Form.Control
+                  type="text"
+                  value={lm_no}
+                  onChange={(e) => setLmNo(e.target.value)}
+                  placeholder="Enter Life Member No."
+                  className="me-2"
+                  autoFocus
+                />
+                <Button variant="primary" type="submit">
+                  Search
+                </Button>
+              </div>
             </Form>
           </Col>
         </Row>
@@ -407,22 +534,115 @@ const NewRegistration = () => {
             <Card.Body>
               <Form onSubmit={handleSubmit}>
                 <Row>
-                  <Col md={4} className="text-center">
-                    <Image
-                      src={
-                        photo
-                          ? URL.createObjectURL(photo)
-                          : member.photo || "/placeholder.jpg"
-                      }
-                      rounded
-                      fluid
-                      alt="Member Photo"
-                      style={{ maxHeight: "200px", border: "1px solid #ccc" }}
-                      onError={(e) => (e.target.src = "/placeholder.jpg")}
-                    />
+                  {/* <Col md={4} className="text-center">
+                    {photo || member?.photo ? (
+                      <>
+                        <Image
+                          src={photoPreview}
+                          rounded
+                          fluid
+                          alt="Member Photo"
+                          style={{
+                            maxHeight: "200px",
+                            border: "1px solid #ccc",
+                          }}
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = "/placeholder.jpg";
+                          }}
+                        />
+                      </>
+                    ) : (
+                      <div
+                        style={{
+                          width: "200px",
+                          height: "200px",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          border: "1px solid #ccc",
+                          borderRadius: "0.25rem",
+                          backgroundColor: "#f8f9fa",
+                          fontSize: "1rem",
+                          color: "#888",
+                        }}
+                      >
+                        Photo Not Uploaded
+                      </div>
+                    )}
+
                     <Form.Group controlId="photo" className="mt-3">
                       <Form.Label>Upload New Photo</Form.Label>
                       <Form.Control type="file" onChange={handlePhotoChange} />
+                    </Form.Group>
+                  </Col> */}
+                  <Col md={4} className="text-center">
+                    <div
+                      style={{
+                        width: "220px",
+                        height: "220px",
+                        margin: "0 auto",
+                        border: "2px dashed #ccc",
+                        borderRadius: "10px",
+                        backgroundColor: "#f9f9f9",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        position: "relative",
+                        overflow: "hidden",
+                      }}
+                    >
+                      {photoPreview ? (
+                        <Image
+                          src={photoPreview}
+                          alt="Member Photo"
+                          fluid
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "cover",
+                            borderRadius: "10px",
+                          }}
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = "/placeholder.jpg";
+                          }}
+                        />
+                      ) : (
+                        <div
+                          style={{
+                            color: "#999",
+                            fontSize: "1.1rem",
+                            textAlign: "center",
+                          }}
+                        >
+                          <p style={{ margin: 0 }}>Photo Not Uploaded</p>
+                        </div>
+                      )}
+                    </div>
+
+                    <Form.Group controlId="photo" className="mt-3">
+                      <Form.Label
+                        style={{
+                          fontWeight: "bold",
+                          fontSize: "1rem",
+                          marginBottom: "0.5rem",
+                          display: "block",
+                        }}
+                      >
+                        Upload New Photo
+                      </Form.Label>
+                      <Form.Control
+                        type="file"
+                        accept="image/*"
+                        onChange={handlePhotoChange}
+                        style={{
+                          padding: "0.4rem",
+                          borderRadius: "5px",
+                          border: "1px solid #ced4da",
+                          cursor: "pointer",
+                        }}
+                      />
                     </Form.Group>
                   </Col>
 
@@ -555,6 +775,7 @@ const NewRegistration = () => {
                           <strong>Category</strong>{" "}
                           <span style={{ color: "red" }}>*</span>
                         </Form.Label>
+
                         <div className="d-flex align-items-center">
                           {editingFields["category"] ? (
                             <Form.Select
@@ -593,24 +814,39 @@ const NewRegistration = () => {
                             </div>
                           )}
 
+                          {/* 🔽 This is the edit/save button */}
                           <Button
-                            variant="link"
+                            variant="outline-secondary"
                             size="sm"
                             onClick={() => toggleEdit("category")}
-                            style={{ marginLeft: "0.5rem" }}
+                            style={{
+                              marginLeft: "0.5rem",
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "0.25rem",
+                              fontSize: "0.85rem",
+                              padding: "4px 8px",
+                            }}
                             aria-label={
                               editingFields["category"]
-                                ? "Stop editing"
-                                : "Edit field"
+                                ? "Save category"
+                                : "Edit category"
                             }
                           >
                             {editingFields["category"] ? (
-                              <FaCheck color="green" />
+                              <>
+                                <FaCheck color="green" />
+                                Save
+                              </>
                             ) : (
-                              <FaEdit />
+                              <>
+                                <FaEdit />
+                                Edit
+                              </>
                             )}
                           </Button>
                         </div>
+
                         {formErrors["category"] && (
                           <Form.Control.Feedback
                             type="invalid"

@@ -34,7 +34,7 @@ const Registration = () => {
             </Card>
           </Col>
 
-          <Col md={5}>
+          {/* <Col md={5}>
             <Card
               onClick={() => handleNavigate('/new-registration')}
               className="registration-card conference-card text-white"
@@ -49,7 +49,7 @@ const Registration = () => {
                 </Card.Text>
               </Card.Body>
             </Card>
-          </Col>
+          </Col> */}
         </Row>
       </Container>
     </>

@@ -45,7 +45,7 @@ export const vivahmemberLogin = async (vivahmemberlogin) => {
   }
 };
 
-// ✅ Get Pending Members
+
 export const getPendingMembers = async () => {
   try {
     const res = await axios.get(

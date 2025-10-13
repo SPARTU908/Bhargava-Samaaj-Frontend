@@ -6,17 +6,21 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getAllUsers } from "../apis/registration";
 import { getAllAwardUsers } from "../apis/awardForm";
-import { getAllLifeMembers } from "../apis/lifemember";
+import {
+  getAllLifeMembers,
+  getUpdatedLifeMembers,
+  getNewLifeMembers,
+} from "../apis/lifemember";
 import { Table } from "react-bootstrap";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 
 const ConferenceAdminDashboard = () => {
   const [selectedSection, setSelectedSection] = useState(null);
-  const [registeredUsers, setRegisteredUsers] = useState([]);
-  const [totalUsers, setTotalUsers] = useState(0);
-
   const [awardForms, setAwardForms] = useState([]);
   const [totalAwardForms, setTotalAwardForms] = useState(0);
-
   const [lifeMembers, setLifeMembers] = useState([]);
   const [totalLifeMembers, setTotalLifeMembers] = useState(0);
 
@@ -24,8 +28,57 @@ const ConferenceAdminDashboard = () => {
     lmNo: "",
     name: "",
   });
+
+  const [updatedLifeMembers, setUpdatedLifeMembers] = useState([]);
+  const [totalUpdatedLifeMembers, setTotalUpdatedLifeMembers] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
+  const [newLifeMembers, setNewLifeMembers] = useState([]);
+  const [totalNewLifeMembers, setTotalNewLifeMembers] = useState(0);
   const itemsPerPage = 20;
+
+  const exportToExcel = (data, fileName = "data.xlsx") => {
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: "xlsx",
+      type: "array",
+    });
+    const blob = new Blob([excelBuffer], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8",
+    });
+    saveAs(blob, fileName);
+  };
+
+  const exportToPDF = (data, columns, fileName = "data.pdf") => {
+    const doc = new jsPDF();
+    const tableColumn = columns;
+    const tableRows = data.map((item) => columns.map((col) => item[col] || ""));
+
+    autoTable(doc, {
+      head: [tableColumn],
+      body: tableRows,
+    });
+
+    doc.save(fileName);
+  };
+
+  const columns = [
+    { header: "LM No", key: "lm_no" },
+    { header: "Year", key: "year" },
+    { header: "Title", key: "col_y" },
+    { header: "Name", key: "member_name" },
+    { header: "Card Issue", key: "card_issue" },
+    { header: "Address", key: "add" },
+    { header: "Full Address", key: "address1" },
+    { header: "Contact", key: "contact_no" },
+    { header: "DOB", key: "dob" },
+    { header: "Gotra", key: "gotra" },
+    { header: "Kuldevi", key: "kuldevi" },
+    { header: "City", key: "city" },
+    { header: "Gender", key: "gender" },
+    { header: "Category", key: "category" },
+  ];
 
   const navigate = useNavigate();
 
@@ -66,9 +119,35 @@ const ConferenceAdminDashboard = () => {
       }
     };
 
+    const fetchUpdatedLifeMembers = async () => {
+      try {
+        const res = await getUpdatedLifeMembers();
+        if (res) {
+          setUpdatedLifeMembers(res);
+          setTotalUpdatedLifeMembers(res.length);
+        }
+      } catch (err) {
+        console.error("Error fetching updated life members:", err);
+      }
+    };
+
+    const fetchNewLifeMembers = async () => {
+      try {
+        const res = await getNewLifeMembers();
+        if (res) {
+          setNewLifeMembers(res);
+          setTotalNewLifeMembers(res.length);
+        }
+      } catch (err) {
+        console.error("Error fetching new life members:", err);
+      }
+    };
+
     fetchUsers();
     fetchAwardForms();
     fetchLifeMembers();
+    fetchUpdatedLifeMembers();
+    fetchNewLifeMembers();
   }, []);
 
   const handleLogout = () => {
@@ -108,85 +187,6 @@ const ConferenceAdminDashboard = () => {
 
   const renderSection = () => {
     switch (selectedSection) {
-      case "allUsers":
-        return (
-          <div className={styles.userTableWrapper}>
-            <h4 className="mb-3">Registered Users</h4>
-            <Table striped bordered hover responsive>
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>ABBS Membership No</th>
-                  <th>Name</th>
-                  <th>Gender</th>
-                  <th>DOB</th>
-                  <th>Address</th>
-                  <th>City</th>
-                  <th>Pin Code</th>
-                  <th>Email</th>
-                  <th>Category</th>
-                  <th>Mobile No</th>
-                  <th>Photo</th>
-                  <th>Payment Slip</th>
-                </tr>
-              </thead>
-              <tbody>
-                {registeredUsers.map((user, index) => (
-                  <tr key={user._id}>
-                    <td>{index + 1}</td>
-                    <td>{user.abbsMembershipNo}</td>
-                    <td>{user.name}</td>
-                    <td>{user.gender}</td>
-                    <td>{new Date(user.dob).toLocaleDateString()}</td>
-                    <td>{user.address}</td>
-                    <td>{user.city}</td>
-                    <td>{user.pincode}</td>
-                    <td>{user.email}</td>
-                    <td>{user.category}</td>
-                    <td>{user.mobileNo}</td>
-                    <td>
-                      {user.photo ? (
-                        <img
-                          src={user.photo}
-                          alt="User Photo"
-                          style={{
-                            width: "60px",
-                            height: "60px",
-                            objectFit: "cover",
-                          }}
-                        />
-                      ) : (
-                        "N/A"
-                      )}
-                    </td>
-                    <td>
-                      {user.paymentSlip ? (
-                        <a
-                          href={user.paymentSlip}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <img
-                            src={user.paymentSlip}
-                            alt="Payment Slip"
-                            style={{
-                              width: "60px",
-                              height: "60px",
-                              objectFit: "cover",
-                            }}
-                          />
-                        </a>
-                      ) : (
-                        "N/A"
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-          </div>
-        );
-
       case "awardForms":
         return (
           <div className={styles.userTableWrapper}>
@@ -234,7 +234,7 @@ const ConferenceAdminDashboard = () => {
                     <td>{users.father}</td>
                     <td>{users.mother}</td>
                     <td>{users.spouse}</td>
-                    <td>
+                    {/* <td>
                       {users.photo ? (
                         <img
                           src={users.photo}
@@ -290,7 +290,104 @@ const ConferenceAdminDashboard = () => {
                       ) : (
                         "N/A"
                       )}
+                    </td> */}
+
+                    <td>
+                      {users.photo ? (
+                        <>
+                          {users.photo.endsWith(".pdf") ? (
+                            <a
+                              href={users.photo}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              📄 View Photo (PDF)
+                            </a>
+                          ) : (
+                            <img
+                              src={users.photo}
+                              alt="Form Photo"
+                              style={{
+                                width: "60px",
+                                height: "60px",
+                                objectFit: "cover",
+                              }}
+                            />
+                          )}
+                        </>
+                      ) : (
+                        "N/A"
+                      )}
                     </td>
+
+                    <td>
+                      {users.document1 ? (
+                        <>
+                          {users.document1.endsWith(".pdf") ? (
+                            <a
+                              href={users.document1}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              📄 View Document 1 (PDF)
+                            </a>
+                          ) : (
+                            <a
+                              href={users.document1}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <img
+                                src={users.document1}
+                                alt="Document 1"
+                                style={{
+                                  width: "60px",
+                                  height: "60px",
+                                  objectFit: "cover",
+                                }}
+                              />
+                            </a>
+                          )}
+                        </>
+                      ) : (
+                        "N/A"
+                      )}
+                    </td>
+
+                    <td>
+                      {users.document2 ? (
+                        <>
+                          {users.document2.endsWith(".pdf") ? (
+                            <a
+                              href={users.document2}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              📄 View Document 2 (PDF)
+                            </a>
+                          ) : (
+                            <a
+                              href={users.document2}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <img
+                                src={users.document2}
+                                alt="Document 2"
+                                style={{
+                                  width: "60px",
+                                  height: "60px",
+                                  objectFit: "cover",
+                                }}
+                              />
+                            </a>
+                          )}
+                        </>
+                      ) : (
+                        "N/A"
+                      )}
+                    </td>
+
                     <td>{users.proposerName}</td>
                     <td>{users.proposalEmail}</td>
                     <td>{users.proposalMobile}</td>
@@ -417,6 +514,233 @@ const ConferenceAdminDashboard = () => {
           </>
         );
 
+      case "updatedLifeMembers":
+        return (
+          <>
+            {/*           
+          <div className={styles.userTableWrapper}>
+            <h4 className="mb-3">Updated ABBS Life Members</h4>
+
+            <div className={styles.exportButtons}>
+              <button
+                onClick={() =>
+                  exportToExcel(updatedLifeMembers, "UpdatedLifeMembers.xlsx")
+                }
+                className={styles.btn}
+              >
+                Export Excel
+              </button>
+             
+            </div>
+            <Table striped bordered hover responsive>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>LM No</th>
+                  <th>Year</th>
+                  <th>Title</th>
+                  <th>Name</th>
+                  <th>Card Issue</th>
+                  <th>Address</th>
+                  <th>Full Address</th>
+                  <th>Contact</th>
+                  <th>DOB</th>
+                  <th>Gotra</th>
+                  <th>Kuldevi</th>
+                  <th>City</th>
+                  <th>Gender</th>
+                  <th>Category</th>
+                  <th>Photo</th>
+                </tr>
+              </thead>
+              <tbody>
+                {updatedLifeMembers.map((member, index) => (
+                  <tr key={member._id}>
+                    <td>{index + 1}</td>
+                    <td>{member.lm_no}</td>
+                    <td>{member.year}</td>
+                    <td>{member.col_y}</td>
+                    <td>{member.member_name}</td>
+                    <td>{member.card_issue}</td>
+                    <td>{member.add}</td>
+                    <td>{member.address1}</td>
+                    <td>{member.contact_no}</td>
+                    <td>{member.dob}</td>
+                    <td>{member.gotra}</td>
+                    <td>{member.kuldevi}</td>
+                    <td>{member.city}</td>
+                    <td>{member.gender}</td>
+                    <td>{member.category}</td>
+                    <td>
+                      {member.photo ? (
+                        <img
+                          src={member.photo}
+                          alt="Photo"
+                          style={{
+                            width: "60px",
+                            height: "60px",
+                            objectFit: "cover",
+                          }}
+                        />
+                      ) : (
+                        "N/A"
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </div> */}
+
+            <div className={styles.userTableWrapper}>
+              <h4 className="mb-3">Updated Life Members</h4>
+
+              <div className={styles.exportButtons}>
+                <button
+                  onClick={() =>
+                    exportToExcel(updatedLifeMembers, "UpdatedLifeMembers.xlsx")
+                  }
+                  className={styles.btn}
+                >
+                  Export Updated Members
+                </button>
+              </div>
+
+              <Table striped bordered hover responsive>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>LM No</th>
+                    <th>Year</th>
+                    <th>Title</th>
+                    <th>Name</th>
+                    <th>Card Issue</th>
+                    <th>Address</th>
+                    <th>Full Address</th>
+                    <th>Contact</th>
+                    <th>DOB</th>
+                    <th>Gotra</th>
+                    <th>Kuldevi</th>
+                    <th>City</th>
+                    <th>Gender</th>
+                    <th>Category</th>
+                    <th>Photo</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {updatedLifeMembers.map((member, index) => (
+                    <tr key={member._id}>
+                      <td>{index + 1}</td>
+                      <td>{member.lm_no}</td>
+                      <td>{member.year}</td>
+                      <td>{member.col_y}</td>
+                      <td>{member.member_name}</td>
+                      <td>{member.card_issue}</td>
+                      <td>{member.add}</td>
+                      <td>{member.address1}</td>
+                      <td>{member.contact_no}</td>
+                      <td>{member.dob}</td>
+                      <td>{member.gotra}</td>
+                      <td>{member.kuldevi}</td>
+                      <td>{member.city}</td>
+                      <td>{member.gender}</td>
+                      <td>{member.category}</td>
+                      <td>
+                        {member.photo ? (
+                          <img
+                            src={member.photo}
+                            alt="Photo"
+                            style={{
+                              width: "60px",
+                              height: "60px",
+                              objectFit: "cover",
+                            }}
+                          />
+                        ) : (
+                          "N/A"
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+
+              
+              <h4 className="mb-3 mt-5">Newly Registered Life Members</h4>
+
+              <div className={styles.exportButtons}>
+                <button
+                  onClick={() =>
+                    exportToExcel(newLifeMembers, "NewLifeMembers.xlsx")
+                  }
+                  className={styles.btn}
+                >
+                  Export New Members
+                </button>
+              </div>
+
+              <Table striped bordered hover responsive>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>LM No</th>
+                    <th>Year</th>
+                    <th>Title</th>
+                    <th>Name</th>
+                    <th>Card Issue</th>
+                    <th>Address</th>
+                    <th>Full Address</th>
+                    <th>Contact</th>
+                    <th>DOB</th>
+                    <th>Gotra</th>
+                    <th>Kuldevi</th>
+                    <th>City</th>
+                    <th>Gender</th>
+                    <th>Category</th>
+                    <th>Photo</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {newLifeMembers.map((member, index) => (
+                    <tr key={member._id}>
+                      <td>{index + 1}</td>
+                      <td>{member.lm_no}</td>
+                      <td>{member.year}</td>
+                      <td>{member.col_y}</td>
+                      <td>{member.member_name}</td>
+                      <td>{member.card_issue}</td>
+                      <td>{member.add}</td>
+                      <td>{member.address1}</td>
+                      <td>{member.contact_no}</td>
+                      <td>{member.dob}</td>
+                      <td>{member.gotra}</td>
+                      <td>{member.kuldevi}</td>
+                      <td>{member.city}</td>
+                      <td>{member.gender}</td>
+                      <td>{member.category}</td>
+                      <td>
+                        {member.photo ? (
+                          <img
+                            src={member.photo}
+                            alt="Photo"
+                            style={{
+                              width: "60px",
+                              height: "60px",
+                              objectFit: "cover",
+                            }}
+                          />
+                        ) : (
+                          "N/A"
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </div>
+          </>
+        );
+
       default:
         return (
           <div className={styles.renderSection}>
@@ -431,6 +755,15 @@ const ConferenceAdminDashboard = () => {
                 Total number of ABBS Life Members
               </div>
               <div className={styles.widgetCount}>{totalLifeMembers}</div>
+            </div>
+
+            <div className={styles.widget} style={{ marginTop: "20px" }}>
+              <div className={styles.widgetTitle}>
+                Total number of Updated Life Members
+              </div>
+              <div className={styles.widgetCount}>
+                {totalUpdatedLifeMembers}
+              </div>
             </div>
           </div>
         );
@@ -465,6 +798,19 @@ const ConferenceAdminDashboard = () => {
                 onClick={() => setSelectedSection("lifeMembers")}
               >
                 ABBS Life Members
+              </div>
+            </div>
+
+            <div>
+              <div
+                className={`${styles.optionButton} ${
+                  selectedSection === "updatedLifeMembers"
+                    ? styles.activeButton
+                    : ""
+                }`}
+                onClick={() => setSelectedSection("updatedLifeMembers")}
+              >
+                Updated and New Registered Life Members
               </div>
             </div>
           </div>

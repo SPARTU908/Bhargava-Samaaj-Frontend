@@ -124,13 +124,8 @@ const AwardForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("handleSubmit triggered");
-
-    console.log("Current formData:", formData);
-    console.log("Current files:", files);
-
-    const validationErrors = validateForm();
-    console.log("validationErrors:", validationErrors);
+     const validationErrors = validateForm();
+ 
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length > 0) {
@@ -138,7 +133,7 @@ const AwardForm = () => {
       return;
     }
 
-    console.log("Validation passed, building FormData");
+   
 
     const data = new FormData();
     for (let key in formData) {
@@ -195,6 +190,9 @@ const AwardForm = () => {
           spouse: "",
           spouseOccupation: "",
           spousedob: "",
+          photo:"",
+          document1:"",
+          document2:"",
           proposerName: "",
           proposerEmail: "",
           proposerMobile: "",
