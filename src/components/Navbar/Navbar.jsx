@@ -128,18 +128,18 @@ const Navbar = () => {
         </div>
 
         {/* Rightmost Blinking Button */}
-        {/* <div
-    className="position-absolute top-50 end-0 translate-middle-y pe-3"
-    style={{ zIndex: 10 }}
-  >
-    <button
-      onClick={() => handleNavigate("/new-registration")}
-      className="btn btn-primary px-4 py-2 rounded-pill fw-semibold shadow-sm blinking-button"
-      style={{ whiteSpace: "nowrap" }}
-    >
-      📝 Conference Registration Form 
-    </button>
-  </div> */}
+        <div
+          className="position-absolute top-50 end-0 translate-middle-y pe-3"
+          style={{ zIndex: 10 }}
+        >
+          <button
+            onClick={() => handleNavigate("/new-registration")}
+            className="btn btn-primary px-4 py-2 rounded-pill fw-semibold shadow-sm blinking-button"
+            style={{ whiteSpace: "nowrap" }}
+          >
+            📝 Conference Registration Form
+          </button>
+        </div>
       </div>
 
       <BootstrapNavbar
@@ -256,6 +256,14 @@ const Navbar = () => {
                   <NavDropdown.Item onClick={() => handleNavigate("/haridwar")}>
                     हरिद्वार
                   </NavDropdown.Item>
+                  <NavDropdown.Item
+                    as="a"
+                    href="/pdfs/Bhargava Sabha Ki Properties.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    प्रॉपर्टीज
+                  </NavDropdown.Item>
                 </NavDropdown>
 
                 <Nav.Link onClick={() => handleNavigate("/magazine")}>
@@ -296,9 +304,27 @@ const Navbar = () => {
                   रजिस्ट्रेशन
                 </Nav.Link>
 
-                <Nav.Link onClick={() => handleNavigate("/registration")}>
+                {/* <Nav.Link onClick={() => handleNavigate("/download")}>
                   डाउनलोड
-                </Nav.Link>
+                </Nav.Link> */}
+
+                <NavDropdown title="डाउनलोड" id="download-dropdown">
+                  <NavDropdown.Item
+                    href="/pdfs/Samaj Kalyan Sahayata Form 2025-2027.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Samaj Kalyan Sahayata Form 
+                  </NavDropdown.Item>
+                  <NavDropdown.Item
+                    href="/pdfs/Shiksha Chhatravriti Application Form 2025-2027.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Shiksha Chhatravriti Application Form 
+                  </NavDropdown.Item>
+                </NavDropdown>
+
 
                 <Nav.Link onClick={() => handleNavigate("/admin")}>
                   एडमिन लॉगिन

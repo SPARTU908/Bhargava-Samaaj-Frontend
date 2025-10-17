@@ -1,10 +1,10 @@
 import axios from "axios";
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
-export const searchLifeMember = async (lm_no) => {
+export const searchLifeMember = async (LM_NO) => {
   try {
     const response = await axios.get(
-      `${BASE_URL}/api/v1/register/lifemember/${lm_no}`
+      `${BASE_URL}/api/v1/register/lifemember/${LM_NO}`
     );
     return response.data;
   } catch (error) {
@@ -23,11 +23,43 @@ export const getAllLifeMembers = async () => {
   }
 };
 
-export const updateLifeMember = async (lm_no, updateData) => {
+// export const updateLifeMember = async (LM_NO, updateData) => {
+//   try {
+//     const response = await axios.patch(
+//       `${BASE_URL}/api/v1/register/life-members/${LM_NO}`,
+//       updateData
+//     );
+
+//     return response.data;
+//   } catch (error) {
+//     console.error("Error in updateLifeMember:", error);
+//     const message = error.response?.data?.message || "Update failed";
+//     throw new Error(message);
+//   }
+// };
+
+
+export const updateLifeMember = async (LM_NO, memberData, photoFile) => {
   try {
+    const formData = new FormData();
+   Object.entries(memberData).forEach(([key, value]) => {
+      if (value !== undefined && value !== null) {
+        formData.append(key, value);
+      }
+    });
+    if (photoFile) {
+      formData.append("photo", photoFile);
+    }
+
     const response = await axios.patch(
-      `${BASE_URL}/api/v1/register/life-members/${lm_no}`,
-      updateData
+      `${BASE_URL}/api/v1/register/life-members/${LM_NO}`,
+      formData,
+      {
+        headers: {
+          // Let axios/browser handle the boundary
+          "Content-Type": "multipart/form-data",
+        },
+      }
     );
 
     return response.data;
@@ -37,6 +69,7 @@ export const updateLifeMember = async (lm_no, updateData) => {
     throw new Error(message);
   }
 };
+
 
 export const createLifeMember = async (formData, photoFile) => {
   try {

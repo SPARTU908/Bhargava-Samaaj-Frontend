@@ -44,32 +44,14 @@ const EditProfile = () => {
     whatsapp: "",
     nri: "",
     remarks: "",
-    photo:"",
-    bioData:"",
-    
- });
+    photo: "",
+    bioData: "",
+  });
 
-
-   const [photo, setPhoto] = useState(null);
+  const [photo, setPhoto] = useState(null);
   const [bioData, setBioData] = useState(null);
   const [existingPhoto, setExistingPhoto] = useState("");
   const [existingBiodata, setExistingBiodata] = useState("");
-
-  // useEffect(() => {
-  //   if (!userEmail) return;
-  //   axios
-  //     .get(`${BACKEND_URL}/api/v1/form/${userEmail}`)
-  //     .then((res) => {
-  //       const { _id, __v, password,photo,bioData,status,submittedAt,createdAt, updatedAt,...cleanedData } = res.data;
-  //       setFormData(cleanedData);
-  //     })
-  //     .catch((err) => console.error("Error fetching user", err));
-  // }, [userEmail]);
-
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setFormData((prev) => ({ ...prev, [name]: value }));
-  // };
 
   useEffect(() => {
     if (!userEmail) return;
@@ -86,7 +68,10 @@ const EditProfile = () => {
           submittedAt,
           createdAt,
           updatedAt,
+          resetOTP,
+          resetOTPExpires,
           ...cleanedData
+
         } = res.data;
 
         setFormData(cleanedData);
@@ -96,28 +81,36 @@ const EditProfile = () => {
       .catch((err) => console.error("Error fetching user", err));
   }, [userEmail]);
 
-    const handleChange = (e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-   const handlePhotoChange = (e) => setPhoto(e.target.files[0]);
+  const handlePhotoChange = (e) => setPhoto(e.target.files[0]);
   const handleBioDataChange = (e) => setBioData(e.target.files[0]);
 
+  const labelMap = {
+    number: "ABBS Membership Number",
+    dob: "Date of Birth",
+    fatherName: "Father's Name",
+    motherName: "Mother's Name",
+    birthPlace: "Place of Birth",
+    birthTime: "Time of Birth",
+    kuldevi: "Kuldevi Name",
+    pin: "PIN Code",
+    whatsapp: "WhatsApp Number",
+    photo: "Profile Photo",
+    bioData: "Biodata File",
+    nri: "Are you NRI?",
+    gotra: "Gotra (Family Lineage)",
+    manglik: "Manglik Status",
+    guardianName: "Guardian's Name",
+    fatherProfession: "Father's Profession",
+    fatherIncome: "Father's Income",
+    fatherDesignation: "Father's Designation",
+  };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     await axios.patch(`${BACKEND_URL}/api/v1/form/update/${userEmail}`, formData);
-  //     alert("✅ Profile updated successfully!");
-  //   } catch (error) {
-  //     console.error("Error updating profile:", error);
-  //     alert("❌ Failed to update profile");
-  //   }
-  // };
-
-
-   const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const formDataToSend = new FormData();
@@ -146,62 +139,7 @@ const EditProfile = () => {
     }
   };
 
-
   return (
-    // <Container className="py-5">
-    //   <Card className="shadow-sm h-auto">
-    //     <Card.Header className=" text-black text-center">
-    //       <h4>Edit Your Profile</h4>
-    //     </Card.Header>
-
-    //     {/* Scrollable body */}
-    //     <div
-    //       style={{
-    //         maxHeight: "600px",
-    //         overflowY: "auto",
-    //         padding: "20px",
-    //         background: "#f9f9f9",
-    //       }}
-    //     >
-    //       <Form onSubmit={handleSubmit}>
-    //         <Row>
-    //           {Object.entries(formData).map(([key, value]) => {
-    //             if (["_id", "__v", "password"].includes(key)) return null;
-
-    //             // Special types
-    //             const isDateField = key.toLowerCase().includes("dob");
-    //             const inputType = isDateField ? "date" : "text";
-
-    //             return (
-    //               <Col md={6} sm={12} key={key} className="mb-3">
-    //                 <Form.Group controlId={`form-${key}`}>
-    //                   <Form.Label className="text-capitalize">
-    //                     {key.replace(/([A-Z])/g, " $1")}
-    //                   </Form.Label>
-    //                   <Form.Control
-    //                     type={inputType}
-    //                     name={key}
-    //                     value={value || ""}
-    //                     onChange={handleChange}
-                        
-    //                   />
-    //                 </Form.Group>
-    //               </Col>
-    //             );
-    //           })}
-    //         </Row>
-
-    //         <div className="text-center mt-4">
-    //           <Button variant="success" type="submit" className="px-5">
-    //             Save Changes
-    //           </Button>
-    //         </div>
-    //       </Form>
-    //     </div>
-    //   </Card>
-    // </Container>
-
-
     <Container className="py-5">
       <Card className="shadow-sm h-auto">
         <Card.Header className="text-black text-center bg-light">
@@ -226,7 +164,7 @@ const EditProfile = () => {
                   <Col md={6} sm={12} key={key} className="mb-3">
                     <Form.Group controlId={`form-${key}`}>
                       <Form.Label className="text-capitalize">
-                        {key.replace(/([A-Z])/g, " $1")}
+                        {labelMap[key] || key.replace(/([A-Z])/g, " $1")}
                       </Form.Label>
                       <Form.Control
                         type={inputType}

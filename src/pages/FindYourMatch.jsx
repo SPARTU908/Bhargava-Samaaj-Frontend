@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { Container, Row, Col, Form, Button, Card ,Modal} from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Form,
+  Button,
+  Card,
+  Modal,
+} from "react-bootstrap";
 import Navbar from "../components/Navbar/Navbar";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../apis/login";
@@ -13,6 +21,7 @@ const FindYourMatch = () => {
   const [showForgotModal, setShowForgotModal] = useState(false);
   const [forgotForm, setForgotForm] = useState({
     email: "",
+    otp: "",
     newPassword: "",
     confirmPassword: "",
   });
@@ -28,6 +37,23 @@ const FindYourMatch = () => {
   const handleForgotChange = (e) => {
     const { name, value } = e.target;
     setForgotForm({ ...forgotForm, [name]: value });
+  };
+
+  const handleRequestOtp = async () => {
+    if (!forgotForm.email || !/\S+@\S+\.\S+/.test(forgotForm.email)) {
+      setForgotErrors({ email: "Valid email is required" });
+      return;
+    }
+
+    try {
+      const res = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/form/request-reset-otp`,
+        { email: forgotForm.email }
+      );
+      toast.success("OTP sent to your email!", { position: "top-center" });
+    } catch (err) {
+      toast.error("Failed to send OTP. Try again.", { position: "top-center" });
+    }
   };
 
   const validate = () => {
@@ -57,8 +83,58 @@ const FindYourMatch = () => {
     return errors;
   };
 
+  // const handleResetPassword = async () => {
+  //   const errors = validateForgotForm();
+  //   if (Object.keys(errors).length > 0) {
+  //     setForgotErrors(errors);
+  //     return;
+  //   }
+
+  //   setIsResetting(true);
+  //   try {
+  //     const res = await axios.post(
+  //       `${import.meta.env.VITE_BACKEND_URL}/api/v1/auth/reset-password`,
+  //       {
+  //         email: forgotForm.email,
+  //         newPassword: forgotForm.newPassword,
+  //       }
+  //     );
+
+  //     if (res.status === 200) {
+  //       toast.success("Password reset successfully!", {
+  //         position: "top-center",
+  //         autoClose: 3000,
+  //       });
+  //       setShowForgotModal(false);
+  //       setForgotForm({ email: "", newPassword: "", confirmPassword: "" });
+  //     } else {
+  //       toast.error("Reset failed. Email not found?", {
+  //         position: "top-center",
+  //       });
+  //     }
+  //   } catch (err) {
+  //     toast.error("Server error. Please try again.", {
+  //       position: "top-center",
+  //     });
+  //   } finally {
+  //     setIsResetting(false);
+  //   }
+  // };
+
   const handleResetPassword = async () => {
-    const errors = validateForgotForm();
+    const errors = {};
+    if (!forgotForm.email || !/\S+@\S+\.\S+/.test(forgotForm.email)) {
+      errors.email = "Valid email is required";
+    }
+    if (!forgotForm.otp) {
+      errors.otp = "OTP is required";
+    }
+    if (!forgotForm.newPassword) {
+      errors.newPassword = "New password is required";
+    }
+    if (forgotForm.newPassword !== forgotForm.confirmPassword) {
+      errors.confirmPassword = "Passwords do not match";
+    }
     if (Object.keys(errors).length > 0) {
       setForgotErrors(errors);
       return;
@@ -67,29 +143,24 @@ const FindYourMatch = () => {
     setIsResetting(true);
     try {
       const res = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/v1/auth/reset-password`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/form/verify-reset-otp`,
         {
           email: forgotForm.email,
+          otp: forgotForm.otp,
           newPassword: forgotForm.newPassword,
         }
       );
 
-      if (res.status === 200) {
-        toast.success("Password reset successfully!", {
-          position: "top-center",
-          autoClose: 3000,
-        });
-        setShowForgotModal(false);
-        setForgotForm({ email: "", newPassword: "", confirmPassword: "" });
-      } else {
-        toast.error("Reset failed. Email not found?", {
-          position: "top-center",
-        });
-      }
-    } catch (err) {
-      toast.error("Server error. Please try again.", {
-        position: "top-center",
+      toast.success("Password reset successfully!", { position: "top-center" });
+      setShowForgotModal(false);
+      setForgotForm({
+        email: "",
+        otp: "",
+        newPassword: "",
+        confirmPassword: "",
       });
+    } catch (err) {
+      toast.error("Invalid OTP or error occurred", { position: "top-center" });
     } finally {
       setIsResetting(false);
     }
@@ -115,7 +186,7 @@ const FindYourMatch = () => {
 
         if (statusRes.data.status === "approved") {
           localStorage.setItem("isLoggedIn", "true");
-         localStorage.setItem("userEmail", userData.email); 
+          localStorage.setItem("userEmail", userData.email);
           toast.success(result.data.message, {
             position: "top-center",
             autoClose: 3000,
@@ -168,7 +239,7 @@ const FindYourMatch = () => {
                 padding: "2.5rem 2rem",
                 borderRadius: "12px",
                 margin: "auto",
-                minHeight: "345px"
+                minHeight: "345px",
               }}
             >
               <Card.Body>
@@ -241,95 +312,130 @@ const FindYourMatch = () => {
       <ToastContainer />
 
       <Modal
-  show={showForgotModal}
-  onHide={() => setShowForgotModal(false)}
-  centered
-  backdrop="static"
->
-  <Modal.Header closeButton style={{ borderBottom: "none" }}>
-    <Modal.Title className="w-100 text-center" style={{ fontWeight: "600", color: "#0077cc" }}>
-      🔒 Reset Your Password
-    </Modal.Title>
-  </Modal.Header>
+        show={showForgotModal}
+        onHide={() => setShowForgotModal(false)}
+        centered
+        backdrop="static"
+      >
+        <Modal.Header closeButton style={{ borderBottom: "none" }}>
+          <Modal.Title
+            className="w-100 text-center"
+            style={{ fontWeight: "600", color: "#0077cc" }}
+          >
+            🔒 Reset Your Password
+          </Modal.Title>
+        </Modal.Header>
 
-  <Modal.Body style={{ padding: "2rem 2.5rem" }}>
-    <Form>
-      <Form.Group className="mb-4">
-        <Form.Label style={{ fontWeight: "500" }}>Email</Form.Label>
-        <Form.Control
-          type="email"
-          name="email"
-          placeholder="Enter your registered email"
-          value={forgotForm.email}
-          onChange={handleForgotChange}
-          isInvalid={!!forgotErrors.email}
-        />
-        <Form.Control.Feedback type="invalid">
-          {forgotErrors.email}
-        </Form.Control.Feedback>
-      </Form.Group>
+        <Modal.Body style={{ padding: "2rem 2.5rem" }}>
+          <Form>
+            <Form.Group className="mb-4">
+              <Form.Label style={{ fontWeight: "500" }}>Email</Form.Label>
+              <Form.Control
+                type="email"
+                name="email"
+                placeholder="Enter your registered email"
+                value={forgotForm.email}
+                onChange={handleForgotChange}
+                isInvalid={!!forgotErrors.email}
+              />
+              <Form.Control.Feedback type="invalid">
+                {forgotErrors.email}
+              </Form.Control.Feedback>
+            </Form.Group>
 
-      <Form.Group className="mb-4">
-        <Form.Label style={{ fontWeight: "500" }}>New Password</Form.Label>
-        <Form.Control
-          type="password"
-          name="newPassword"
-          placeholder="Enter new password"
-          value={forgotForm.newPassword}
-          onChange={handleForgotChange}
-          isInvalid={!!forgotErrors.newPassword}
-        />
-        <Form.Control.Feedback type="invalid">
-          {forgotErrors.newPassword}
-        </Form.Control.Feedback>
-      </Form.Group>
+            <Button
+              variant="outline-primary"
+              onClick={handleRequestOtp}
+              style={{ marginBottom: "1rem" }}
+            >
+              Send OTP
+            </Button>
 
-      <Form.Group className="mb-4">
-        <Form.Label style={{ fontWeight: "500" }}>Confirm Password</Form.Label>
-        <Form.Control
-          type="password"
-          name="confirmPassword"
-          placeholder="Re-enter new password"
-          value={forgotForm.confirmPassword}
-          onChange={handleForgotChange}
-          isInvalid={!!forgotErrors.confirmPassword}
-        />
-        <Form.Control.Feedback type="invalid">
-          {forgotErrors.confirmPassword}
-        </Form.Control.Feedback>
-      </Form.Group>
-    </Form>
-  </Modal.Body>
+            <Form.Group className="mb-4">
+              <Form.Label style={{ fontWeight: "500" }}>OTP</Form.Label>
+              <Form.Control
+                type="text"
+                name="otp"
+                placeholder="Enter the OTP sent to your email"
+                value={forgotForm.otp}
+                onChange={handleForgotChange}
+                isInvalid={!!forgotErrors.otp}
+              />
+              <Form.Control.Feedback type="invalid">
+                {forgotErrors.otp}
+              </Form.Control.Feedback>
+            </Form.Group>
 
-  <Modal.Footer style={{ borderTop: "none", justifyContent: "space-between", padding: "1.5rem 2.5rem" }}>
-    <Button
-      variant="outline-secondary"
-      onClick={() => setShowForgotModal(false)}
-      style={{
-        borderRadius: "8px",
-        padding: "10px 20px",
-        fontWeight: "500",
-      }}
-    >
-      Cancel
-    </Button>
-    <Button
-      variant="primary"
-      onClick={handleResetPassword}
-      disabled={isResetting}
-      style={{
-        backgroundColor: "#0077cc",
-        border: "none",
-        borderRadius: "8px",
-        padding: "10px 24px",
-        fontWeight: "500",
-      }}
-    >
-      {isResetting ? "Resetting..." : "Reset Password"}
-    </Button>
-  </Modal.Footer>
-</Modal>
+            <Form.Group className="mb-4">
+              <Form.Label style={{ fontWeight: "500" }}>
+                New Password
+              </Form.Label>
+              <Form.Control
+                type="password"
+                name="newPassword"
+                placeholder="Enter new password"
+                value={forgotForm.newPassword}
+                onChange={handleForgotChange}
+                isInvalid={!!forgotErrors.newPassword}
+              />
+              <Form.Control.Feedback type="invalid">
+                {forgotErrors.newPassword}
+              </Form.Control.Feedback>
+            </Form.Group>
 
+            <Form.Group className="mb-4">
+              <Form.Label style={{ fontWeight: "500" }}>
+                Confirm Password
+              </Form.Label>
+              <Form.Control
+                type="password"
+                name="confirmPassword"
+                placeholder="Re-enter new password"
+                value={forgotForm.confirmPassword}
+                onChange={handleForgotChange}
+                isInvalid={!!forgotErrors.confirmPassword}
+              />
+              <Form.Control.Feedback type="invalid">
+                {forgotErrors.confirmPassword}
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+
+        <Modal.Footer
+          style={{
+            borderTop: "none",
+            justifyContent: "space-between",
+            padding: "1.5rem 2.5rem",
+          }}
+        >
+          <Button
+            variant="outline-secondary"
+            onClick={() => setShowForgotModal(false)}
+            style={{
+              borderRadius: "8px",
+              padding: "10px 20px",
+              fontWeight: "500",
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="primary"
+            onClick={handleResetPassword}
+            disabled={isResetting}
+            style={{
+              backgroundColor: "#0077cc",
+              border: "none",
+              borderRadius: "8px",
+              padding: "10px 24px",
+              fontWeight: "500",
+            }}
+          >
+            {isResetting ? "Resetting..." : "Reset Password"}
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };

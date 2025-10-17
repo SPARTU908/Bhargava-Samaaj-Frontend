@@ -17,27 +17,10 @@ import {
 } from "../apis/lifemember";
 import Navbar from "../components/Navbar/Navbar.jsx";
 import { FaEdit, FaCheck } from "react-icons/fa";
-
-const requiredFields = [
-  "member_name",
-  "year",
-  "col_y",
-  "dob",
-  "gotra",
-  "kuldevi",
-  "gender",
-  "add",
-  "address1",
-  "address_extra",
-  "city",
-  "pin",
-  "contact_no",
-  "email",
-  "category",
-];
+import { Toast, ToastContainer } from "react-bootstrap";
 
 const NewRegistration = () => {
-  const [lm_no, setLmNo] = useState("");
+  const [LM_NO, setLmNo] = useState("");
   const [member, setMember] = useState(null);
   const [originalMember, setOriginalMember] = useState(null);
   const [photo, setPhoto] = useState(null);
@@ -48,6 +31,27 @@ const NewRegistration = () => {
   const [showConfirm, setShowConfirm] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+
+  const requiredFields = [
+    "LM_NO",
+    "Year",
+    "Title",
+    "Member_Name",
+    "Card_Issued",
+    "S_O_D_O_W_O",
+    "Date_of_Birth",
+    "Address",
+    "City",
+    "Pin",
+    "Contact_No",
+    "Email",
+    "Gotra",
+    "Kuldevi",
+    "gender",
+    "category",
+    "photo",
+  ];
 
   const photoPreview = useMemo(() => {
     if (photo) {
@@ -59,7 +63,7 @@ const NewRegistration = () => {
   }, [photo, member]);
 
   const handleSearch = async () => {
-    if (!lm_no.trim()) {
+    if (!LM_NO.trim()) {
       setError("Please enter a Life Member No.");
       setMember(null);
       setOriginalMember(null);
@@ -68,27 +72,27 @@ const NewRegistration = () => {
     }
 
     try {
-      const data = await searchLifeMember(lm_no);
+      const data = await searchLifeMember(LM_NO);
       const normalized = {
         ...data,
-        gotra: data.gotra || "",
-        kuldevi: data.kuldevi || "",
+        Gotra: data.Gotra || "",
+        Kuldevi: data.Kuldevi || "",
         category: data.category || "",
         gender: data.gender || "",
-        email: data.email || "",
-        member_name: data.member_name || "",
-        city: data.city || "",
-        pin: data.pin || "",
-        dob: data.dob ? data.dob.split("T")[0] : "",
-        add: data.add || "",
-        address1: data.address1 || "",
-        address_extra: data.address_extra || "",
-        contact_no: data.contact_no || "",
-        col_y: data.col_y || "",
-        year: data.year || "",
-        card_issue: data.card_issue || "",
+        Email: data.Email || "",
+        Member_Name: data.Member_Name || "",
+        City: data.City || "",
+        Pin: data.Pin || "",
+        Date_of_Birth: data.Date_of_Birth
+          ? data.Date_of_Birth.split("T")[0]
+          : "",
+        Address: data.Address || "",
+        Contact_No: data.Contact_No || "",
+        Title: data.Title || "",
+        Year: data.Year || "",
+        Card_Issued: data.Card_Issued || "",
         photo: data.photo,
-        lm_no: data.lm_no || lm_no,
+        LM_NO: data.LM_NO || LM_NO,
       };
       setMember(normalized);
       setOriginalMember(normalized);
@@ -107,21 +111,20 @@ const NewRegistration = () => {
       );
 
       const blankMember = {
-        lm_no: lm_no,
-        year: "",
-        col_y: "",
-        member_name: "",
-        card_issue: "",
-        add: "",
-        dob: "",
-        address1: "",
-        address_extra: "",
-        city: "",
-        pin: "",
-        contact_no: "",
-        email: "",
-        gotra: "",
-        kuldevi: "",
+        LM_NO: LM_NO,
+        Year: "",
+        Title: "",
+        Member_Name: "",
+        Card_Issued: "",
+        S_O_D_O_W_O: "",
+        Date_of_Birth: "",
+        Address: "",
+        City: "",
+        Pin: "",
+        Contact_No: "",
+        Email: "",
+        Gotra: "",
+        Kuldevi: "",
         gender: "",
         category: "",
         photo: "",
@@ -164,31 +167,48 @@ const NewRegistration = () => {
   };
 
   const validate = () => {
+    console.log("🔍 Starting validation...");
+    console.log("🧾 Member object:", member);
+
     const errors = {};
+
     requiredFields.forEach((field) => {
-      if (!member[field] || member[field].toString().trim() === "") {
+      const value = member[field];
+      console.log(`🔎 Checking "${field}" →`, value);
+      if (field === "photo") {
+        if (!photo && !member.photo) {
+          errors.photo = "Photo is required";
+        }
+        return;
+      }
+
+      if (!value || value.toString().trim() === "") {
+        console.warn(`⚠️ "${field}" is missing or empty`);
         errors[field] = "This field is required";
       } else {
-        if (field === "email") {
+        if (field === "Email") {
           const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          if (!emailRegex.test(member[field])) {
+          if (!emailRegex.test(value)) {
             errors[field] = "Invalid email address";
           }
         }
-        if (field === "contact_no") {
+
+        if (field === "Contact_No") {
           const phoneRegex = /^[0-9]{10,15}$/;
-          if (!phoneRegex.test(member[field])) {
+          if (!phoneRegex.test(value)) {
             errors[field] = "Invalid contact number";
           }
         }
-        if (field === "pin") {
-          if (!/^\d{6}$/.test(member[field])) {
+
+        if (field === "Pin") {
+          if (!/^\d{6}$/.test(value)) {
             errors[field] = "PIN code must be 6 digits";
           }
         }
       }
     });
 
+    console.log("✅ Validation finished. Errors found:", errors);
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -206,48 +226,36 @@ const NewRegistration = () => {
     }
   };
 
-  const confirmSubmit = async () => {
+ const confirmSubmit = async () => {
     setShowConfirm(false);
     setSubmitting(true);
 
-    const formData = new FormData();
-    Object.entries(member).forEach(([key, value]) => {
-      if (value !== undefined && value !== null && value !== "") {
-        formData.append(key, value);
-      }
-    });
-
-    if (photo) {
-      formData.append("photo", photo);
-    }
-    for (let pair of formData.entries()) {
-      console.log(pair[0] + ": " + pair[1]);
-    }
     try {
       if (isCreating) {
         await createLifeMember(member, photo);
-        setSuccess("Member created successfully!");
+        setSuccess("Form Submitted Successfully!");
       } else {
-        await updateLifeMember(lm_no, member, photo);
-        setSuccess("Member updated successfully!");
+        await updateLifeMember(LM_NO, member, photo);
+        setSuccess("Form Updated Successfully!");
       }
 
+      setShowToast(true); // ✅ Show the toast
+
       setMember({
-        lm_no: "",
-        year: "",
-        col_y: "",
-        member_name: "",
-        card_issue: "",
-        add: "",
-        dob: "",
-        address1: "",
-        address_extra: "",
-        city: "",
-        pin: "",
-        contact_no: "",
-        email: "",
-        gotra: "",
-        kuldevi: "",
+        LM_NO: "",
+        Year: "",
+        Title: "",
+        Member_Name: "",
+        Card_Issued: "",
+        S_O_D_O_W_O: "",
+        Date_of_Birth: "",
+        Address: "",
+        City: "",
+        Pin: "",
+        Contact_No: "",
+        Email: "",
+        Gotra: "",
+        Kuldevi: "",
         gender: "",
         category: "",
         photo: "",
@@ -264,6 +272,7 @@ const NewRegistration = () => {
       setSubmitting(false);
     }
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -273,6 +282,7 @@ const NewRegistration = () => {
       setError("Please search a member first.");
       return;
     }
+    console.log("🔎 member before validation:", member);
 
     if (!validate()) {
       setError("Please fix the errors before submitting.");
@@ -292,7 +302,8 @@ const NewRegistration = () => {
     field,
     type = "text",
     options = null,
-    required = false
+    required = false,
+    placeholder = ""
   ) => {
     const isEditing = editingFields[field];
     const value = member?.[field] ?? "";
@@ -342,7 +353,9 @@ const NewRegistration = () => {
             ) : (
               <Form.Control
                 type={type}
+                placeholder={placeholder}
                 {...commonInputProps}
+                
                 style={{ flexGrow: 1 }}
               />
             )
@@ -395,44 +408,22 @@ const NewRegistration = () => {
         <h2 className="text-center mb-4">
           Registration for 134<sup>th</sup> Annual Conference at Ujjain
         </h2>
-
-        {/* <p>
-          <strong>Respected ABBS Member,</strong>
+        <p className="text-center mb-4 fw-semibold text-danger">
+          ⚠️ Last Date for Online Registration:{" "}
+          <strong>
+            7<sup>th</sup> December 2025
+          </strong>
         </p>
-        <p>Greetings of the Day</p>
-        <p>
-          The form for Online Registration for the upcoming Adhiveshan at Ujjain
-          on the 20th, 21st and 22nd of December has been uploaded on the
-          Website. You may register on the website depending on your plans to
-          attend the Adhiveshan.
-        </p>
-        <p>
-          The Registration Charges are Rs.50 per person for Online Registration
-          and Rs.100 per person for the On Spot Registration at the Adhiveshan
-          Venue.
-        </p>
-        <p>The charge for each form for On Spot Registration will be Rs.10</p>
-
-        <p>Upload the slip of payment in online form.</p>
-        <p>For any query, please contact at ABBS Office number-9521276842</p> */}
-
         <Card className="p-4 shadow-sm border-0 bg-light h-auto">
           <Card.Body>
-            <p className="fw-bold text-primary fs-5 mb-2">
-              Respected ABBS Member,
-            </p>
-            <p className="mb-4">🙏 Greetings of the Day!</p>
-
             <p className="mb-3">
-              The form for <strong>Online Registration</strong> for the upcoming
+              <strong>Online Registration</strong> for the upcoming
               <em> Adhiveshan at Ujjain </em> on the
               <strong>
                 {" "}
                 20<sup>th</sup>, 21<sup>st</sup>, and 22<sup>nd</sup> of
-                December{" "}
+                December.
               </strong>
-              has been uploaded on the website. <br />
-              You may register depending on your plans to attend the Adhiveshan.
             </p>
 
             <div className="mb-3 p-3 bg-white rounded border">
@@ -458,26 +449,6 @@ const NewRegistration = () => {
 
         <Row className="justify-content-center mb-4">
           <Col md={6}>
-            {/* <Form
-              className="d-flex"
-              onSubmit={(e) => {
-                e.preventDefault();
-                handleSearch();
-              }}
-            >
-              <Form.Control
-                type="text"
-                value={lm_no}
-                onChange={(e) => setLmNo(e.target.value)}
-                placeholder="Enter Life Member No."
-                className="me-2"
-                autoFocus
-              />
-              <Button variant="primary" type="submit">
-                Search
-              </Button>
-            </Form> */}
-
             <Form
               className="d-flex flex-column mt-5"
               onSubmit={(e) => {
@@ -486,12 +457,14 @@ const NewRegistration = () => {
               }}
             >
               <Form.Label className="mb-2  fw-semibold">
+                To Register for Conference-
+                <br />
                 Enter your ABBS Life Membership Number:
               </Form.Label>
               <div className="d-flex">
                 <Form.Control
                   type="text"
-                  value={lm_no}
+                  value={LM_NO}
                   onChange={(e) => setLmNo(e.target.value)}
                   placeholder="Enter Life Member No."
                   className="me-2"
@@ -519,7 +492,7 @@ const NewRegistration = () => {
           </Row>
         )}
 
-        {success && (
+        {/* {success && (
           <Row className="justify-content-center">
             <Col md={6}>
               <Alert variant="success" className="text-center">
@@ -527,55 +500,13 @@ const NewRegistration = () => {
               </Alert>
             </Col>
           </Row>
-        )}
+        )} */}
 
         {member && (
           <Card className="shadow-lg h-auto">
             <Card.Body>
               <Form onSubmit={handleSubmit}>
                 <Row>
-                  {/* <Col md={4} className="text-center">
-                    {photo || member?.photo ? (
-                      <>
-                        <Image
-                          src={photoPreview}
-                          rounded
-                          fluid
-                          alt="Member Photo"
-                          style={{
-                            maxHeight: "200px",
-                            border: "1px solid #ccc",
-                          }}
-                          onError={(e) => {
-                            e.target.onerror = null;
-                            e.target.src = "/placeholder.jpg";
-                          }}
-                        />
-                      </>
-                    ) : (
-                      <div
-                        style={{
-                          width: "200px",
-                          height: "200px",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          border: "1px solid #ccc",
-                          borderRadius: "0.25rem",
-                          backgroundColor: "#f8f9fa",
-                          fontSize: "1rem",
-                          color: "#888",
-                        }}
-                      >
-                        Photo Not Uploaded
-                      </div>
-                    )}
-
-                    <Form.Group controlId="photo" className="mt-3">
-                      <Form.Label>Upload New Photo</Form.Label>
-                      <Form.Control type="file" onChange={handlePhotoChange} />
-                    </Form.Group>
-                  </Col> */}
                   <Col md={4} className="text-center">
                     <div
                       style={{
@@ -630,7 +561,7 @@ const NewRegistration = () => {
                           display: "block",
                         }}
                       >
-                        Upload New Photo
+                        Upload New Photo(Please Upload in Image Format)
                       </Form.Label>
                       <Form.Control
                         type="file"
@@ -643,100 +574,138 @@ const NewRegistration = () => {
                           cursor: "pointer",
                         }}
                       />
+                      {formErrors.photo && (
+                        <div
+                          style={{
+                            color: "red",
+                            marginTop: "0.5rem",
+                            fontSize: "0.875rem",
+                          }}
+                        >
+                          {formErrors.photo}
+                        </div>
+                      )}
                     </Form.Group>
                   </Col>
 
                   <Col md={8}>
                     <Row>
                       {renderEditableField(
-                        "Life Membership No",
-                        "lm_no",
+                        "ABBS Life Membership No",
+                        "LM_NO",
                         "text",
                         null,
                         false
                       )}
                       {renderEditableField(
-                        "Title (Mr/Mrs/Miss)",
-                        "col_y",
+                        "Title ",
+                        "Title",
                         "text",
                         null,
-                        true
+                        true,
+                        "Mr/Mrs/Miss"
                       )}
                       {renderEditableField(
                         "Member Name",
-                        "member_name",
+                        "Member_Name",
                         "text",
                         null,
                         true
                       )}
-                      {renderEditableField("Year", "year", "text", null, true)}
+
+                      {renderEditableField(
+                        "S/O,D/O,W/O",
+                        "S_O_D_O_W_O",
+                        "text",
+                        null,
+                        true,
+                        "eg-S/O Mr.ABC"
+                      )}
+                      {renderEditableField(
+                        "ABBS Membership Card Issued Year",
+                        "Year",
+                        "text",
+                        null,
+                        true
+                      )}
                       {renderEditableField(
                         "Date of Birth",
-                        "dob",
+                        "Date_of_Birth",
                         "date",
                         null,
                         true
                       )}
                       {renderEditableField(
                         "Gotra",
-                        "gotra",
+                        "Gotra",
                         "text",
                         null,
                         true
                       )}
                       {renderEditableField(
                         "Kuldevi",
-                        "kuldevi",
+                        "Kuldevi",
                         "text",
                         null,
                         true
                       )}
-                      {renderEditableField(
+                      {/* {renderEditableField(
                         "Gender",
                         "gender",
                         "text",
                         null,
                         true
-                      )}
+                      )} */}
+
+
+                      <Form.Group
+                        as={Col}
+                        md={6}
+                        className="mb-3"
+                        controlId="gender"
+                      >
+                        <Form.Label>
+                          <strong>Gender</strong>
+                        </Form.Label>
+                        <Form.Select
+                          value={member.gender || ""}
+                          onChange={(e) =>
+                            handleChange("gender", e.target.value)
+                          }
+                        >
+                          <option value="">Select</option>
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
+                        </Form.Select>
+                      </Form.Group>
+
+
                       {renderEditableField(
                         "Email",
-                        "email",
+                        "Email",
                         "email",
                         null,
                         true
                       )}
                       {renderEditableField(
                         "Mobile No",
-                        "contact_no",
+                        "Contact_No",
                         "text",
                         null,
                         true
                       )}
                       {renderEditableField(
-                        "Address Line 1",
-                        "add",
+                        "Address",
+                        "Address",
                         "text",
                         null,
                         true
                       )}
-                      {renderEditableField(
-                        "Address Line 2",
-                        "address1",
-                        "text",
-                        null,
-                        true
-                      )}
-                      {renderEditableField(
-                        "Extra Address Info",
-                        "address_extra",
-                        "text",
-                        null,
-                        true
-                      )}
-                      {renderEditableField("City", "city", "text", null, true)}
+
+                      {renderEditableField("City", "City", "text", null, true)}
                       {renderEditableField(
                         "PIN Code",
-                        "pin",
+                        "Pin",
                         "text",
                         null,
                         true
@@ -747,15 +716,15 @@ const NewRegistration = () => {
                         as={Col}
                         md={6}
                         className="mb-3"
-                        controlId="card_issue"
+                        controlId="Card_Issued"
                       >
                         <Form.Label>
                           <strong>Card Issued</strong>
                         </Form.Label>
                         <Form.Select
-                          value={member.card_issue || ""}
+                          value={member.Card_Issued || ""}
                           onChange={(e) =>
-                            handleChange("card_issue", e.target.value)
+                            handleChange("Card_Issued", e.target.value)
                           }
                         >
                           <option value="">Select</option>
@@ -874,6 +843,32 @@ const NewRegistration = () => {
             </Card.Body>
           </Card>
         )}
+
+        <div
+          style={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            zIndex: 9999,
+            minWidth: "300px",
+          }}
+        >
+          <Toast
+            show={showToast}
+            onClose={() => setShowToast(false)}
+            delay={4000}
+            autohide
+            bg="success"
+          >
+            <Toast.Header>
+              <strong className="me-auto">Success</strong>
+            </Toast.Header>
+            <Toast.Body className="text-white">
+              Form Submitted Successfully!
+            </Toast.Body>
+          </Toast>
+        </div>
       </Container>
 
       <Modal show={showConfirm} onHide={() => setShowConfirm(false)} centered>

@@ -14,8 +14,6 @@ import {
 import { Table } from "react-bootstrap";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
-import jsPDF from "jspdf";
-import autoTable from "jspdf-autotable";
 
 const ConferenceAdminDashboard = () => {
   const [selectedSection, setSelectedSection] = useState(null);
@@ -34,6 +32,8 @@ const ConferenceAdminDashboard = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [newLifeMembers, setNewLifeMembers] = useState([]);
   const [totalNewLifeMembers, setTotalNewLifeMembers] = useState(0);
+
+  const [genderFilter, setGenderFilter] = useState("");
   const itemsPerPage = 20;
 
   const exportToExcel = (data, fileName = "data.xlsx") => {
@@ -50,32 +50,21 @@ const ConferenceAdminDashboard = () => {
     saveAs(blob, fileName);
   };
 
-  const exportToPDF = (data, columns, fileName = "data.pdf") => {
-    const doc = new jsPDF();
-    const tableColumn = columns;
-    const tableRows = data.map((item) => columns.map((col) => item[col] || ""));
-
-    autoTable(doc, {
-      head: [tableColumn],
-      body: tableRows,
-    });
-
-    doc.save(fileName);
-  };
-
   const columns = [
-    { header: "LM No", key: "lm_no" },
-    { header: "Year", key: "year" },
-    { header: "Title", key: "col_y" },
-    { header: "Name", key: "member_name" },
-    { header: "Card Issue", key: "card_issue" },
-    { header: "Address", key: "add" },
-    { header: "Full Address", key: "address1" },
-    { header: "Contact", key: "contact_no" },
-    { header: "DOB", key: "dob" },
-    { header: "Gotra", key: "gotra" },
-    { header: "Kuldevi", key: "kuldevi" },
-    { header: "City", key: "city" },
+    { header: "LM No", key: "LM_NO" },
+    { header: "Year", key: "Year" },
+    { header: "Title", key: "Title" },
+    { header: "Name", key: "Member_Name" },
+    { header: "Card Issue", key: "Card_IssueD" },
+    { header: "S/O,D/O,W/O", key: "S_O_D_O_W_O" },
+    { header: "Address", key: "Address" },
+    { header: "Contact", key: "Contact_No" },
+    { header: "DOB", key: "Date_of_Birth" },
+    { header: "Gotra", key: "Gotra" },
+    { header: "Kuldevi", key: "Kuldevi" },
+    { header: "City", key: "City" },
+    { header: "Pin", key: "Pin" },
+    { header: "Email", key: "Email" },
     { header: "Gender", key: "gender" },
     { header: "Category", key: "category" },
   ];
@@ -167,12 +156,12 @@ const ConferenceAdminDashboard = () => {
 
   // Filter by LM No and Name
   const filteredLifeMembers = lifeMembers.filter((member) => {
-    const matchesLmNo = member.lm_no
-      .toLowerCase()
-      .includes(lifeMemberSearch.lmNo.toLowerCase());
-    const matchesName = member.member_name
-      .toLowerCase()
-      .includes(lifeMemberSearch.name.toLowerCase());
+    const matchesLmNo = member.LM_NO.toLowerCase().includes(
+      lifeMemberSearch.lmNo.toLowerCase()
+    );
+    const matchesName = member.Member_Name.toLowerCase().includes(
+      lifeMemberSearch.name.toLowerCase()
+    );
     return matchesLmNo && matchesName;
   });
 
@@ -234,64 +223,6 @@ const ConferenceAdminDashboard = () => {
                     <td>{users.father}</td>
                     <td>{users.mother}</td>
                     <td>{users.spouse}</td>
-                    {/* <td>
-                      {users.photo ? (
-                        <img
-                          src={users.photo}
-                          alt="Form Photo"
-                          style={{
-                            width: "60px",
-                            height: "60px",
-                            objectFit: "cover",
-                          }}
-                        />
-                      ) : (
-                        "N/A"
-                      )}
-                    </td>
-                    <td>
-                      {users.document1 ? (
-                        <a
-                          href={users.document1}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <img
-                            src={users.document1}
-                            alt="Document 1"
-                            style={{
-                              width: "60px",
-                              height: "60px",
-                              objectFit: "cover",
-                            }}
-                          />
-                        </a>
-                      ) : (
-                        "N/A"
-                      )}
-                    </td>
-                    <td>
-                      {users.document2 ? (
-                        <a
-                          href={users.document2}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <img
-                            src={users.document2}
-                            alt="Document 2"
-                            style={{
-                              width: "60px",
-                              height: "60px",
-                              objectFit: "cover",
-                            }}
-                          />
-                        </a>
-                      ) : (
-                        "N/A"
-                      )}
-                    </td> */}
-
                     <td>
                       {users.photo ? (
                         <>
@@ -440,13 +371,15 @@ const ConferenceAdminDashboard = () => {
                     <th>Title</th>
                     <th>Name</th>
                     <th>Card Issue</th>
+                    <th>S/O,D/O,W/O</th>
+                    <th>Dae of Birth</th>
                     <th>Address</th>
-                    <th>Full Address</th>
-                    <th>Contact</th>
-                    <th>DOB</th>
+                    <th>City</th>
+                    <th>Pin</th>
+                    <th>Contact No.</th>
+                    <th>Email</th>
                     <th>Gotra</th>
                     <th>Kuldevi</th>
-                    <th>City</th>
                     <th>Gender</th>
                     <th>Category</th>
                     <th>Photo</th>
@@ -456,18 +389,20 @@ const ConferenceAdminDashboard = () => {
                   {currentMembers.map((member, index) => (
                     <tr key={member._id}>
                       <td>{indexOfFirstItem + index + 1}</td>
-                      <td>{member.lm_no}</td>
-                      <td>{member.year}</td>
-                      <td>{member.col_y}</td>
-                      <td>{member.member_name}</td>
-                      <td>{member.card_issue}</td>
-                      <td>{member.add}</td>
-                      <td>{member.address1}</td>
-                      <td>{member.contact_no}</td>
-                      <td>{member.dob}</td>
-                      <td>{member.gotra}</td>
-                      <td>{member.kuldevi}</td>
-                      <td>{member.city}</td>
+                      <td>{member.LM_NO}</td>
+                      <td>{member.Year}</td>
+                      <td>{member.Title}</td>
+                      <td>{member.Member_Name}</td>
+                      <td>{member.Card_Issued}</td>
+                      <td>{member.S_O_D_O_W_O}</td>
+                      <td>{member.Date_of_Birth}</td>
+                      <td>{member.Address}</td>
+                      <td>{member.City}</td>
+                      <td>{member.Pin}</td>
+                      <td>{member.Contact_No}</td>
+                      <td>{member.Email}</td>
+                      <td>{member.Gotra}</td>
+                      <td>{member.Kuldevi}</td>
                       <td>{member.gender}</td>
                       <td>{member.category}</td>
                       <td>
@@ -517,81 +452,6 @@ const ConferenceAdminDashboard = () => {
       case "updatedLifeMembers":
         return (
           <>
-            {/*           
-          <div className={styles.userTableWrapper}>
-            <h4 className="mb-3">Updated ABBS Life Members</h4>
-
-            <div className={styles.exportButtons}>
-              <button
-                onClick={() =>
-                  exportToExcel(updatedLifeMembers, "UpdatedLifeMembers.xlsx")
-                }
-                className={styles.btn}
-              >
-                Export Excel
-              </button>
-             
-            </div>
-            <Table striped bordered hover responsive>
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>LM No</th>
-                  <th>Year</th>
-                  <th>Title</th>
-                  <th>Name</th>
-                  <th>Card Issue</th>
-                  <th>Address</th>
-                  <th>Full Address</th>
-                  <th>Contact</th>
-                  <th>DOB</th>
-                  <th>Gotra</th>
-                  <th>Kuldevi</th>
-                  <th>City</th>
-                  <th>Gender</th>
-                  <th>Category</th>
-                  <th>Photo</th>
-                </tr>
-              </thead>
-              <tbody>
-                {updatedLifeMembers.map((member, index) => (
-                  <tr key={member._id}>
-                    <td>{index + 1}</td>
-                    <td>{member.lm_no}</td>
-                    <td>{member.year}</td>
-                    <td>{member.col_y}</td>
-                    <td>{member.member_name}</td>
-                    <td>{member.card_issue}</td>
-                    <td>{member.add}</td>
-                    <td>{member.address1}</td>
-                    <td>{member.contact_no}</td>
-                    <td>{member.dob}</td>
-                    <td>{member.gotra}</td>
-                    <td>{member.kuldevi}</td>
-                    <td>{member.city}</td>
-                    <td>{member.gender}</td>
-                    <td>{member.category}</td>
-                    <td>
-                      {member.photo ? (
-                        <img
-                          src={member.photo}
-                          alt="Photo"
-                          style={{
-                            width: "60px",
-                            height: "60px",
-                            objectFit: "cover",
-                          }}
-                        />
-                      ) : (
-                        "N/A"
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-          </div> */}
-
             <div className={styles.userTableWrapper}>
               <h4 className="mb-3">Updated Life Members</h4>
 
@@ -606,6 +466,22 @@ const ConferenceAdminDashboard = () => {
                 </button>
               </div>
 
+              <div className="mb-3 d-flex align-items-center gap-2">
+                <label htmlFor="genderFilter" style={{ fontWeight: 600 }}>
+                  Filter by Gender:
+                </label>
+                <select
+                  id="genderFilter"
+                  value={genderFilter}
+                  onChange={(e) => setGenderFilter(e.target.value)}
+                  className="form-select w-auto"
+                >
+                  <option value="">All</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+              </div>
+
               <Table striped bordered hover responsive>
                 <thead>
                   <tr>
@@ -615,34 +491,38 @@ const ConferenceAdminDashboard = () => {
                     <th>Title</th>
                     <th>Name</th>
                     <th>Card Issue</th>
+                    <th>S/O,D/O,W/O</th>
+                    <th>Dae of Birth</th>
                     <th>Address</th>
-                    <th>Full Address</th>
-                    <th>Contact</th>
-                    <th>DOB</th>
+                    <th>City</th>
+                    <th>Pin</th>
+                    <th>Contact No.</th>
+                    <th>Email</th>
                     <th>Gotra</th>
                     <th>Kuldevi</th>
-                    <th>City</th>
                     <th>Gender</th>
                     <th>Category</th>
                     <th>Photo</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {updatedLifeMembers.map((member, index) => (
+                  {/* {updatedLifeMembers.map((member, index) => (
                     <tr key={member._id}>
                       <td>{index + 1}</td>
-                      <td>{member.lm_no}</td>
-                      <td>{member.year}</td>
-                      <td>{member.col_y}</td>
-                      <td>{member.member_name}</td>
-                      <td>{member.card_issue}</td>
-                      <td>{member.add}</td>
-                      <td>{member.address1}</td>
-                      <td>{member.contact_no}</td>
-                      <td>{member.dob}</td>
-                      <td>{member.gotra}</td>
-                      <td>{member.kuldevi}</td>
-                      <td>{member.city}</td>
+                      <td>{member.LM_NO}</td>
+                      <td>{member.Year}</td>
+                      <td>{member.Title}</td>
+                      <td>{member.Member_Name}</td>
+                      <td>{member.Card_Issued}</td>
+                      <td>{member.S_O_D_O_W_O}</td>
+                      <td>{member.Date_of_Birth}</td>
+                      <td>{member.Address}</td>
+                      <td>{member.City}</td>
+                      <td>{member.Pin}</td>
+                      <td>{member.Contact_No}</td>
+                      <td>{member.Email}</td>
+                      <td>{member.Gotra}</td>
+                      <td>{member.Kuldevi}</td>
                       <td>{member.gender}</td>
                       <td>{member.category}</td>
                       <td>
@@ -661,11 +541,51 @@ const ConferenceAdminDashboard = () => {
                         )}
                       </td>
                     </tr>
-                  ))}
+                  ))} */}
+
+                  {updatedLifeMembers
+                    .filter((member) =>
+                      genderFilter ? member.gender === genderFilter : true
+                    )
+                    .map((member, index) => (
+                      <tr key={member._id}>
+                        <td>{index + 1}</td>
+                        <td>{member.LM_NO}</td>
+                        <td>{member.Year}</td>
+                        <td>{member.Title}</td>
+                        <td>{member.Member_Name}</td>
+                        <td>{member.Card_Issued}</td>
+                        <td>{member.S_O_D_O_W_O}</td>
+                        <td>{member.Date_of_Birth}</td>
+                        <td>{member.Address}</td>
+                        <td>{member.City}</td>
+                        <td>{member.Pin}</td>
+                        <td>{member.Contact_No}</td>
+                        <td>{member.Email}</td>
+                        <td>{member.Gotra}</td>
+                        <td>{member.Kuldevi}</td>
+                        <td>{member.gender}</td>
+                        <td>{member.category}</td>
+                        <td>
+                          {member.photo ? (
+                            <img
+                              src={member.photo}
+                              alt="Photo"
+                              style={{
+                                width: "60px",
+                                height: "60px",
+                                objectFit: "cover",
+                              }}
+                            />
+                          ) : (
+                            "N/A"
+                          )}
+                        </td>
+                      </tr>
+                    ))}
                 </tbody>
               </Table>
 
-              
               <h4 className="mb-3 mt-5">Newly Registered Life Members</h4>
 
               <div className={styles.exportButtons}>
@@ -679,6 +599,22 @@ const ConferenceAdminDashboard = () => {
                 </button>
               </div>
 
+               <div className="mb-3 d-flex align-items-center gap-2">
+                <label htmlFor="genderFilter" style={{ fontWeight: 600 }}>
+                  Filter by Gender:
+                </label>
+                <select
+                  id="genderFilter"
+                  value={genderFilter}
+                  onChange={(e) => setGenderFilter(e.target.value)}
+                  className="form-select w-auto"
+                >
+                  <option value="">All</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+              </div>
+
               <Table striped bordered hover responsive>
                 <thead>
                   <tr>
@@ -688,53 +624,61 @@ const ConferenceAdminDashboard = () => {
                     <th>Title</th>
                     <th>Name</th>
                     <th>Card Issue</th>
+                    <th>S/O,D/O,W/O</th>
+                    <th>Dae of Birth</th>
                     <th>Address</th>
-                    <th>Full Address</th>
-                    <th>Contact</th>
-                    <th>DOB</th>
+                    <th>City</th>
+                    <th>Pin</th>
+                    <th>Contact No.</th>
+                    <th>Email</th>
                     <th>Gotra</th>
                     <th>Kuldevi</th>
-                    <th>City</th>
                     <th>Gender</th>
                     <th>Category</th>
                     <th>Photo</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {newLifeMembers.map((member, index) => (
-                    <tr key={member._id}>
-                      <td>{index + 1}</td>
-                      <td>{member.lm_no}</td>
-                      <td>{member.year}</td>
-                      <td>{member.col_y}</td>
-                      <td>{member.member_name}</td>
-                      <td>{member.card_issue}</td>
-                      <td>{member.add}</td>
-                      <td>{member.address1}</td>
-                      <td>{member.contact_no}</td>
-                      <td>{member.dob}</td>
-                      <td>{member.gotra}</td>
-                      <td>{member.kuldevi}</td>
-                      <td>{member.city}</td>
-                      <td>{member.gender}</td>
-                      <td>{member.category}</td>
-                      <td>
-                        {member.photo ? (
-                          <img
-                            src={member.photo}
-                            alt="Photo"
-                            style={{
-                              width: "60px",
-                              height: "60px",
-                              objectFit: "cover",
-                            }}
-                          />
-                        ) : (
-                          "N/A"
-                        )}
-                      </td>
-                    </tr>
-                  ))}
+                  {newLifeMembers
+                    .filter((member) =>
+                      genderFilter ? member.gender === genderFilter : true
+                    )
+                    .map((member, index) => (
+                      <tr key={member._id}>
+                        <td>{index + 1}</td>
+                        <td>{member.LM_NO}</td>
+                        <td>{member.Year}</td>
+                        <td>{member.Title}</td>
+                        <td>{member.Member_Name}</td>
+                        <td>{member.Card_Issued}</td>
+                        <td>{member.S_O_D_O_W_O}</td>
+                        <td>{member.Date_of_Birth}</td>
+                        <td>{member.Address}</td>
+                        <td>{member.City}</td>
+                        <td>{member.Pin}</td>
+                        <td>{member.Contact_No}</td>
+                        <td>{member.Email}</td>
+                        <td>{member.Gotra}</td>
+                        <td>{member.Kuldevi}</td>
+                        <td>{member.gender}</td>
+                        <td>{member.category}</td>
+                        <td>
+                          {member.photo ? (
+                            <img
+                              src={member.photo}
+                              alt="Photo"
+                              style={{
+                                width: "60px",
+                                height: "60px",
+                                objectFit: "cover",
+                              }}
+                            />
+                          ) : (
+                            "N/A"
+                          )}
+                        </td>
+                      </tr>
+                    ))}
                 </tbody>
               </Table>
             </div>

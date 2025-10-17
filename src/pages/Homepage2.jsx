@@ -35,11 +35,12 @@ import salil from "../assets/salil.jpg";
 import sanjay3 from "../assets/sanjay2.jpg";
 import sohan from "../assets/sohan.jpg";
 import narayan from "../assets/narayan.jpeg";
-import announcement2 from "../assets/announcement.jpeg";
+import announcement2 from "../assets/PIC1.PNG";
+import activity1 from '../assets/Event1.PNG';
+import activity2 from '../assets/Event2.PNG';
 
 // Sample content data
 const festivals = [
-  "सोमवार, 13 अक्टूबर - अहोई अष्टमी ",
   "शुक्रवार, 17 अक्टूबर - एकादशी रम्भा ",
   "शनिवार, 18 अक्टूबर -धनतेरस / प्रदोष ",
   "रविवार, 19 अक्टूबर - नरक चतुर्दशी  ",
@@ -48,17 +49,14 @@ const festivals = [
   "बुधवार, 22 अक्टूबर - अन्नकूट / गोवर्धन पूजा ",
   "गुरुवार, 23 अक्टूबर - भाई दूज ",
   "गुरुवार, 30 अक्टूबर - अक्षय नवमी",
-  
-  // "गुरुवार, 30 अक्टूबर - अक्षय नवमी ",
+  "शनिवार, 1 नवंबर - देवोत्थानी एकादशी",
+ 
   // "शनिवार, 1 नवंबर - देवोत्थानी एकादशी",
   // "सोमवार, 3 नवंबर - सोम प्रदोष",
   // "बुधवार, 5 नवंबर - पूर्णिमा व्रत एवं स्नान",
   // "शनिवार, 15 नवंबर - एकादशी (उत्पन्ना) ",
   // "सोमवार, 17 नवंबर - सोम प्रदोष",
   // "गुरुवार, 20 नवंबर -अमावस्या",
-
-
-
   // "मंगलवार, 9 सितम्बर - द्वितीया श्राद्ध  से",
   // "गुरुवार, 11 सितम्बर- चतुर्थी श्राद्ध तक ",
   // "बुधवार, 3 सितम्बर - एकादशी (पदमा)",
@@ -177,7 +175,7 @@ const Homepage = () => {
       </Container>
 
       {/* ACTIVITIES */}
-      <Container id="activities" className="my-5">
+      {/* <Container id="activities" className="my-5">
         <h3 className="text-center mb-4" style={{ color: "#ea8d0c" }}>
           अपकमिंग एक्टिविटीज 2025
         </h3>
@@ -206,7 +204,65 @@ const Homepage = () => {
             </div>
           </Col>
         </Row>
-      </Container>
+      </Container> */}
+
+
+      <Container id="activities" className="my-5">
+  <h3 className="text-center mb-4" style={{ color: "#ea8d0c" }}>
+    अपकमिंग एक्टिविटीज 2025
+  </h3>
+
+  <Row className="justify-content-center mt-4">
+    <Col md={6} className="mb-4">
+      <div
+        style={{
+          padding: "20px",
+          borderRadius: "12px",
+          boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
+          textAlign: "center",
+        }}
+      >
+        <Image
+          src={activity1}
+          alt="Activity 1"
+          fluid
+          rounded
+          style={{
+            border: "3px solid #ea8d0c",
+            maxHeight: "400px",
+            objectFit: "cover",
+            width: "100%",
+          }}
+        />
+      </div>
+    </Col>
+
+    <Col md={6} className="mb-4">
+      <div
+        style={{
+          padding: "20px",
+          borderRadius: "12px",
+          boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
+          textAlign: "center",
+        }}
+      >
+        <Image
+          src={activity2}
+          alt="Activity 2"
+          fluid
+          rounded
+          style={{
+            border: "3px solid #ea8d0c",
+            maxHeight: "400px",
+            objectFit: "cover",
+            width: "100%",
+          }}
+        />
+      </div>
+    </Col>
+  </Row>
+</Container>
+
 
       {/* PRESIDENT MESSAGE */}
       <Container id="president" className="my-5">

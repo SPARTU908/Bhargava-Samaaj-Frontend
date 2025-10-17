@@ -27,7 +27,7 @@ const MemberInfo = ({ member }) => {
             <>
               <div className={styles.details}>
                 <div>
-                  <b>Membership No:</b> {member.number}
+                  <b>ABBS Membership No:</b> {member.number}
                 </div>
                 <div>
                   <b>Gender:</b> {member.gender}
