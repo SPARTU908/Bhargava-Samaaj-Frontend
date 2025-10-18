@@ -42,6 +42,7 @@ import NewRegistration from "./pages/NewRegistration.jsx";
 import MagazineForm from "./pages/MagazineForm.jsx";
 import { AuthProvider } from "./components/AuthContext.jsx";
 
+
 function App() {
   return (
     <>
@@ -116,6 +117,8 @@ function App() {
           <Route path="/download-form/:id" element={<DownloadForm />} />
           <Route path="/registration" element={<Registration />} />
           <Route path="/award-form" element={<AwardForm />} />
+
+          
           <Route
             path="/conference-registration"
             element={<ConferenceRegistration />}

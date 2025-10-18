@@ -50,6 +50,35 @@ const ConferenceAdminDashboard = () => {
     saveAs(blob, fileName);
   };
 
+  const exportAwardFormsToExcel = () => {
+  const formattedData = awardForms.map((user, index) => ({
+    S_No: index + 1,
+    Code1: user.code1,
+    Code2: user.code2,
+    Code3: user.code3,
+    Name: user.name,
+    DOB: new Date(user.dob).toLocaleDateString(),
+    Email: user.email,
+    Address: user.address,
+    Mobile: user.mobile,
+    Pincode: user.pin,
+    Qualification: user.academicQualification,
+    FatherName: user.father,
+    MotherName: user.mother,
+    SpouseName: user.spouse,
+    Photo: user.photo || "N/A",
+    Document1: user.document1 || "N/A",
+    Document2: user.document2 || "N/A",
+    ProposerName: user.proposerName,
+    ProposerEmail: user.proposalEmail,
+    ProposerMobile: user.proposalMobile,
+    ProposerAddress: user.proposalAddress,
+  }));
+
+  exportToExcel(formattedData, "AwardForms.xlsx");
+};
+
+
   const columns = [
     { header: "LM No", key: "LM_NO" },
     { header: "Year", key: "Year" },
@@ -154,14 +183,21 @@ const ConferenceAdminDashboard = () => {
     window.location.reload();
   };
 
-  // Filter by LM No and Name
   const filteredLifeMembers = lifeMembers.filter((member) => {
-    const matchesLmNo = member.LM_NO.toLowerCase().includes(
-      lifeMemberSearch.lmNo.toLowerCase()
-    );
-    const matchesName = member.Member_Name.toLowerCase().includes(
-      lifeMemberSearch.name.toLowerCase()
-    );
+    const lmNo = member.LM_NO || "";
+    const name = member.Member_Name || "";
+
+    const searchLmNo = lifeMemberSearch.lmNo || "";
+    const searchName = lifeMemberSearch.name || "";
+
+    const matchesLmNo =
+      searchLmNo === "" ||
+      lmNo.toLowerCase().includes(searchLmNo.toLowerCase());
+
+    const matchesName =
+      searchName === "" ||
+      name.toLowerCase().includes(searchName.toLowerCase());
+
     return matchesLmNo && matchesName;
   });
 
@@ -180,6 +216,13 @@ const ConferenceAdminDashboard = () => {
         return (
           <div className={styles.userTableWrapper}>
             <h4 className="mb-3">Award Form Submissions</h4>
+            <button
+              onClick={exportAwardFormsToExcel}
+              className="btn btn-success"
+            >
+              📥 Download Excel
+            </button>
+
             <Table striped bordered hover responsive>
               <thead>
                 <tr>
@@ -599,7 +642,7 @@ const ConferenceAdminDashboard = () => {
                 </button>
               </div>
 
-               <div className="mb-3 d-flex align-items-center gap-2">
+              <div className="mb-3 d-flex align-items-center gap-2">
                 <label htmlFor="genderFilter" style={{ fontWeight: 600 }}>
                   Filter by Gender:
                 </label>

@@ -23,20 +23,7 @@ export const getAllLifeMembers = async () => {
   }
 };
 
-// export const updateLifeMember = async (LM_NO, updateData) => {
-//   try {
-//     const response = await axios.patch(
-//       `${BASE_URL}/api/v1/register/life-members/${LM_NO}`,
-//       updateData
-//     );
 
-//     return response.data;
-//   } catch (error) {
-//     console.error("Error in updateLifeMember:", error);
-//     const message = error.response?.data?.message || "Update failed";
-//     throw new Error(message);
-//   }
-// };
 
 
 export const updateLifeMember = async (LM_NO, memberData, photoFile) => {
@@ -79,8 +66,7 @@ export const createLifeMember = async (formData, photoFile) => {
         data.append(key, formData[key]);
       }
     }
-
-    if (photoFile) {
+if (photoFile) {
       data.append("photo", photoFile);
     }
     const response = await axios.post(
@@ -92,13 +78,14 @@ export const createLifeMember = async (formData, photoFile) => {
         },
       }
     );
-
-    return response.data;
+return response.data;
   } catch (error) {
     console.error("Error in createLifeMember:", error);
     throw error.response?.data || { message: "Something went wrong." };
   }
 };
+
+
 
 export const getUpdatedLifeMembers = async () => {
   try {
