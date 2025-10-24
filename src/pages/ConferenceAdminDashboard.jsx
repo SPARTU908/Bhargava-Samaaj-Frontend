@@ -415,7 +415,7 @@ const ConferenceAdminDashboard = () => {
                     <th>Name</th>
                     <th>Card Issue</th>
                     <th>S/O,D/O,W/O</th>
-                    <th>Dae of Birth</th>
+                    <th>Date of Birth</th>
                     <th>Address</th>
                     <th>City</th>
                     <th>Pin</th>
@@ -535,7 +535,7 @@ const ConferenceAdminDashboard = () => {
                     <th>Name</th>
                     <th>Card Issue</th>
                     <th>S/O,D/O,W/O</th>
-                    <th>Dae of Birth</th>
+                    <th>Date of Birth</th>
                     <th>Address</th>
                     <th>City</th>
                     <th>Pin</th>
@@ -668,7 +668,7 @@ const ConferenceAdminDashboard = () => {
                     <th>Name</th>
                     <th>Card Issue</th>
                     <th>S/O,D/O,W/O</th>
-                    <th>Dae of Birth</th>
+                    <th>Date of Birth</th>
                     <th>Address</th>
                     <th>City</th>
                     <th>Pin</th>

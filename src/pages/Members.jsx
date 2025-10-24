@@ -229,10 +229,10 @@ const Members = () => {
                     <img
                       src={
                         member.photo.startsWith("http")
-                          ? member.photo // Cloudinary image
+                          ? member.photo 
                           : `${
                               import.meta.env.VITE_BACKEND_URL
-                            }/${member.photo.replace(/\\/g, "/")}` // Local image from multer
+                            }/${member.photo.replace(/\\/g, "/")}` 
                       }
                       alt="Photo"
                       className={styles.img}

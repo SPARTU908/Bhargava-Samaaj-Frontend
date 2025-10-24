@@ -314,17 +314,23 @@ const Navbar = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    Samaj Kalyan Sahayata Form 
+                    Samaj Kalyan Sahayata Form
                   </NavDropdown.Item>
                   <NavDropdown.Item
                     href="/pdfs/Shiksha Chhatravriti Application Form 2025-2027.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    Shiksha Chhatravriti Application Form 
+                    Shiksha Chhatravriti Application Form
+                  </NavDropdown.Item>
+                  <NavDropdown.Item
+                    href="/pdfs/Education Loan Documents 30.09.2025.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Education Loan Document Form
                   </NavDropdown.Item>
                 </NavDropdown>
-
 
                 <Nav.Link onClick={() => handleNavigate("/admin")}>
                   एडमिन लॉगिन

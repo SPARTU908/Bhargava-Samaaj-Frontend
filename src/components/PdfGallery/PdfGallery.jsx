@@ -11,7 +11,7 @@ const allMonths = [
 const pdfData = [
   {
     year: 2025,
-    months: ["January", "February", "March", "April", "May", "June","July","August","September"]
+    months: ["January", "February", "March", "April", "May", "June","July","August","September","October"]
   },
   {
     year: 2024,
@@ -38,6 +38,7 @@ const coverImages = {
   "July-2025":"/covers/july-2025.png",
   "August-2025":"/covers/august-2025.png",
   "September-2025":"/covers/september-2025.PNG",
+  "October-2025":"/covers/october-2025.PNG",
   "January-2024": "/covers/jan-2024.png",
   "February-2024": "/covers/feb-2024.png",
   "March-2024": "/covers/march-2024.png",
