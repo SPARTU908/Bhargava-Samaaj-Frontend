@@ -124,3 +124,17 @@ export const getNewLifeMembers = async (from, to) => {
     );
   }
 };
+
+
+export const softDeleteLifeMember = async (id) => {
+  try {
+    const response = await axios.patch(
+      `${BASE_URL}/api/v1/register/life-members/${id}/delete`,
+      {} 
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error soft deleting life member:", error);
+    throw error;
+  }
+};

@@ -10,6 +10,7 @@ import {
   getAllLifeMembers,
   getUpdatedLifeMembers,
   getNewLifeMembers,
+  softDeleteLifeMember,
 } from "../apis/lifemember";
 import { Table } from "react-bootstrap";
 import * as XLSX from "xlsx";
@@ -51,33 +52,49 @@ const ConferenceAdminDashboard = () => {
   };
 
   const exportAwardFormsToExcel = () => {
-  const formattedData = awardForms.map((user, index) => ({
-    S_No: index + 1,
-    Code1: user.code1,
-    Code2: user.code2,
-    Code3: user.code3,
-    Name: user.name,
-    DOB: new Date(user.dob).toLocaleDateString(),
-    Email: user.email,
-    Address: user.address,
-    Mobile: user.mobile,
-    Pincode: user.pin,
-    Qualification: user.academicQualification,
-    FatherName: user.father,
-    MotherName: user.mother,
-    SpouseName: user.spouse,
-    Photo: user.photo || "N/A",
-    Document1: user.document1 || "N/A",
-    Document2: user.document2 || "N/A",
-    ProposerName: user.proposerName,
-    ProposerEmail: user.proposalEmail,
-    ProposerMobile: user.proposalMobile,
-    ProposerAddress: user.proposalAddress,
-  }));
+    const formattedData = awardForms.map((user, index) => ({
+      S_No: index + 1,
+      Code1: user.code1,
+      Code2: user.code2,
+      Code3: user.code3,
+      Name: user.name,
+      DOB: new Date(user.dob).toLocaleDateString(),
+      Email: user.email,
+      Address: user.address,
+      Mobile: user.mobile,
+      Pincode: user.pin,
+      Qualification: user.academicQualification,
+      FatherName: user.father,
+      MotherName: user.mother,
+      SpouseName: user.spouse,
+      Photo: user.photo || "N/A",
+      Document1: user.document1 || "N/A",
+      Document2: user.document2 || "N/A",
+      ProposerName: user.proposerName,
+      ProposerEmail: user.proposalEmail,
+      ProposerMobile: user.proposalMobile,
+      ProposerAddress: user.proposalAddress,
+    }));
 
-  exportToExcel(formattedData, "AwardForms.xlsx");
-};
+    exportToExcel(formattedData, "AwardForms.xlsx");
+  };
 
+  const handleSoftDelete = async (member) => {
+    if (!member?._id) return;
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this life member?"
+    );
+    if (!confirmDelete) return;
+
+    try {
+      const result = await softDeleteLifeMember(member._id);
+      alert(result.message);
+      // Update state to remove deleted member from table
+      setNewLifeMembers((prev) => prev.filter((m) => m._id !== member._id));
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   const columns = [
     { header: "LM No", key: "LM_NO" },
@@ -679,6 +696,7 @@ const ConferenceAdminDashboard = () => {
                     <th>Gender</th>
                     <th>Category</th>
                     <th>Photo</th>
+                    <th>Delete</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -720,6 +738,15 @@ const ConferenceAdminDashboard = () => {
                             "N/A"
                           )}
                         </td>
+
+                        <td>
+                          <button
+                            className={styles.deleteButton} // optional CSS class
+                            onClick={() => handleSoftDelete(member)} // pass the member
+                          >
+                            Delete
+                          </button>
+                        </td>
                       </tr>
                     ))}
                 </tbody>
@@ -751,6 +778,13 @@ const ConferenceAdminDashboard = () => {
               <div className={styles.widgetCount}>
                 {totalUpdatedLifeMembers}
               </div>
+            </div>
+
+            <div className={styles.widget} style={{ marginTop: "20px" }}>
+              <div className={styles.widgetTitle}>
+                Total number of New members registered for the Conference
+              </div>
+              <div className={styles.widgetCount}>{totalNewLifeMembers}</div>
             </div>
           </div>
         );

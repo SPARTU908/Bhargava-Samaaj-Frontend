@@ -622,7 +622,7 @@ const handleSubmit = async (e) => {
               Monthly Income
             </label>
             <input
-              placeholder=""
+              placeholder="eg-1,00,000"
               className={styles.input1}
               type="text"
               name="income"

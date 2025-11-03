@@ -20,8 +20,6 @@ const UserDashboard = () => {
   };
 
 
-
-
   const renderSection = () => {
     switch (selectedSection) {
       case "profile":
