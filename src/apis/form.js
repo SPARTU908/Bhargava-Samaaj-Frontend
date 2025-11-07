@@ -96,8 +96,8 @@ export const getApprovedFormCount = async () => {
   }
 };
 
-export const deleteUser = async (email) => {
-  const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/form/deleteUser/${email}`;
+export const deleteUser = async (id) => {
+  const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/form/deleteUser/${id}`;
   try {
     const response = await axios.delete(reqUrl, {
       withCredentials: true,

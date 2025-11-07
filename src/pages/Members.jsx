@@ -12,20 +12,19 @@ const Members = () => {
   const [gender, setGender] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
 
-
-  const handleDelete = async (email) => {
+  const handleDelete = async (id) => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this user?"
     );
     if (!confirmDelete) return;
 
     try {
-      const result = await deleteUser(email);
+      const result = await deleteUser(id); // now passing user id
       console.log("User deleted successfully:", result);
 
-      // Remove the deleted member from state
+      // Remove the deleted member from the UI
       setMembers((prevMembers) =>
-        prevMembers.filter((member) => member.email !== email)
+        prevMembers.filter((member) => member._id !== id)
       );
     } catch (error) {
       console.error("Failed to delete user:", error);
@@ -229,10 +228,10 @@ const Members = () => {
                     <img
                       src={
                         member.photo.startsWith("http")
-                          ? member.photo 
+                          ? member.photo
                           : `${
                               import.meta.env.VITE_BACKEND_URL
-                            }/${member.photo.replace(/\\/g, "/")}` 
+                            }/${member.photo.replace(/\\/g, "/")}`
                       }
                       alt="Photo"
                       className={styles.img}
@@ -243,7 +242,7 @@ const Members = () => {
                 {/* Buttons BELOW the photo */}
                 <div className={styles.buttonGroup}>
                   <button
-                    onClick={() => handleDelete(member.email)}
+                    onClick={() => handleDelete(member._id)}
                     className={styles.deleteButton}
                   >
                     Delete

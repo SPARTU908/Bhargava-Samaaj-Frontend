@@ -70,6 +70,7 @@ const EditProfile = () => {
           updatedAt,
           resetOTP,
           resetOTPExpires,
+          deletedAt,
           ...cleanedData
 
         } = res.data;
