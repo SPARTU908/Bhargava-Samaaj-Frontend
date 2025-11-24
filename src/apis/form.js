@@ -82,6 +82,21 @@ export const getRejectedForms = async () => {
   }
 };
 
+export const getDeletedForms= async()=>{
+  const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/form/deleted`;
+  try{
+    const response = await axios.get(reqUrl, {
+      withCredentials:true,
+    });
+    return response.data.data;
+  }catch(error){
+    console.error("Failed to fetch deleted forms:", error);
+    throw error;
+  }
+};
+
+
+
 
 export const getApprovedFormCount = async () => {
   const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/form/approved/count`;
@@ -95,6 +110,8 @@ export const getApprovedFormCount = async () => {
     throw error;
   }
 };
+
+
 
 export const deleteUser = async (id) => {
   const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/form/deleteUser/${id}`;

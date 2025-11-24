@@ -4,13 +4,13 @@ import { Form, Button, Container, Row, Col, Card } from "react-bootstrap";
 import { Image } from "react-bootstrap";
 
 const EditProfile = () => {
-  const userEmail = localStorage.getItem("userEmail");
+  const userId = localStorage.getItem("userId");
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
   const [formData, setFormData] = useState({
     number: "",
     name: "",
-    email: userEmail || "",
+    email: "",
     mobile: "",
     gender: "",
     birthTime: "",
@@ -53,34 +53,71 @@ const EditProfile = () => {
   const [existingPhoto, setExistingPhoto] = useState("");
   const [existingBiodata, setExistingBiodata] = useState("");
 
-  useEffect(() => {
-    if (!userEmail) return;
-    axios
-      .get(`${BACKEND_URL}/api/v1/form/${userEmail}`)
-      .then((res) => {
-        const {
-          photo,
-          bioData,
-          _id,
-          __v,
-          password,
-          status,
-          submittedAt,
-          createdAt,
-          updatedAt,
-          resetOTP,
-          resetOTPExpires,
-          deletedAt,
-          ...cleanedData
+  // useEffect(() => {
+  //   if (!userEmail) return;
+  //   axios
+  //     .get(`${BACKEND_URL}/api/v1/form/${userEmail}`)
+  //     .then((res) => {
+  //       const {
+  //         photo,
+  //         bioData,
+  //         _id,
+  //         __v,
+  //         password,
+  //         // status,
+  //         submittedAt,
+  //         createdAt,
+  //         updatedAt,
+  //         resetOTP,
+  //         resetOTPExpires,
+  //         deletedAt,
+  //         ...cleanedData
 
-        } = res.data;
+  //       } = res.data;
 
-        setFormData(cleanedData);
-        if (photo) setExistingPhoto(photo);
-        if (bioData) setExistingBiodata(bioData);
-      })
-      .catch((err) => console.error("Error fetching user", err));
-  }, [userEmail]);
+  //       setFormData(cleanedData);
+  //       if (photo) setExistingPhoto(photo);
+  //       if (bioData) setExistingBiodata(bioData);
+  //     })
+  //     .catch((err) => console.error("Error fetching user", err));
+  // }, [userEmail]);
+
+
+useEffect(() => {
+  if (!userId) return;
+  axios
+    .get(`${BACKEND_URL}/api/v1/form/${userId}`)
+    .then((res) => {
+      const {
+        photo,
+        bioData,
+        _id,
+        __v,
+        password,
+        status,
+        submittedAt,
+        createdAt,
+        updatedAt,
+        resetOTP,
+        resetOTPExpires,
+        deletedAt,
+        ...cleanedData
+      } = res.data;
+
+       if (cleanedData.dob) {
+        cleanedData.dob = cleanedData.dob.split("T")[0];
+      }
+
+      setFormData(cleanedData);
+
+      // setFormData(cleanedData);
+      if (photo) setExistingPhoto(photo);
+      if (bioData) setExistingBiodata(bioData);
+    })
+    .catch((err) => console.error("Error fetching user", err));
+}, [userId]);
+
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -124,7 +161,7 @@ const EditProfile = () => {
       if (bioData) formDataToSend.append("bioData", bioData);
 
       await axios.patch(
-        `${BACKEND_URL}/api/v1/form/update/${userEmail}`,
+        `${BACKEND_URL}/api/v1/form/update/${userId}`,
         formDataToSend,
         {
           headers: {

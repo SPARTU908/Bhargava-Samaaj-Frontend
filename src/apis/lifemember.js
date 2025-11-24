@@ -23,9 +23,6 @@ export const getAllLifeMembers = async () => {
   }
 };
 
-
-
-
 export const updateLifeMember = async (LM_NO, memberData, photoFile) => {
   try {
     const formData = new FormData();

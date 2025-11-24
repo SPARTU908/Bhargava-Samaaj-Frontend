@@ -22,13 +22,12 @@ const DownloadForm = () => {
 
   const handleDownloadPDF = async () => {
     const input = pdfRef.current;
-   const canvas = await html2canvas(input, { scale: 2, useCORS: true });
+    const canvas = await html2canvas(input, { scale: 2, useCORS: true });
     const imgData = canvas.toDataURL("image/png");
-
-    const pdf = new jsPDF("p", "mm", "a4");
-    const pdfWidth = pdf.internal.pageSize.getWidth();
+   const pdf = new jsPDF("p", "mm", "a4");
+    const pdfWidth = pdf.internal.pageSize.getWidth(); 
     const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-
+    pdf.internal.pageSize.height = pdfHeight;
     pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
     pdf.save(`${member.name}_Biodata.pdf`);
   };
@@ -38,92 +37,285 @@ const DownloadForm = () => {
 
   return (
     <Container className="my-5">
-  {/* PDF Content */}
-  <div ref={pdfRef}>
-    <Card className=" shadow-lg border-0 rounded-4 p-4 mb-3 h-auto">
-      <Row className="align-items-center">
-        <Col md={4} className="text-center">
-          <img
-            src={member.photo || "https://via.placeholder.com/250x300.png"}
-            alt={member.name}
-            className="img-fluid rounded-4 border border-3 border-light shadow"
-            style={{ height:"auto", objectFit: "cover" }}
-          />
-        </Col>
-        <Col md={8}>
-          <h2 className="fw-bold text-danger mb-1">{member.name}</h2>
-          <p className="text-muted fst-italic mb-4">{member.profession}</p>
-             <Card className="mb-3 border-0 shadow-sm">
-                 <Card.Body>
-                   <h5 className="fw-semibold text-danger border-bottom pb-2">
-                   Personal Details
-                   </h5>
-                  <Row>
-                     <Col sm={6}><b>DOB:</b> {new Date(member.dob).toLocaleDateString()}</Col>
-                     <Col sm={6}><b>Birth Time:</b> {member.birthTime}</Col>
-                     <Col sm={6}><b>Birth Place:</b> {member.birthPlace}</Col>
-                     <Col sm={6}><b>Height:</b> {member.height}</Col>
-                     <Col sm={6}><b>Weight:</b> {member.weight}</Col>
-                     <Col sm={6}><b>Blood Group:</b> {member.bloodGroup}</Col>
-                     <Col sm={6}><b>Complexion:</b> {member.complexion}</Col>
-                     <Col sm={6}><b>Manglik:</b> {member.manglik}</Col>
-                     <Col sm={6}><b>Gotra:</b> {member.gotra}</Col>
-                     <Col sm={6}><b>Kuldevi:</b> {member.kuldevi}</Col>
-                     <Col sm={6}><b>Gender:</b> {member.gender}</Col>
-                     <Col sm={6}><b>Mobile:</b> {member.mobile}</Col>
-                     <Col sm={6}><b>Email:</b> {member.email}</Col>
-                     <Col sm={12}><b>Hobbies:</b> {member.hobbies}</Col>
-                     <Col sm={12}><b>Remarks:</b> {member.remarks}</Col>
-                   </Row>
-                 </Card.Body>
-               </Card>
 
-               {/* Education & Profession */}
-               <Card className="mb-3 border-0 shadow-sm">
-                 <Card.Body>
-                   <h5 className="fw-semibold text-danger border-bottom pb-2">
-                     Education & Profession
-                   </h5>
-                   <Row>
-                     <Col sm={6}><b>Education:</b> {member.education}</Col>
-                     <Col sm={6}><b>Other Qualification:</b> {member.otherQualification}</Col>
-                     <Col sm={6}><b>Professional Qualification:</b> {member.professionQualification}</Col>
-                     <Col sm={6}><b>Profession:</b> {member.profession}</Col>
-                     <Col sm={6}><b>Company:</b> {member.company}</Col>
-                     <Col sm={6}><b>Designation:</b> {member.designation}</Col>
-                     <Col sm={6}><b>Income:</b> {member.income}</Col>
-                 </Row>
-                 </Card.Body>
-               </Card>
+ <div
+  ref={pdfRef}
+  style={{
+    width: "800px",
+    margin: "0 auto",
+    padding: "20px",
+    background: "#fff",
+    borderRadius: "10px",
+    position: "relative",
+  }}
+>
 
-               {/* Family Details */}
-               <Card className="mb-3 border-0 shadow-sm">
-                 <Card.Body>
-                   <h5 className="fw-semibold text-danger border-bottom pb-2">
-                     Family Details
-                   </h5>
-                   <Row>
-                   <Col sm={6}><b>Guardian Name:</b> {member.guardianName}</Col>
-                    <Col sm={6}><b>Father Name:</b> {member.fatherName}</Col>
-                     <Col sm={6}><b>Father Profession:</b> {member.fatherProfession}</Col>
-                     <Col sm={6}><b>Father Designation:</b> {member.fatherDesignation}</Col>
-                     <Col sm={6}><b>Father Income:</b> {member.fatherIncome}</Col>
-                     <Col sm={6}><b>Mother Name:</b> {member.motherName}</Col>
-                     <Col sm={6}><b>Native Place:</b> {member.nativePlace}</Col>
-                     <Col sm={6}><b>Address:</b> {member.address}</Col>
-                     <Col sm={6}><b>City:</b> {member.city}</Col>
-                     <Col sm={6}><b>PIN:</b> {member.pin}</Col>
-                     <Col sm={6}><b>WhatsApp:</b> {member.whatsapp}</Col>
-                     <Col sm={6}><b>NRI:</b> {member.nri}</Col>
-                  </Row>
-               </Card.Body>
-               </Card>
-        </Col>
-      </Row>
-    </Card>
+
+  <div style={{ textAlign: "center", marginBottom: "10px" }}>
+    </div>
+<div
+  style={{
+    width: "100%",
+    textAlign: "center",
+    marginBottom: "10px",
+  }}
+>
+
+<div
+  style={{
+    background: "linear-gradient(90deg, #ffddc1, #ffc3a0)",
+    width: "60%",
+    margin: "0 auto",
+    padding: "12px 0",
+    borderRadius: "40px",
+    textAlign: "center",
+  }}
+>
+  <h1
+    style={{
+      margin: 0,
+      fontWeight: "900",
+      fontSize: "26px",
+      color: "#c0392b",
+      letterSpacing: "2px",
+    }}
+  >
+    {member.name?.toUpperCase()}
+  </h1>
+</div>
+
+
+
+
+
+  <p
+    style={{
+      fontStyle: "italic",
+      color: "#555",
+      fontSize: "16px",
+      marginTop: "2px",
+      fontWeight:"500",
+    }}
+  >
+    {member.profession}
+  </p>
+</div>
+
+
+
+  <div
+    style={{
+      display: "flex",
+      gap: "20px",
+   
+      paddingBottom: "20px",
+      marginBottom: "20px",
+    }}
+  >
+   <div
+  style={{
+    padding: "6px",
+    borderRadius: "20px",
+    border: "3px dashed #e74c3c",
+    display: "inline-block",
+  }}
+>
+  <div
+    style={{
+      borderRadius: "18px",
+      overflow: "hidden",
+      border: "2px solid #ffd6d6", 
+    }}
+  >
+    <img
+      src={member.photo}
+      alt="profile"
+      style={{
+        width: "200px",
+        height: "240px",
+        objectFit: "cover",
+        display: "block",
+      }}
+    />
+  </div>
+</div>
+
+
+   
+    <div style={{ width: "70%" }}>
+    
+
+   
+<div style={{ marginBottom: "10px", display: "flex", alignItems: "center" }}>
+
+  <div
+    style={{
+      width: "5px",
+      height: "28px",
+      background: "#007bff",
+      borderRadius: "4px",
+      marginRight: "10px",
+    }}
+  ></div>
+
+
+  <h3
+    style={{
+      color: "#e74c3c",
+      fontWeight: "700",
+      margin: 0,
+    }}
+  >
+    Personal Details
+  </h3>
+</div>
+
+
+<div
+  style={{
+    width: "100%",
+    height: "1.5px",
+    background: "#e6e6e6",
+    marginBottom: "15px",
+  }}
+></div>
+
+
+      <div style={{ display: "flex", flexWrap: "wrap", marginTop: "10px"  }}>
+        <p style={{ width: "50%",marginBottom: "0rem" }}><b>DOB:</b> {new Date(member.dob).toLocaleDateString()}</p>
+        <p style={{ width: "50%" ,marginBottom: "0rem" }}><b>Birth Time:</b> {member.birthTime}</p>
+        <p style={{ width: "50%" ,marginBottom: "0rem" }}><b>Birth Place:</b> {member.birthPlace}</p>
+        <p style={{ width: "50%" ,marginBottom: "0rem" }}><b>Height:</b> {member.height}</p>
+        <p style={{ width: "50%",marginBottom: "0rem" }}><b>Weight:</b> {member.weight}</p>
+        <p style={{ width: "50%",marginBottom: "0rem" }}><b>Blood Group:</b> {member.bloodGroup}</p>
+        <p style={{ width: "50%",marginBottom: "0rem" }}><b>Complexion:</b> {member.complexion}</p>
+        <p style={{ width: "50%" ,marginBottom: "0rem"}}><b>Manglik:</b> {member.manglik}</p>
+        <p style={{ width: "50%",marginBottom: "0rem" }}><b>Gotra:</b> {member.gotra}</p>
+        <p style={{ width: "50%",marginBottom: "0rem" }}><b>Kuldevi:</b> {member.kuldevi}</p>
+        <p style={{ width: "50%",marginBottom: "0rem" }}><b>Mobile:</b> {member.mobile}</p>
+        <p style={{ width: "50%",marginBottom: "0rem" }}><b>Email:</b> {member.email}</p>
+
+        <p style={{ width: "100%" ,marginBottom: "0rem"}}><b>Hobbies:</b> {member.hobbies}</p>
+        <p style={{ width: "100%" ,marginBottom: "0rem"}}><b>Remarks:</b> {member.remarks}</p>
+      </div>
+    </div>
   </div>
 
-  {/* Download PDF Button */}
+
+  <div style={{ marginBottom: "20px" }}>
+  
+
+   
+<div style={{ marginBottom: "10px", display: "flex", alignItems: "center" }}>
+  
+ 
+  <div
+    style={{
+      width: "5px",
+      height: "28px",
+      background: "#007bff",
+      borderRadius: "4px",
+      marginRight: "10px",
+    }}
+  ></div>
+
+
+  <h3
+    style={{
+      color: "#e74c3c",
+      fontWeight: "700",
+      margin: 0,
+    }}
+  >
+    Education & Profession
+  </h3>
+</div>
+
+
+<div
+  style={{
+    width: "100%",
+    height: "1.5px",
+    background: "#e6e6e6",
+    marginBottom: "15px",
+  }}
+></div>
+
+
+    <div style={{ display: "flex", flexWrap: "wrap", marginTop: "10px" }}>
+      <p style={{ width: "50%" ,marginBottom: "0rem"}}><b>Education:</b> {member.education}</p>
+      <p style={{ width: "50%",marginBottom: "0rem" }}><b>Other Qualification:</b> {member.otherQualification}</p>
+      <p style={{ width: "50%" ,marginBottom: "0rem"}}><b>Professional Qualification:</b> {member.professionQualification}</p>
+      <p style={{ width: "50%",marginBottom: "0rem" }}><b>Profession:</b> {member.profession}</p>
+      <p style={{ width: "50%",marginBottom: "0rem" }}><b>Company:</b> {member.company}</p>
+      <p style={{ width: "50%",marginBottom: "0rem" }}><b>Designation:</b> {member.designation}</p>
+      <p style={{ width: "50%" ,marginBottom: "0rem"}}><b>Income:</b> {member.income}</p>
+    </div>
+  </div>
+
+
+  <div style={{ marginBottom: "20px" }}>
+  
+<div style={{ marginBottom: "10px", display: "flex", alignItems: "center" }}>
+  
+
+  <div
+    style={{
+      width: "5px",
+      height: "28px",
+      background: "#007bff",
+      borderRadius: "4px",
+      marginRight: "10px",
+    }}
+  ></div>
+
+
+  <h3
+    style={{
+      color: "#e74c3c",
+      fontWeight: "700",
+      margin: 0,
+    }}
+  >
+    Family Details 
+  </h3>
+</div>
+
+
+<div
+  style={{
+    width: "100%",
+    height: "1.5px",
+    background: "#e6e6e6",
+    marginBottom: "15px",
+  }}
+></div>
+
+
+    <div style={{ display: "flex", flexWrap: "wrap", marginTop: "10px" }}>
+      <p style={{ width: "50%",marginBottom: "0rem" }}><b>Guardian Name:</b> {member.guardianName}</p>
+      <p style={{ width: "50%" ,marginBottom: "0rem"}}><b>Father Name:</b> {member.fatherName}</p>
+      <p style={{ width: "50%",marginBottom: "0rem" }}><b>Father Profession:</b> {member.fatherProfession}</p>
+      <p style={{ width: "50%",marginBottom: "0rem" }}><b>Father Designation:</b> {member.fatherDesignation}</p>
+      <p style={{ width: "50%",marginBottom: "0rem" }}><b>Father Income:</b> {member.fatherIncome}</p>
+      <p style={{ width: "50%",marginBottom: "0rem" }}><b>Mother Name:</b> {member.motherName}</p>
+      <p style={{ width: "50%",marginBottom: "0rem" }}><b>Native Place:</b> {member.nativePlace}</p>
+      <p style={{ width: "50%",marginBottom: "0rem" }}><b>Address:</b> {member.address}</p>
+      <p style={{ width: "50%",marginBottom: "0rem" }}><b>City:</b> {member.city}</p>
+      <p style={{ width: "50%",marginBottom: "0rem" }}><b>PIN:</b> {member.pin}</p>
+      <p style={{ width: "50%",marginBottom: "0rem" }}><b>WhatsApp:</b> {member.whatsapp}</p>
+      <p style={{ width: "50%" ,marginBottom: "0rem"}}><b>NRI:</b> {member.nri}</p>
+    </div>
+  </div>
+
+
+  <div style={{ textAlign: "center", marginTop: "20px" }}>
+   
+  </div>
+</div>
+
+
+
   <div className="text-end mt-3">
     <Button variant="danger" onClick={handleDownloadPDF}>
       📄 Download Biodata

@@ -166,62 +166,181 @@ const FindYourMatch = () => {
     }
   };
 
-  const handleLoginSubmit = async (e) => {
-    e.preventDefault();
-    const validationErrors = validate();
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
+  // const handleLoginSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const validationErrors = validate();
+  //   if (Object.keys(validationErrors).length > 0) {
+  //     setErrors(validationErrors);
+  //     return;
+  //   }
 
-    setErrors({});
+  //   setErrors({});
 
-    try {
-      const result = await loginUser(userData);
-      if (result.status === 200) {
-        const statusUrl = `${
-          import.meta.env.VITE_BACKEND_URL
-        }/api/v1/form/status/${encodeURIComponent(userData.email)}`;
-        const statusRes = await axios.get(statusUrl);
+  //   try {
+  //     const result = await loginUser(userData);
+  //     if (result.status === 200) {
+  //       const statusUrl = `${
+  //         import.meta.env.VITE_BACKEND_URL
+  //       }/api/v1/form/status/${encodeURIComponent(userData.email)}`;
+  //       const statusRes = await axios.get(statusUrl);
 
-        if (statusRes.data.status === "approved") {
-          localStorage.setItem("isLoggedIn", "true");
-          localStorage.setItem("userEmail", userData.email);
-          toast.success(result.data.message, {
-            position: "top-center",
-            autoClose: 3000,
-            theme: "light",
-          });
+  //       if (statusRes.data.status === "approved") {
+  //         localStorage.setItem("isLoggedIn", "true");
+  //         localStorage.setItem("userEmail", userData.email);
+  //         toast.success(result.data.message, {
+  //           position: "top-center",
+  //           autoClose: 3000,
+  //           theme: "light",
+  //         });
 
-          setTimeout(() => {
-            navigate("/user-dashboard");
-          }, 3000);
-        } else {
-          toast.info(
-            "Please wait 1–7 days for admin approval before accessing this feature.",
-            {
-              position: "top-center",
-              autoClose: 4000,
-              theme: "light",
-            }
-          );
-        }
-      } else {
-        toast.error("Invalid Credentials", {
-          position: "top-center",
-          autoClose: 4000,
-          theme: "light",
-        });
+  //         setTimeout(() => {
+  //           navigate("/user-dashboard");
+  //         }, 3000);
+
+
+      
+  //         }  else {
+  //         toast.info(
+  //           "Please wait 1–7 days for admin approval before accessing this feature.",
+  //           {
+  //             position: "top-center",
+  //             autoClose: 4000,
+  //             theme: "light",
+  //           }
+  //         );
+  //       }
+  //     } else {
+  //       toast.error("Invalid Credentials Or Your Form got Rejected", {
+  //         position: "top-center",
+  //         autoClose: 4000,
+  //         theme: "light",
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.error("Login or status check failed:", error);
+  //     toast.error("Something went wrong. Please try again later.", {
+  //       position: "top-center",
+  //       autoClose: 4000,
+  //       theme: "light",
+  //     });
+  //   }
+  // };
+
+// const handleLoginSubmit = async (e) => {
+//   e.preventDefault();
+//   const validationErrors = validate();
+//   if (Object.keys(validationErrors).length > 0) {
+//     setErrors(validationErrors);
+//     return;
+//   }
+
+//   setErrors({});
+
+//   try {
+//     const result = await loginUser(userData);
+
+//     if (result.status === 200) {
+//       const statusUrl = `${
+//         import.meta.env.VITE_BACKEND_URL
+//       }/api/v1/form/status/${encodeURIComponent(userData.email)}`;
+
+//       const statusRes = await axios.get(statusUrl);
+//       const userStatus = statusRes.data.status;
+//       const userId = statusRes.data._id;
+
+//       if (userStatus === "approved") {
+//         localStorage.setItem("isLoggedIn", "true");
+//         localStorage.setItem("userEmail", userData.email);
+//          localStorage.setItem("userId", userId);
+//         toast.success(result.data.message, {
+//           position: "top-center",
+//           autoClose: 3000,
+//           theme: "light",
+//         });
+
+//         setTimeout(() => {
+//           navigate("/user-dashboard");
+//         }, 3000);
+
+//       } else if (userStatus === "rejected") {
+//         toast.error("Your form got rejected.", {
+//           position: "top-center",
+//           autoClose: 4000,
+//           theme: "light",
+//         });
+
+//       } else {
+//         // For pending or any other status
+//         toast.info(
+//           "Please wait 1–7 days for admin approval before accessing this feature.",
+//           {
+//             position: "top-center",
+//             autoClose: 4000,
+//             theme: "light",
+//           }
+//         );
+//       }
+//     } else {
+//       toast.error("Invalid Credentials Or Your Form got Rejected", {
+//         position: "top-center",
+//         autoClose: 4000,
+//         theme: "light",
+//       });
+//     }
+//   } catch (error) {
+//     console.error("Login or status check failed:", error);
+//     toast.error("Something went wrong. Please try again later.", {
+//       position: "top-center",
+//       autoClose: 4000,
+//       theme: "light",
+//     });
+//   }
+// };
+
+
+const handleLoginSubmit = async (e) => {
+  e.preventDefault();
+
+  const validationErrors = validate();
+  if (Object.keys(validationErrors).length > 0) {
+    setErrors(validationErrors);
+    return;
+  }
+
+  try {
+    const result = await loginUser(userData);
+
+    if (result.status === 200) {
+      const { status, userId, email, name } = result.data;
+
+      localStorage.setItem("isLoggedIn", "true");
+      localStorage.setItem("userEmail", email);
+      localStorage.setItem("userId", userId);
+      localStorage.setItem("name", name);
+
+      if (status === "approved") {
+        toast.success("Login successful");
+        navigate("/user-dashboard");
+      } 
+      else if (status === "rejected") {
+        toast.error("Your form was rejected.");
+      } 
+      else if(status == "deleted"){
+        toast.error("Your form was deleted");
       }
-    } catch (error) {
-      console.error("Login or status check failed:", error);
-      toast.error("Something went wrong. Please try again later.", {
-        position: "top-center",
-        autoClose: 4000,
-        theme: "light",
-      });
+      else {
+        toast.info("Please wait 1-7 days for admin approval.");
+      }
+    } else {
+      toast.error("Invalid credentials");
     }
-  };
+  } catch (error) {
+    console.error("Login failed:", error);
+    toast.error("Something went wrong.");
+  }
+};
+
+
 
   return (
     <>

@@ -4,12 +4,13 @@ import PendingForms from "../pages/PendingForms";
 import Members from "../pages/Members";
 import { useNavigate } from "react-router-dom";
 import { IoMdHome } from "react-icons/io";
-import { getPendingFormCount,getRejectedFormCount } from "../apis/form";
+import { getPendingFormCount,getRejectedFormCount,getDeletedForms, } from "../apis/form";
 import { getApprovedFormCount } from "../apis/form";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import RejectedForm from "./RejectedForm";
 import DeletedUser from "./DeletedUser";
+
 import { useAuth } from "../components/AuthContext";
 
 const MatrimonialAdminDashboard = () => {

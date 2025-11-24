@@ -3,7 +3,7 @@ import axios from "axios";
 import { Container, Card, Row, Col, Spinner, Image } from "react-bootstrap";
 
 const UserProfile = () => {
-  const userEmail = localStorage.getItem("userEmail");
+  const userId = localStorage.getItem("userId");
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -31,10 +31,10 @@ const UserProfile = () => {
   };
 
   useEffect(() => {
-    if (!userEmail) return;
+    if (!userId) return;
 
     axios
-      .get(`${BACKEND_URL}/api/v1/form/${userEmail}`)
+      .get(`${BACKEND_URL}/api/v1/form/${userId}`)
       .then((res) => {
         const {
           _id,
@@ -56,7 +56,7 @@ const UserProfile = () => {
         console.error("Error fetching profile:", err);
         setLoading(false);
       });
-  }, [userEmail]);
+  }, [userId]);
 
   if (loading) {
     return (
