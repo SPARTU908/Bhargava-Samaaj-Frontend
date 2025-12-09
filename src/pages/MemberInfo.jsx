@@ -11,6 +11,13 @@ const MemberInfo = ({ member }) => {
 
   const toggle = (setter) => () => setter((prev) => !prev);
 
+
+  const dob = new Date(member.dob);
+
+const day = dob.getUTCDate().toString().padStart(2, "0");
+const month = (dob.getUTCMonth() + 1).toString().padStart(2, "0");
+const year = dob.getUTCFullYear();
+
   return (
     <>
       <div className={styles.info}>
@@ -38,14 +45,16 @@ const MemberInfo = ({ member }) => {
                 <div>
                   <b>Birth Place:</b> {member.birthPlace}
                 </div>
-                <div>
+                {/* <div>
                   <b>DOB:</b>{" "}
                   {new Date(member.dob).getDate().toString().padStart(2, "0")}/
                   {(new Date(member.dob).getMonth() + 1)
                     .toString()
                     .padStart(2, "0")}
                   /{new Date(member.dob).getFullYear()}
-                </div>
+                </div> */}
+
+                <b>DOB:</b> {day}/{month}/{year}
                 <div>
                   <b>Blood Group:</b> {member.bloodGroup}
                 </div>

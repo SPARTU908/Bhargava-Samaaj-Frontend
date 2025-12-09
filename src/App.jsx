@@ -41,6 +41,7 @@ import ConferenceRegistration from "./components/Registration/ConferenceRegistra
 import NewRegistration from "./pages/NewRegistration.jsx";
 import MagazineForm from "./pages/MagazineForm.jsx";
 import { AuthProvider } from "./components/AuthContext.jsx";
+import DownloadAll from "./pages/DownloadAll.jsx";
 
 
 function App() {
@@ -117,6 +118,7 @@ function App() {
           <Route path="/download-form/:id" element={<DownloadForm />} />
           <Route path="/registration" element={<Registration />} />
           <Route path="/award-form" element={<AwardForm />} />
+          <Route path="/download-all" element={<DownloadAll />} />
 
           
           <Route

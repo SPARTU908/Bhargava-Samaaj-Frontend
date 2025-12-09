@@ -11,6 +11,40 @@ const Members = () => {
   const [sortBy, setSortBy] = useState("");
   const [gender, setGender] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+    const navigate = useNavigate();
+
+
+  //  const calculateAge = (dob) => {
+  //   const birthDate = new Date(dob);
+  //   const today = new Date();
+  //   let age = today.getFullYear() - birthDate.getFullYear();
+  //   const m = today.getMonth() - birthDate.getMonth();
+  //   if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+  //     age--;
+  //   }
+  //   return age;
+  // };
+
+const calculateAge = (dob) => {
+  if (!dob) return 0;
+
+  const birthDate = new Date(dob); // works for Date object or ISO string
+  if (isNaN(birthDate)) return 0;
+
+  const today = new Date();
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const m = today.getMonth() - birthDate.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+  return age;
+};
+
+
+
+
 
   const handleDelete = async (id) => {
     const confirmDelete = window.confirm(
@@ -31,29 +65,32 @@ const Members = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchMembers = async () => {
-      const result = await getApprovedMembers();
-      const approvedMembers = result.filter(
-        (member) => member.status === "approved"
-      );
-      setMembers(approvedMembers);
-    };
-    fetchMembers();
-  }, []);
+ useEffect(() => {
+  const fetchMembers = async () => {
+    const result = await getApprovedMembers();
 
-  const navigate = useNavigate();
+    const approvedMembers = result
+      .filter((member) => member.status === "approved")
+      .map((m) => ({
+        ...m,
+        age: calculateAge(m.dob), // precomputed age
+      }));
 
-  const calculateAge = (dob) => {
-    const birthDate = new Date(dob);
-    const today = new Date();
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const m = today.getMonth() - birthDate.getMonth();
-    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-      age--;
-    }
-    return age;
+     
+ 
+
+    setMembers(approvedMembers);
   };
+
+  fetchMembers();
+}, []);
+
+
+
+ useEffect(() => {
+  setCurrentPage(1);
+}, [ageRange, city, gender, sortBy, searchQuery]);
+
 
   const cities = [
     "Mumbai",
@@ -98,30 +135,92 @@ const Members = () => {
     "Udaipur",
   ];
 
-  const filteredMembers = members.filter((member) => {
-    const age = calculateAge(member.dob);
-    const ageMatches =
-      !ageRange ||
-      (() => {
-        const [min, max] = ageRange.split("-").map(Number);
-        return age >= min && age <= max;
-      })();
+//   const filteredMembers = members.filter((member) => {
+//     const age = member.age;
+//     const ageMatches =
+//       !ageRange ||
+//       (() => {
+//         const [min, max] = ageRange.split("-").map(Number);
+//         return age >= min && age <= max;
+//       })();
 
-    const cityMatches = !city || member.city === city;
-    const genderMatches = !gender || member.gender?.toLowerCase() === gender;
-    const nameMatches =
-      !searchQuery ||
-      member.name.toLowerCase().includes(searchQuery.toLowerCase());
+//     const cityMatches = !city || member.city === city;
+//     const genderMatches = !gender || member.gender?.toLowerCase() === gender;
+//     const nameMatches =
+//       !searchQuery ||
+//       member.name.toLowerCase().includes(searchQuery.toLowerCase());
 
-    return ageMatches && cityMatches && genderMatches && nameMatches;
-  });
+//     return ageMatches && cityMatches && genderMatches && nameMatches;
+//   });
 
-  const sortedMembers = [...filteredMembers].sort((a, b) => {
-    if (sortBy === "name") {
-      return a.name.localeCompare(b.name);
+//   const sortedMembers = [...filteredMembers].sort((a, b) => {
+//     if (sortBy === "name") {
+//       return a.name.localeCompare(b.name);
+//     }
+//    if (sortBy === "age") {
+//   return a.age - b.age;
+// }
+//     return 0;
+//   });
+
+
+const [minAge, maxAge] = ageRange ? ageRange.split("-").map(Number) : [0, Infinity];
+
+// 1️⃣ Filter Members
+const filteredMembers = members.filter((member) => {
+  const age = member.age;
+
+  // Age range filter
+ const ageMatches = member.age >= minAge && member.age <= maxAge;
+
+  // Other filters
+  const cityMatches = !city || member.city === city;
+  const genderMatches = !gender || member.gender?.toLowerCase() === gender;
+  const nameMatches =
+    !searchQuery ||
+    member.name.toLowerCase().includes(searchQuery.toLowerCase());
+
+  return ageMatches && cityMatches && genderMatches && nameMatches;
+});
+
+// 🔍 Debug Logs (filtered result)
+console.log("---- FILTERED MEMBERS ----");
+filteredMembers.forEach((m) => {
+  console.log(`${m.name} | Age: ${m.age}`);
+});
+console.log("--------------------------");
+
+
+// 2️⃣ Sort Members
+let sortedMembers = [...filteredMembers];
+
+if (sortBy === "age") {
+  // Sort by exact birthdate (oldest first)
+  sortedMembers.sort((a, b) => new Date(a.dob) - new Date(b.dob));
+} else if (sortBy === "name") {
+  sortedMembers.sort((a, b) => a.name.localeCompare(b.name));
+}
+
+// 🔍 Debug Logs (sorted result)
+console.log("---- SORTED MEMBERS ----");
+sortedMembers.forEach((m) => {
+  console.log(`${m.name} | Age: ${m.age}`);
+});
+console.log("--------------------------");
+
+
+  // Pagination logic
+  const indexOfLast = currentPage * itemsPerPage;
+  const indexOfFirst = indexOfLast - itemsPerPage;
+  const currentMembers = sortedMembers.slice(indexOfFirst, indexOfLast);
+
+  const totalPages = Math.ceil(sortedMembers.length / itemsPerPage);
+
+  const goToPage = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
     }
-    return 0;
-  });
+  };
 
   const [tempAgeRange, setTempAgeRange] = useState("");
   const [tempCity, setTempCity] = useState("");
@@ -134,10 +233,10 @@ const Members = () => {
     setSortBy(tempSortBy);
     setGender(tempGender);
 
-    setTempAgeRange(tempAgeRange);
-    setTempCity(tempCity);
-    setTempSortBy(tempSortBy);
-    setTempGender(tempGender);
+    // setTempAgeRange(tempAgeRange);
+    // setTempCity(tempCity);
+    // setTempSortBy(tempSortBy);
+    // setTempGender(tempGender);
   };
 
   return (
@@ -164,8 +263,9 @@ const Members = () => {
           >
             <option value="">All</option>
             <option value="20-30">20 - 30</option>
-            <option value="30-40">30 - 40</option>
-            <option value="40-50">40 - 50</option>
+            <option value="31-40">31 - 40</option>
+            <option value="41-50">41 - 50</option>
+            <option value="51-60">51 - 60</option>
           </select>
         </div>
 
@@ -207,6 +307,7 @@ const Members = () => {
           >
             <option value="">None</option>
             <option value="name">Name</option>
+            <option value="age">Age</option>
           </select>
         </div>
 
@@ -216,10 +317,22 @@ const Members = () => {
           </button>
         </div>
       </div>
+      <div>
+        <button
+          onClick={() =>
+            navigate("/download-all", {
+              state: { filteredMembers: sortedMembers },
+            })
+          }
+          className={styles.downloadButton}
+        >
+          Download All
+        </button>
+      </div>
 
       <div className={styles.container}>
-        {sortedMembers.map((member) => (
-          <div key={member.id} className={styles.card1}>
+        {currentMembers.map((member) => (
+          <div key={member._id} className={styles.card1}>
             <div className={styles.name}>{member.name}</div>
             <div className={styles.box}>
               <div className={styles.imageSection}>
@@ -262,6 +375,30 @@ const Members = () => {
           </div>
         ))}
       </div>
+
+      {totalPages > 1 && (
+        <div className={styles.simplePagination}>
+          <button
+            onClick={() => goToPage(currentPage - 1)}
+            disabled={currentPage === 1}
+            className={styles.prevNext}
+          >
+            Previous
+          </button>
+
+          <span className={styles.pageInfo}>
+            Page {currentPage} of {totalPages}
+          </span>
+
+          <button
+            onClick={() => goToPage(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className={styles.prevNext}
+          >
+            Next
+          </button>
+        </div>
+      )}
     </>
   );
 };

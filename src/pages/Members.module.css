@@ -320,3 +320,34 @@
 .downloadButton:hover {
   background-color: #0056b3;
 }
+
+
+.simplePagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin: 25px 0;
+}
+
+.prevNext {
+  padding: 8px 18px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.prevNext:disabled {
+  background-color: #e0e0e0;
+  color: #999;
+  cursor: not-allowed;
+}
+
+.pageInfo {
+  font-size: 15px;
+  color: #333;
+  font-weight: 500;
+}

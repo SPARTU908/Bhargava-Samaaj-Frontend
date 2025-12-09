@@ -357,7 +357,7 @@ const NewRegistration = () => {
   return (
     <>
       <Navbar />
-      <Container className="py-3">
+      {/* <Container className="py-3">
         <div className="text-center mb-2">
           <h4 style={{ fontSize: "1.5rem", marginBottom: "0.25rem" }}>
             Online Registration for 134<sup>th</sup> Annual Conference at Ujjain
@@ -543,6 +543,9 @@ const NewRegistration = () => {
             </Button>
           </Modal.Footer>
         </Modal>
+      </Container> */}
+      <Container>
+        Registration Closed
       </Container>
     </>
   );

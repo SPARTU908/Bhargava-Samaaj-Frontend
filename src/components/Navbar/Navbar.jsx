@@ -132,13 +132,13 @@ const Navbar = () => {
           className="position-absolute top-50 end-0 translate-middle-y pe-3"
           style={{ zIndex: 10 }}
         >
-          <button
+          {/* <button
             onClick={() => handleNavigate("/new-registration")}
             className="btn btn-primary px-4 py-2 rounded-pill fw-semibold shadow-sm blinking-button"
             style={{ whiteSpace: "nowrap" }}
           >
             📝 Conference Registration Form
-          </button>
+          </button> */}
         </div>
       </div>
 

@@ -225,9 +225,9 @@ const AwardForm = () => {
   return (
     <>
       <Navbar />
-      <Container fluid className="my-5">
+      {/* <Container fluid className="my-5">
         <Row>
-          {/* Left Side: Image Viewer */}
+       
           <Col lg={5} className="mb-4">
             <Card className="shadow-sm p-3 h-auto">
               <h5 className="text-center mb-3">Awards List & Details</h5>
@@ -276,7 +276,7 @@ const AwardForm = () => {
             </Card>
           </Col>
 
-          {/* Right Side: Form */}
+       
           <Col lg={7}>
             <Card className="p-4 shadow-sm h-auto">
               <h3 className="text-center mb-4" style={{ color: "#003366" }}>
@@ -295,7 +295,7 @@ const AwardForm = () => {
                 encType="multipart/form-data"
                 noValidate
               >
-                {/* Section: Nominee Codes */}
+            
                 <h5 className="text-secondary mb-3">Preference for award</h5>
                 <Row>
                   <Col md={4}>
@@ -339,7 +339,7 @@ const AwardForm = () => {
                   </Col>
                 </Row>
 
-                {/* Section: Personal Info */}
+         
                 <h5 className="text-secondary mt-4 mb-3">
                   Applicant's details
                 </h5>
@@ -569,7 +569,7 @@ const AwardForm = () => {
                   
                 </Row>
 
-                {/* Section: Proposer Info */}
+               
                 <h5 className="text-secondary mt-4 mb-3">
                   If the application is not submitted by the applicant
                   himself/herself, details of proposer —
@@ -618,7 +618,7 @@ const AwardForm = () => {
                   />
                 </Form.Group>
 
-                {/* Section: Document Upload */}
+             
                 <h5 className="text-secondary mt-4 mb-3">Upload Files</h5>
                 <Row>
                   <Col md={4}>
@@ -689,7 +689,10 @@ const AwardForm = () => {
             </Card>
           </Col>
         </Row>{" "}
-        {/* ✅ Missing Row close tag */}
+      
+      </Container> */}
+      <Container>
+        Registration Closed
       </Container>
     </>
   );

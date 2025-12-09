@@ -22,6 +22,11 @@ const ConferenceAdminDashboard = () => {
   const [totalAwardForms, setTotalAwardForms] = useState(0);
   const [lifeMembers, setLifeMembers] = useState([]);
   const [totalLifeMembers, setTotalLifeMembers] = useState(0);
+  const [cityFilter, setCityFilter] = useState("");
+  const [updatedPage, setUpdatedPage] = useState(1);
+  const [newPage, setNewPage] = useState(1);
+  const [registeredUsers, setRegisteredUsers] = useState([]);
+const [totalUsers, setTotalUsers] = useState(0);
 
   const [lifeMemberSearch, setLifeMemberSearch] = useState({
     lmNo: "",
@@ -35,6 +40,38 @@ const ConferenceAdminDashboard = () => {
   const [totalNewLifeMembers, setTotalNewLifeMembers] = useState(0);
 
   const [genderFilter, setGenderFilter] = useState("");
+
+  const cleanCity = (city) => {
+    if (!city) return null;
+
+    const c = city.trim().toUpperCase();
+
+    if (!/[A-Z]/.test(c)) return null;
+
+    if (c.length < 2) return null;
+
+    if (/^[^A-Z0-9]+$/.test(c)) return null;
+
+    return c;
+  };
+
+  const dynamicCities = [
+    ...new Set([
+      ...(lifeMembers?.map((m) => cleanCity(m.City)) || []),
+      ...(updatedLifeMembers?.map((m) => cleanCity(m.City)) || []),
+      ...(newLifeMembers?.map((m) => cleanCity(m.City)) || []),
+
+      "DELHI",
+      "MUMBAI",
+      "CHENNAI",
+      "KOLKATA",
+      "HYDERABAD",
+      "BENGALURU",
+    ]),
+  ]
+    .filter(Boolean)
+    .sort();
+
   const itemsPerPage = 20;
 
   const exportToExcel = (data, fileName = "data.xlsx") => {
@@ -89,7 +126,6 @@ const ConferenceAdminDashboard = () => {
     try {
       const result = await softDeleteLifeMember(member._id);
       alert(result.message);
-      // Update state to remove deleted member from table
       setNewLifeMembers((prev) => prev.filter((m) => m._id !== member._id));
     } catch (error) {
       alert(error.message);
@@ -101,7 +137,7 @@ const ConferenceAdminDashboard = () => {
     { header: "Year", key: "Year" },
     { header: "Title", key: "Title" },
     { header: "Name", key: "Member_Name" },
-    { header: "Card Issue", key: "Card_IssueD" },
+    { header: "Card Issue", key: "Card_Issued" },
     { header: "S/O,D/O,W/O", key: "S_O_D_O_W_O" },
     { header: "Address", key: "Address" },
     { header: "Contact", key: "Contact_No" },
@@ -203,20 +239,53 @@ const ConferenceAdminDashboard = () => {
   const filteredLifeMembers = lifeMembers.filter((member) => {
     const lmNo = member.LM_NO || "";
     const name = member.Member_Name || "";
-
+    const city = member.City || "";
     const searchLmNo = lifeMemberSearch.lmNo || "";
     const searchName = lifeMemberSearch.name || "";
 
     const matchesLmNo =
       searchLmNo === "" ||
       lmNo.toLowerCase().includes(searchLmNo.toLowerCase());
-
     const matchesName =
       searchName === "" ||
       name.toLowerCase().includes(searchName.toLowerCase());
 
-    return matchesLmNo && matchesName;
+    const matchesCity =
+      cityFilter === "" ||
+      (city || "").toLowerCase() === cityFilter.toLowerCase();
+
+    return matchesLmNo && matchesName && matchesCity;
   });
+
+  const updatedFiltered = updatedLifeMembers
+    .filter((member) => (genderFilter ? member.gender === genderFilter : true))
+    .filter((member) =>
+      cityFilter
+        ? (member.City || "").toLowerCase() === cityFilter.toLowerCase()
+        : true
+    );
+
+  const updatedTotalPages = Math.ceil(updatedFiltered.length / itemsPerPage);
+
+  const updatedPaginated = updatedFiltered.slice(
+    (updatedPage - 1) * itemsPerPage,
+    updatedPage * itemsPerPage
+  );
+
+  const newFiltered = newLifeMembers
+    .filter((member) => (genderFilter ? member.gender === genderFilter : true))
+    .filter((member) =>
+      cityFilter
+        ? (member.City || "").toLowerCase() === cityFilter.toLowerCase()
+        : true
+    );
+
+  const newTotalPages = Math.ceil(newFiltered.length / itemsPerPage);
+
+  const newPaginated = newFiltered.slice(
+    (newPage - 1) * itemsPerPage,
+    newPage * itemsPerPage
+  );
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -420,6 +489,19 @@ const ConferenceAdminDashboard = () => {
                   }
                   className={styles.searchInput}
                 />
+
+                <select
+                  value={cityFilter}
+                  onChange={(e) => setCityFilter(e.target.value)}
+                  className={styles.searchInput}
+                >
+                  <option value="">Filter by City</option>
+                  {dynamicCities.map((city) => (
+                    <option key={city} value={city}>
+                      {city}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <Table striped bordered hover responsive>
@@ -540,6 +622,21 @@ const ConferenceAdminDashboard = () => {
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
                 </select>
+
+                <label style={{ fontWeight: 600 }}>Filter by City:</label>
+
+                <select
+                  value={cityFilter}
+                  onChange={(e) => setCityFilter(e.target.value)}
+                  className="form-select w-auto"
+                >
+                  <option value="">All</option>
+                  {dynamicCities.map((city) => (
+                    <option key={city} value={city}>
+                      {city}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <Table striped bordered hover responsive>
@@ -603,48 +700,66 @@ const ConferenceAdminDashboard = () => {
                     </tr>
                   ))} */}
 
-                  {updatedLifeMembers
-                    .filter((member) =>
-                      genderFilter ? member.gender === genderFilter : true
-                    )
-                    .map((member, index) => (
-                      <tr key={member._id}>
-                        <td>{index + 1}</td>
-                        <td>{member.LM_NO}</td>
-                        <td>{member.Year}</td>
-                        <td>{member.Title}</td>
-                        <td>{member.Member_Name}</td>
-                        <td>{member.Card_Issued}</td>
-                        <td>{member.S_O_D_O_W_O}</td>
-                        <td>{member.Date_of_Birth}</td>
-                        <td>{member.Address}</td>
-                        <td>{member.City}</td>
-                        <td>{member.Pin}</td>
-                        <td>{member.Contact_No}</td>
-                        <td>{member.Email}</td>
-                        <td>{member.Gotra}</td>
-                        <td>{member.Kuldevi}</td>
-                        <td>{member.gender}</td>
-                        <td>{member.category}</td>
-                        <td>
-                          {member.photo ? (
-                            <img
-                              src={member.photo}
-                              alt="Photo"
-                              style={{
-                                width: "60px",
-                                height: "60px",
-                                objectFit: "cover",
-                              }}
-                            />
-                          ) : (
-                            "N/A"
-                          )}
-                        </td>
-                      </tr>
-                    ))}
+                  {updatedPaginated.map((member, index) => (
+                    <tr key={member._id}>
+                      <td>{(updatedPage - 1) * itemsPerPage + index + 1}</td>
+                      <td>{member.LM_NO}</td>
+                      <td>{member.Year}</td>
+                      <td>{member.Title}</td>
+                      <td>{member.Member_Name}</td>
+                      <td>{member.Card_Issued}</td>
+                      <td>{member.S_O_D_O_W_O}</td>
+                      <td>{member.Date_of_Birth}</td>
+                      <td>{member.Address}</td>
+                      <td>{member.City}</td>
+                      <td>{member.Pin}</td>
+                      <td>{member.Contact_No}</td>
+                      <td>{member.Email}</td>
+                      <td>{member.Gotra}</td>
+                      <td>{member.Kuldevi}</td>
+                      <td>{member.gender}</td>
+                      <td>{member.category}</td>
+                      <td>
+                        {member.photo ? (
+                          <img
+                            src={member.photo}
+                            alt="Photo"
+                            style={{
+                              width: "60px",
+                              height: "60px",
+                              objectFit: "cover",
+                            }}
+                          />
+                        ) : (
+                          "N/A"
+                        )}
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </Table>
+
+              <div className={styles.pagination}>
+                <button
+                  onClick={() => setUpdatedPage((p) => Math.max(p - 1, 1))}
+                  disabled={updatedPage === 1}
+                >
+                  Previous
+                </button>
+
+                <span>
+                  Page {updatedPage} of {updatedTotalPages}
+                </span>
+
+                <button
+                  onClick={() =>
+                    setUpdatedPage((p) => Math.min(p + 1, updatedTotalPages))
+                  }
+                  disabled={updatedPage === updatedTotalPages}
+                >
+                  Next
+                </button>
+              </div>
 
               <h4 className="mb-3 mt-5">Newly Registered Life Members</h4>
 
@@ -673,6 +788,18 @@ const ConferenceAdminDashboard = () => {
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
                 </select>
+                <select
+                  value={cityFilter}
+                  onChange={(e) => setCityFilter(e.target.value)}
+                  className="form-select w-auto"
+                >
+                  <option value="">All</option>
+                  {dynamicCities.map((city) => (
+                    <option key={city} value={city}>
+                      {city}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <Table striped bordered hover responsive>
@@ -700,57 +827,74 @@ const ConferenceAdminDashboard = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {newLifeMembers
-                    .filter((member) =>
-                      genderFilter ? member.gender === genderFilter : true
-                    )
-                    .map((member, index) => (
-                      <tr key={member._id}>
-                        <td>{index + 1}</td>
-                        <td>{member.LM_NO}</td>
-                        <td>{member.Year}</td>
-                        <td>{member.Title}</td>
-                        <td>{member.Member_Name}</td>
-                        <td>{member.Card_Issued}</td>
-                        <td>{member.S_O_D_O_W_O}</td>
-                        <td>{member.Date_of_Birth}</td>
-                        <td>{member.Address}</td>
-                        <td>{member.City}</td>
-                        <td>{member.Pin}</td>
-                        <td>{member.Contact_No}</td>
-                        <td>{member.Email}</td>
-                        <td>{member.Gotra}</td>
-                        <td>{member.Kuldevi}</td>
-                        <td>{member.gender}</td>
-                        <td>{member.category}</td>
-                        <td>
-                          {member.photo ? (
-                            <img
-                              src={member.photo}
-                              alt="Photo"
-                              style={{
-                                width: "60px",
-                                height: "60px",
-                                objectFit: "cover",
-                              }}
-                            />
-                          ) : (
-                            "N/A"
-                          )}
-                        </td>
+                  {newPaginated.map((member, index) => (
+                    <tr key={member._id}>
+                      <td>{(newPage - 1) * itemsPerPage + index + 1}</td>
+                      <td>{member.LM_NO}</td>
+                      <td>{member.Year}</td>
+                      <td>{member.Title}</td>
+                      <td>{member.Member_Name}</td>
+                      <td>{member.Card_Issued}</td>
+                      <td>{member.S_O_D_O_W_O}</td>
+                      <td>{member.Date_of_Birth}</td>
+                      <td>{member.Address}</td>
+                      <td>{member.City}</td>
+                      <td>{member.Pin}</td>
+                      <td>{member.Contact_No}</td>
+                      <td>{member.Email}</td>
+                      <td>{member.Gotra}</td>
+                      <td>{member.Kuldevi}</td>
+                      <td>{member.gender}</td>
+                      <td>{member.category}</td>
+                      <td>
+                        {member.photo ? (
+                          <img
+                            src={member.photo}
+                            alt="Photo"
+                            style={{
+                              width: "60px",
+                              height: "60px",
+                              objectFit: "cover",
+                            }}
+                          />
+                        ) : (
+                          "N/A"
+                        )}
+                      </td>
 
-                        <td>
-                          <button
-                            className={styles.deleteButton} // optional CSS class
-                            onClick={() => handleSoftDelete(member)} // pass the member
-                          >
-                            Delete
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
+                      <td>
+                        <button
+                          className={styles.deleteButton} // optional CSS class
+                          onClick={() => handleSoftDelete(member)} // pass the member
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </Table>
+              <div className={styles.pagination}>
+                <button
+                  onClick={() => setNewPage((p) => Math.max(p - 1, 1))}
+                  disabled={newPage === 1}
+                >
+                  Previous
+                </button>
+
+                <span>
+                  Page {newPage} of {newTotalPages}
+                </span>
+
+                <button
+                  onClick={() =>
+                    setNewPage((p) => Math.min(p + 1, newTotalPages))
+                  }
+                  disabled={newPage === newTotalPages}
+                >
+                  Next
+                </button>
+              </div>
             </div>
           </>
         );
