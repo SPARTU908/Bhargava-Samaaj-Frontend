@@ -1,13 +1,13 @@
 import React from "react";
 import "./PdfGallery.css";
 
-// All months
+
 const allMonths = [
   "January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
 ];
 
-// PDF and cover image mapping
+
 const pdfData = [
   {
     year: 2025,
@@ -27,7 +27,7 @@ const pdfData = [
   },
 ];
 
-// Cover images mapped by "Month-Year"
+
 const coverImages = {
   "January-2025": "/covers/january-2025.png",
   "February-2025": "/covers/february-2025.png",
@@ -63,20 +63,20 @@ const coverImages = {
   "December-2023": "/covers/dec-2023.png",
 };
 
-// For sorting months in correct order
+
 const monthOrder = [
   "January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
 ];
 
 const PdfGallery = () => {
-  // Sort years descending
+
   const sortedPdfData = [...pdfData].sort((a, b) => b.year - a.year);
 
   return (
     <div className="container">
       {sortedPdfData.map((yearBlock) => {
-        // Sort months in reverse chronological order
+       
         const sortedMonths = [...yearBlock.months].sort(
           (a, b) => monthOrder.indexOf(b) - monthOrder.indexOf(a)
         );

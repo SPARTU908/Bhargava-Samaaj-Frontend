@@ -200,7 +200,14 @@ const DownloadForm = () => {
               style={{ display: "flex", flexWrap: "wrap", marginTop: "10px" }}
             >
               <p style={{ width: "50%", marginBottom: "0rem" }}>
-                <b>DOB:</b> {new Date(member.dob).toLocaleDateString()}
+                <b>DOB:</b>{" "}
+                {(() => {
+                  if (!member.dob) return "";
+                  const [year, month, day] = member.dob
+                    .split("T")[0]
+                    .split("-");
+                  return `${day}/${month}/${year}`;
+                })()}
               </p>
               <p style={{ width: "50%", marginBottom: "0rem" }}>
                 <b>Birth Time:</b> {member.birthTime}
@@ -402,5 +409,3 @@ const DownloadForm = () => {
 };
 
 export default DownloadForm;
-
-

@@ -107,15 +107,8 @@ const Navbar = () => {
 
   return (
     <>
-      {/* <Image
-        src={logo}
-        alt="Logo"
-        height={48}
-        className="d-block mx-auto mt-3"
-      /> */}
-
-      <div className="position-relative py-3 bg-white">
-        {/* Centered Logo */}
+       <div className="position-relative py-3 bg-white">
+      
         <div className="text-center">
           <Image
             src={logo}
@@ -127,18 +120,12 @@ const Navbar = () => {
           />
         </div>
 
-        {/* Rightmost Blinking Button */}
+     
         <div
           className="position-absolute top-50 end-0 translate-middle-y pe-3"
           style={{ zIndex: 10 }}
         >
-          {/* <button
-            onClick={() => handleNavigate("/new-registration")}
-            className="btn btn-primary px-4 py-2 rounded-pill fw-semibold shadow-sm blinking-button"
-            style={{ whiteSpace: "nowrap" }}
-          >
-            📝 Conference Registration Form
-          </button> */}
+         
         </div>
       </div>
 
@@ -217,7 +204,7 @@ const Navbar = () => {
                   </NavDropdown.Item>
                 </NavDropdown>
 
-                {/* ---------------- हमारा समाज ---------------- */}
+              
                 <NavDropdown title="हमारा समाज" id="society-dd">
                   <NavDropdown.Item
                     onClick={() => handleSocietySection("ancestors")}
@@ -251,7 +238,7 @@ const Navbar = () => {
                   </NavDropdown.Item>
                 </NavDropdown>
 
-                {/* संपत्तियाँ */}
+              
                 <NavDropdown title="संपत्तियाँ" id="property-dd">
                   <NavDropdown.Item onClick={() => handleNavigate("/haridwar")}>
                     हरिद्वार
@@ -269,11 +256,7 @@ const Navbar = () => {
                 <Nav.Link onClick={() => handleNavigate("/magazine")}>
                   भार्गव पत्रिका
                 </Nav.Link>
-                {/* <Nav.Link onClick={() => handleNavigate("/matrimonial")}>
-                  वैवाहिक
-                </Nav.Link> */}
-
-                <NavDropdown title="वैवाहिक" id="vaivahik-dd">
+              <NavDropdown title="वैवाहिक" id="vaivahik-dd">
                   <NavDropdown.Item
                     onClick={() => handleNavigate("/matrimonial")}
                   >
@@ -303,12 +286,7 @@ const Navbar = () => {
                 <Nav.Link onClick={() => handleNavigate("/registration")}>
                   रजिस्ट्रेशन
                 </Nav.Link>
-
-                {/* <Nav.Link onClick={() => handleNavigate("/download")}>
-                  डाउनलोड
-                </Nav.Link> */}
-
-                <NavDropdown title="डाउनलोड" id="download-dropdown">
+ <NavDropdown title="डाउनलोड" id="download-dropdown">
                   <NavDropdown.Item
                     href="/pdfs/Samaj Kalyan Sahayata Form 2025-2027.pdf"
                     target="_blank"

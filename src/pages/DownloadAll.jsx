@@ -7,99 +7,39 @@ import Navbar from "../components/Navbar/Navbar";
 
 const DownloadAll = () => {
   const [members, setMembers] = useState([]);
-
-  // Progress UI States
-  const [progress, setProgress] = useState(0); // in %
+  const [progress, setProgress] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isDownloading, setIsDownloading] = useState(false);
   const [status, setStatus] = useState("");
   const [eta, setEta] = useState(null);
 
   const pdfRef = useRef();
-
-  // useEffect(() => {
-  //   const load = async () => {
-  //     const all = await getApprovedMembers();
-  //     const approved = all.filter((m) => m.status === "approved");
-  //     setMembers(approved);
-  //   };
-  //   load();
-  // }, []);
-
   const location = useLocation();
 
-  // useEffect(() => {
-  //   if (location.state?.filteredMembers) {
-  //     // Create a fresh copy to prevent any reverse mutation
-  //     setMembers([...location.state.filteredMembers]);
-  //   } else {
-  //     const load = async () => {
-  //       const all = await getApprovedMembers();
-  //       setMembers(
-  //         all
-  //           .filter(m => m.status === "approved")
-  //           .map(m => ({
-  //             ...m,
-  //             age: calculateAge(m.dob),
-  //           }))
-  //       );
-  //     };
-  //     load();
-  //   }
-  // }, [location]);
-
-  // useEffect(() => {
-  //   if (location.state?.filteredMembers) {
-  //     setMembers(
-  //       location.state.filteredMembers.map((m, i) => ({
-  //         ...m,
-  //         index: i, // 🔥 numbering preserved
-  //       }))
-  //     );
-  //   } else {
-  //     const load = async () => {
-  //       const all = await getApprovedMembers();
-  //       const approved = all.filter((m) => m.status === "approved");
-
-  //       setMembers(
-  //         approved.map((m, i) => ({
-  //           ...m,
-  //           index: i, // 🔥 numbering assigned
-  //           age: calculateAge?.(m.dob) ?? "",
-  //         }))
-  //       );
-  //     };
-  //     load();
-  //   }
-  // }, [location]);
-
-
-useEffect(() => {
-  if (location.state?.filteredMembers) {
-    setMembers(
-      location.state.filteredMembers.map((m, i) => ({
-        ...m,
-        index: i,  
-      }))
-    );
-  } else {
-    const load = async () => {
-      const all = await getApprovedMembers();
-      const approved = all.filter(m => m.status === "approved");
-
+  useEffect(() => {
+    if (location.state?.filteredMembers) {
       setMembers(
-        approved.map((m, i) => ({
+        location.state.filteredMembers.map((m, i) => ({
           ...m,
-          index: i, 
-          age: calculateAge(m.dob),
+          index: i,
         }))
       );
-    };
-    load();
-  }
-}, [location]);
+    } else {
+      const load = async () => {
+        const all = await getApprovedMembers();
+        const approved = all.filter((m) => m.status === "approved");
 
-
+        setMembers(
+          approved.map((m, i) => ({
+            ...m,
+            index: i,
+            age: calculateAge(m.dob),
+          }))
+        );
+      };
+      load();
+    }
+  }, [location]);
 
   const renderTemplate = (member) => {
     return `
@@ -139,15 +79,14 @@ useEffect(() => {
 
           <div style="display:flex;flex-wrap:wrap;margin-top:10px;">
             
-            <p style="width:50%;margin-bottom:0rem;">
+           <p style="width:50%;margin-bottom:0rem;">
   <b>DOB:</b> ${(() => {
-    const d = new Date(member.dob);
-    const day = String(d.getDate()).padStart(2, "0");
-    const month = String(d.getMonth() + 1).padStart(2, "0");
-    const year = d.getFullYear();
+    if (!member.dob) return "";
+    const [year, month, day] = member.dob.split("-");
     return `${day}/${month}/${year}`;
   })()}
 </p>
+
 
             <p style="width:50%;margin-bottom:0rem;"><b>Birth Time:</b> ${
               member.birthTime
@@ -273,12 +212,9 @@ useEffect(() => {
     `;
   };
 
-  // ---------- Convert template → canvas → PNG ----------
   const generateImage = async (member) => {
     return new Promise(async (resolve) => {
       pdfRef.current.innerHTML = renderTemplate(member);
-
-      // Wait for photo load
       await new Promise((res) => {
         const img = pdfRef.current.querySelector("img");
         if (!img) return res();
@@ -294,8 +230,6 @@ useEffect(() => {
 
       const imgData = canvas.toDataURL("image/jpeg,0.85");
       const base64 = imgData.split(",")[1];
-      //  resolve({ name: `${member.name}_${member._id}.jpg`, file: base64 });
-
       resolve({
         name: `${String(member.index + 1).padStart(3, "0")}_${member.name}.jpg`,
         file: base64,
@@ -303,52 +237,6 @@ useEffect(() => {
     });
   };
 
-  // ---------- Progress bar, ETA & ZIP ----------
-  // const downloadAll = async () => {
-  //   setIsDownloading(true);
-
-  //   setStatus("Starting batch download...");
-
-  //   const batchSize = 100;
-  //   const total = members.length;
-  //   let batchNumber = 1;
-
-  //   for (let start = 0; start < total; start += batchSize) {
-  //     const end = Math.min(start + batchSize, total);
-  //     const batch = members.slice(start, end);
-
-  //     setStatus(`Generating ZIP batch ${batchNumber} (${start + 1} to ${end})`);
-  //     const zip = new JSZip();
-
-  //     for (let i = 0; i < batch.length; i++) {
-  //       const member = batch[i];
-
-  //       setCurrentIndex(start + i + 1);
-  //       setProgress(Math.round(((start + i + 1) / total) * 100));
-  //       setStatus(`Generating image ${start + i + 1} of ${total}`);
-
-  //       const img = await generateImage(member);
-  //       zip.file(img.name, img.file, { base64: true });
-
-  //       pdfRef.current.innerHTML = "";
-  //       await new Promise(r => setTimeout(r, 10));
-  //     }
-
-  //     setStatus(`Compressing ZIP batch ${batchNumber}...`);
-
-  //     const zipBlob = await zip.generateAsync({ type: "blob" });
-
-  //     const a = document.createElement("a");
-  //     a.href = URL.createObjectURL(zipBlob);
-  //     a.download = `Biodata_Images_Batch_${batchNumber}.zip`;
-  //     a.click();
-
-  //     batchNumber++;
-  //   }
-
-  //   setStatus("All batches downloaded successfully!");
-  //   setIsDownloading(false);
-  // };
   const downloadAll = async () => {
     setIsDownloading(true);
     setStatus("Starting batch download...");
@@ -359,7 +247,7 @@ useEffect(() => {
 
     for (let start = 0; start < total; start += batchSize) {
       const end = Math.min(start + batchSize, total);
-      const batch = members.slice(start, end); // ✔ now safe
+      const batch = members.slice(start, end);
 
       setStatus(`Generating ZIP batch ${batchNumber} (${start + 1} to ${end})`);
       const zip = new JSZip();
@@ -462,7 +350,6 @@ useEffect(() => {
           </div>
         )}
 
-        {/* Progress Section */}
         {isDownloading && (
           <div
             style={{
@@ -481,7 +368,6 @@ useEffect(() => {
               </span>
             </h3>
 
-            {/* Enhanced Progress Bar */}
             <div
               style={{
                 position: "relative",
@@ -526,7 +412,6 @@ useEffect(() => {
           </div>
         )}
 
-        {/* Hidden container for html2canvas */}
         <div
           ref={pdfRef}
           style={{

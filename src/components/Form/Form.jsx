@@ -146,18 +146,18 @@ const handleSubmit = async (e) => {
   try {
     const formPayload = new FormData();
 
-    // Append text fields
+  
     Object.entries(formData).forEach(([key, value]) => {
       formPayload.append(key, value);
     });
 
-    // Append files
+    
     if (photoFile) formPayload.append("photo", photoFile);
     if (biodataFile) formPayload.append("bioData", biodataFile);
 
     const result = await registerUser(formPayload);
 
-    // ✅ Success
+
     if (result.status === 201) {
       toast.success(
         "Thanks for submitting your details! Your profile will go live within 24–36 hours.",
@@ -172,7 +172,7 @@ const handleSubmit = async (e) => {
         }
       );
 
-      // Reset form
+   
       setFormData({
         number: "",
         name: "",
@@ -226,7 +226,7 @@ const handleSubmit = async (e) => {
   } catch (err) {
     console.error("Form submission failed:", err);
 
-    // ✅ Check for 409 error (email exists)
+  
     if (err?.response?.status === 409) {
       toast.error(err.response.data.errorMessage || "Email already exists");
     } else {
@@ -261,7 +261,7 @@ const handleSubmit = async (e) => {
           {errors.number && <p className={styles.error}>{errors.number}</p>}
         </div>
 
-        {/* Name and Email */}
+     
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label htmlFor="name" className={styles.label}>
@@ -296,7 +296,7 @@ const handleSubmit = async (e) => {
           </div>
         </div>
 
-        {/* Mobile and gender */}
+  
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label htmlFor="mobile" className={styles.label}>
@@ -333,7 +333,7 @@ const handleSubmit = async (e) => {
           </div>
         </div>
 
-        {/* Birth Time and birth place */}
+       
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label htmlFor="birthTime" className={styles.label}>
@@ -372,7 +372,7 @@ const handleSubmit = async (e) => {
           </div>
         </div>
 
-        {/* Height and weight */}
+       
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label className={styles.label}>
@@ -405,7 +405,7 @@ const handleSubmit = async (e) => {
           </div>
         </div>
 
-        {/* Row: DOB and Blood Group */}
+      
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label className={styles.label}>
@@ -448,7 +448,7 @@ const handleSubmit = async (e) => {
           </div>
         </div>
 
-        {/* manglik and gotra */}
+     
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label className={styles.label}>Manglik</label>
@@ -483,7 +483,7 @@ const handleSubmit = async (e) => {
           </div>
         </div>
 
-        {/* kuldevi and complexion */}
+      
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label className={styles.label}>
@@ -520,7 +520,7 @@ const handleSubmit = async (e) => {
           </div>
         </div>
 
-        {/* educational qualification and professional qualification */}
+       
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label htmlFor="education" className={styles.label}>
@@ -559,7 +559,7 @@ const handleSubmit = async (e) => {
           </div>
         </div>
 
-        {/* profession and company */}
+      
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label htmlFor="profession" className={styles.label}>
@@ -597,7 +597,7 @@ const handleSubmit = async (e) => {
             )}
           </div>
         </div>
-        {/* Designation and monthly income */}
+      
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label htmlFor="designation" className={styles.label}>
@@ -634,7 +634,7 @@ const handleSubmit = async (e) => {
           </div>
         </div>
 
-        {/* Hobbies and other qualification */}
+      
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label htmlFor="hobbies" className={styles.label}>
@@ -671,7 +671,7 @@ const handleSubmit = async (e) => {
           </div>
         </div>
 
-        {/* Guardian name and father name */}
+      
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label htmlFor="guardianName" className={styles.label}>
@@ -710,7 +710,7 @@ const handleSubmit = async (e) => {
           </div>
         </div>
 
-        {/* father profession and monthly income */}
+       
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label htmlFor="fatherProfession" className={styles.label}>
@@ -749,7 +749,7 @@ const handleSubmit = async (e) => {
           </div>
         </div>
 
-        {/* father occupation and father designation */}
+       
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label htmlFor="fatherDesignation" className={styles.label}>
@@ -787,7 +787,7 @@ const handleSubmit = async (e) => {
           </div>
         </div>
 
-        {/* NATIVE PLACE AND ADDRESS */}
+       
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label htmlFor="nativePlace" className={styles.label}>
@@ -826,7 +826,7 @@ const handleSubmit = async (e) => {
           </div>
         </div>
 
-        {/* city and pin */}
+       
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label htmlFor="city" className={styles.label}>
@@ -861,7 +861,7 @@ const handleSubmit = async (e) => {
           </div>
         </div>
 
-        {/* Whatsapp no residencial no  */}
+      
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label htmlFor="whatsapp" className={styles.label}>
@@ -897,7 +897,7 @@ const handleSubmit = async (e) => {
           </div>
         </div>
 
-        {/* mobile and nri */}
+       
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label htmlFor="photo" className={styles.label}>
@@ -932,7 +932,7 @@ const handleSubmit = async (e) => {
             {errors.nri && <p className={styles.error1}>{errors.nri}</p>}
           </div>
         </div>
-        {/* remarks and create passowrd */}
+     
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label htmlFor="bioData" className={styles.label}>
