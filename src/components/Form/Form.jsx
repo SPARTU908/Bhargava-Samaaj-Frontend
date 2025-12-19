@@ -1,12 +1,11 @@
-import React, { useState, useRef, } from "react";
+import React, { useState, useRef } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./Form.module.css";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import { registerUser } from "../../apis/form";
-
-
+import { format } from "date-fns";
 
 const Form = () => {
   const [formData, setFormData] = useState({
@@ -58,7 +57,6 @@ const Form = () => {
   const photoInputRef = useRef(null);
   const biodataInputRef = useRef(null);
 
-
   const validate = () => {
     let newErrors = {};
 
@@ -83,7 +81,7 @@ const Form = () => {
       "pin",
       "nri",
       "password",
-     ];
+    ];
 
     requiredFields.forEach((field) => {
       if (!formData[field]) {
@@ -102,18 +100,17 @@ const Form = () => {
       newErrors.email = "Email is invalid";
     }
 
-  if (
-  formData.mobile &&
-  !/^((\+91)?[6-9]\d{9}|(\+1)?\d{10})$/.test(formData.mobile)
-)
- {
-  newErrors.mobile = "Please enter a valid 10-digit Indian or US Mobile Number";
-}
+    if (
+      formData.mobile &&
+      !/^((\+91)?[6-9]\d{9}|(\+1)?\d{10})$/.test(formData.mobile)
+    ) {
+      newErrors.mobile =
+        "Please enter a valid 10-digit Indian or US Mobile Number";
+    }
 
-
-   if (formData.whatsapp && !/^[6-9]\d{9}$/.test(formData.whatsapp)) {
-    newErrors.whatsapp = "Please enter a valid 10-digit Indian mobile number";
-  }
+    if (formData.whatsapp && !/^[6-9]\d{9}$/.test(formData.whatsapp)) {
+      newErrors.whatsapp = "Please enter a valid 10-digit Indian mobile number";
+    }
 
     return newErrors;
   };
@@ -123,127 +120,117 @@ const Form = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
+    if (isSubmitting) return;
+    setIsSubmitting(true);
 
-  if (isSubmitting) return;
-  setIsSubmitting(true);
+    const validationErrors = validate();
 
-  const validationErrors = validate();
+    if (!photoFile) validationErrors.photo = "Photo is required";
+    if (!biodataFile) validationErrors.bioData = "Biodata is required";
 
-  if (!photoFile) validationErrors.photo = "Photo is required";
-  if (!biodataFile) validationErrors.bioData = "Biodata is required";
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      setIsSubmitting(false);
+      return;
+    }
 
-  if (Object.keys(validationErrors).length > 0) {
-    setErrors(validationErrors);
-    setIsSubmitting(false);
-    return;
-  }
+    setErrors({});
 
-  setErrors({});
+    try {
+      const formPayload = new FormData();
 
-  try {
-    const formPayload = new FormData();
-
-  
-    Object.entries(formData).forEach(([key, value]) => {
-      formPayload.append(key, value);
-    });
-
-    
-    if (photoFile) formPayload.append("photo", photoFile);
-    if (biodataFile) formPayload.append("bioData", biodataFile);
-
-    const result = await registerUser(formPayload);
-
-
-    if (result.status === 201) {
-      toast.success(
-        "Thanks for submitting your details! Your profile will go live within 24–36 hours.",
-        {
-          position: "top-center",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: true,
-          theme: "light",
-        }
-      );
-
-   
-      setFormData({
-        number: "",
-        name: "",
-        email: "",
-        mobile: "",
-        gender: "",
-        birthTime: "",
-        birthPlace: "",
-        height: "",
-        weight: "",
-        dob: "",
-        bloodGroup: "",
-        manglik: "",
-        gotra: "",
-        kuldevi: "",
-        complexion: "",
-        education: "",
-        professionQualification: "",
-        profession: "",
-        company: "",
-        designation: "",
-        income: "",
-        hobbies: "",
-        otherQualification: "",
-        guardianName: "",
-        fatherName: "",
-        fatherProfession: "",
-        fatherIncome: "",
-        fatherDesignation: "",
-        motherName: "",
-        nativePlace: "",
-        address: "",
-        city: "",
-        pin: "",
-        whatsapp: "",
-        nri: "",
-        remarks: "",
-        password: "",
-        photo: "",
-        bioData: "",
+      Object.entries(formData).forEach(([key, value]) => {
+        formPayload.append(key, value);
       });
 
-      setPhotoFile(null);
-      setBiodataFile(null);
-      if (photoInputRef.current) photoInputRef.current.value = "";
-      if (biodataInputRef.current) biodataInputRef.current.value = "";
-    } else {
-      toast.error(result?.response?.data?.message || "Submission failed");
+      if (photoFile) formPayload.append("photo", photoFile);
+      if (biodataFile) formPayload.append("bioData", biodataFile);
+
+      const result = await registerUser(formPayload);
+
+      if (result.status === 201) {
+        toast.success(
+          "Thanks for submitting your details! Your profile will go live within 24–36 hours.",
+          {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            theme: "light",
+          }
+        );
+
+        setFormData({
+          number: "",
+          name: "",
+          email: "",
+          mobile: "",
+          gender: "",
+          birthTime: "",
+          birthPlace: "",
+          height: "",
+          weight: "",
+          dob: "",
+          bloodGroup: "",
+          manglik: "",
+          gotra: "",
+          kuldevi: "",
+          complexion: "",
+          education: "",
+          professionQualification: "",
+          profession: "",
+          company: "",
+          designation: "",
+          income: "",
+          hobbies: "",
+          otherQualification: "",
+          guardianName: "",
+          fatherName: "",
+          fatherProfession: "",
+          fatherIncome: "",
+          fatherDesignation: "",
+          motherName: "",
+          nativePlace: "",
+          address: "",
+          city: "",
+          pin: "",
+          whatsapp: "",
+          nri: "",
+          remarks: "",
+          password: "",
+          photo: "",
+          bioData: "",
+        });
+
+        setPhotoFile(null);
+        setBiodataFile(null);
+        if (photoInputRef.current) photoInputRef.current.value = "";
+        if (biodataInputRef.current) biodataInputRef.current.value = "";
+      } else {
+        toast.error(result?.response?.data?.message || "Submission failed");
+      }
+    } catch (err) {
+      console.error("Form submission failed:", err);
+
+      if (err?.response?.status === 409) {
+        toast.error(err.response.data.errorMessage || "Email already exists");
+      } else {
+        toast.error("Something went wrong. Please try again.");
+      }
+    } finally {
+      setIsSubmitting(false);
     }
-
-  } catch (err) {
-    console.error("Form submission failed:", err);
-
-  
-    if (err?.response?.status === 409) {
-      toast.error(err.response.data.errorMessage || "Email already exists");
-    } else {
-      toast.error("Something went wrong. Please try again.");
-    }
-  } finally {
-    setIsSubmitting(false);
-  }
-};
-
-
-
+  };
 
   return (
     <>
       <div className={styles.heading}>वैवाहिक फ़ॉर्म</div>
-     
+
       <div className={styles.container}>
         <div className={styles.inputBox}>
           <label htmlFor="number" className={styles.label}>
@@ -261,7 +248,6 @@ const handleSubmit = async (e) => {
           {errors.number && <p className={styles.error}>{errors.number}</p>}
         </div>
 
-     
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label htmlFor="name" className={styles.label}>
@@ -296,7 +282,6 @@ const handleSubmit = async (e) => {
           </div>
         </div>
 
-  
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label htmlFor="mobile" className={styles.label}>
@@ -333,7 +318,6 @@ const handleSubmit = async (e) => {
           </div>
         </div>
 
-       
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label htmlFor="birthTime" className={styles.label}>
@@ -372,7 +356,6 @@ const handleSubmit = async (e) => {
           </div>
         </div>
 
-       
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label className={styles.label}>
@@ -405,7 +388,6 @@ const handleSubmit = async (e) => {
           </div>
         </div>
 
-      
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label className={styles.label}>
@@ -413,13 +395,13 @@ const handleSubmit = async (e) => {
             </label>
             <DatePicker
               selected={formData.dob}
-              onChange={(date) => setFormData({ ...formData, dob: date })}
+              onChange={(date) =>
+                setFormData({
+                  ...formData,
+                  dob: format(date, "yyyy-MM-dd"), 
+                })
+              }
               dateFormat="dd/MM/yyyy"
-              className={styles.input}
-              placeholderText="Select Date of Birth"
-              showMonthDropdown
-              showYearDropdown
-              dropdownMode="select"
             />
             {errors.dob && <p className={styles.error}>{errors.dob}</p>}
           </div>
@@ -448,7 +430,6 @@ const handleSubmit = async (e) => {
           </div>
         </div>
 
-     
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label className={styles.label}>Manglik</label>
@@ -483,7 +464,6 @@ const handleSubmit = async (e) => {
           </div>
         </div>
 
-      
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label className={styles.label}>
@@ -520,7 +500,6 @@ const handleSubmit = async (e) => {
           </div>
         </div>
 
-       
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label htmlFor="education" className={styles.label}>
@@ -559,7 +538,6 @@ const handleSubmit = async (e) => {
           </div>
         </div>
 
-      
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label htmlFor="profession" className={styles.label}>
@@ -597,7 +575,7 @@ const handleSubmit = async (e) => {
             )}
           </div>
         </div>
-      
+
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label htmlFor="designation" className={styles.label}>
@@ -634,7 +612,6 @@ const handleSubmit = async (e) => {
           </div>
         </div>
 
-      
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label htmlFor="hobbies" className={styles.label}>
@@ -671,7 +648,6 @@ const handleSubmit = async (e) => {
           </div>
         </div>
 
-      
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label htmlFor="guardianName" className={styles.label}>
@@ -710,7 +686,6 @@ const handleSubmit = async (e) => {
           </div>
         </div>
 
-       
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label htmlFor="fatherProfession" className={styles.label}>
@@ -749,7 +724,6 @@ const handleSubmit = async (e) => {
           </div>
         </div>
 
-       
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label htmlFor="fatherDesignation" className={styles.label}>
@@ -787,7 +761,6 @@ const handleSubmit = async (e) => {
           </div>
         </div>
 
-       
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label htmlFor="nativePlace" className={styles.label}>
@@ -826,7 +799,6 @@ const handleSubmit = async (e) => {
           </div>
         </div>
 
-       
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label htmlFor="city" className={styles.label}>
@@ -861,7 +833,6 @@ const handleSubmit = async (e) => {
           </div>
         </div>
 
-      
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label htmlFor="whatsapp" className={styles.label}>
@@ -897,7 +868,6 @@ const handleSubmit = async (e) => {
           </div>
         </div>
 
-       
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label htmlFor="photo" className={styles.label}>
@@ -932,7 +902,7 @@ const handleSubmit = async (e) => {
             {errors.nri && <p className={styles.error1}>{errors.nri}</p>}
           </div>
         </div>
-     
+
         <div className={styles.row1}>
           <div className={styles.inputBox}>
             <label htmlFor="bioData" className={styles.label}>

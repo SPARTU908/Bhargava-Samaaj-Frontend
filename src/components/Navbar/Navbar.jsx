@@ -286,7 +286,7 @@ const Navbar = () => {
                 <Nav.Link onClick={() => handleNavigate("/registration")}>
                   रजिस्ट्रेशन
                 </Nav.Link>
- <NavDropdown title="डाउनलोड" id="download-dropdown">
+                  <NavDropdown title="डाउनलोड" id="download-dropdown">
                   <NavDropdown.Item
                     href="/pdfs/Samaj Kalyan Sahayata Form 2025-2027.pdf"
                     target="_blank"

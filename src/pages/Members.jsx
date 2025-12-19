@@ -202,11 +202,11 @@ if (sortBy === "age") {
 }
 
 // 🔍 Debug Logs (sorted result)
-console.log("---- SORTED MEMBERS ----");
+
 sortedMembers.forEach((m) => {
   console.log(`${m.name} | Age: ${m.age}`);
 });
-console.log("--------------------------");
+
 
 
   // Pagination logic

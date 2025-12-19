@@ -19,6 +19,18 @@ const DownloadForm = () => {
     fetchMember();
   }, [id]);
 
+  const formatDOB = (dob) => {
+    if (!dob) return "";
+
+    const d = new Date(dob);
+
+    const day = String(d.getUTCDate()).padStart(2, "0");
+    const month = String(d.getUTCMonth() + 1).padStart(2, "0");
+    const year = d.getUTCFullYear();
+
+    return `${day}/${month}/${year}`;
+  };
+
   const handleDownloadPDF = async () => {
     const input = pdfRef.current;
 
@@ -200,15 +212,11 @@ const DownloadForm = () => {
               style={{ display: "flex", flexWrap: "wrap", marginTop: "10px" }}
             >
               <p style={{ width: "50%", marginBottom: "0rem" }}>
-                <b>DOB:</b>{" "}
-                {(() => {
-                  if (!member.dob) return "";
-                  const [year, month, day] = member.dob
-                    .split("T")[0]
-                    .split("-");
-                  return `${day}/${month}/${year}`;
-                })()}
+                <p style={{ width: "50%", marginBottom: "0rem" }}>
+                  <b>DOB:</b> {formatDOB(member.dob)}
+                </p>
               </p>
+
               <p style={{ width: "50%", marginBottom: "0rem" }}>
                 <b>Birth Time:</b> {member.birthTime}
               </p>

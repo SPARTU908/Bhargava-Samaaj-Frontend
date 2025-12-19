@@ -16,6 +16,38 @@ const DownloadAll = () => {
   const pdfRef = useRef();
   const location = useLocation();
 
+ const formatDOB = (dob) => {
+  if (!dob) return "";
+
+  let date;
+
+  // Case 1: already a Date object
+  if (dob instanceof Date) {
+    date = dob;
+  }
+  // Case 2: ISO string with time
+  else if (dob.includes("T")) {
+    date = new Date(dob);
+  }
+  // Case 3: YYYY-MM-DD (most common)
+  else {
+    const [year, month, day] = dob.split("-");
+    date = new Date(Date.UTC(year, month - 1, day));
+  }
+
+  if (isNaN(date.getTime())) return "";
+
+  const day = String(date.getUTCDate()).padStart(2, "0");
+  const month = String(date.getUTCMonth() + 1).padStart(2, "0");
+  const year = date.getUTCFullYear();
+
+  return `${day}/${month}/${year}`;
+};
+
+
+
+
+
   useEffect(() => {
     if (location.state?.filteredMembers) {
       setMembers(
@@ -79,17 +111,13 @@ const DownloadAll = () => {
 
           <div style="display:flex;flex-wrap:wrap;margin-top:10px;">
             
-           <p style="width:50%;margin-bottom:0rem;">
-  <b>DOB:</b> ${(() => {
-    if (!member.dob) return "";
-    const [year, month, day] = member.dob.split("-");
-    return `${day}/${month}/${year}`;
-  })()}
+          <p style="width:50%;margin-bottom:0rem;">
+  <b>DOB:</b> ${formatDOB(member.dob)}
 </p>
 
 
             <p style="width:50%;margin-bottom:0rem;"><b>Birth Time:</b> ${
-              member.birthTime
+              member.birthTime 
             }</p>
             <p style="width:50%;margin-bottom:0rem;"><b>Birth Place:</b> ${
               member.birthPlace
