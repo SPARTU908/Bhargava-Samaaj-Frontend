@@ -35,7 +35,7 @@ import salil from "../assets/salil.jpg";
 import sanjay3 from "../assets/sanjay2.jpg";
 import sohan from "../assets/sohan.jpg";
 import narayan from "../assets/narayan.jpeg";
-import announcement2 from "../assets/PIC1.PNG";
+import announcement2 from "../assets/announcement.PNG";
 import activity1 from "../assets/Event1.PNG";
 import activity2 from "../assets/Event2.PNG";
 
@@ -70,9 +70,9 @@ const festivals = [
   // "सोमवार,1 दिसंबर - एकादशी (मोक्षदा) ",
   // "मंगलवार, 2 दिसंबर - प्रदोष ",
   // "गुरुवार , 4 दिसंबर - पूर्णिमा व्रत एवं स्नान ",
-  "सोमवार , 15 दिसंबर - एकादशी (सफला) ",
-  "बुधवार , 17 दिसंबर - प्रदोष ",
-  "शुक्रवार, 19 दिसंबर - अमावस्या",
+  // "सोमवार , 15 दिसंबर - एकादशी (सफला) ",
+  // "बुधवार , 17 दिसंबर - प्रदोष ",
+  // "शुक्रवार, 19 दिसंबर - अमावस्या",
   "मंगलवार, 30 दिसंबर - एकादशी (पुत्रदा)",
 
 
@@ -216,7 +216,7 @@ const Homepage = () => {
         </Row>
       </Container> */}
 
-      <Container id="activities" className="my-5">
+      {/* <Container id="activities" className="my-5">
         <h3 className="text-center mb-4" style={{ color: "#ea8d0c" }}>
           अपकमिंग एक्टिविटीज 2025
         </h3>
@@ -270,7 +270,7 @@ const Homepage = () => {
             </div>
           </Col>
         </Row>
-      </Container>
+      </Container> */}
 
       {/* PRESIDENT MESSAGE */}
       <Container id="president" className="my-5">
