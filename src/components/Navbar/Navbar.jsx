@@ -302,7 +302,7 @@ const Navbar = () => {
                     Shiksha Chhatravriti Application Form
                   </NavDropdown.Item>
                   <NavDropdown.Item
-                    href="/pdfs/Education Loan Documents 30.09.2025.pdf"
+                    href="/pdfs/EducationLoanNew.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
