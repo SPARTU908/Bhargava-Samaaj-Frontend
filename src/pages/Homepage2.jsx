@@ -36,6 +36,7 @@ import sanjay3 from "../assets/sanjay2.jpg";
 import sohan from "../assets/sohan.jpg";
 import narayan from "../assets/narayan.jpeg";
 import announcement2 from "../assets/announcement.PNG";
+
 import activity1 from "../assets/Event1.PNG";
 import activity2 from "../assets/Event2.PNG";
 
@@ -73,7 +74,7 @@ const festivals = [
   // "सोमवार , 15 दिसंबर - एकादशी (सफला) ",
   // "बुधवार , 17 दिसंबर - प्रदोष ",
   // "शुक्रवार, 19 दिसंबर - अमावस्या",
-  "मंगलवार, 30 दिसंबर - एकादशी (पुत्रदा)",
+  // "मंगलवार, 30 दिसंबर - एकादशी (पुत्रदा)",
    "गुरुवार , 1 जनवरी - प्रदोष ",
    "शुक्रवार,2 जनवरी - पूर्णिमा (व्रत)",
    "शनिवार,3 जनवरी - पूर्णिमा (स्नान)",
@@ -147,10 +148,102 @@ const Homepage = () => {
         </Row>
       </Container>
 
+
+
+
+     
+{/* SMARIKA 2025 SECTION */}
+{/* SMARIKA 2025 SECTION */}
+<Container id="smarika" className="my-5">
+  <h3 className="text-center mb-4 fw-bold" style={{ color: "#ea8d0c" }}>
+    स्मारिका 2025
+  </h3>
+
+  <Row className="justify-content-center">
+    <Col md={10} lg={8}>
+      <div
+        className="shadow-lg"
+        style={{
+          borderRadius: "18px",
+          overflow: "hidden",
+          position: "relative",
+          backgroundColor: "#fff",
+        }}
+      >
+        {/* COVER IMAGE */}
+        <img
+          src="/covers/smarika.jpeg"
+          alt="Smarika 2025"
+          style={{
+            width: "100%",
+            maxHeight: "670px",
+            objectFit: "cover",
+          }}
+        />
+
+        {/* YEAR BADGE */}
+        <span
+          style={{
+            position: "absolute",
+            top: "16px",
+            right: "16px",
+            backgroundColor: "#ea8d0c",
+            color: "#fff",
+            padding: "6px 14px",
+            borderRadius: "20px",
+            fontWeight: "600",
+            fontSize: "0.9rem",
+          }}
+        >
+          2025
+        </span>
+
+        {/* OVERLAY ACTION BAR */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: 0,
+            width: "100%",
+            background:
+              "linear-gradient(to top, rgba(0,0,0,0.75), rgba(0,0,0,0))",
+            padding: "20px",
+            display: "flex",
+            justifyContent: "center",
+            gap: "16px",
+            flexWrap: "wrap",
+          }}
+        >
+          <a
+            href="/pdfs/Smarika2025.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-warning px-4 fw-semibold"
+          >
+            📖 पढ़ें
+          </a>
+
+          <a
+            href="/pdfs/Smarika2025.pdf"
+            download
+            className="btn btn-outline-light px-4 fw-semibold"
+          >
+            ⬇ डाउनलोड
+          </a>
+        </div>
+      </div>
+    </Col>
+  </Row>
+</Container>
+
+
+
+
+     
+
       {/* FESTIVALS */}
       <Container id="festivals" className="my-5">
         <h3 className="text-center mb-4" style={{ color: "#ea8d0c" }}>
-          अपकमिंग फेस्टिवल्स 2025
+          अपकमिंग फेस्टिवल्स 2026
         </h3>
         <Row xs={1} sm={2} md={3} className="g-4">
           {festivals.map((fest, index) => (
