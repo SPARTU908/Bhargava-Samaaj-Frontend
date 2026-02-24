@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import styles from "./MembershipAdminDashboard.module.css";
 import MemberAdmin from "../pages/MemberAdmin";
 import PendingMemberList from "../pages/PendingMemberList";
+import DeletedMembers from "./DeletedMembers"
 import { IoMdHome } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { getMemberCount } from "../apis/member";
@@ -30,8 +31,8 @@ const MembershipAdminDashboard = () => {
     switch (selectedSection) {
       case "membership":
         return <MemberAdmin />;
-      case "pending":
-        return <PendingMemberList />;
+       case "deleted":
+      return <DeletedMembers />;
       default:
         return (
           <>
@@ -79,23 +80,29 @@ const MembershipAdminDashboard = () => {
           </div>
           <div className={styles.options}>
             <div>
-                <div
+              <div
                 className={`${styles.optionButton} ${
                   selectedSection === "pending" ? styles.activeButton : ""
                 }`}
                 onClick={() => setSelectedSection("pending")}
-              >
-              
-              </div>
+              ></div>
               <div
                 className={`${styles.optionButton} ${
                   selectedSection === "membership" ? styles.activeButton : ""
                 }`}
                 onClick={() => setSelectedSection("membership")}
               >
-               All Membership Form 
+                All Membership Form
               </div>
-              
+
+              <div
+                className={`${styles.optionButton} ${
+                  selectedSection === "deleted" ? styles.activeButton : ""
+                }`}
+                onClick={() => setSelectedSection("deleted")}
+              >
+                All Deleted Members
+              </div>
             </div>
           </div>
           <div className={styles.logoutWrapper}>

@@ -21,7 +21,7 @@ const DisplayForm = ({ member }) => {
         canvas.height = height;
         const ctx = canvas.getContext("2d");
         ctx.drawImage(img, 0, 0, width, height);
-        resolve(canvas.toDataURL("image/jpeg", 0.7)); // 0.7 = quality
+        resolve(canvas.toDataURL("image/jpeg", 0.7)); 
       };
       img.src = src;
     });

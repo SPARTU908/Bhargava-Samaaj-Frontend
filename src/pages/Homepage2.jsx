@@ -40,48 +40,16 @@ import announcement2 from "../assets/announcement.PNG";
 import activity1 from "../assets/Event1.PNG";
 import activity2 from "../assets/Event2.PNG";
 
-
 const festivals = [
-  // "बुधवार, 22 अक्टूबर - अन्नकूट / गोवर्धन पूजा ",
-  // "गुरुवार, 23 अक्टूबर - भाई दूज ",
-  // "गुरुवार, 30 अक्टूबर - अक्षय नवमी",
-  // "शनिवार, 1 नवंबर - देवोत्थानी एकादशी",
-  // "सोमवार, 3 नवंबर - सोम प्रदोष",
-  // "बुधवार, 5 नवंबर - पूर्णिमा व्रत एवं स्नान",
-  // "शनिवार, 15 नवंबर - एकादशी (उत्पन्ना) ",
-  // "सोमवार, 17 नवंबर - सोम प्रदोष",
-  // "गुरुवार, 20 नवंबर -अमावस्या",
-  // "मंगलवार, 9 सितम्बर - द्वितीया श्राद्ध  से",
-  // "गुरुवार, 11 सितम्बर- चतुर्थी श्राद्ध तक ",
-  // "बुधवार, 3 सितम्बर - एकादशी (पदमा)",
-  // "शुक्रवार, 5 सितम्बर - प्रदोष ",
-  // "शनिवार, 6 सितम्बर - अनंत चतुर्दशी",
-  // "रविवार, 7 सितम्बर - पूर्णिमा व्रत एवं स्नान ",
-  // "सोमवार, 8 सितम्बर - प्रतिपदा श्राद्ध ",
-  //  "शनिवार, 20 सितम्बर - चतुर्दशी श्राद्ध ",
-  // "रविवार, 21 सितम्बर - अमावस्या (पितृविसर्जनी) ",
-  // "सोमवार, 22 सितम्बर - शारदीय नवरात्रारम्भ (कलश  स्थापना) ",
-  // "शुक्रवार, 17 अक्टूबर - एकादशी रम्भा ",
-  // "शनिवार, 18 अक्टूबर -धनतेरस / प्रदोष ",
-  // "रविवार, 19 अक्टूबर - नरक चतुर्दशी  ",
-  // "सोमवार, 20 अक्टूबर -  दीपावली, (हनुमान जयंती) ",
-  // "मंगलवार, 21 अक्टूबर - अमावस्या ",
-  // "शनिवार, 1 नवंबर - देवोत्थानी एकादशी",
-  // "सोमवार, 3 नवंबर - सोम प्रदोष",
-  // "सोमवार,1 दिसंबर - एकादशी (मोक्षदा) ",
-  // "मंगलवार, 2 दिसंबर - प्रदोष ",
-  // "गुरुवार , 4 दिसंबर - पूर्णिमा व्रत एवं स्नान ",
-  // "सोमवार , 15 दिसंबर - एकादशी (सफला) ",
-  // "बुधवार , 17 दिसंबर - प्रदोष ",
-  // "शुक्रवार, 19 दिसंबर - अमावस्या",
-  // "मंगलवार, 30 दिसंबर - एकादशी (पुत्रदा)",
-   "गुरुवार , 1 जनवरी - प्रदोष ",
-   "शुक्रवार,2 जनवरी - पूर्णिमा (व्रत)",
-   "शनिवार,3 जनवरी - पूर्णिमा (स्नान)",
-
-
-
-
+ "मंगलवार, 17 फ़रवरी  - अमावस्या ",
+"शुक्रवार,27 फ़रवरी - एकादशी (आमलकी) ",
+"रविवार, 1 मार्च - प्रदोष",
+"सोमवार, 2 मार्च - पूर्णिमा व्रत ",
+"मंगलवार, 3 मार्च - पूर्णिमा स्नान ",
+"बुधवार,  4 मार्च - होली ",
+"बुधवार, 11 मार्च - शीतला अष्टमी",
+"रविवार, 15 मार्च - एकादशी (पापमोचनी ) ",
+"सोमवार , 16 मार्च - सोम प्रदोष ",
 
 ];
 
@@ -148,97 +116,88 @@ const Homepage = () => {
         </Row>
       </Container>
 
+      {/* SMARIKA 2025 SECTION */}
+      {/* SMARIKA 2025 SECTION */}
+      <Container id="smarika" className="my-5">
+        <h3 className="text-center mb-4 fw-bold" style={{ color: "#ea8d0c" }}>
+          स्मारिका 2025
+        </h3>
 
+        <Row className="justify-content-center">
+          <Col md={10} lg={8}>
+            <div
+              className="shadow-lg"
+              style={{
+                borderRadius: "18px",
+                overflow: "hidden",
+                position: "relative",
+                backgroundColor: "#fff",
+              }}
+            >
+              {/* COVER IMAGE */}
+              <img
+                src="/covers/smarika.jpeg"
+                alt="Smarika 2025"
+                style={{
+                  width: "100%",
+                  maxHeight: "670px",
+                  objectFit: "cover",
+                }}
+              />
 
+              {/* YEAR BADGE */}
+              <span
+                style={{
+                  position: "absolute",
+                  top: "16px",
+                  right: "16px",
+                  backgroundColor: "#ea8d0c",
+                  color: "#fff",
+                  padding: "6px 14px",
+                  borderRadius: "20px",
+                  fontWeight: "600",
+                  fontSize: "0.9rem",
+                }}
+              >
+                2025
+              </span>
 
-     
-{/* SMARIKA 2025 SECTION */}
-{/* SMARIKA 2025 SECTION */}
-<Container id="smarika" className="my-5">
-  <h3 className="text-center mb-4 fw-bold" style={{ color: "#ea8d0c" }}>
-    स्मारिका 2025
-  </h3>
+              {/* OVERLAY ACTION BAR */}
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: 0,
+                  width: "100%",
+                  background:
+                    "linear-gradient(to top, rgba(0,0,0,0.75), rgba(0,0,0,0))",
+                  padding: "20px",
+                  display: "flex",
+                  justifyContent: "center",
+                  gap: "16px",
+                  flexWrap: "wrap",
+                }}
+              >
+                <a
+                  href="/pdfs/Smarika2025.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-warning px-4 fw-semibold"
+                >
+                  📖 पढ़ें
+                </a>
 
-  <Row className="justify-content-center">
-    <Col md={10} lg={8}>
-      <div
-        className="shadow-lg"
-        style={{
-          borderRadius: "18px",
-          overflow: "hidden",
-          position: "relative",
-          backgroundColor: "#fff",
-        }}
-      >
-        {/* COVER IMAGE */}
-        <img
-          src="/covers/smarika.jpeg"
-          alt="Smarika 2025"
-          style={{
-            width: "100%",
-            maxHeight: "670px",
-            objectFit: "cover",
-          }}
-        />
-
-        {/* YEAR BADGE */}
-        <span
-          style={{
-            position: "absolute",
-            top: "16px",
-            right: "16px",
-            backgroundColor: "#ea8d0c",
-            color: "#fff",
-            padding: "6px 14px",
-            borderRadius: "20px",
-            fontWeight: "600",
-            fontSize: "0.9rem",
-          }}
-        >
-          2025
-        </span>
-
-        {/* OVERLAY ACTION BAR */}
-        <div
-          style={{
-            position: "absolute",
-            bottom: 0,
-            width: "100%",
-            background:
-              "linear-gradient(to top, rgba(0,0,0,0.75), rgba(0,0,0,0))",
-            padding: "20px",
-            display: "flex",
-            justifyContent: "center",
-            gap: "16px",
-            flexWrap: "wrap",
-          }}
-        >
-          <a
-            href="/pdfs/Smarika2025.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-warning px-4 fw-semibold"
-          >
-            📖 पढ़ें
-          </a>
-
-          <a
-            href="/pdfs/Smarika2025.pdf"
-            download
-            className="btn btn-outline-light px-4 fw-semibold"
-          >
-            ⬇ डाउनलोड
-          </a>
-        </div>
-      </div>
-    </Col>
-  </Row>
-</Container>
-
-
-
-
-     
+                <a
+                  href="/pdfs/Smarika2025.pdf"
+                  download
+                  className="btn btn-outline-light px-4 fw-semibold"
+                >
+                  ⬇ डाउनलोड
+                </a>
+              </div>
+            </div>
+          </Col>
+        </Row>
+      </Container>
 
       {/* FESTIVALS */}
       <Container id="festivals" className="my-5">
@@ -398,7 +357,7 @@ const Homepage = () => {
               <p>
                 प्रधान की कलम से.... <br />
                 प्रिय बंधुवर, सादर अभिनन्दन !! सर्वप्रथम में आप सभी स्नेहीजनों,
-                बड़े व छोटे भाई. बहनों का का मुझे व मेरी कार्यकारिणी को भारी
+                बड़े व छोटे भाई. बहनों का मुझे व मेरी कार्यकारिणी को भारी
                 मतों से विजय का आशीर्वाद देने के लिए हृदय से आभार व्यक्त करता
                 हूँ। आप सभी हमारी उर्जा हैं, हमारी ताकत हैं, चुनाव अधिकारी श्री
                 एल पी भार्गव, जयपुर के सानिध्य में चुनाव शांति पूर्वक संपन्न
@@ -480,7 +439,7 @@ const Homepage = () => {
             <div
               style={{
                 maxHeight: "250px",
-                overflowY: "auto",
+                overflowY: "auto", 
                 paddingRight: "10px",
                 border: "1px solid #ccc",
                 borderRadius: "8px",

@@ -46,7 +46,6 @@ const UserProfile = () => {
           updatedAt,
           resetOTP,
           resetOTPExpires,
-          
           ...cleaned
         } = res.data;
         setProfile(cleaned);

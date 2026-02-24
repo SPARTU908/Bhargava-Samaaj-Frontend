@@ -44,6 +44,7 @@ import { AuthProvider } from "./components/AuthContext.jsx";
 import DownloadAll from "./pages/DownloadAll.jsx";
 
 
+
 function App() {
   return (
     <>
@@ -127,6 +128,9 @@ function App() {
           />
           <Route path="/new-registration" element={<NewRegistration />} />
           <Route path="/patrika-form" element={<MagazineForm />} />
+
+      
+
         </Routes>
         </AuthProvider> 
       </BrowserRouter>

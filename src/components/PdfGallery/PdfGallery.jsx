@@ -9,6 +9,10 @@ const allMonths = [
 
 
 const pdfData = [
+   {
+    year: 2026,
+    months: ["January","February"]
+  },
   {
     year: 2025,
     months: ["January", "February", "March", "April", "May", "June","July","August","September","October","November","December"]
@@ -29,6 +33,8 @@ const pdfData = [
 
 
 const coverImages = {
+  "January-2026":"/covers/jan-2026.PNG",
+  "February-2026":"/covers/february-2026.PNG",
   "January-2025": "/covers/january-2025.png",
   "February-2025": "/covers/february-2025.png",
   "March-2025": "/covers/march-2025.png",
@@ -77,8 +83,8 @@ const PdfGallery = () => {
   return (
     <div className="container">
       {sortedPdfData.map((yearBlock) => {
-       
-        const sortedMonths = [...yearBlock.months].sort(
+
+      const sortedMonths = [...yearBlock.months].sort(
           (a, b) => monthOrder.indexOf(b) - monthOrder.indexOf(a)
         );
 

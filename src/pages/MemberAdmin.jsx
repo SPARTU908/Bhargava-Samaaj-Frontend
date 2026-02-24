@@ -8,6 +8,9 @@ import html2canvas from "html2canvas";
 import DisplayForm from "./DisplayForm";
 import { createRoot } from "react-dom/client";
 import { updateDispatchStatus } from "../apis/member";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import DeletedMembers from "./DeletedMembers";
 
 const MemberAdmin = () => {
   const [members, setMembers] = useState([]);
@@ -146,6 +149,20 @@ const MemberAdmin = () => {
   //   return filterStatus === "All" || status === filterStatus;
   // });
 
+const handleDeleteMember = (memberId) => {
+  if (deletedMemberIds.includes(memberId)) return;
+
+  const updatedDeletedIds = [...deletedMemberIds, memberId];
+
+  setDeletedMemberIds(updatedDeletedIds);
+  localStorage.setItem(
+    "deletedMemberIds",
+    JSON.stringify(updatedDeletedIds)
+  );
+
+  toast.success("User deleted successfully!");
+};
+
   const filteredMembers = members
     .filter((member) => !deletedMemberIds.includes(member._id)) // <-- Exclude deleted
     .filter((member) => {
@@ -158,6 +175,7 @@ const MemberAdmin = () => {
   return (
     <>
       {/* <Navbar /> */}
+      <ToastContainer position="top-right" autoClose={3000} />
       <div className={styles.container}>
         <div className={styles.header}>
           <div className={styles.heading}>List of all members</div>
