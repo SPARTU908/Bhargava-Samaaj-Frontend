@@ -23,7 +23,6 @@ const Haridwar = () => {
   const position = [29.9506, 78.1634];
   return (
     <>
-    
       <Navbar />
       <div className={styles.container}>
         <div className={styles.heading}>Bhargava Ashram - Haridwar</div>
@@ -51,7 +50,7 @@ const Haridwar = () => {
             <div>
               <MdEmail className={styles.icon2} />
             </div>
-            <div className={styles.email}>info@yatradham.org</div>
+            <div className={styles.email}>abbsairtel@gmail.com</div>
           </div>
 
           <div className={styles.mobile}>
@@ -59,7 +58,7 @@ const Haridwar = () => {
               {" "}
               <MdOutlineWifiCalling className={styles.iconCall} />
             </div>
-            <div className={styles.call}>8069266004</div>
+            <div className={styles.call}>9251276842</div>
           </div>
         </div>
 
@@ -140,7 +139,7 @@ const Haridwar = () => {
               <div>Including GST</div>
               <div>Attached Bathrooms</div>
             </div>
-            <div className={styles.rupee2}>Rs.1200.00</div>
+            <div className={styles.rupee2}>Rs.1500.00</div>
           </div>
         </div>
 
@@ -171,16 +170,17 @@ const Haridwar = () => {
           </div>
           <div className={styles.kund}>
             <FaArrowRight />
+            Har Ki Pauri - 1 km
+          </div>
+          <div className={styles.kund}>
+            <FaArrowRight />
             Bhimgoda Kund - 2.1 km
           </div>
           <div className={styles.kund}>
             <FaArrowRight />
             Maa Mansa Devi Mandir - 2.6 km
           </div>
-          <div className={styles.kund}>
-            <FaArrowRight />
-            Har Ki Pauri - 3.6 km
-          </div>
+
           <div className={styles.kund}>
             <FaArrowRight />
             Bharat Mata Temple - 6.2 km
@@ -209,5 +209,3 @@ const Haridwar = () => {
 };
 
 export default Haridwar;
-
-

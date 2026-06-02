@@ -45,16 +45,7 @@ const year = dob.getUTCFullYear();
                 <div>
                   <b>Birth Place:</b> {member.birthPlace}
                 </div>
-                {/* <div>
-                  <b>DOB:</b>{" "}
-                  {new Date(member.dob).getDate().toString().padStart(2, "0")}/
-                  {(new Date(member.dob).getMonth() + 1)
-                    .toString()
-                    .padStart(2, "0")}
-                  /{new Date(member.dob).getFullYear()}
-                </div> */}
-
-                <b>DOB:</b> {day}/{month}/{year}
+                 <b>DOB:</b> {day}/{month}/{year}
                 <div>
                   <b>Blood Group:</b> {member.bloodGroup}
                 </div>

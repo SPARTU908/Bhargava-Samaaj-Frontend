@@ -63,32 +63,7 @@ const PendingForms = () => {
     }
   };
 
-  // const handleMemberReview = async (memberId, action) => {
-  //   try {
-  //     const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/review`;
-  //     const res = await axios.post(
-  //       reqUrl,
-  //       { memberId, action },
-  //       { headers: { Authorization: `Bearer ${token}` } }
-  //     );
-
-  //     // Update the member status locally
-  //     const updated = res.data.member;
-  //     setPendingMembers((prev) =>
-  //       prev.map((m) => (m._id === updated._id ? updated : m))
-  //     );
-
-  //     toast.success(res.data.message, {
-  //       position: "top-center",
-  //       autoClose: 3000,
-  //       theme: "light",
-  //     });
-  //   } catch (err) {
-  //     console.error(err);
-  //     alert("Error updating member status");
-  //   }
-  // };
-
+  
   const handleMemberReview = async (memberId, action) => {
     try {
       const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/review`;

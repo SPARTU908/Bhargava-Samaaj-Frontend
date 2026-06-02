@@ -27,7 +27,7 @@ export const vivahmemberRegister = async (vivahmemberDetails) => {
   }
 };
 
-// ✅ Login Vivah Member
+
 export const vivahmemberLogin = async (vivahmemberlogin) => {
   const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/member/login`;
 

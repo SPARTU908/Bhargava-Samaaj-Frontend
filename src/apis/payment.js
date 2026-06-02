@@ -40,7 +40,7 @@ export const savePayment = async (paymentDetails) => {
   }
 };
 
-// ✅ Get All Payments
+
 export const getAllPayment = async () => {
   try {
     const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/payment/allpayment`;
@@ -54,7 +54,7 @@ export const getAllPayment = async () => {
   }
 };
 
-// ✅ Update Uploaded Form
+
 export const updateUploadedForm = async (paymentId, uploadedFormUrl) => {
   const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/payment/upload/:paymentId`;
 
@@ -87,7 +87,7 @@ export const updateUploadedForm = async (paymentId, uploadedFormUrl) => {
   }
 };
 
-// ✅ Update Payment Form
+
 export const updatePaymentForm = async (paymentId, formValue) => {
   const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/payment/update`;
 

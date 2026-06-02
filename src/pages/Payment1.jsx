@@ -87,6 +87,7 @@ const Payment1 = () => {
 
   return (
     <>
+    
       <Navbar />
       <div className={styles.container2}>
         <div className={styles.step1}>

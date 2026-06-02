@@ -21,15 +21,14 @@ const DownloadAll = () => {
 
   let date;
 
-  // Case 1: already a Date object
   if (dob instanceof Date) {
     date = dob;
   }
-  // Case 2: ISO string with time
+ 
   else if (dob.includes("T")) {
     date = new Date(dob);
   }
-  // Case 3: YYYY-MM-DD (most common)
+  
   else {
     const [year, month, day] = dob.split("-");
     date = new Date(Date.UTC(year, month - 1, day));

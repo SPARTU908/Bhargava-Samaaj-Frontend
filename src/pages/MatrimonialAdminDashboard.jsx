@@ -4,23 +4,30 @@ import PendingForms from "../pages/PendingForms";
 import Members from "../pages/Members";
 import { useNavigate } from "react-router-dom";
 import { IoMdHome } from "react-icons/io";
-import { getPendingFormCount,getRejectedFormCount,getDeletedForms, } from "../apis/form";
+import {
+  getPendingFormCount,
+  getRejectedFormCount,
+  getDeletedForms,
+} from "../apis/form";
 import { getApprovedFormCount } from "../apis/form";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import RejectedForm from "./RejectedForm";
 import DeletedUser from "./DeletedUser";
+import { getAllMagazines } from "../apis/magazine";
 
 import { useAuth } from "../components/AuthContext";
+import MagazineFormData from "./MagazineFormData";
 
 const MatrimonialAdminDashboard = () => {
   const [selectedSection, setSelectedSection] = useState(null);
   const [pendingCount, setPendingCount] = useState(0);
-  const [rejectedCount, setRejectedCount] = useState(0)
+  const [rejectedCount, setRejectedCount] = useState(0);
   const [approvedCount, setApprovedCount] = useState(0);
-  
+  const [magazines, setMagazines] = useState([]);
+
   const navigate = useNavigate();
-const { setIsLoggedIn } = useAuth();
+  const { setIsLoggedIn } = useAuth();
   useEffect(() => {
     const fetchPendingCount = async () => {
       try {
@@ -60,16 +67,34 @@ const { setIsLoggedIn } = useAuth();
     fetchApprovedCount();
   }, []);
 
+  useEffect(() => {
+    const fetchMagazines = async () => {
+      try {
+        const res = await getAllMagazines();
+        if (res.success) {
+          setMagazines(res.data);
+        } else {
+          toast.error(res.message);
+        }
+      } catch (err) {
+        console.error("Error fetching magazines:", err);
+      }
+    };
+
+    fetchMagazines();
+  }, []);
+
   const renderSection = () => {
     switch (selectedSection) {
       case "pending":
         return <PendingForms />;
       case "members":
         return <Members />;
-        case "rejected":
-          return <RejectedForm/>
-       
-      
+      case "rejected":
+        return <RejectedForm />;
+     case "magazines":
+      return <MagazineFormData/>
+   
 
       default:
         return (
@@ -96,38 +121,30 @@ const { setIsLoggedIn } = useAuth();
                 <div className={styles.widgetCount}>{rejectedCount}</div>
               </div>
 
-              {/* <div className={styles.widget}>
-                <div className={styles.widgetTitle}>
-                  Total no. of deleted form
-                </div>
-                <div className={styles.widgetCount}>{deleteduserCount}</div>
-              </div> */}
+              
             </div>
           </>
         );
     }
   };
-const handleLogout = () => {
- 
-  setIsLoggedIn(false);
-  localStorage.setItem("isLoggedIn", "false");
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    localStorage.setItem("isLoggedIn", "false");
 
+    toast.success("Logged out successfully", {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
 
-  toast.success("Logged out successfully", {
-    position: "top-right",
-    autoClose: 2000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-  });
-
-
-  setTimeout(() => {
-    navigate("/");
-  }, 2000);
-};
+    setTimeout(() => {
+      navigate("/");
+    }, 2000);
+  };
 
   const refreshPage = () => {
     window.location.reload();
@@ -169,15 +186,14 @@ const handleLogout = () => {
                 Rejected Form
               </div>
 
-              {/* <div
+              <div
                 className={`${styles.optionButton} ${
-                  selectedSection === "deleteduser" ? styles.activeButton : ""
+                  selectedSection === "magazines" ? styles.activeButton : ""
                 }`}
-                onClick={() => setSelectedSection("deleteduser")}
+                onClick={() => setSelectedSection("magazines")}
               >
-                Delete Form
-              </div> */}
-             
+                Bhargava Patrika DS Forms
+              </div>
             </div>
           </div>
           <div className={styles.logoutWrapper}>

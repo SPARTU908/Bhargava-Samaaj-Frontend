@@ -256,11 +256,11 @@ const Navbar = () => {
                 <Nav.Link onClick={() => handleNavigate("/magazine")}>
                   भार्गव पत्रिका
                 </Nav.Link>
-              <NavDropdown title="वैवाहिक" id="vaivahik-dd">
+              <NavDropdown title="वैवाहिक प्रत्याशी" id="vaivahik-dd">
                   <NavDropdown.Item
                     onClick={() => handleNavigate("/matrimonial")}
                   >
-                    वैवाहिक फ़ॉर्म
+                   वैवाहिक प्रत्याशी पंजीकरण
                   </NavDropdown.Item>
                   <NavDropdown.Item
                     onClick={() => handleNavigate("/findyourmatch")}

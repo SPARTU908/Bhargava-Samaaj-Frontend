@@ -40,7 +40,7 @@ export const updateLifeMember = async (LM_NO, memberData, photoFile) => {
       formData,
       {
         headers: {
-          // Let axios/browser handle the boundary
+          
           "Content-Type": "multipart/form-data",
         },
       }

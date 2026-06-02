@@ -6,7 +6,7 @@ export const loginAdmin = async (loginData) => {
 
   try {
     const response = await axios.post(reqUrl, loginData, {
-      withCredentials: true, // ✅ Add this line here
+      withCredentials: true,
     });
 
     if (response?.data?.token) {

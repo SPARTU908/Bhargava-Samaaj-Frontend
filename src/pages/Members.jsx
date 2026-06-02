@@ -3,6 +3,7 @@ import styles from "./Members.module.css";
 import { getApprovedMembers, deleteUser } from "../apis/form";
 import MemberInfo from "./MemberInfo";
 import { useNavigate } from "react-router-dom";
+import DownloadFormMagazine from "./DownloadFormMagazine";
 
 const Members = () => {
   const [members, setMembers] = useState([]);
@@ -12,85 +13,65 @@ const Members = () => {
   const [gender, setGender] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+
+  const [downloading, setDownloading] = useState(false);
+const [progress, setProgress] = useState(0);
   const itemsPerPage = 10;
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
+  const calculateAge = (dob) => {
+    if (!dob) return 0;
 
-  //  const calculateAge = (dob) => {
-  //   const birthDate = new Date(dob);
-  //   const today = new Date();
-  //   let age = today.getFullYear() - birthDate.getFullYear();
-  //   const m = today.getMonth() - birthDate.getMonth();
-  //   if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-  //     age--;
-  //   }
-  //   return age;
-  // };
+    const birthDate = new Date(dob);
+    if (isNaN(birthDate)) return 0;
 
-const calculateAge = (dob) => {
-  if (!dob) return 0;
-
-  const birthDate = new Date(dob); // works for Date object or ISO string
-  if (isNaN(birthDate)) return 0;
-
-  const today = new Date();
-  let age = today.getFullYear() - birthDate.getFullYear();
-  const m = today.getMonth() - birthDate.getMonth();
-  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-    age--;
-  }
-  return age;
-};
-
-
-
-
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    return age;
+  };
 
   const handleDelete = async (id) => {
     const confirmDelete = window.confirm(
-      "Are you sure you want to delete this user?"
+      "Are you sure you want to delete this user?",
     );
     if (!confirmDelete) return;
 
     try {
-      const result = await deleteUser(id); // now passing user id
+      const result = await deleteUser(id);
       console.log("User deleted successfully:", result);
 
-      // Remove the deleted member from the UI
       setMembers((prevMembers) =>
-        prevMembers.filter((member) => member._id !== id)
+        prevMembers.filter((member) => member._id !== id),
       );
     } catch (error) {
       console.error("Failed to delete user:", error);
     }
   };
 
- useEffect(() => {
-  const fetchMembers = async () => {
-    const result = await getApprovedMembers();
+  useEffect(() => {
+    const fetchMembers = async () => {
+      const result = await getApprovedMembers();
 
-    const approvedMembers = result
-      .filter((member) => member.status === "approved")
-      .map((m) => ({
-        ...m,
-        age: calculateAge(m.dob), // precomputed age
-      }));
+      const approvedMembers = result
+        .filter((member) => member.status === "approved")
+        .map((m) => ({
+          ...m,
+          age: calculateAge(m.dob),
+        }));
 
-     
- 
+      setMembers(approvedMembers);
+    };
 
-    setMembers(approvedMembers);
-  };
+    fetchMembers();
+  }, []);
 
-  fetchMembers();
-}, []);
-
-
-
- useEffect(() => {
-  setCurrentPage(1);
-}, [ageRange, city, gender, sortBy, searchQuery]);
-
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [ageRange, city, gender, sortBy, searchQuery]);
 
   const cities = [
     "Mumbai",
@@ -135,79 +116,49 @@ const calculateAge = (dob) => {
     "Udaipur",
   ];
 
-//   const filteredMembers = members.filter((member) => {
-//     const age = member.age;
-//     const ageMatches =
-//       !ageRange ||
-//       (() => {
-//         const [min, max] = ageRange.split("-").map(Number);
-//         return age >= min && age <= max;
-//       })();
+  const [minAge, maxAge] = ageRange
+    ? ageRange.split("-").map(Number)
+    : [0, Infinity];
 
-//     const cityMatches = !city || member.city === city;
-//     const genderMatches = !gender || member.gender?.toLowerCase() === gender;
-//     const nameMatches =
-//       !searchQuery ||
-//       member.name.toLowerCase().includes(searchQuery.toLowerCase());
+  // 1️⃣ Filter Members
+  const filteredMembers = members.filter((member) => {
+    const age = member.age;
 
-//     return ageMatches && cityMatches && genderMatches && nameMatches;
-//   });
+    // Age range filter
+    const ageMatches = member.age >= minAge && member.age <= maxAge;
 
-//   const sortedMembers = [...filteredMembers].sort((a, b) => {
-//     if (sortBy === "name") {
-//       return a.name.localeCompare(b.name);
-//     }
-//    if (sortBy === "age") {
-//   return a.age - b.age;
-// }
-//     return 0;
-//   });
+    // Other filters
+    const cityMatches = !city || member.city === city;
+    const genderMatches = !gender || member.gender?.toLowerCase() === gender;
+    const nameMatches =
+      !searchQuery ||
+      member.name.toLowerCase().includes(searchQuery.toLowerCase());
 
+    return ageMatches && cityMatches && genderMatches && nameMatches;
+  });
 
-const [minAge, maxAge] = ageRange ? ageRange.split("-").map(Number) : [0, Infinity];
+  // 🔍 Debug Logs (filtered result)
+  console.log("---- FILTERED MEMBERS ----");
+  filteredMembers.forEach((m) => {
+    console.log(`${m.name} | Age: ${m.age}`);
+  });
+  console.log("--------------------------");
 
-// 1️⃣ Filter Members
-const filteredMembers = members.filter((member) => {
-  const age = member.age;
+  // 2️⃣ Sort Members
+  let sortedMembers = [...filteredMembers];
 
-  // Age range filter
- const ageMatches = member.age >= minAge && member.age <= maxAge;
+  if (sortBy === "age") {
+    // Sort by exact birthdate (oldest first)
+    sortedMembers.sort((a, b) => new Date(a.dob) - new Date(b.dob));
+  } else if (sortBy === "name") {
+    sortedMembers.sort((a, b) => a.name.localeCompare(b.name));
+  }
 
-  // Other filters
-  const cityMatches = !city || member.city === city;
-  const genderMatches = !gender || member.gender?.toLowerCase() === gender;
-  const nameMatches =
-    !searchQuery ||
-    member.name.toLowerCase().includes(searchQuery.toLowerCase());
+  // 🔍 Debug Logs (sorted result)
 
-  return ageMatches && cityMatches && genderMatches && nameMatches;
-});
-
-// 🔍 Debug Logs (filtered result)
-console.log("---- FILTERED MEMBERS ----");
-filteredMembers.forEach((m) => {
-  console.log(`${m.name} | Age: ${m.age}`);
-});
-console.log("--------------------------");
-
-
-// 2️⃣ Sort Members
-let sortedMembers = [...filteredMembers];
-
-if (sortBy === "age") {
-  // Sort by exact birthdate (oldest first)
-  sortedMembers.sort((a, b) => new Date(a.dob) - new Date(b.dob));
-} else if (sortBy === "name") {
-  sortedMembers.sort((a, b) => a.name.localeCompare(b.name));
-}
-
-// 🔍 Debug Logs (sorted result)
-
-sortedMembers.forEach((m) => {
-  console.log(`${m.name} | Age: ${m.age}`);
-});
-
-
+  sortedMembers.forEach((m) => {
+    console.log(`${m.name} | Age: ${m.age}`);
+  });
 
   // Pagination logic
   const indexOfLast = currentPage * itemsPerPage;
@@ -232,11 +183,6 @@ sortedMembers.forEach((m) => {
     setCity(tempCity);
     setSortBy(tempSortBy);
     setGender(tempGender);
-
-    // setTempAgeRange(tempAgeRange);
-    // setTempCity(tempCity);
-    // setTempSortBy(tempSortBy);
-    // setTempGender(tempGender);
   };
 
   return (
@@ -317,7 +263,8 @@ sortedMembers.forEach((m) => {
           </button>
         </div>
       </div>
-      <div>
+
+      <div className={styles.buttonWrapper}>
         <button
           onClick={() =>
             navigate("/download-all", {
@@ -326,9 +273,57 @@ sortedMembers.forEach((m) => {
           }
           className={styles.downloadButton}
         >
-          Download All
+          Download Design 1
         </button>
-      </div>
+
+        {/* <button
+         onClick={() => DownloadFormMagazine(sortedMembers)}
+          className={styles.downloadButton}
+        >
+          Download Design 2
+        </button> */}
+
+        <button
+  onClick={async () => {
+    setDownloading(true);
+    setProgress(0);
+
+    await DownloadFormMagazine(sortedMembers, setProgress);
+
+    setDownloading(false);
+  }}
+  className={styles.downloadButton}
+>
+  {downloading ? `Generating... ${progress}%` : "Download Design 2"}
+</button>
+
+{downloading && (
+  <div style={{ marginTop: "15px", textAlign: "center" }}>
+    <div
+      style={{
+        width: "100%",
+        height: "10px",
+        background: "#eee",
+        borderRadius: "10px",
+        overflow: "hidden",
+      }}
+    >
+      <div
+        style={{
+          width: `${progress}%`,
+          height: "100%",
+          background: "linear-gradient(90deg,#4caf50,#81c784)",
+          transition: "0.3s",
+        }}
+      />
+    </div>
+
+    <p style={{ marginTop: "8px", fontSize: "14px" }}>
+      Generating PDF... {progress}%
+    </p>
+  </div>
+)}
+ </div>
 
       <div className={styles.container}>
         {currentMembers.map((member) => (

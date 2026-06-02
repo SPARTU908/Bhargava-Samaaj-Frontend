@@ -53,36 +53,7 @@ const EditProfile = () => {
   const [existingPhoto, setExistingPhoto] = useState("");
   const [existingBiodata, setExistingBiodata] = useState("");
 
-  // useEffect(() => {
-  //   if (!userEmail) return;
-  //   axios
-  //     .get(`${BACKEND_URL}/api/v1/form/${userEmail}`)
-  //     .then((res) => {
-  //       const {
-  //         photo,
-  //         bioData,
-  //         _id,
-  //         __v,
-  //         password,
-  //         // status,
-  //         submittedAt,
-  //         createdAt,
-  //         updatedAt,
-  //         resetOTP,
-  //         resetOTPExpires,
-  //         deletedAt,
-  //         ...cleanedData
-
-  //       } = res.data;
-
-  //       setFormData(cleanedData);
-  //       if (photo) setExistingPhoto(photo);
-  //       if (bioData) setExistingBiodata(bioData);
-  //     })
-  //     .catch((err) => console.error("Error fetching user", err));
-  // }, [userEmail]);
-
-
+  
 useEffect(() => {
   if (!userId) return;
   axios

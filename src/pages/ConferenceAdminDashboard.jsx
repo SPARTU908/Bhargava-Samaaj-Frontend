@@ -864,8 +864,8 @@ const [totalUsers, setTotalUsers] = useState(0);
 
                       <td>
                         <button
-                          className={styles.deleteButton} // optional CSS class
-                          onClick={() => handleSoftDelete(member)} // pass the member
+                          className={styles.deleteButton} 
+                          onClick={() => handleSoftDelete(member)} 
                         >
                           Delete
                         </button>

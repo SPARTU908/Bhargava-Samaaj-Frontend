@@ -42,6 +42,8 @@ import NewRegistration from "./pages/NewRegistration.jsx";
 import MagazineForm from "./pages/MagazineForm.jsx";
 import { AuthProvider } from "./components/AuthContext.jsx";
 import DownloadAll from "./pages/DownloadAll.jsx";
+import MagazinePage from "./pages/MagazinePage.jsx";
+import MagazineFormData from "./pages/MagazineFormData.jsx";
 
 
 
@@ -120,6 +122,8 @@ function App() {
           <Route path="/registration" element={<Registration />} />
           <Route path="/award-form" element={<AwardForm />} />
           <Route path="/download-all" element={<DownloadAll />} />
+         <Route path="/magazine-data" element={<MagazineFormData />} />
+
 
           
           <Route
@@ -128,6 +132,10 @@ function App() {
           />
           <Route path="/new-registration" element={<NewRegistration />} />
           <Route path="/patrika-form" element={<MagazineForm />} />
+
+            <Route path="/magazine-form-download" element={<MagazinePage />} />
+
+
 
       
 

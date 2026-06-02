@@ -232,6 +232,7 @@ const handleDeleteMember = (memberId) => {
                   <th className={styles.title}>Mobile</th>
                   <th className={styles.title}>Spouse Mobile</th>
                   <th className={styles.title}>DOB</th>
+                  <th className={styles.title}>Spouse DOB</th>
                   <th className={styles.title}>Address</th>
                   <th className={styles.title}>Membership</th>
                   <th className={styles.title}>Father Name</th>
@@ -243,6 +244,7 @@ const handleDeleteMember = (memberId) => {
                   <th className={styles.title}>Photo</th>
                   <th className={styles.title}>Spouse Photo</th>
                   <th className={styles.title}>Occupation</th>
+                  <th className={styles.title}>Spouse Occupation</th>
                   <th className={styles.title}>User Aadhar Card </th>
                   <th className={styles.title}>Spouse Aadhar Card</th>
                   <th className={styles.title}>Payer Name</th>
@@ -274,6 +276,14 @@ const handleDeleteMember = (memberId) => {
                       <td>{member.spouseMobile}</td>
                       <td>
                         {new Date(member.dob).toLocaleDateString("en-GB", {
+                          day: "2-digit",
+                          month: "2-digit",
+                          year: "numeric",
+                        })}
+                      </td>
+
+                       <td>
+                        {new Date(member.spouseDob).toLocaleDateString("en-GB", {
                           day: "2-digit",
                           month: "2-digit",
                           year: "numeric",
@@ -330,6 +340,7 @@ const handleDeleteMember = (memberId) => {
                         )}
                       </td>
                       <td>{member.occupation}</td>
+                      <td>{member.spouseOccupation}</td>
 
                       {/* <td>
                         {member.uploadAadharUser && (

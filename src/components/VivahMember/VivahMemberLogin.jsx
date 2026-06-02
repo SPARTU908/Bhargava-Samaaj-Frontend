@@ -95,44 +95,7 @@ const VivahMemberLogin = () => {
     return errors;
   };
 
-  // const handleResetPassword = async () => {
-  //   const errors = validateForgotForm();
-  //   if (Object.keys(errors).length > 0) {
-  //     setForgotErrors(errors);
-  //     return;
-  //   }
-
-  //   setIsResetting(true);
-  //   try {
-  //     const res = await axios.post(
-  //       `${import.meta.env.VITE_BACKEND_URL}/api/v1/reset-password`,
-  //       {
-  //         email: forgotForm.email,
-  //         newPassword: forgotForm.newPassword,
-  //       }
-  //     );
-
-  //     if (res.status === 200) {
-  //       toast.success("Password reset successfully!", {
-  //         position: "top-center",
-  //         autoClose: 3000,
-  //       });
-  //       setShowModal(false);
-  //       setForgotForm({ email: "", newPassword: "", confirmPassword: "" });
-  //     } else {
-  //       toast.error("Reset failed. Email not found?", {
-  //         position: "top-center",
-  //       });
-  //     }
-  //   } catch (err) {
-  //     toast.error("Server error. Please try again.", {
-  //       position: "top-center",
-  //     });
-  //   } finally {
-  //     setIsResetting(false);
-  //   }
-  // };
-
+ 
 
   const handleResetPassword = async () => {
   const errors = validateForgotForm();
@@ -241,65 +204,7 @@ const VivahMemberLogin = () => {
         <ToastContainer />
       </div>
 
-      {/* 🔄 Forgot Password Modal */}
-      {/* <Modal show={showModal} onHide={() => setShowModal(false)} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Reset Password</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group className="mb-3">
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                type="email"
-                name="email"
-                value={forgotForm.email}
-                onChange={handleForgotChange}
-                isInvalid={!!forgotErrors.email}
-              />
-              <Form.Control.Feedback type="invalid">
-                {forgotErrors.email}
-              </Form.Control.Feedback>
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label>New Password</Form.Label>
-              <Form.Control
-                type="password"
-                name="newPassword"
-                value={forgotForm.newPassword}
-                onChange={handleForgotChange}
-                isInvalid={!!forgotErrors.newPassword}
-              />
-              <Form.Control.Feedback type="invalid">
-                {forgotErrors.newPassword}
-              </Form.Control.Feedback>
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label>Confirm Password</Form.Label>
-              <Form.Control
-                type="password"
-                name="confirmPassword"
-                value={forgotForm.confirmPassword}
-                onChange={handleForgotChange}
-                isInvalid={!!forgotErrors.confirmPassword}
-              />
-              <Form.Control.Feedback type="invalid">
-                {forgotErrors.confirmPassword}
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
-            Cancel
-          </Button>
-          <Button variant="primary" onClick={handleResetPassword} disabled={isResetting}>
-            {isResetting ? "Resetting..." : "Reset Password"}
-          </Button>
-        </Modal.Footer>
-      </Modal> */}
+     
 
       <Modal
   show={showModal}

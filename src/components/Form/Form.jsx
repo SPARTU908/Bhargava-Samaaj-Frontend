@@ -229,7 +229,7 @@ const Form = () => {
 
   return (
     <>
-      <div className={styles.heading}>वैवाहिक फ़ॉर्म</div>
+      <div className={styles.heading}>वैवाहिक प्रत्याशी पंजीकरण</div>
 
       <div className={styles.container}>
         <div className={styles.inputBox}>

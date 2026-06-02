@@ -1,22 +1,5 @@
 import axios from 'axios';
 
-// export const submitAwardForm = async (formData) => {
-//   const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/award-form/register`;
-
-//   try {
-//     const response = await axios.post(reqUrl, formData, {
-//       withCredentials: true,
-//       headers: {
-//         'Content-Type': 'multipart/form-data',
-//       },
-//     });
-
-//     return response;
-//   } catch (error) {
-//     console.error("Award Form Submission Error:", error);
-//     throw error;
-//   }
-// };
 
 export const submitAwardForm = async (formData) => {
   const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/award-form/register`;

@@ -19,6 +19,7 @@ const Membership = () => {
     mobile: "",
     spouse: "",
     dob: "",
+    spouseDob:"",
     pincode: "",
     photo: "",
     signature: "",
@@ -26,6 +27,7 @@ const Membership = () => {
     gotra: "",
     kuldevi: "",
     occupation: "",
+    spouseOccupation:"", 
     spouseMobile: "",
     spouseEmail: "",
     spousePhoto: "",
@@ -71,8 +73,10 @@ const Membership = () => {
         ...prevData,
         spouse: "",
         spouseEmail: "",
+        spouseDob:"",
         spouseMobile: "",
         spousePhoto: "",
+        spouseOccupation:"", 
         spouseSignature: "",
         uploadAadharUser: "",
         uploadAadharSpouse: "",
@@ -130,6 +134,15 @@ const Membership = () => {
         newErrors.spouseEmail = "कृपया जीवनसाथी का मान्य ईमेल दर्ज करें।";
       }
 
+      
+     if (!memberData.spouseDob) newErrors.spouseDob = "कृपया जन्म तिथि चुनें।";
+
+    if (!memberData.spouseOccupation)
+      newErrors.spouseOccupation = "कृपया व्यवसाय दर्ज करें।";
+    
+
+    
+
       if (!memberData.spouseMobile) {
         newErrors.spouseMobile = "कृपया जीवनसाथी का मोबाइल नंबर दर्ज करें।";
       } else if (!/^[6-9]\d{9}$/.test(memberData.spouseMobile)) {
@@ -154,162 +167,7 @@ const Membership = () => {
     setMemberData({ ...memberData, [name]: value });
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   if (isSubmitting) return;
-  //   setIsSubmitting(true);
-
-  //   const validationErrors = validate();
-  //   console.log(validationErrors);
-
-  //   if (Object.keys(validationErrors).length > 0) {
-  //     setErrors(validationErrors);
-  //     toast.error("कृपया सभी आवश्यक फ़ील्ड भरें।", {
-  //       position: "top-center",
-  //     });
-  //     setIsSubmitting(false);
-  //     return;
-  //   }
-
-  //   try {
-  //     // ✅ Upload to Cloudinary (helper function)
-  //     const uploadToCloudinary = async (file) => {
-  //       const formData = new FormData();
-  //       formData.append("file", file);
-  //       formData.append("upload_preset", "matrimony_upload"); // <-- your Cloudinary preset
-
-  //       const res = await fetch(
-  //         "https://api.cloudinary.com/v1_1/doj76lpfe/upload",
-  //         {
-  //           method: "POST",
-  //           body: formData,
-  //         }
-  //       );
-
-  //       if (!res.ok) {
-  //         throw new Error("Cloudinary upload failed");
-  //       }
-
-  //       const data = await res.json();
-  //       return data.secure_url;
-  //     };
-
-  //     // ✅ Upload photo and biodata (if provided)
-  //     let uploadedPhotoUrl = "";
-  //     let uploadedSignatureUrl = "";
-  //     let uploadedSpousePhotoUrl = "";
-  //     let uploadedSpouseSignatureUrl = "";
-  //     let uploadedAadharUserUrl = "";
-  //     let uploadedAadharSpouseUrl = "";
-
-  //     if (photoFile) {
-  //       uploadedPhotoUrl = await uploadToCloudinary(photoFile);
-  //     }
-  //     if (signatureFile) {
-  //       uploadedSignatureUrl = await uploadToCloudinary(signatureFile);
-  //     }
-  //     if (spousePhotoFile) {
-  //       uploadedSpousePhotoUrl = await uploadToCloudinary(spousePhotoFile);
-  //     }
-  //     if (spouseSignatureFile) {
-  //       uploadedSpouseSignatureUrl = await uploadToCloudinary(
-  //         spouseSignatureFile
-  //       );
-  //     }
-  //     if (uploadAadharUser) {
-  //       uploadedAadharUserUrl = await uploadToCloudinary(uploadAadharUser);
-  //     }
-  //     if (uploadAadharSpouse) {
-  //       uploadedAadharSpouseUrl = await uploadToCloudinary(uploadAadharSpouse);
-  //     }
-  //     // ✅ Prepare final form data
-  //     const finalForm = {
-  //       ...memberData,
-  //       photo: uploadedPhotoUrl,
-  //       signature: uploadedSignatureUrl,
-  //       spousePhoto: uploadedSpousePhotoUrl,
-  //       spouseSignature: uploadedSpouseSignatureUrl,
-  //       uploadAadharUser: uploadedAadharUserUrl,
-  //       uploadAadharSpouse: uploadedAadharSpouseUrl,
-  //       membership: selectedFee,
-  //     };
-  //     console.log("Final Form Data Submitted:", finalForm);
-
-  //     // ✅ Submit the form to backend
-  //     const result = await registerMember(finalForm);
-  //     console.log("API Response from registerMember:", result);
-
-  //     if (result.success) {
-  //       toast.success("Thanks for submitting your details!.", {
-  //         position: "top-center",
-  //         autoClose: 3000,
-  //         hideProgressBar: false,
-  //         closeOnClick: true,
-  //         pauseOnHover: false,
-  //         draggable: true,
-  //         progress: undefined,
-  //         theme: "light",
-  //       });
-
-  //       // ✅ Reset the form
-  //       setMemberData({
-  //         username: "",
-  //         email: "",
-  //         address: "",
-  //         mobile: "",
-  //         spouse: "",
-  //         dob: "",
-  //         pincode: "",
-  //         photo: "",
-  //         signature: "",
-  //         fatherName: "",
-  //         gotra: "",
-  //         kuldevi: "",
-  //         occupation: "",
-  //         spouseMobile: "",
-  //         spouseEmail: "",
-  //         spousePhoto: "",
-  //         spouseSignature: "",
-
-  //         membership: "",
-  //       });
-  //       setSelectedFee("");
-  //       setPhotoFile(null);
-  //       setSignatureFile(null);
-  //       setSpousePhotoFile(null);
-  //       setSpouseSignatureFile(null);
-  //       setUploadAadharUser(null);
-  //       setUploadAadharSpouse(null);
-  //       // if (photoInputRef.current) photoInputRef.current.value = "";
-  //       // if (biodataInputRef.current) biodataInputRef.current.value = "";
-  //       console.log(result.data);
-  //       setTimeout(() => {
-  //         navigate("/payment1", {
-  //           state: {
-  //             membership: selectedFee,
-  //             memberId: result.data?.memberId,
-  //             email: memberData.email,
-  //             name: memberData.username,
-  //             mobile: memberData.mobile,
-  //           },
-  //         });
-  //       }, 3000);
-  //     } else {
-  //       toast.error(result.error || "Something went wrong. Please try again.", {
-  //         position: "top-center",
-  //       });
-  //       setIsSubmitting(false);
-  //     }
-  //   } catch (err) {
-  //     console.error("Form submission failed:", err);
-  //     toast.error("Something went wrong. Please try again.", {
-  //       position: "top-center",
-  //     });
-  //     setIsSubmitting(false);
-  //   }
-  // };
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -368,6 +226,7 @@ const Membership = () => {
           mobile: "",
           spouse: "",
           dob: "",
+          spouseDob:"",
           pincode: "",
           photo: "",
           signature: "",
@@ -375,6 +234,7 @@ const Membership = () => {
           gotra: "",
           kuldevi: "",
           occupation: "",
+          spouseOccupation:"",
           spouseMobile: "",
           spouseEmail: "",
           spousePhoto: "",
@@ -628,7 +488,7 @@ const Membership = () => {
 
             <div className={styles.inputBox}>
               <label htmlFor="fatherName" className={styles.label}>
-                Father Name <span style={{ color: "red" }}>*</span>
+                (S/o, D/o & W/o ) <span style={{ color: "red" }}>*</span>
               </label>
               <input
                 placeholder=""
@@ -720,6 +580,46 @@ const Membership = () => {
             </div>
           </div>
 
+
+             <div className={styles.row1}>
+            <div className={styles.inputBox}>
+              <label className={styles.label}>
+               Spouse DOB <span style={{ color: "red" }}>*</span>
+              </label>
+              <DatePicker
+                selected={memberData.spouseDob}
+                onChange={(date) => setMemberData({ ...memberData, spouseDob: date })}
+                dateFormat="dd/MM/yyyy"
+                className={styles.input}
+                placeholderText="Select Date of Birth"
+                showMonthDropdown
+                showYearDropdown
+                dropdownMode="select"
+                disabled={!showSpouseFields}
+              />
+              {errors.spouseDob && <p className={styles.error}>{errors.spouseDob}</p>}
+            </div>
+
+            <div className={styles.inputBox}>
+              <label htmlFor="spouseOccupation" className={styles.label}>
+                Spouse Occupation<span style={{ color: "red" }}>*</span>
+              </label>
+              <input
+                placeholder=""
+                className={styles.input}
+                type="text"
+                name="spouseOccupation"
+                id="spouseOccupation"
+                value={memberData.spouseOccupation}
+                onChange={handleChange}
+                disabled={!showSpouseFields}
+              />
+              {errors.spouseOccupation && (
+                <p className={styles.error}>{errors.spouseOccupation}</p>
+              )}
+            </div>
+          </div>
+
           <div className={styles.row1}>
             <div className={styles.inputBox}>
               <label className={styles.label}>
@@ -779,7 +679,7 @@ const Membership = () => {
           <div className={styles.rowUpload}>
             <div className={styles.inputBox}>
               <label htmlFor="photo" className={styles.labelUpload}>
-                Upload Photo (Please Upload In Image Format)
+                Upload Photo (Please Upload In Passport Size Image)
                 <span style={{ color: "red" }}>*</span>
               </label>
               <div className={styles.uploadurl}>
@@ -790,7 +690,7 @@ const Membership = () => {
             </div>
             <div className={styles.inputBox}>
               <label htmlFor="spousePhoto" className={styles.labelUpload}>
-                Upload Spouse Photo (Please Upload In Image Format)
+                Upload Spouse Photo (Please Upload In Passport Size Image)
               </label>
               <div className={styles.uploadurl}>
                 <SpousePhotoUpload

@@ -89,16 +89,16 @@ const BiodataUser = () => {
     const genderMatches = !gender || member.gender?.toLowerCase() === gender;
     const nameMatches =
       !searchQuery ||
-      member.name.toLowerCase().includes(searchQuery.toLowerCase()); // Search by name
+      member.name.toLowerCase().includes(searchQuery.toLowerCase()); 
 
-    return ageMatches && cityMatches && genderMatches && nameMatches; // Apply search filter
+    return ageMatches && cityMatches && genderMatches && nameMatches; 
   });
 
   const sortedMembers = [...filteredMembers].sort((a, b) => {
     if (sortBy === "name") {
-      return a.name.localeCompare(b.name); // Sort by name
+      return a.name.localeCompare(b.name);
     }
-    return 0; // No sorting by default
+    return 0;
   });
 
   const [tempAgeRange, setTempAgeRange] = useState("");
@@ -112,7 +112,7 @@ const BiodataUser = () => {
     setSortBy(tempSortBy);
     setGender(tempGender);
 
-    // Sync temp values with applied filters so the dropdowns stay updated
+   
     setTempAgeRange(tempAgeRange);
     setTempCity(tempCity);
     setTempSortBy(tempSortBy);
@@ -123,13 +123,13 @@ const BiodataUser = () => {
     <>
       <div className={styles.approvedProfiles}>Browse Profiles</div>
 
-      {/* Search Box - Added search by name */}
+   
       <div className={styles.searchBox}>
         <input
           type="text"
           placeholder="Search by name..."
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)} // Update search query on change
+          onChange={(e) => setSearchQuery(e.target.value)} 
           className={styles.searchInput}
         />
       </div>
