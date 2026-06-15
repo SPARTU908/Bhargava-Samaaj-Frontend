@@ -58,7 +58,7 @@ const DownloadFormMagazine = async (members, setProgress) => {
   const pageWidth = doc.internal.pageSize.getWidth();
 
   // ✅ Title
-  doc.setFontSize(14);
+  doc.setFontSize(12);
   doc.text("LIST OF MARRIAGEABLE CANDIDATES", pageWidth / 2, 10, {
     align: "center",
   });
@@ -120,7 +120,7 @@ const parentName = isFatherLate
   `Address: ${val(m.address)}`,
   parentName,
 ];
-    doc.setFontSize(18);
+    doc.setFontSize(8);
 
     // ✅ Height calculator
     const getHeight = (arr, width) => {
@@ -175,7 +175,7 @@ const parentName = isFatherLate
 
   // ✅ Set bold font for all columns
 doc.setFont("helvetica", "bold");
-doc.setFontSize(12);
+doc.setFontSize(8);
 
 // ✅ COLUMN 2
 let y2 = startY + 4;
