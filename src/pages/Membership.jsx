@@ -254,13 +254,13 @@ const Membership = () => {
 
         // ✅ Navigate to payment
         setTimeout(() => {
-          const memberId = response.data.memberId;
+          const memberId = result.data.memberId;
           navigate("/payment1", {
             state: {
                 memberId,    
               membership: selectedFee,
                
-                 email: memberData.email,
+              email: memberData.email,
               name: memberData.username,
               mobile: memberData.mobile,
             },
@@ -488,7 +488,7 @@ const Membership = () => {
 
             <div className={styles.inputBox}>
               <label htmlFor="fatherName" className={styles.label}>
-                (S/o, D/o & W/o ) <span style={{ color: "red" }}>*</span>
+                (S/o, D/o & W/o Name) <span style={{ color: "red" }}>*</span>
               </label>
               <input
                 placeholder=""
@@ -584,7 +584,7 @@ const Membership = () => {
              <div className={styles.row1}>
             <div className={styles.inputBox}>
               <label className={styles.label}>
-               Spouse DOB <span style={{ color: "red" }}>*</span>
+               Spouse DOB 
               </label>
               <DatePicker
                 selected={memberData.spouseDob}
@@ -602,7 +602,7 @@ const Membership = () => {
 
             <div className={styles.inputBox}>
               <label htmlFor="spouseOccupation" className={styles.label}>
-                Spouse Occupation<span style={{ color: "red" }}>*</span>
+                Spouse Occupation 
               </label>
               <input
                 placeholder=""
