@@ -153,8 +153,8 @@ const DisplayForm = ({ member }) => {
               <tr>
                 <td>2. {member.spouse}</td>
                 <td></td>
-                <td></td>
-                <td></td>
+               <td>{new Date(member.spouseDob).toLocaleDateString("en-GB")}</td>
+                <td>{member.spouseOccupation}</td>
               </tr>
             </tbody>
           </table>
