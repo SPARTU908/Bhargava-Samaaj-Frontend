@@ -8,6 +8,7 @@ import {
   getPendingFormCount,
   getRejectedFormCount,
   getDeletedForms,
+  getAllUsers,
 } from "../apis/form";
 import { getApprovedFormCount } from "../apis/form";
 import { toast, ToastContainer } from "react-toastify";
@@ -18,6 +19,7 @@ import { getAllMagazines } from "../apis/magazine";
 
 import { useAuth } from "../components/AuthContext";
 import MagazineFormData from "./MagazineFormData";
+import AllUsers from "./AllUsers";
 
 const MatrimonialAdminDashboard = () => {
   const [selectedSection, setSelectedSection] = useState(null);
@@ -25,6 +27,7 @@ const MatrimonialAdminDashboard = () => {
   const [rejectedCount, setRejectedCount] = useState(0);
   const [approvedCount, setApprovedCount] = useState(0);
   const [magazines, setMagazines] = useState([]);
+  const [allUsers, setAllUsers] = useState([]);
 
   const navigate = useNavigate();
   const { setIsLoggedIn } = useAuth();
@@ -84,6 +87,20 @@ const MatrimonialAdminDashboard = () => {
     fetchMagazines();
   }, []);
 
+  useEffect(() => {
+    const fetchAllUsers = async () => {
+      try {
+        const users = await getAllUsers();
+        setAllUsers(users);
+        console.log("All users:", users);
+      } catch (err) {
+        console.error("Error fetching all users:", err);
+      }
+    };
+
+    fetchAllUsers();
+  }, []);
+
   const renderSection = () => {
     switch (selectedSection) {
       case "pending":
@@ -92,9 +109,10 @@ const MatrimonialAdminDashboard = () => {
         return <Members />;
       case "rejected":
         return <RejectedForm />;
-     case "magazines":
-      return <MagazineFormData/>
-   
+      case "magazines":
+        return <MagazineFormData />;
+      case "allUsers":
+        return <AllUsers />;
 
       default:
         return (
@@ -120,8 +138,6 @@ const MatrimonialAdminDashboard = () => {
                 </div>
                 <div className={styles.widgetCount}>{rejectedCount}</div>
               </div>
-
-              
             </div>
           </>
         );
@@ -193,6 +209,15 @@ const MatrimonialAdminDashboard = () => {
                 onClick={() => setSelectedSection("magazines")}
               >
                 Bhargava Patrika DS Forms
+              </div>
+
+              <div
+                className={`${styles.optionButton} ${
+                  selectedSection === "allUsers" ? styles.activeButton : ""
+                }`}
+                onClick={() => setSelectedSection("allUsers")}
+              >
+                Download Biodata in Excel
               </div>
             </div>
           </div>

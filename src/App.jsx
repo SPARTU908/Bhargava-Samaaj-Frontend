@@ -44,6 +44,7 @@ import { AuthProvider } from "./components/AuthContext.jsx";
 import DownloadAll from "./pages/DownloadAll.jsx";
 import MagazinePage from "./pages/MagazinePage.jsx";
 import MagazineFormData from "./pages/MagazineFormData.jsx";
+import AllUsers from "./pages/AllUsers.jsx";
 
 
 
@@ -123,6 +124,7 @@ function App() {
           <Route path="/award-form" element={<AwardForm />} />
           <Route path="/download-all" element={<DownloadAll />} />
          <Route path="/magazine-data" element={<MagazineFormData />} />
+           <Route path="/allusers" element={<AllUsers/>} />
 
 
           

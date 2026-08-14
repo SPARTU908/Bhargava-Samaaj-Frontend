@@ -225,7 +225,7 @@ const AwardForm = () => {
   return (
     <>
       <Navbar />
-      {/* <Container fluid className="my-5">
+      <Container fluid className="my-5">
         <Row>
        
           <Col lg={5} className="mb-4">
@@ -264,7 +264,7 @@ const AwardForm = () => {
                 }}
               >
                 <img
-                  src={`/award/page${currentPage}.jpg`}
+                  src={`/award/page${currentPage}.png`}
                   alt={`Page ${currentPage}`}
                   style={{
                     width: `${zoom * 100}%`,
@@ -281,7 +281,7 @@ const AwardForm = () => {
             <Card className="p-4 shadow-sm h-auto">
               <h3 className="text-center mb-4" style={{ color: "#003366" }}>
                 Application Form For Awards And Maan Samman <br />
-                <small>(1st Nov 2024 - 31st Oct 2025)</small>
+                <small>(1st Nov 2025 - 31st Oct 2026) </small>
               </h3>
 
               {status.message && (
@@ -690,7 +690,7 @@ const AwardForm = () => {
           </Col>
         </Row>{" "}
       
-      </Container> */}
+      </Container> 
       <Container>
         Registration Closed
       </Container>

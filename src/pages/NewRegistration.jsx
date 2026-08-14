@@ -545,8 +545,9 @@ const NewRegistration = () => {
         </Modal>
       </Container> */}
       <Container>
-        Registration Closed
+        Form under maintenance
       </Container>
+    
     </>
   );
 };

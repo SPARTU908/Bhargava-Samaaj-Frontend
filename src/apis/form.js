@@ -149,3 +149,19 @@ export const updateUserDetails = async (email, updatedData) => {
     throw error;
   }
 };
+
+
+export const getAllUsers = async () => {
+  const reqUrl = `${import.meta.env.VITE_BACKEND_URL}/api/v1/form/all-users`;
+
+  try {
+    const response = await axios.get(reqUrl, {
+      withCredentials: true,
+    });
+
+    return response.data.data;
+  } catch (error) {
+    console.error("Failed to fetch all users:", error);
+    throw error;
+  }
+};

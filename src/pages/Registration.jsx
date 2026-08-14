@@ -14,7 +14,7 @@ const Registration = () => {
   return (
     <>
       <Navbar />
-      {/* <Container className="my-5">
+      <Container className="my-5">
         <h2 className="text-center mb-5">Please Choose a Registration Form</h2>
         <Row className="justify-content-center g-4">
           <Col md={5}>
@@ -25,7 +25,7 @@ const Registration = () => {
             >
               <Card.Body className="text-center p-5">
                 <Card.Title className="fs-4 fw-bold mb-3">
-                  🏅 Puruskar & <br/> Maan Samman Form <br/> 2024–2025
+                  🏅 Puruskar & <br/> Maan Samman Form <br/> 2025–2026
                 </Card.Title>
                 <Card.Text>
                 
@@ -51,7 +51,7 @@ const Registration = () => {
             </Card>
           </Col>
         </Row>
-      </Container> */}
+      </Container> 
     </>
   );
 };
