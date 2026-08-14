@@ -23,14 +23,57 @@ export const getAllLifeMembers = async () => {
   }
 };
 
-export const updateLifeMember = async (LM_NO, memberData, photoFile) => {
+// export const updateLifeMember = async (LM_NO, memberData, photoFile) => {
+//   try {
+//     const formData = new FormData();
+//    Object.entries(memberData).forEach(([key, value]) => {
+//       if (value !== undefined && value !== null) {
+//         formData.append(key, value);
+//       }
+//     });
+//     if (photoFile) {
+//       formData.append("photo", photoFile);
+//     }
+
+//     const response = await axios.patch(
+//       `${BASE_URL}/api/v1/register/life-members/${LM_NO}`,
+//       formData,
+//       {
+//         headers: {
+          
+//           "Content-Type": "multipart/form-data",
+//         },
+//       }
+//     );
+
+//     return response.data;
+//   } catch (error) {
+//     console.error("Error in updateLifeMember:", error);
+//     const message = error.response?.data?.message || "Update failed";
+//     throw new Error(message);
+//   }
+// };
+export const updateLifeMember = async (
+  LM_NO,
+  memberData,
+  photoFile
+) => {
   try {
     const formData = new FormData();
-   Object.entries(memberData).forEach(([key, value]) => {
+
+    Object.entries(memberData).forEach(([key, value]) => {
       if (value !== undefined && value !== null) {
-        formData.append(key, value);
+        if (key === "familyDetails") {
+          formData.append(
+            key,
+            JSON.stringify(value)
+          );
+        } else {
+          formData.append(key, value);
+        }
       }
     });
+
     if (photoFile) {
       formData.append("photo", photoFile);
     }
@@ -40,7 +83,6 @@ export const updateLifeMember = async (LM_NO, memberData, photoFile) => {
       formData,
       {
         headers: {
-          
           "Content-Type": "multipart/form-data",
         },
       }
@@ -49,20 +91,33 @@ export const updateLifeMember = async (LM_NO, memberData, photoFile) => {
     return response.data;
   } catch (error) {
     console.error("Error in updateLifeMember:", error);
-    const message = error.response?.data?.message || "Update failed";
+
+    const message =
+      error.response?.data?.message ||
+      "Update failed";
+
     throw new Error(message);
   }
 };
 
-
 export const createLifeMember = async (formData, photoFile) => {
   try {
     const data = new FormData();
-    for (const key in formData) {
-      if (formData[key] !== undefined && formData[key] !== null) {
-        data.append(key, formData[key]);
-      }
+   for (const key in formData) {
+  if (
+    formData[key] !== undefined &&
+    formData[key] !== null
+  ) {
+    if (key === "familyDetails") {
+      data.append(
+        key,
+        JSON.stringify(formData[key])
+      );
+    } else {
+      data.append(key, formData[key]);
     }
+  }
+}
 if (photoFile) {
       data.append("photo", photoFile);
     }

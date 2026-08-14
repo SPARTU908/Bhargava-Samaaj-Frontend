@@ -39,7 +39,7 @@ const AwardForm = () => {
   });
   const [errors, setErrors] = useState({});
 
-  const totalPages = 12;
+  const totalPages = 13;
   const [currentPage, setCurrentPage] = useState(1);
   const [zoom, setZoom] = useState(1);
 
@@ -264,7 +264,7 @@ const AwardForm = () => {
                 }}
               >
                 <img
-                  src={`/award/page${currentPage}.png`}
+                  src={`/award/page${currentPage}.jpeg`}
                   alt={`Page ${currentPage}`}
                   style={{
                     width: `${zoom * 100}%`,

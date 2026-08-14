@@ -45,6 +45,7 @@ import DownloadAll from "./pages/DownloadAll.jsx";
 import MagazinePage from "./pages/MagazinePage.jsx";
 import MagazineFormData from "./pages/MagazineFormData.jsx";
 import AllUsers from "./pages/AllUsers.jsx";
+import ConferencePayment from "./components/ConferencePayment.jsx";
 
 
 
@@ -136,6 +137,8 @@ function App() {
           <Route path="/patrika-form" element={<MagazineForm />} />
 
             <Route path="/magazine-form-download" element={<MagazinePage />} />
+
+             <Route path="/conference-payment" element={<ConferencePayment />} />
 
 
 

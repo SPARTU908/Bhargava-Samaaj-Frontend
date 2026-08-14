@@ -18,6 +18,12 @@ import {
   createLifeMember,
   updateLifeMember,
 } from "../apis/lifemember.js";
+import styles from "./NewRegistration.module.css";
+import {
+  createConferenceRegistration,
+  submitConferencePayment,
+} from "../apis/conferenceRegistration";
+import ConferencePayment from "../components/ConferencePayment";
 
 const EMPTY_MEMBER = {
   LM_NO: "",
@@ -36,6 +42,7 @@ const EMPTY_MEMBER = {
   Pin: "",
   Card_Issued: "",
   category: "",
+  familyDetails: [],
 };
 
 const MemberForm = React.memo(
@@ -50,6 +57,56 @@ const MemberForm = React.memo(
     handleSubmit,
     updateMemberData,
   }) => {
+    const familyDetails = member?.familyDetails || [];
+
+    const [editingFamilyIndex, setEditingFamilyIndex] = useState(null);
+
+    const addFamilyMember = () => {
+      const newFamilyMember = {
+        LM_NO: member?.LM_NO || "",
+        Year: member?.Year || "",
+        Relation: "",
+        Title: "",
+        Member_Name: "",
+        Card_Issued: "",
+        S_O_D_O_W_O: "",
+        Date_of_Birth: "",
+        Address: "",
+        City: "",
+        Pin: "",
+        Contact_No: "",
+        Email: "",
+        Gotra: "",
+        Kuldevi: "",
+        gender: "",
+        category: "",
+        photo: "",
+      };
+
+      updateMemberData("familyDetails", [...familyDetails, newFamilyMember]);
+
+      // Automatically put the newly added family member into edit mode
+      setEditingFamilyIndex(familyDetails.length);
+    };
+
+    const removeFamilyMember = (index) => {
+      const updatedFamily = familyDetails.filter((_, i) => i !== index);
+
+      updateMemberData("familyDetails", updatedFamily);
+
+      if (editingFamilyIndex === index) {
+        setEditingFamilyIndex(null);
+      }
+    };
+
+    const updateFamilyMember = (index, field, value) => {
+      const updatedFamily = familyDetails.map((familyMember, i) =>
+        i === index ? { ...familyMember, [field]: value } : familyMember,
+      );
+
+      updateMemberData("familyDetails", updatedFamily);
+    };
+
     const renderEditableField = useCallback(
       (
         label,
@@ -57,7 +114,7 @@ const MemberForm = React.memo(
         type = "text",
         placeholder = null,
         required = false,
-        options = null
+        options = null,
       ) => {
         const value = member?.[field] || "";
 
@@ -115,12 +172,12 @@ const MemberForm = React.memo(
           </Form.Group>
         );
       },
-      [member, formErrors, isEditing, updateMemberData]
+      [member, formErrors, isEditing, updateMemberData],
     );
 
     return (
       <Form onSubmit={handleSubmit}>
-        <div className="d-flex justify-content-between align-items-center mb-3">
+        {/* <div className="d-flex justify-content-between align-items-center mb-3">
           <Button
             variant={isEditing ? "success" : "outline-primary"}
             onClick={() => setIsEditing(!isEditing)}
@@ -136,7 +193,7 @@ const MemberForm = React.memo(
               </>
             )}
           </Button>
-        </div>
+        </div> */}
 
         <Row>
           {/* {renderEditableField(
@@ -152,28 +209,28 @@ const MemberForm = React.memo(
             "Member_Name",
             "text",
             null,
-            true
+            true,
           )}
           {renderEditableField(
             "S/O,D/O,W/O",
             "S_O_D_O_W_O",
             "text",
             "S/O Mr.ABC",
-            true
+            true,
           )}
           {renderEditableField(
             "ABBS Membership Card Issued Year",
             "Year",
             "text",
             null,
-            false
+            false,
           )}
           {renderEditableField(
             "Date of Birth",
             "Date_of_Birth",
             "date",
             null,
-            true
+            true,
           )}
           {renderEditableField("Gotra", "Gotra", "text", null, true)}
           {renderEditableField("Kuldevi", "Kuldevi", "text", null, true)}
@@ -192,7 +249,7 @@ const MemberForm = React.memo(
             "select",
             null,
             true,
-            ["Yes", "No"]
+            ["Yes", "No"],
           )}
           {renderEditableField("Category", "category", "select", null, true, [
             "Delegate",
@@ -225,9 +282,532 @@ const MemberForm = React.memo(
               />
             )}
           </Form.Group>
+
+          {/* family member section start */}
+
+          <Col md={12} className="mt-4">
+            <div className="border rounded p-3">
+              <div className="d-flex justify-content-between align-items-center mb-3">
+                <h5 className="mb-0">Family Details</h5>
+                <Button
+                  type="button"
+                  variant="primary"
+                  size="sm"
+                  onClick={addFamilyMember}
+                >
+                  + Add Family Member
+                </Button>
+              </div>
+
+              {familyDetails.map((familyMember, index) => (
+                <Card key={index} className="mb-4">
+                  <Card.Body>
+                    <div className="d-flex justify-content-between align-items-center mb-3">
+                      <h6 className="mb-0">Family Member {index + 1}</h6>
+
+                      <div className="d-flex gap-2">
+                        {editingFamilyIndex !== index && (
+                          <Button
+                            type="button"
+                            variant="outline-primary"
+                            size="sm"
+                            onClick={() => setEditingFamilyIndex(index)}
+                          >
+                            <FaEdit className="me-1" />
+                            Edit
+                          </Button>
+                        )}
+
+                        <Button
+                          type="button"
+                          variant="outline-danger"
+                          size="sm"
+                          onClick={() => removeFamilyMember(index)}
+                        >
+                          Delete
+                        </Button>
+                      </div>
+                    </div>
+
+                    <Row>
+                      {/* Relation */}
+                      <Form.Group as={Col} md={6} className="mb-3">
+                        <Form.Label>
+                          <strong>Relation</strong>{" "}
+                          <span style={{ color: "red" }}>*</span>
+                        </Form.Label>
+
+                       {editingFamilyIndex === index ? (
+                          <Form.Select
+                            value={familyMember.Relation || ""}
+                            onChange={(e) =>
+                              updateFamilyMember(
+                                index,
+                                "Relation",
+                                e.target.value,
+                              )
+                            }
+                          >
+                            <option value="">Select Relation</option>
+                            <option value="Spouse">Spouse</option>
+                            <option value="Son">Son</option>
+                            <option value="Daughter">Daughter</option>
+                            <option value="Father">Father</option>
+                            <option value="Mother">Mother</option>
+                            <option value="Brother">Brother</option>
+                            <option value="Sister">Sister</option>
+                            <option value="Other">Other</option>
+                          </Form.Select>
+                        ) : (
+                          <div className="form-control bg-light">
+                            {familyMember.Relation || "Not set"}
+                          </div>
+                        )}
+                      </Form.Group>
+
+                      {/* LM NO */}
+                      <Form.Group as={Col} md={6} className="mb-3">
+                        <Form.Label>
+                          <strong>ABBS Life Membership No</strong>
+                        </Form.Label>
+
+                        <Form.Control
+                          type="text"
+                          value={familyMember.LM_NO || ""}
+                          readOnly
+                          disabled
+                        />
+                      </Form.Group>
+
+                      {/* Year */}
+                      <Form.Group as={Col} md={6} className="mb-3">
+                        <Form.Label>
+                          <strong>ABBS Membership Card Issued Year</strong>
+                        </Form.Label>
+
+                        <Form.Control
+                          type="text"
+                          value={familyMember.Year || ""}
+                          onChange={(e) =>
+                            updateFamilyMember(index, "Year", e.target.value)
+                          }
+                          disabled={editingFamilyIndex !== index}
+                        />
+                      </Form.Group>
+
+                      {/* Title */}
+                      <Form.Group as={Col} md={6} className="mb-3">
+                        <Form.Label>
+                          <strong>Title</strong>{" "}
+                          <span style={{ color: "red" }}>*</span>
+                        </Form.Label>
+
+                       {editingFamilyIndex === index ? (
+                          <Form.Select
+                            value={familyMember.Title || ""}
+                            onChange={(e) =>
+                              updateFamilyMember(index, "Title", e.target.value)
+                            }
+                          >
+                            <option value="">Select Title</option>
+                            <option value="Mr">Mr</option>
+                            <option value="Mrs">Mrs</option>
+                            <option value="Miss">Miss</option>
+                            <option value="Ms">Ms</option>
+                            <option value="Dr">Dr</option>
+                          </Form.Select>
+                        ) : (
+                          <div className="form-control bg-light">
+                            {familyMember.Title || "Not set"}
+                          </div>
+                        )}
+                      </Form.Group>
+
+                      {/* Member Name */}
+                      <Form.Group as={Col} md={6} className="mb-3">
+                        <Form.Label>
+                          <strong>Member Name</strong>{" "}
+                          <span style={{ color: "red" }}>*</span>
+                        </Form.Label>
+
+                      {editingFamilyIndex === index ? (
+                          <Form.Control
+                            type="text"
+                            value={familyMember.Member_Name || ""}
+                            onChange={(e) =>
+                              updateFamilyMember(
+                                index,
+                                "Member_Name",
+                                e.target.value,
+                              )
+                            }
+                          />
+                        ) : (
+                          <div className="form-control bg-light">
+                            {familyMember.Member_Name || "Not set"}
+                          </div>
+                        )}
+                      </Form.Group>
+
+                      {/* S/O D/O W/O */}
+                      <Form.Group as={Col} md={6} className="mb-3">
+                        <Form.Label>
+                          <strong>S/O, D/O, W/O</strong>{" "}
+                          <span style={{ color: "red" }}>*</span>
+                        </Form.Label>
+
+                       {editingFamilyIndex === index ? (
+                          <Form.Control
+                            type="text"
+                            placeholder="S/O Mr. ABC"
+                            value={familyMember.S_O_D_O_W_O || ""}
+                            onChange={(e) =>
+                              updateFamilyMember(
+                                index,
+                                "S_O_D_O_W_O",
+                                e.target.value,
+                              )
+                            }
+                          />
+                        ) : (
+                          <div className="form-control bg-light">
+                            {familyMember.S_O_D_O_W_O || "Not set"}
+                          </div>
+                        )}
+                      </Form.Group>
+
+                      {/* Date of Birth */}
+                      <Form.Group as={Col} md={6} className="mb-3">
+                        <Form.Label>
+                          <strong>Date of Birth</strong>{" "}
+                          <span style={{ color: "red" }}>*</span>
+                        </Form.Label>
+
+                       {editingFamilyIndex === index ? (
+                          <Form.Control
+                            type="date"
+                            value={familyMember.Date_of_Birth || ""}
+                            onChange={(e) =>
+                              updateFamilyMember(
+                                index,
+                                "Date_of_Birth",
+                                e.target.value,
+                              )
+                            }
+                          />
+                        ) : (
+                          <div className="form-control bg-light">
+                            {familyMember.Date_of_Birth || "Not set"}
+                          </div>
+                        )}
+                      </Form.Group>
+
+                      {/* Gotra */}
+                      <Form.Group as={Col} md={6} className="mb-3">
+                        <Form.Label>
+                          <strong>Gotra</strong>{" "}
+                          <span style={{ color: "red" }}>*</span>
+                        </Form.Label>
+
+                        {editingFamilyIndex === index ? (
+                          <Form.Control
+                            type="text"
+                            value={familyMember.Gotra || ""}
+                            onChange={(e) =>
+                              updateFamilyMember(index, "Gotra", e.target.value)
+                            }
+                          />
+                        ) : (
+                          <div className="form-control bg-light">
+                            {familyMember.Gotra || "Not set"}
+                          </div>
+                        )}
+                      </Form.Group>
+
+                      {/* Kuldevi */}
+                      <Form.Group as={Col} md={6} className="mb-3">
+                        <Form.Label>
+                          <strong>Kuldevi</strong>{" "}
+                          <span style={{ color: "red" }}>*</span>
+                        </Form.Label>
+
+                        {editingFamilyIndex === index ? (
+                          <Form.Control
+                            type="text"
+                            value={familyMember.Kuldevi || ""}
+                            onChange={(e) =>
+                              updateFamilyMember(
+                                index,
+                                "Kuldevi",
+                                e.target.value,
+                              )
+                            }
+                          />
+                        ) : (
+                          <div className="form-control bg-light">
+                            {familyMember.Kuldevi || "Not set"}
+                          </div>
+                        )}
+                      </Form.Group>
+
+                      {/* Gender */}
+                      <Form.Group as={Col} md={6} className="mb-3">
+                        <Form.Label>
+                          <strong>Gender</strong>{" "}
+                          <span style={{ color: "red" }}>*</span>
+                        </Form.Label>
+
+                        {editingFamilyIndex === index ? (
+                          <Form.Select
+                            value={familyMember.gender || ""}
+                            onChange={(e) =>
+                              updateFamilyMember(
+                                index,
+                                "gender",
+                                e.target.value,
+                              )
+                            }
+                          >
+                            <option value="">Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                          </Form.Select>
+                        ) : (
+                          <div className="form-control bg-light">
+                            {familyMember.gender || "Not set"}
+                          </div>
+                        )}
+                      </Form.Group>
+
+                      {/* Email */}
+                      <Form.Group as={Col} md={6} className="mb-3">
+                        <Form.Label>
+                          <strong>Email</strong>{" "}
+                          <span style={{ color: "red" }}>*</span>
+                        </Form.Label>
+
+                       {editingFamilyIndex === index ? (
+                          <Form.Control
+                            type="email"
+                            value={familyMember.Email || ""}
+                            onChange={(e) =>
+                              updateFamilyMember(index, "Email", e.target.value)
+                            }
+                          />
+                        ) : (
+                          <div className="form-control bg-light">
+                            {familyMember.Email || "Not set"}
+                          </div>
+                        )}
+                      </Form.Group>
+
+                      {/* Contact */}
+                      <Form.Group as={Col} md={6} className="mb-3">
+                        <Form.Label>
+                          <strong>Mobile No</strong>{" "}
+                          <span style={{ color: "red" }}>*</span>
+                        </Form.Label>
+
+{editingFamilyIndex === index ? (                          <Form.Control
+                            type="text"
+                            value={familyMember.Contact_No || ""}
+                            onChange={(e) =>
+                              updateFamilyMember(
+                                index,
+                                "Contact_No",
+                                e.target.value,
+                              )
+                            }
+                          />
+                        ) : (
+                          <div className="form-control bg-light">
+                            {familyMember.Contact_No || "Not set"}
+                          </div>
+                        )}
+                      </Form.Group>
+
+                      {/* Address */}
+                      <Form.Group as={Col} md={12} className="mb-3">
+                        <Form.Label>
+                          <strong>Address</strong>{" "}
+                          <span style={{ color: "red" }}>*</span>
+                        </Form.Label>
+
+                        {editingFamilyIndex === index ? (
+                          <Form.Control
+                            as="textarea"
+                            rows={2}
+                            value={familyMember.Address || ""}
+                            onChange={(e) =>
+                              updateFamilyMember(
+                                index,
+                                "Address",
+                                e.target.value,
+                              )
+                            }
+                          />
+                        ) : (
+                          <div className="form-control bg-light">
+                            {familyMember.Address || "Not set"}
+                          </div>
+                        )}
+                      </Form.Group>
+
+                      {/* City */}
+                      <Form.Group as={Col} md={6} className="mb-3">
+                        <Form.Label>
+                          <strong>City</strong>{" "}
+                          <span style={{ color: "red" }}>*</span>
+                        </Form.Label>
+
+                      {editingFamilyIndex === index ? (
+                          <Form.Control
+                            type="text"
+                            value={familyMember.City || ""}
+                            onChange={(e) =>
+                              updateFamilyMember(index, "City", e.target.value)
+                            }
+                          />
+                        ) : (
+                          <div className="form-control bg-light">
+                            {familyMember.City || "Not set"}
+                          </div>
+                        )}
+                      </Form.Group>
+
+                      {/* PIN */}
+                      <Form.Group as={Col} md={6} className="mb-3">
+                        <Form.Label>
+                          <strong>PIN Code</strong>{" "}
+                          <span style={{ color: "red" }}>*</span>
+                        </Form.Label>
+
+                       {editingFamilyIndex === index ? (
+                          <Form.Control
+                            type="text"
+                            value={familyMember.Pin || ""}
+                            onChange={(e) =>
+                              updateFamilyMember(index, "Pin", e.target.value)
+                            }
+                          />
+                        ) : (
+                          <div className="form-control bg-light">
+                            {familyMember.Pin || "Not set"}
+                          </div>
+                        )}
+                      </Form.Group>
+
+                      {/* Card Issued */}
+                      <Form.Group as={Col} md={6} className="mb-3">
+                        <Form.Label>
+                          <strong>Card Issued</strong>{" "}
+                          <span style={{ color: "red" }}>*</span>
+                        </Form.Label>
+
+                       {editingFamilyIndex === index ? (
+                          <Form.Select
+                            value={familyMember.Card_Issued || ""}
+                            onChange={(e) =>
+                              updateFamilyMember(
+                                index,
+                                "Card_Issued",
+                                e.target.value,
+                              )
+                            }
+                          >
+                            <option value="">Select</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                          </Form.Select>
+                        ) : (
+                          <div className="form-control bg-light">
+                            {familyMember.Card_Issued || "Not set"}
+                          </div>
+                        )}
+                      </Form.Group>
+
+                      {/* Category */}
+                      <Form.Group as={Col} md={6} className="mb-3">
+                        <Form.Label>
+                          <strong>Category</strong>{" "}
+                          <span style={{ color: "red" }}>*</span>
+                        </Form.Label>
+
+                       {editingFamilyIndex === index ? (
+                          <Form.Select
+                            value={familyMember.category || ""}
+                            onChange={(e) =>
+                              updateFamilyMember(
+                                index,
+                                "category",
+                                e.target.value,
+                              )
+                            }
+                          >
+                            <option value="">Select Category</option>
+                            <option value="Delegate">Delegate</option>
+                            <option value="Parent of Marriageable Candidate">
+                              Parent of Marriageable Candidate
+                            </option>
+                            <option value="Marriageable Candidate">
+                              Marriageable Candidate
+                            </option>
+                          </Form.Select>
+                        ) : (
+                          <div className="form-control bg-light">
+                            {familyMember.category || "Not set"}
+                          </div>
+                        )}
+                      </Form.Group>
+
+                      {/* Occupation */}
+                      <Form.Group as={Col} md={6} className="mb-3">
+                        <Form.Label>
+                          <strong>Occupation</strong>
+                        </Form.Label>
+
+                       {editingFamilyIndex === index ? (
+                          <Form.Control
+                            type="text"
+                            value={familyMember.occupation || ""}
+                            onChange={(e) =>
+                              updateFamilyMember(
+                                index,
+                                "occupation",
+                                e.target.value,
+                              )
+                            }
+                          />
+                        ) : (
+                          <div className="form-control bg-light">
+                            {familyMember.occupation || "Not set"}
+                          </div>
+                        )}
+                      </Form.Group>
+                    </Row>
+
+{editingFamilyIndex === index && (
+  <div className="d-flex justify-content-end mt-3">
+    <Button
+      type="button"
+      variant="success"
+      size="sm"
+      onClick={() => setEditingFamilyIndex(null)}
+    >
+      <FaCheck className="me-1" />
+      Done
+    </Button>
+  </div>
+)}
+                  </Card.Body>
+                </Card>
+              ))}
+            </div>
+          </Col>
         </Row>
 
-        <div className="text-center mt-4">
+        {/* <div className="text-center mt-4">
           <Button
             type="submit"
             variant="success"
@@ -236,10 +816,38 @@ const MemberForm = React.memo(
           >
             {submitting ? "Submitting..." : "Submit"}
           </Button>
-        </div>
+        </div> */}
+       <div
+  className="save-submit-wrapper"
+  style={{
+    position: "relative",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    clear: "both",
+    marginTop: "30px",
+    marginBottom: "20px",
+    zIndex: 1000,
+  }}
+>
+  <Button
+    type="submit"
+    variant="success"
+    size="lg"
+    disabled={submitting}
+    className="px-5"
+    style={{
+      position: "relative",
+      zIndex: 1001,
+    }}
+  >
+    {submitting ? "Saving..." : "Save & Submit"}
+  </Button>
+</div>
       </Form>
     );
-  }
+  },
 );
 
 const NewRegistration = () => {
@@ -254,6 +862,14 @@ const NewRegistration = () => {
   const [submitting, setSubmitting] = useState(false);
   const [photoFile, setPhotoFile] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [currentStep, setCurrentStep] = useState(1);
+
+const [conferenceRegistration, setConferenceRegistration] = useState(null);
+const [paymentScreenshot, setPaymentScreenshot] =useState(null);
+const [paymentPreview, setPaymentPreview] =useState(null);
+const [transactionId, setTransactionId] =useState("");
+const [paymentSubmitting, setPaymentSubmitting] =useState(false);
+const [paymentError, setPaymentError] =useState("");
 
   const handleSearch = async () => {
     setError("");
@@ -270,7 +886,7 @@ const NewRegistration = () => {
       }
     } catch (error) {
       setError(
-        error.message || "No member found with this Life Membership Number"
+        error.message || "No member found with this Life Membership Number",
       );
     }
   };
@@ -284,6 +900,30 @@ const NewRegistration = () => {
       setPhotoFile(file);
     }
   };
+
+  const handlePaymentScreenshot = (e) => {
+  const file = e.target.files?.[0];
+
+  if (!file) return;
+
+  if (!file.type.startsWith("image/")) {
+    setPaymentError(
+      "Please upload a valid image."
+    );
+    return;
+  }
+
+  setPaymentScreenshot(file);
+  setPaymentError("");
+
+  const reader = new FileReader();
+
+  reader.onloadend = () => {
+    setPaymentPreview(reader.result);
+  };
+
+  reader.readAsDataURL(file);
+};
 
   const updateMemberData = useCallback((field, value) => {
     setMember((prev) => ({ ...prev, [field]: value }));
@@ -312,21 +952,56 @@ const NewRegistration = () => {
     });
 
     if (member.Email && !/\S+@\S+\.\S+/.test(member.Email)) {
-    errors.Email = "Email is invalid";
-  } else if (!member.Email) {
-    errors.Email = "Email is required";
-  } 
+      errors.Email = "Email is invalid";
+    } else if (!member.Email) {
+      errors.Email = "Email is required";
+    }
 
+    const familyDetails = member?.familyDetails || [];
 
-  const mobile = member?.Contact_No?.trim();
-  if (!mobile) {
-    errors.Contact_No = "Mobile number is required.";
-  } else if (!/^\d{10}$/.test(mobile)) {
-    errors.Contact_No = "Enter a valid 10-digit mobile number.";
+   familyDetails.forEach((familyMember, index) => {
+  if (!familyMember.Relation) {
+    errors[`familyDetails_${index}_Relation`] =
+      "Relation is required.";
   }
+
+  if (!familyMember.Member_Name) {
+    errors[`familyDetails_${index}_Member_Name`] =
+      "Member Name is required.";
+  }
+
+  if (!familyMember.Date_of_Birth) {
+    errors[`familyDetails_${index}_Date_of_Birth`] =
+      "Date of Birth is required.";
+  }
+
+  if (!familyMember.gender) {
+    errors[`familyDetails_${index}_gender`] =
+      "Gender is required.";
+  }
+});
+
+    const mobile = member?.Contact_No?.trim();
+    if (!mobile) {
+      errors.Contact_No = "Mobile number is required.";
+    } else if (!/^\d{10}$/.test(mobile)) {
+      errors.Contact_No = "Enter a valid 10-digit mobile number.";
+    }
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
   };
+
+  const handlePaymentSuccess = (data) => {
+  setCurrentStep(3);
+
+  setTimeout(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, 100);
+};
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -334,35 +1009,107 @@ const NewRegistration = () => {
     setShowConfirm(true);
   };
 
+ 
+
   const confirmSubmit = async () => {
-    setShowConfirm(false);
-    setSubmitting(true);
-    try {
-      if (isAbbsMember) {
-        await updateLifeMember(member.LM_NO, member, photoFile);
-      } else {
-        await createLifeMember(member, photoFile);
-      }
-      setShowToast(true);
-      setMember(null);
-      setPhotoFile(null);
-      setPhotoPreview(null);
-    } catch (err) {
-      alert(err.message || "Submission failed");
-    } finally {
-      setSubmitting(false);
+  setShowConfirm(false);
+  setSubmitting(true);
+
+  try {
+    let savedMember;
+
+    /*
+    |--------------------------------------------------------------------------
+    | Save member using existing API
+    |--------------------------------------------------------------------------
+    */
+
+    if (isAbbsMember) {
+      savedMember =
+        await updateLifeMember(
+          member.LM_NO,
+          member,
+          photoFile
+        );
+    } else {
+      savedMember =
+        await createLifeMember(
+          member,
+          photoFile
+        );
     }
-  };
+
+    /*
+    |--------------------------------------------------------------------------
+    | Get actual saved member
+    |--------------------------------------------------------------------------
+    */
+
+    const savedMemberData =
+      savedMember?.member ||
+      savedMember?.data ||
+      savedMember;
+
+    /*
+    |--------------------------------------------------------------------------
+    | Create Conference Registration
+    |--------------------------------------------------------------------------
+    */
+
+    const conferenceData =
+      await createConferenceRegistration({
+        memberId:
+          savedMemberData?._id ||
+          member._id,
+
+        familyDetails:
+          JSON.stringify(
+            member.familyDetails || []
+          ),
+      });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Store payment information in state
+    |--------------------------------------------------------------------------
+    */
+
+    setConferenceRegistration(
+      conferenceData
+    );
+
+    /*
+    |--------------------------------------------------------------------------
+    | Go to Step 2
+    |--------------------------------------------------------------------------
+    */
+
+    setCurrentStep(2);
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+
+  } catch (err) {
+    alert(
+      err.message ||
+        "Submission failed"
+    );
+  } finally {
+    setSubmitting(false);
+  }
+};
 
   return (
     <>
       <Navbar />
-      {/* <Container className="py-3">
+      <Container className="py-3">
         <div className="text-center mb-2">
           <h4 style={{ fontSize: "1.5rem", marginBottom: "0.25rem" }}>
             Online Registration for 134<sup>th</sup> Annual Conference at Ujjain
             ( 20th, 21st, 22nd December 2025)
-            </h4>
+          </h4>
         </div>
         <p className="text-center mb-4 fw-semibold text-danger">
           ⚠️ Last Date for Online Registration:{" "}
@@ -395,7 +1142,7 @@ const NewRegistration = () => {
               </div>
 
               <div style={{ flex: 1, textAlign: "right" }}>
-                <p >★ Charge per form for On-Spot Registration: Rs. 10</p>
+                <p>★ Charge per form for On-Spot Registration: Rs. 10</p>
                 <p className="mb-0">
                   ★ For any queries, contact the ABBS Office at:{" "}
                   <strong className="text-dark">9251276842</strong>
@@ -404,6 +1151,9 @@ const NewRegistration = () => {
             </div>
           </div>
         </Card.Body>
+   {currentStep === 1 && (   
+    <>
+  
 
         <div className="d-flex justify-content-center gap-3 mb-4">
           <Button
@@ -505,7 +1255,8 @@ const NewRegistration = () => {
             </Col>
           </Row>
         )}
-
+          </>  
+    )}
         <Toast
           onClose={() => setShowToast(false)}
           show={showToast}
@@ -528,28 +1279,40 @@ const NewRegistration = () => {
         </Toast>
         <Modal show={showConfirm} onHide={() => setShowConfirm(false)} centered>
           <Modal.Header closeButton>
-            <Modal.Title>Confirm Submission</Modal.Title>
+           <Modal.Title>Confirm Registration</Modal.Title>
           </Modal.Header>
-          <Modal.Body>
-            Are you sure the information is correct and you want to submit the
-            form?
-          </Modal.Body>
+         <Modal.Body>
+  Please review all the member and family details carefully.
+  Once submitted, the information will be saved.
+  <br />
+  <br />
+  Are you sure you want to save and submit this registration?
+</Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={() => setShowConfirm(false)}>
-              I want to edit my information.
-            </Button>
-            <Button variant="primary" onClick={confirmSubmit}>
-              Yes, Submit
-            </Button>
-          </Modal.Footer>
+  <Button
+    variant="secondary"
+    onClick={() => setShowConfirm(false)}
+  >
+    Review Again
+  </Button>
+
+  <Button
+    variant="success"
+    onClick={confirmSubmit}
+    disabled={submitting}
+  >
+    {submitting ? "Saving..." : "Yes, Save & Submit"}
+  </Button>
+</Modal.Footer>
         </Modal>
-      </Container> */}
-      <Container>
-        Form under maintenance
       </Container>
-    
+      {/* <Container>
+        Form under maintenance
+      </Container> */}
     </>
+    
   );
+
 };
 
 export default NewRegistration;
