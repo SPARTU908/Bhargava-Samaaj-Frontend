@@ -163,22 +163,64 @@ const ConferencePayment = ({
                   "1px solid #ffb47a",
               }}
             >
-              <strong>
-                Registration Number
-              </strong>
+             <div
+  style={{
+    padding: "18px",
+    borderBottom: "1px solid #ffb47a",
+  }}
+>
+  <strong
+    style={{
+      display: "block",
+      textAlign: "center",
+      marginBottom: "12px",
+    }}
+  >
+    Registration Numbers
+  </strong>
 
-              <div
-                style={{
-                  color: "#f4511e",
-                  fontSize: "24px",
-                  fontWeight: "700",
-                  marginTop: "5px",
-                }}
-              >
-                {
-                  registration.primaryRegistrationNumber
-                }
-              </div>
+  {registration.members?.map((member, index) => (
+    <div
+      key={member.registrationNumber}
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        gap: "15px",
+        padding: "8px 0",
+        borderBottom:
+          index !== registration.members.length - 1
+            ? "1px solid #eee"
+            : "none",
+      }}
+    >
+      <div>
+        <strong>{member.Member_Name}</strong>
+
+        <div
+          style={{
+            fontSize: "12px",
+            color: "#777",
+          }}
+        >
+          {member.memberType === "Primary"
+            ? "Primary Member"
+            : member.relation || "Family Member"}
+        </div>
+      </div>
+
+      <strong
+        style={{
+          color: "#f4511e",
+        }}
+      >
+        {member.registrationNumber}
+      </strong>
+    </div>
+  ))}
+</div>
+
+
             </div>
 
 
