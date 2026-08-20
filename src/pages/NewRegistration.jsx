@@ -80,7 +80,7 @@ const MemberForm = React.memo(
         Kuldevi: "",
         gender: "",
         category: "",
-        
+
         photo: "",
         photoFile: null,
         photoPreview: "",
@@ -248,7 +248,7 @@ const MemberForm = React.memo(
           ])}
           {renderEditableField("Email", "Email", "email", null, true)}
           {renderEditableField("Mobile No", "Contact_No", "text", null, true)}
-          {renderEditableField("Address", "Address", "text", null, true)}
+          {renderEditableField("Address", "Address", "textarea", null, true)}
           {renderEditableField("City", "City", "text", null, true)}
           {renderEditableField("PIN Code", "Pin", "text", null, true)}
           {renderEditableField(
@@ -286,6 +286,8 @@ const MemberForm = React.memo(
                 style={{
                   borderRadius: "8px",
                   border: "1px solid #ccc",
+                  width:"200px",
+                  height:"200px",
                 }}
               />
             )}
@@ -496,36 +498,26 @@ const MemberForm = React.memo(
 
                         {editingFamilyIndex === index ? (
                           <>
-                         
-                          <Form.Control
-  type="text"
-  value={
-    familyMember.Member_Name || ""
-  }
-  onChange={(e) =>
-    updateFamilyMember(
-      index,
-      "Member_Name",
-      e.target.value
-    )
-  }
-  isInvalid={
-    !!formErrors[
-      `familyDetails_${index}_Member_Name`
-    ]
-  }
-/>
-<Form.Control.Feedback
-  type="invalid"
->
-  {
-    formErrors[
-      `familyDetails_${index}_Member_Name`
-    ]
-  }
-</Form.Control.Feedback>
- </>
-
+                            <Form.Control
+                              type="text"
+                              value={familyMember.Member_Name || ""}
+                              onChange={(e) =>
+                                updateFamilyMember(
+                                  index,
+                                  "Member_Name",
+                                  e.target.value,
+                                )
+                              }
+                              isInvalid={
+                                !!formErrors[
+                                  `familyDetails_${index}_Member_Name`
+                                ]
+                              }
+                            />
+                            <Form.Control.Feedback type="invalid">
+                              {formErrors[`familyDetails_${index}_Member_Name`]}
+                            </Form.Control.Feedback>
+                          </>
                         ) : (
                           <div className="form-control bg-light">
                             {familyMember.Member_Name || "Not set"}
@@ -548,36 +540,27 @@ const MemberForm = React.memo(
 
                         {editingFamilyIndex === index ? (
                           <>
-                          <Form.Control
-  type="text"
-  placeholder="S/O Mr. ABC"
-  value={
-    familyMember.S_O_D_O_W_O || ""
-  }
-  onChange={(e) =>
-    updateFamilyMember(
-      index,
-      "S_O_D_O_W_O",
-      e.target.value
-    )
-  }
-  isInvalid={
-    !!formErrors[
-      `familyDetails_${index}_S_O_D_O_W_O`
-    ]
-  }
-/>
-<Form.Control.Feedback
-  type="invalid"
->
-  {
-    formErrors[
-      `familyDetails_${index}_S_O_D_O_W_O`
-    ]
-  }
-</Form.Control.Feedback>
+                            <Form.Control
+                              type="text"
+                              placeholder="S/O Mr. ABC"
+                              value={familyMember.S_O_D_O_W_O || ""}
+                              onChange={(e) =>
+                                updateFamilyMember(
+                                  index,
+                                  "S_O_D_O_W_O",
+                                  e.target.value,
+                                )
+                              }
+                              isInvalid={
+                                !!formErrors[
+                                  `familyDetails_${index}_S_O_D_O_W_O`
+                                ]
+                              }
+                            />
+                            <Form.Control.Feedback type="invalid">
+                              {formErrors[`familyDetails_${index}_S_O_D_O_W_O`]}
+                            </Form.Control.Feedback>
                           </>
-                          
                         ) : (
                           <div className="form-control bg-light">
                             {familyMember.S_O_D_O_W_O || "Not set"}
@@ -600,41 +583,32 @@ const MemberForm = React.memo(
 
                         {editingFamilyIndex === index ? (
                           <>
-                          <Form.Control
-  type="date"
-  max={
-    new Date()
-      .toISOString()
-      .split("T")[0]
-  }
-  value={
-    familyMember.Date_of_Birth || ""
-  }
-  onChange={(e) =>
-    updateFamilyMember(
-      index,
-      "Date_of_Birth",
-      e.target.value
-    )
-  }
-  isInvalid={
-    !!formErrors[
-      `familyDetails_${index}_Date_of_Birth`
-    ]
-  }
-/>
+                            <Form.Control
+                              type="date"
+                              max={new Date().toISOString().split("T")[0]}
+                              value={familyMember.Date_of_Birth || ""}
+                              onChange={(e) =>
+                                updateFamilyMember(
+                                  index,
+                                  "Date_of_Birth",
+                                  e.target.value,
+                                )
+                              }
+                              isInvalid={
+                                !!formErrors[
+                                  `familyDetails_${index}_Date_of_Birth`
+                                ]
+                              }
+                            />
 
-<Form.Control.Feedback
-  type="invalid"
->
-  {
-    formErrors[
-      `familyDetails_${index}_Date_of_Birth`
-    ]
-  }
-</Form.Control.Feedback>
+                            <Form.Control.Feedback type="invalid">
+                              {
+                                formErrors[
+                                  `familyDetails_${index}_Date_of_Birth`
+                                ]
+                              }
+                            </Form.Control.Feedback>
                           </>
-                        
                         ) : (
                           <div className="form-control bg-light">
                             {familyMember.Date_of_Birth || "Not set"}
@@ -657,36 +631,25 @@ const MemberForm = React.memo(
 
                         {editingFamilyIndex === index ? (
                           <>
-                          <Form.Control
-  type="text"
-  value={
-    familyMember.Gotra || ""
-  }
-  onChange={(e) =>
-    updateFamilyMember(
-      index,
-      "Gotra",
-      e.target.value
-    )
-  }
-  isInvalid={
-    !!formErrors[
-      `familyDetails_${index}_Gotra`
-    ]
-  }
-/>
+                            <Form.Control
+                              type="text"
+                              value={familyMember.Gotra || ""}
+                              onChange={(e) =>
+                                updateFamilyMember(
+                                  index,
+                                  "Gotra",
+                                  e.target.value,
+                                )
+                              }
+                              isInvalid={
+                                !!formErrors[`familyDetails_${index}_Gotra`]
+                              }
+                            />
 
-<Form.Control.Feedback
-  type="invalid"
->
-  {
-    formErrors[
-      `familyDetails_${index}_Gotra`
-    ]
-  }
-</Form.Control.Feedback>
+                            <Form.Control.Feedback type="invalid">
+                              {formErrors[`familyDetails_${index}_Gotra`]}
+                            </Form.Control.Feedback>
                           </>
-                        
                         ) : (
                           <div className="form-control bg-light">
                             {familyMember.Gotra || "Not set"}
@@ -709,36 +672,25 @@ const MemberForm = React.memo(
 
                         {editingFamilyIndex === index ? (
                           <>
-                          <Form.Control
-  type="text"
-  value={
-    familyMember.Kuldevi || ""
-  }
-  onChange={(e) =>
-    updateFamilyMember(
-      index,
-      "Kuldevi",
-      e.target.value
-    )
-  }
-  isInvalid={
-    !!formErrors[
-      `familyDetails_${index}_Kuldevi`
-    ]
-  }
-/>
+                            <Form.Control
+                              type="text"
+                              value={familyMember.Kuldevi || ""}
+                              onChange={(e) =>
+                                updateFamilyMember(
+                                  index,
+                                  "Kuldevi",
+                                  e.target.value,
+                                )
+                              }
+                              isInvalid={
+                                !!formErrors[`familyDetails_${index}_Kuldevi`]
+                              }
+                            />
 
-<Form.Control.Feedback
-  type="invalid"
->
-  {
-    formErrors[
-      `familyDetails_${index}_Kuldevi`
-    ]
-  }
-</Form.Control.Feedback>
+                            <Form.Control.Feedback type="invalid">
+                              {formErrors[`familyDetails_${index}_Kuldevi`]}
+                            </Form.Control.Feedback>
                           </>
-                          
                         ) : (
                           <div className="form-control bg-light">
                             {familyMember.Kuldevi || "Not set"}
@@ -761,51 +713,32 @@ const MemberForm = React.memo(
 
                         {editingFamilyIndex === index ? (
                           <>
-                          <Form.Select
-  value={
-    familyMember.gender || ""
-  }
-  onChange={(e) =>
-    updateFamilyMember(
-      index,
-      "gender",
-      e.target.value
-    )
-  }
-  isInvalid={
-    !!formErrors[
-      `familyDetails_${index}_gender`
-    ]
-  }
->
-  <option value="">
-    Select Gender
-  </option>
+                            <Form.Select
+                              value={familyMember.gender || ""}
+                              onChange={(e) =>
+                                updateFamilyMember(
+                                  index,
+                                  "gender",
+                                  e.target.value,
+                                )
+                              }
+                              isInvalid={
+                                !!formErrors[`familyDetails_${index}_gender`]
+                              }
+                            >
+                              <option value="">Select Gender</option>
 
-  <option value="Male">
-    Male
-  </option>
+                              <option value="Male">Male</option>
 
-  <option value="Female">
-    Female
-  </option>
+                              <option value="Female">Female</option>
 
-  <option value="Other">
-    Other
-  </option>
-</Form.Select>
+                              <option value="Other">Other</option>
+                            </Form.Select>
 
-<Form.Control.Feedback
-  type="invalid"
->
-  {
-    formErrors[
-      `familyDetails_${index}_gender`
-    ]
-  }
-</Form.Control.Feedback>
+                            <Form.Control.Feedback type="invalid">
+                              {formErrors[`familyDetails_${index}_gender`]}
+                            </Form.Control.Feedback>
                           </>
-                        
                         ) : (
                           <div className="form-control bg-light">
                             {familyMember.gender || "Not set"}
@@ -828,36 +761,25 @@ const MemberForm = React.memo(
 
                         {editingFamilyIndex === index ? (
                           <>
-                          <Form.Control
-  type="email"
-  value={
-    familyMember.Email || ""
-  }
-  onChange={(e) =>
-    updateFamilyMember(
-      index,
-      "Email",
-      e.target.value
-    )
-  }
-  isInvalid={
-    !!formErrors[
-      `familyDetails_${index}_Email`
-    ]
-  }
-/>
+                            <Form.Control
+                              type="email"
+                              value={familyMember.Email || ""}
+                              onChange={(e) =>
+                                updateFamilyMember(
+                                  index,
+                                  "Email",
+                                  e.target.value,
+                                )
+                              }
+                              isInvalid={
+                                !!formErrors[`familyDetails_${index}_Email`]
+                              }
+                            />
 
-<Form.Control.Feedback
-  type="invalid"
->
-  {
-    formErrors[
-      `familyDetails_${index}_Email`
-    ]
-  }
-</Form.Control.Feedback>
+                            <Form.Control.Feedback type="invalid">
+                              {formErrors[`familyDetails_${index}_Email`]}
+                            </Form.Control.Feedback>
                           </>
-                        
                         ) : (
                           <div className="form-control bg-light">
                             {familyMember.Email || "Not set"}
@@ -880,45 +802,28 @@ const MemberForm = React.memo(
 
                         {editingFamilyIndex === index ? (
                           <>
-                          <Form.Control
-  type="tel"
-  inputMode="numeric"
-  maxLength={10}
-  placeholder="10-digit mobile number"
-  value={
-    familyMember.Contact_No || ""
-  }
-  onChange={(e) => {
-    const value =
-      e.target.value.replace(
-        /\D/g,
-        ""
-      );
+                            <Form.Control
+                              type="tel"
+                              inputMode="numeric"
+                              maxLength={10}
+                              placeholder="10-digit mobile number"
+                              value={familyMember.Contact_No || ""}
+                              onChange={(e) => {
+                                const value = e.target.value.replace(/\D/g, "");
 
-    updateFamilyMember(
-      index,
-      "Contact_No",
-      value
-    );
-  }}
-  isInvalid={
-    !!formErrors[
-      `familyDetails_${index}_Contact_No`
-    ]
-  }
-/>
+                                updateFamilyMember(index, "Contact_No", value);
+                              }}
+                              isInvalid={
+                                !!formErrors[
+                                  `familyDetails_${index}_Contact_No`
+                                ]
+                              }
+                            />
 
-<Form.Control.Feedback
-  type="invalid"
->
-  {
-    formErrors[
-      `familyDetails_${index}_Contact_No`
-    ]
-  }
-</Form.Control.Feedback>
+                            <Form.Control.Feedback type="invalid">
+                              {formErrors[`familyDetails_${index}_Contact_No`]}
+                            </Form.Control.Feedback>
                           </>
-                        
                         ) : (
                           <div className="form-control bg-light">
                             {familyMember.Contact_No || "Not set"}
@@ -941,37 +846,26 @@ const MemberForm = React.memo(
 
                         {editingFamilyIndex === index ? (
                           <>
-                          <Form.Control
-  as="textarea"
-  rows={3}
-  value={
-    familyMember.Address || ""
-  }
-  onChange={(e) =>
-    updateFamilyMember(
-      index,
-      "Address",
-      e.target.value
-    )
-  }
-  isInvalid={
-    !!formErrors[
-      `familyDetails_${index}_Address`
-    ]
-  }
-/>
+                            <Form.Control
+                              as="textarea"
+                              rows={3}
+                              value={familyMember.Address || ""}
+                              onChange={(e) =>
+                                updateFamilyMember(
+                                  index,
+                                  "Address",
+                                  e.target.value,
+                                )
+                              }
+                              isInvalid={
+                                !!formErrors[`familyDetails_${index}_Address`]
+                              }
+                            />
 
-<Form.Control.Feedback
-  type="invalid"
->
-  {
-    formErrors[
-      `familyDetails_${index}_Address`
-    ]
-  }
-</Form.Control.Feedback>
+                            <Form.Control.Feedback type="invalid">
+                              {formErrors[`familyDetails_${index}_Address`]}
+                            </Form.Control.Feedback>
                           </>
-                         
                         ) : (
                           <div className="form-control bg-light">
                             {familyMember.Address || "Not set"}
@@ -994,36 +888,25 @@ const MemberForm = React.memo(
 
                         {editingFamilyIndex === index ? (
                           <>
-                          <Form.Control
-  type="text"
-  value={
-    familyMember.City || ""
-  }
-  onChange={(e) =>
-    updateFamilyMember(
-      index,
-      "City",
-      e.target.value
-    )
-  }
-  isInvalid={
-    !!formErrors[
-      `familyDetails_${index}_City`
-    ]
-  }
-/>
+                            <Form.Control
+                              type="text"
+                              value={familyMember.City || ""}
+                              onChange={(e) =>
+                                updateFamilyMember(
+                                  index,
+                                  "City",
+                                  e.target.value,
+                                )
+                              }
+                              isInvalid={
+                                !!formErrors[`familyDetails_${index}_City`]
+                              }
+                            />
 
-<Form.Control.Feedback
-  type="invalid"
->
-  {
-    formErrors[
-      `familyDetails_${index}_City`
-    ]
-  }
-</Form.Control.Feedback>
+                            <Form.Control.Feedback type="invalid">
+                              {formErrors[`familyDetails_${index}_City`]}
+                            </Form.Control.Feedback>
                           </>
-                          
                         ) : (
                           <div className="form-control bg-light">
                             {familyMember.City || "Not set"}
@@ -1046,45 +929,26 @@ const MemberForm = React.memo(
 
                         {editingFamilyIndex === index ? (
                           <>
-                          <Form.Control
-  type="text"
-  inputMode="numeric"
-  maxLength={6}
-  placeholder="6-digit PIN code"
-  value={
-    familyMember.Pin || ""
-  }
-  onChange={(e) => {
-    const value =
-      e.target.value.replace(
-        /\D/g,
-        ""
-      );
+                            <Form.Control
+                              type="text"
+                              inputMode="numeric"
+                              maxLength={6}
+                              placeholder="6-digit PIN code"
+                              value={familyMember.Pin || ""}
+                              onChange={(e) => {
+                                const value = e.target.value.replace(/\D/g, "");
 
-    updateFamilyMember(
-      index,
-      "Pin",
-      value
-    );
-  }}
-  isInvalid={
-    !!formErrors[
-      `familyDetails_${index}_Pin`
-    ]
-  }
-/>
+                                updateFamilyMember(index, "Pin", value);
+                              }}
+                              isInvalid={
+                                !!formErrors[`familyDetails_${index}_Pin`]
+                              }
+                            />
 
-<Form.Control.Feedback
-  type="invalid"
->
-  {
-    formErrors[
-      `familyDetails_${index}_Pin`
-    ]
-  }
-</Form.Control.Feedback>
+                            <Form.Control.Feedback type="invalid">
+                              {formErrors[`familyDetails_${index}_Pin`]}
+                            </Form.Control.Feedback>
                           </>
-                         
                         ) : (
                           <div className="form-control bg-light">
                             {familyMember.Pin || "Not set"}
@@ -1107,47 +971,32 @@ const MemberForm = React.memo(
 
                         {editingFamilyIndex === index ? (
                           <>
-                          <Form.Select
-  value={
-    familyMember.Card_Issued || ""
-  }
-  onChange={(e) =>
-    updateFamilyMember(
-      index,
-      "Card_Issued",
-      e.target.value
-    )
-  }
-  isInvalid={
-    !!formErrors[
-      `familyDetails_${index}_Card_Issued`
-    ]
-  }
->
-  <option value="">
-    Select
-  </option>
+                            <Form.Select
+                              value={familyMember.Card_Issued || ""}
+                              onChange={(e) =>
+                                updateFamilyMember(
+                                  index,
+                                  "Card_Issued",
+                                  e.target.value,
+                                )
+                              }
+                              isInvalid={
+                                !!formErrors[
+                                  `familyDetails_${index}_Card_Issued`
+                                ]
+                              }
+                            >
+                              <option value="">Select</option>
 
-  <option value="Yes">
-    Yes
-  </option>
+                              <option value="Yes">Yes</option>
 
-  <option value="No">
-    No
-  </option>
-</Form.Select>
+                              <option value="No">No</option>
+                            </Form.Select>
 
-<Form.Control.Feedback
-  type="invalid"
->
-  {
-    formErrors[
-      `familyDetails_${index}_Card_Issued`
-    ]
-  }
-</Form.Control.Feedback>
+                            <Form.Control.Feedback type="invalid">
+                              {formErrors[`familyDetails_${index}_Card_Issued`]}
+                            </Form.Control.Feedback>
                           </>
-                        
                         ) : (
                           <div className="form-control bg-light">
                             {familyMember.Card_Issued || "Not set"}
@@ -1170,63 +1019,42 @@ const MemberForm = React.memo(
 
                         {editingFamilyIndex === index ? (
                           <>
-                          <Form.Select
-  value={
-    familyMember.category || ""
-  }
-  onChange={(e) =>
-    updateFamilyMember(
-      index,
-      "category",
-      e.target.value
-    )
-  }
-  isInvalid={
-    !!formErrors[
-      `familyDetails_${index}_category`
-    ]
-  }
->
-  <option value="">
-    Select Category
-  </option>
+                            <Form.Select
+                              value={familyMember.category || ""}
+                              onChange={(e) =>
+                                updateFamilyMember(
+                                  index,
+                                  "category",
+                                  e.target.value,
+                                )
+                              }
+                              isInvalid={
+                                !!formErrors[`familyDetails_${index}_category`]
+                              }
+                            >
+                              <option value="">Select Category</option>
 
-  <option value="Delegate">
-    Delegate
-  </option>
+                              <option value="Delegate">Delegate</option>
 
-  <option
-    value="Parent of Marriageable Candidate"
-  >
-    Parent of Marriageable Candidate
-  </option>
+                              <option value="Parent of Marriageable Candidate">
+                                Parent of Marriageable Candidate
+                              </option>
 
-  <option
-    value="Marriageable Candidate"
-  >
-    Marriageable Candidate
-  </option>
-</Form.Select>
+                              <option value="Marriageable Candidate">
+                                Marriageable Candidate
+                              </option>
+                            </Form.Select>
 
-<Form.Control.Feedback
-  type="invalid"
->
-  {
-    formErrors[
-      `familyDetails_${index}_category`
-    ]
-  }
-</Form.Control.Feedback>
+                            <Form.Control.Feedback type="invalid">
+                              {formErrors[`familyDetails_${index}_category`]}
+                            </Form.Control.Feedback>
                           </>
-                        
                         ) : (
                           <div className="form-control bg-light">
                             {familyMember.category || "Not set"}
                           </div>
                         )}
                       </Form.Group>
-
-                    
 
                       <Form.Group
                         as={Col}
@@ -1413,32 +1241,26 @@ const NewRegistration = () => {
     reader.readAsDataURL(file);
   };
 
- const updateMemberData =
-  useCallback(
-    (field, value) => {
-      setMember((prev) => ({
+  const updateMemberData = useCallback((field, value) => {
+    setMember((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+
+    setFormErrors((prev) => {
+      if (!prev[field]) {
+        return prev;
+      }
+
+      const updated = {
         ...prev,
-        [field]: value,
-      }));
+      };
 
-      setFormErrors(
-        (prev) => {
-          if (!prev[field]) {
-            return prev;
-          }
+      delete updated[field];
 
-          const updated = {
-            ...prev,
-          };
-
-          delete updated[field];
-
-          return updated;
-        }
-      );
-    },
-    []
-  );
+      return updated;
+    });
+  }, []);
 
   // const validateForm = () => {
   //   const requiredFields = [
@@ -1803,7 +1625,8 @@ const NewRegistration = () => {
   return (
     <>
       <Navbar />
-      <Container className="py-3">
+      {/* <Container className="py-3"> */}
+      {/* <Container fluid className={styles.registrationPage}>
         <div className="text-center mb-2">
           <h4 style={{ fontSize: "1.5rem", marginBottom: "0.25rem" }}>
             Online Registration for 134<sup>th</sup> Annual Conference at Ujjain
@@ -1915,40 +1738,64 @@ const NewRegistration = () => {
 
                 {error && <Alert variant="danger">{error}</Alert>}
                 {member && (
-                  <Row className="justify-content-center">
-                    <Col xs={12} lg={11} xl={10}>
-                      <Card className="p-4">
-                        <MemberForm
-                          member={member}
-                          isEditing={isEditing}
-                          formErrors={formErrors}
-                          submitting={submitting}
-                          photoPreview={photoPreview}
-                          handlePhotoChange={handlePhotoChange}
-                          setIsEditing={setIsEditing}
-                          handleSubmit={handleSubmit}
-                          updateMemberData={updateMemberData}
-                        />
+                  // <Row className="justify-content-center">
+                  //   <Col xs={12} lg={11} xl={10}>
+                  //     <Card className="p-4">
+                  <Row>
+                    <Col xs={12}>
+                      <Card className={styles.registrationCard}>
+                        <Card.Body className={styles.registrationCardBody}>
+                          <MemberForm
+                            member={member}
+                            isEditing={isEditing}
+                            formErrors={formErrors}
+                            submitting={submitting}
+                            photoPreview={photoPreview}
+                            handlePhotoChange={handlePhotoChange}
+                            setIsEditing={setIsEditing}
+                            handleSubmit={handleSubmit}
+                            updateMemberData={updateMemberData}
+                          />
+                        </Card.Body>
                       </Card>
                     </Col>
                   </Row>
                 )}
               </>
             ) : (
-              <Row className="justify-content-center mb-4">
-                <Col xs={12} lg={11} xl={10}>
-                  <Card className="p-4">
-                    <MemberForm
-                      member={member}
-                      isEditing={isEditing}
-                      formErrors={formErrors}
-                      submitting={submitting}
-                      photoPreview={photoPreview}
-                      handlePhotoChange={handlePhotoChange}
-                      setIsEditing={setIsEditing}
-                      handleSubmit={handleSubmit}
-                      updateMemberData={updateMemberData}
-                    />
+              // <Row className="justify-content-center mb-4">
+              //   <Col xs={12} lg={11} xl={10}>
+              //     <Card className="p-4">
+              //       <MemberForm
+              //         member={member}
+              //         isEditing={isEditing}
+              //         formErrors={formErrors}
+              //         submitting={submitting}
+              //         photoPreview={photoPreview}
+              //         handlePhotoChange={handlePhotoChange}
+              //         setIsEditing={setIsEditing}
+              //         handleSubmit={handleSubmit}
+              //         updateMemberData={updateMemberData}
+              //       />
+              //     </Card>
+              //   </Col>
+              // </Row>
+              <Row className="mb-4">
+                <Col xs={12}>
+                  <Card className={styles.registrationCard}>
+                    <Card.Body className={styles.registrationCardBody}>
+                      <MemberForm
+                        member={member}
+                        isEditing={isEditing}
+                        formErrors={formErrors}
+                        submitting={submitting}
+                        photoPreview={photoPreview}
+                        handlePhotoChange={handlePhotoChange}
+                        setIsEditing={setIsEditing}
+                        handleSubmit={handleSubmit}
+                        updateMemberData={updateMemberData}
+                      />
+                    </Card.Body>
                   </Card>
                 </Col>
               </Row>
@@ -2031,7 +1878,7 @@ const NewRegistration = () => {
             <Modal.Title>Confirm Registration</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            Please review all the member and family details carefully. Once
+            Please review all the details carefully. Once
             submitted, the information will be saved.
             <br />
             <br />
@@ -2051,10 +1898,10 @@ const NewRegistration = () => {
             </Button>
           </Modal.Footer>
         </Modal>
-      </Container>
-      {/* <Container>
-        Form under maintenance
       </Container> */}
+      <Container>
+        Form under maintenance
+      </Container>
     </>
   );
 };

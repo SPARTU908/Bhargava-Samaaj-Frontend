@@ -161,10 +161,62 @@
   border-radius: 14px !important;
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
   background: #ffffff;
+  height: auto !important;
+
 }
+
+/* .registrationCard {
+  width: 100%;
+  border: 1px solid #e8e8e8 !important;
+  border-radius: 16px !important;
+  background: #ffffff !important;
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.02),
+    0 8px 30px rgba(0, 0, 0, 0.06) !important;
+  overflow: hidden;
+}
+
+.registrationCardBody {
+  padding: 32px 36px !important;
+}
+@media (max-width: 768px) {
+  .registrationCardBody {
+    padding: 22px 18px !important;
+  }
+} */
+
 .registrationTypeButton {
   min-width: 190px;
   padding: 11px 18px;
   border-radius: 8px !important;
   font-weight: 600 !important;
 }
+
+.registrationPage {
+  width: 100%;
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: 25px 40px 60px;
+}
+
+@media (max-width: 991px) {
+  .registrationPage {
+    padding: 20px 24px 50px;
+  }
+}
+
+@media (max-width: 576px) {
+  .registrationPage {
+    padding: 15px 12px 40px;
+  }
+}
+
+b, strong {
+    font-weight: 500 !important;
+}
+
+.img-fluid {
+    max-width: 70% !important;
+    height: auto;
+}
+
