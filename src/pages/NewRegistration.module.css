@@ -199,24 +199,350 @@
   padding: 25px 40px 60px;
 }
 
-@media (max-width: 991px) {
+/* =========================================================
+   FINAL MOBILE FIX
+   KEEP THIS AT THE VERY BOTTOM OF THE CSS FILE
+   ========================================================= */
+
+@media screen and (max-width: 767px) {
+
+  .registrationCard,
+  .familyCard {
+    padding: 0 !important;
+  }
   .registrationPage {
-    padding: 20px 24px 50px;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 15px 10px 40px !important;
+    margin: 0 !important;
+    overflow-x: hidden !important;
+  }
+
+  .registrationCard {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .registrationCardBody {
+    width: 100% !important;
+    padding: 12px !important;
+  }
+
+
+  /* ==========================
+     FAMILY SECTION
+     ========================== */
+
+  .familySection {
+    width: 100% !important;
+    max-width: 100% !important;
+
+    padding: 16px 12px !important;
+
+    margin: 10px 0 0 0 !important;
+
+    box-sizing: border-box !important;
+
+    overflow: hidden !important;
+  }
+
+
+  .familyHeader {
+    display: flex !important;
+
+    flex-direction: column !important;
+
+    justify-content: flex-start !important;
+
+    align-items: stretch !important;
+
+    width: 100% !important;
+
+    max-width: 100% !important;
+
+    gap: 14px !important;
+
+    margin-bottom: 20px !important;
+  }
+
+
+  .familyHeader > div {
+    display: block !important;
+
+    width: 100% !important;
+
+    max-width: 100% !important;
+
+    flex: none !important;
+  }
+
+
+  .familyHeader h5 {
+    width: 100% !important;
+
+    margin: 0 0 5px 0 !important;
+
+    font-size: 18px !important;
+
+    line-height: 1.3 !important;
+  }
+
+
+  .familyHeader p {
+    width: 100% !important;
+
+    max-width: 100% !important;
+
+    margin: 0 !important;
+
+    line-height: 1.5 !important;
+
+    word-break: normal !important;
+  }
+
+
+  /* ADD FAMILY BUTTON */
+
+  .addFamilyButton {
+    display: block !important;
+
+    width: 100% !important;
+
+    min-width: 0 !important;
+
+    max-width: 100% !important;
+
+    height: auto !important;
+
+    margin: 0 !important;
+
+    padding: 11px 10px !important;
+
+    white-space: normal !important;
+
+    overflow: hidden !important;
+
+    text-overflow: unset !important;
+
+    box-sizing: border-box !important;
+
+    text-align: center !important;
+
+    line-height: 1.4 !important;
+
+    font-size: 14px !important;
+
+    flex: none !important;
+  }
+
+
+
+
+
+  /* ==========================
+     SUBMIT SECTION
+     ========================== */
+
+  .submitSection {
+    display: flex !important;
+
+    flex-direction: column !important;
+
+    justify-content: flex-start !important;
+
+    align-items: stretch !important;
+
+    width: 100% !important;
+
+    max-width: 100% !important;
+
+    min-width: 0 !important;
+
+    margin: 25px 0 0 0 !important;
+
+    padding: 16px 12px !important;
+
+    gap: 15px !important;
+
+    box-sizing: border-box !important;
+
+    overflow: hidden !important;
+  }
+
+
+  .submitSection > div {
+    display: block !important;
+
+    width: 100% !important;
+
+    max-width: 100% !important;
+
+    min-width: 0 !important;
+
+    flex: none !important;
+  }
+
+
+  .submitTitle {
+    width: 100% !important;
+
+    margin: 0 0 5px 0 !important;
+
+    font-size: 16px !important;
+
+    line-height: 1.4 !important;
+  }
+
+
+  .submitSection small {
+    display: block !important;
+
+    width: 100% !important;
+
+    max-width: 100% !important;
+
+    line-height: 1.5 !important;
+  }
+
+
+  /* SAVE & PROCEED BUTTON */
+
+  .submitButton {
+    display: block !important;
+
+    width: 100% !important;
+
+    min-width: 0 !important;
+
+    max-width: 100% !important;
+
+    height: auto !important;
+
+    min-height: 46px !important;
+
+    margin: 0 !important;
+
+    padding: 11px 8px !important;
+
+    box-sizing: border-box !important;
+
+    white-space: normal !important;
+
+    overflow: hidden !important;
+
+    text-overflow: unset !important;
+
+    text-align: center !important;
+
+    line-height: 1.35 !important;
+
+    font-size: 13px !important;
+
+    flex: none !important;
+  }
+
+}
+
+
+/* ==================================================
+   FAMILY MEMBER FIELDS - FINAL MOBILE FIX
+   ================================================== */
+
+.familyFieldsRow {
+  width: 100%;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+@media (max-width: 767px) {
+
+  .familyFieldsRow {
+    width: 100% !important;
+    max-width: 100% !important;
+
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+
+    display: flex !important;
+    flex-wrap: wrap !important;
+  }
+
+  /* FORCE EVERY FAMILY FIELD TO ONE FULL ROW */
+  .familyFieldsRow > * {
+    flex: 0 0 100% !important;
+    width: 100% !important;
+    max-width: 100% !important;
+
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+
+    margin-bottom: 14px !important;
+
+    box-sizing: border-box !important;
+  }
+
+  /* INPUT */
+  .familyFieldsRow :global(.form-control) {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+
+    display: block !important;
+
+    box-sizing: border-box !important;
+  }
+
+  /* SELECT */
+  .familyFieldsRow :global(.form-select) {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+
+    display: block !important;
+
+    box-sizing: border-box !important;
+  }
+
+  /* LABEL */
+  .familyFieldsRow :global(.form-label) {
+    display: block !important;
+
+    width: 100% !important;
+
+    min-height: auto !important;
+
+    margin-bottom: 7px !important;
+
+    white-space: normal !important;
+    word-break: normal !important;
+
+    line-height: 1.4 !important;
+  }
+
+  /* TEXTAREA */
+  .familyFieldsRow textarea {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* FAMILY CARD */
+  .familyCard {
+    width: 100% !important;
+    max-width: 100% !important;
+
+    padding: 0 !important;
+
+    overflow: visible !important;
+  }
+
+  .familyCard :global(.card-body) {
+    width: 100% !important;
+    max-width: 100% !important;
+
+    padding: 14px !important;
+
+    box-sizing: border-box !important;
   }
 }
-
-@media (max-width: 576px) {
-  .registrationPage {
-    padding: 15px 12px 40px;
-  }
-}
-
-b, strong {
-    font-weight: 500 !important;
-}
-
-.img-fluid {
-    max-width: 70% !important;
-    height: auto;
-}
-

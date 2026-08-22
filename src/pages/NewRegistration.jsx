@@ -356,7 +356,7 @@ const MemberForm = React.memo(
                       </div>
                     </div>
 
-                    <Row>
+                  <Row className={`${styles.familyFieldsRow} g-3`}>
                       {/* Relation */}
                       <Form.Group
                         as={Col}
@@ -1626,17 +1626,17 @@ const NewRegistration = () => {
     <>
       <Navbar />
       {/* <Container className="py-3"> */}
-      {/* <Container fluid className={styles.registrationPage}>
+      <Container fluid className={styles.registrationPage}>
         <div className="text-center mb-2">
           <h4 style={{ fontSize: "1.5rem", marginBottom: "0.25rem" }}>
             Online Registration for 134<sup>th</sup> Annual Conference at Ujjain
-            ( 20th, 21st, 22nd December 2025)
+            ( 20th, 21st, 22nd December 2026)
           </h4>
         </div>
         <p className="text-center mb-4 fw-semibold text-danger">
           ⚠️ Last Date for Online Registration:{" "}
           <strong>
-            7<sup>th</sup> December 2025
+            7<sup>th</sup> December 2026
           </strong>
         </p>
 
@@ -1648,7 +1648,9 @@ const NewRegistration = () => {
             <h5 className="text-decoration-underline text-secondary mb-2">
               🧾 Registration Charges:
             </h5>
-            <div className="d-flex justify-content-between align-items-start">
+            <div
+  className={`d-flex justify-content-between align-items-start ${styles.chargesContent}`}
+>
               <div className="me-3" style={{ flex: 1 }}>
                 <ul className="mb-0 ps-3">
                   <li>
@@ -1675,7 +1677,9 @@ const NewRegistration = () => {
         </Card.Body>
         {currentStep === 1 && (
           <>
-            <div className="d-flex justify-content-center gap-3 mb-4">
+            <div
+  className={`d-flex justify-content-center gap-3 mb-4 ${styles.registrationTypeWrapper}`}
+>
               <Button
                 className={styles.registrationTypeButton}
                 variant={isAbbsMember ? "primary" : "outline-primary"}
@@ -1898,10 +1902,10 @@ const NewRegistration = () => {
             </Button>
           </Modal.Footer>
         </Modal>
-      </Container> */}
-      <Container>
-        Form under maintenance
       </Container>
+      {/* <Container>
+        Form under maintenance
+      </Container> */}
     </>
   );
 };

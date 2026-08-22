@@ -42,7 +42,7 @@ const Registration = () => {
             >
               <Card.Body className="text-center p-5">
                 <Card.Title className="fs-4 fw-bold mb-3">
-                  🏛️ Registration for 134<sup>th</sup> Annual Conference at Ujjain
+                  🏛️ Registration for 135<sup>th</sup> Annual Conference at Ujjain
                 </Card.Title>
                 <Card.Text>
                   Register now to attend the 134<sup>th</sup> Annual Conference being held in Ujjain.
