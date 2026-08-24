@@ -47,6 +47,7 @@ import MagazineFormData from "./pages/MagazineFormData.jsx";
 import AllUsers from "./pages/AllUsers.jsx";
 import ConferencePayment from "./components/ConferencePayment.jsx";
 import DuplicateMembership from "./pages/DuplicateMembership";
+import DuplicatePayment from "./pages/DuplicatePayment";
 
 
 
@@ -127,6 +128,7 @@ function App() {
           <Route path="/download-all" element={<DownloadAll />} />
          <Route path="/magazine-data" element={<MagazineFormData />} />
            <Route path="/allusers" element={<AllUsers/>} />
+           
 
 
           
@@ -140,17 +142,9 @@ function App() {
             <Route path="/magazine-form-download" element={<MagazinePage />} />
 
              <Route path="/conference-payment" element={<ConferencePayment />} />
-<Route
-  path="/duplicate-membership"
-  element={
-    <DuplicateMembership />
-  }
-/>
-
-
-      
-
-        </Routes>
+        < Route path="/duplicate-membership" element={<DuplicateMembership />}/>
+        <Route path="/duplicate-payment" element={<DuplicatePayment /> }/>
+      </Routes>
         </AuthProvider> 
       </BrowserRouter>
     </>

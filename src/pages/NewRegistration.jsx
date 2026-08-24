@@ -1629,8 +1629,8 @@ const NewRegistration = () => {
       <Container fluid className={styles.registrationPage}>
         <div className="text-center mb-2">
           <h4 style={{ fontSize: "1.5rem", marginBottom: "0.25rem" }}>
-            Online Registration for 134<sup>th</sup> Annual Conference at Ujjain
-            ( 20th, 21st, 22nd December 2026)
+            Online Registration for 135<sup>th</sup> Annual Conference at Jaipur
+            ( 26th, 27th, 28th December 2026)
           </h4>
         </div>
         <p className="text-center mb-4 fw-semibold text-danger">
@@ -1649,13 +1649,13 @@ const NewRegistration = () => {
               🧾 Registration Charges:
             </h5>
             <div
-  className={`d-flex justify-content-between align-items-start ${styles.chargesContent}`}
+     className={`d-flex justify-content-between align-items-start ${styles.chargesContent}`}
 >
               <div className="me-3" style={{ flex: 1 }}>
                 <ul className="mb-0 ps-3">
                   <li>
                     ★ Online Registration: Rs. 50 per person (Rs. 50/- will be
-                    charged while collecting your card during the Ujjain
+                    charged while collecting your card during the Jaipur
                     Conference.)
                   </li>
                   <li>

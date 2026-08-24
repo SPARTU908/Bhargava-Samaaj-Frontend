@@ -92,3 +92,16 @@ export const submitDuplicatePayment =
       );
     }
   };
+
+
+  export const getAllDuplicateApplications = async () => {
+  try {
+    const response = await axios.get(
+      `${API_URL}/api/duplicate-membership/admin/all`
+    );
+
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};

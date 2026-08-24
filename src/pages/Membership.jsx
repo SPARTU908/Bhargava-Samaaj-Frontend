@@ -63,6 +63,17 @@ const Membership = () => {
 
   const handleSelection = (event) => {
     const value = event.target.value;
+
+
+      // Duplicate Membership selected
+  if (
+    value ===
+    "डुप्लिकेट परिचय शुल्क - ₹50 रुपये"
+  ) {
+    navigate("/duplicate-membership");
+    return;
+  }
+  
     setSelectedFee(value);
     if (value === "आजीवन सभासद - युगल-(पति-पत्नी) - 1000 रुपये") {
       setShowSpouseFields(true);

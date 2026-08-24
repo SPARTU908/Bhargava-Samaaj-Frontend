@@ -2,11 +2,12 @@ import { useState, useEffect } from "react";
 import styles from "./MembershipAdminDashboard.module.css";
 import MemberAdmin from "../pages/MemberAdmin";
 import PendingMemberList from "../pages/PendingMemberList";
-import DeletedMembers from "./DeletedMembers"
+import DeletedMembers from "./DeletedMembers";
 import { IoMdHome } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { getMemberCount } from "../apis/member";
 import { toast, ToastContainer } from "react-toastify";
+import DuplicateMembershipAdmin from "../pages/DuplicateMembershipAdmin";
 import "react-toastify/dist/ReactToastify.css";
 
 const MembershipAdminDashboard = () => {
@@ -31,8 +32,10 @@ const MembershipAdminDashboard = () => {
     switch (selectedSection) {
       case "membership":
         return <MemberAdmin />;
-       case "deleted":
-      return <DeletedMembers />;
+      case "duplicate":
+        return <DuplicateMembershipAdmin />;
+      case "deleted":
+        return <DeletedMembers />;
       default:
         return (
           <>
@@ -93,6 +96,15 @@ const MembershipAdminDashboard = () => {
                 onClick={() => setSelectedSection("membership")}
               >
                 All Membership Form
+              </div>
+
+              <div
+                className={`${styles.optionButton} ${
+                  selectedSection === "duplicate" ? styles.activeButton : ""
+                }`}
+                onClick={() => setSelectedSection("duplicate")}
+              >
+                Duplicate Membership Form
               </div>
 
               <div

@@ -124,16 +124,14 @@ const AwardForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-     const validationErrors = validateForm();
- 
+    const validationErrors = validateForm();
+
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length > 0) {
       console.log("Validation failed - aborting submit");
       return;
     }
-
-   
 
     const data = new FormData();
     for (let key in formData) {
@@ -148,14 +146,14 @@ const AwardForm = () => {
       data.append("document1", files.document1);
       console.log(
         "Appended file document1:",
-        files.document1.name || files.document1
+        files.document1.name || files.document1,
       );
     }
     if (files.document2) {
       data.append("document2", files.document2);
       console.log(
         "Appended file document2:",
-        files.document2.name || files.document2
+        files.document2.name || files.document2,
       );
     }
 
@@ -190,9 +188,9 @@ const AwardForm = () => {
           spouse: "",
           spouseOccupation: "",
           spousedob: "",
-          photo:"",
-          document1:"",
-          document2:"",
+          photo: "",
+          document1: "",
+          document2: "",
           proposerName: "",
           proposerEmail: "",
           proposerMobile: "",
@@ -227,7 +225,6 @@ const AwardForm = () => {
       <Navbar />
       <Container fluid className="my-5">
         <Row>
-       
           <Col lg={5} className="mb-4">
             <Card className="shadow-sm p-3 h-auto">
               <h5 className="text-center mb-3">Awards List & Details</h5>
@@ -273,10 +270,20 @@ const AwardForm = () => {
                   }}
                 />
               </div>
+
+              <div className="text-center mt-3">
+                <a
+                  href="/pdfs/Award26.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-primary"
+                >
+                  View Full PDF
+                </a>
+              </div>
             </Card>
           </Col>
 
-       
           <Col lg={7}>
             <Card className="p-4 shadow-sm h-auto">
               <h3 className="text-center mb-4" style={{ color: "#003366" }}>
@@ -295,7 +302,6 @@ const AwardForm = () => {
                 encType="multipart/form-data"
                 noValidate
               >
-            
                 <h5 className="text-secondary mb-3">Preference for award</h5>
                 <Row>
                   <Col md={4}>
@@ -339,7 +345,6 @@ const AwardForm = () => {
                   </Col>
                 </Row>
 
-         
                 <h5 className="text-secondary mt-4 mb-3">
                   Applicant's details
                 </h5>
@@ -535,11 +540,9 @@ const AwardForm = () => {
                 <Row>
                   <Col md={6}>
                     <Form.Group className="mb-3">
-                      <Form.Label>
-                        Spouse DOB 
-                      </Form.Label>
+                      <Form.Label>Spouse DOB</Form.Label>
                       <Form.Control
-                      type="date"
+                        type="date"
                         name="spousedob"
                         value={formData.spousedob}
                         onChange={handleChange}
@@ -552,9 +555,7 @@ const AwardForm = () => {
                   </Col>
                   <Col md={6}>
                     <Form.Group className="mb-3">
-                      <Form.Label>
-                        Spouse Occupation 
-                      </Form.Label>
+                      <Form.Label>Spouse Occupation</Form.Label>
                       <Form.Control
                         name="spouseOccupation"
                         value={formData.spouseOccupation}
@@ -566,10 +567,8 @@ const AwardForm = () => {
                       </Form.Control.Feedback>
                     </Form.Group>
                   </Col>
-                  
                 </Row>
 
-               
                 <h5 className="text-secondary mt-4 mb-3">
                   If the application is not submitted by the applicant
                   himself/herself, details of proposer —
@@ -618,7 +617,6 @@ const AwardForm = () => {
                   />
                 </Form.Group>
 
-             
                 <h5 className="text-secondary mt-4 mb-3">Upload Files</h5>
                 <Row>
                   <Col md={4}>
@@ -689,11 +687,8 @@ const AwardForm = () => {
             </Card>
           </Col>
         </Row>{" "}
-      
-      </Container> 
-      <Container>
-        Registration Closed
       </Container>
+      <Container>Registration Closed</Container>
     </>
   );
 };

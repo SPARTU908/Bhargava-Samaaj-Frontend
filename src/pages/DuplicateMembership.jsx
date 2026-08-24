@@ -167,6 +167,10 @@ const DuplicateMembership = () => {
       email:
         member.Email || "",
 
+        dob:
+        member.Date_of_Birth || "",
+
+
       relationName:
         member.S_O_D_O_W_O || "",
 
@@ -181,7 +185,7 @@ const DuplicateMembership = () => {
 
       oldAddress: [
         member.Address,
-        member.City,
+         member.CITY || member.City,
       ]
         .filter(Boolean)
         .join(", "),
@@ -520,17 +524,17 @@ const DuplicateMembership = () => {
 
         {/* Header */}
         <section className="duplicate-hero">
-          <div className="hero-badge">
+          {/* <div className="hero-badge">
             ABBS Duplicate Identity Card
-          </div>
+          </div> */}
 
           <h1>
             डुप्लिकेट परिचय-पत्र हेतु आवेदन
           </h1>
 
-          <p>
+          {/* <p>
             अखिल भारतीय भार्गव सभा (रजि.)
-          </p>
+          </p> */}
 
           <div className="hero-fee">
             <span className="fee-label">
@@ -538,7 +542,7 @@ const DuplicateMembership = () => {
             </span>
 
             <strong>
-              ₹50 प्रति सदस्य
+              ₹50 प्रति आवेदन
             </strong>
           </div>
         </section>
@@ -591,7 +595,7 @@ const DuplicateMembership = () => {
 
                 <div>
                   <strong>
-                    मुझे अपना LM Number पता है
+                    मुझे अपना ABBS L/M Number पता है
                   </strong>
 
                   <span>
@@ -622,7 +626,7 @@ const DuplicateMembership = () => {
 
                 <div>
                   <strong>
-                    मुझे LM Number याद नहीं है
+                    मुझे ABBS L/M Number याद नहीं है
                   </strong>
 
                   <span>
@@ -808,9 +812,24 @@ const DuplicateMembership = () => {
                             <span>
                               <b>City:</b>{" "}
                               {member.CITY ||
-                                member.City ||
+                                member.CITY ||
                                 "-"}
                             </span>
+
+                              <span>
+                              <b>Address:</b>{" "}
+                              {member.Address  ||
+                                member.Address  ||
+                                "-"}
+                            </span>
+                              <span>
+                              <b>Contact No:</b>{" "}
+                              {member.Contact_No   ||
+                                member.Contact_No   ||
+                                "-"}
+                            </span>
+
+
                           </div>
 
                         </div>
@@ -862,7 +881,7 @@ const DuplicateMembership = () => {
                 </strong>
 
                 <span>
-                  ABBS LM No:{" "}
+                  ABBS L/M No:{" "}
                   {formData.abbsLmNo}
                 </span>
               </div>
@@ -1169,7 +1188,7 @@ const DuplicateMembership = () => {
                     <div className="form-field">
 
                       <label>
-                        Spouse ABBS LM No
+                        Spouse ABBS L/M No
                         <span className="required">
                           *
                         </span>
@@ -1327,7 +1346,7 @@ const DuplicateMembership = () => {
 
 
             {/* Fee */}
-            <section className="amount-box">
+            {/* <section className="amount-box">
 
               <div>
                 <span>
@@ -1357,7 +1376,33 @@ const DuplicateMembership = () => {
 
               </div>
 
-            </section>
+            </section> */}
+
+            <section className="amount-box">
+
+  <div>
+    <span>
+      भुगतान विवरण
+    </span>
+
+    <small>
+      डुप्लिकेट परिचय-पत्र हेतु निश्चित आवेदन शुल्क
+    </small>
+  </div>
+
+  <div className="amount-value">
+
+    <span>
+      Application Fee
+    </span>
+
+    <strong>
+      ₹50
+    </strong>
+
+  </div>
+
+</section>
 
 
             {/* Submit */}
