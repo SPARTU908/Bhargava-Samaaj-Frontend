@@ -46,6 +46,7 @@ import MagazinePage from "./pages/MagazinePage.jsx";
 import MagazineFormData from "./pages/MagazineFormData.jsx";
 import AllUsers from "./pages/AllUsers.jsx";
 import ConferencePayment from "./components/ConferencePayment.jsx";
+import DuplicateMembership from "./pages/DuplicateMembership";
 
 
 
@@ -139,7 +140,12 @@ function App() {
             <Route path="/magazine-form-download" element={<MagazinePage />} />
 
              <Route path="/conference-payment" element={<ConferencePayment />} />
-
+<Route
+  path="/duplicate-membership"
+  element={
+    <DuplicateMembership />
+  }
+/>
 
 
       
