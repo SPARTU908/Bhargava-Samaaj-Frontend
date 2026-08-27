@@ -76,6 +76,7 @@ const DisplayForm = ({ member }) => {
                 डुप्लिकेट परिचय शुल्क - 50 रुपये
               </div>
             </div>
+            
             <div className={styles.pictures}>
               {member.photo && (
                 <img

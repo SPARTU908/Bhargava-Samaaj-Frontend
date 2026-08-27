@@ -4,86 +4,86 @@ import qrImage from "../assets/qr-reg.jpg";
 
 import { submitConferencePayment } from "../apis/conferenceRegistration";
 
-const ConferencePayment = ({ registration, onSuccess }) => {
-  const [transactionId, setTransactionId] = useState("");
+const ConferencePayment = ({member,paymentData,setPaymentData,onSuccess,}) => {
+const [error, setError] = useState("");
+const [submitting, setSubmitting] = useState(false);
+const totalMembers =1 + (member?.familyDetails?.length || 0);
+const amount = totalMembers * 50;
+const primaryMember = member;
+const {transactionId, screenshot,preview, } = paymentData;
 
-  const [screenshot, setScreenshot] = useState(null);
+  // if (!registration) {
+  //   return (
+  //     <Card className="p-4 text-center">
+  //       <Alert variant="warning">
+  //         Registration details are not available. Please complete Step 1
+  //         registration first.
+  //       </Alert>
+  //     </Card>
+  //   );
+  // }
 
-  const [preview, setPreview] = useState(null);
+  if (!member) {
+  return (
+    <Card className="p-4 text-center">
+      <Alert variant="warning">
+        Member details are not available. Please complete Step 1 first.
+      </Alert>
+    </Card>
+  );
+}
 
-  const [error, setError] = useState("");
+//   const primaryMember = registration.members?.find(
+//   (member) => member.memberType === "Primary"
+// );
 
-  const [submitting, setSubmitting] = useState(false);
+const handleScreenshotChange = (e) => {
+  const file = e.target.files?.[0];
 
-  if (!registration) {
-    return (
-      <Card className="p-4 text-center">
-        <Alert variant="warning">
-          Registration details are not available. Please complete Step 1
-          registration first.
-        </Alert>
-      </Card>
-    );
+  if (!file) return;
+
+  if (!file.type.startsWith("image/")) {
+    setError("Please upload a valid payment screenshot.");
+    return;
   }
 
-  const primaryMember = registration.members?.find(
-  (member) => member.memberType === "Primary"
-);
+  setError("");
 
-  const handleScreenshotChange = (e) => {
-    const file = e.target.files?.[0];
+  const reader = new FileReader();
 
-    if (!file) return;
-
-    if (!file.type.startsWith("image/")) {
-      setError("Please upload a valid payment screenshot.");
-      return;
-    }
-
-    setScreenshot(file);
-
-    setError("");
-
-    const reader = new FileReader();
-
-    reader.onloadend = () => {
-      setPreview(reader.result);
-    };
-
-    reader.readAsDataURL(file);
+  reader.onloadend = () => {
+    setPaymentData((prev) => ({
+      ...prev,
+      screenshot: file,
+      preview: reader.result,
+    }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  reader.readAsDataURL(file);
+};
 
-    setError("");
+ 
+ const handleSubmit = (e) => {
+  e.preventDefault();
 
-    if (!screenshot) {
-      setError("Please upload payment screenshot.");
-      return;
-    }
+  setError("");
 
-    if (!transactionId.trim()) {
-      setError("Please enter Transaction ID / UTR No.");
-      return;
-    }
+  if (!transactionId.trim()) {
+    setError("Please enter Transaction ID / UTR No.");
+    return;
+  }
 
-    try {
-      setSubmitting(true);
+  if (!screenshot) {
+    setError("Please upload payment screenshot.");
+    return;
+  }
 
-      const response = await submitConferencePayment(
-        registration.registrationId,
-        transactionId,
-        screenshot,
-      );
-
-      onSuccess(response);
-    } catch (error) {
-      setError(error.message || "Payment submission failed");
-    } finally {
-      setSubmitting(false);
-    }
-  };
+  onSuccess({
+    transactionId,
+    screenshot,
+    preview,
+  });
+};
 
   return (
     <div
@@ -215,7 +215,7 @@ const ConferencePayment = ({ registration, onSuccess }) => {
     Members
   </strong>
 
-  {registration.members?.map(
+  {/* {registration.members?.map(
     (member, index) => (
       <div
         key={index}
@@ -250,7 +250,45 @@ const ConferencePayment = ({ registration, onSuccess }) => {
         </div>
       </div>
     )
-  )}
+  )} */}
+  {[
+  {
+    ...member,
+    memberType: "Primary",
+  },
+  ...(member?.familyDetails || []).map((family) => ({
+    ...family,
+    memberType: "Family",
+    relation: family.Relation || "",
+  })),
+].map((item, index) => (
+  <div
+    key={index}
+    style={{
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      padding: "10px 0",
+    }}
+  >
+    <div>
+      <strong
+        style={{
+          display: "block",
+          fontSize: "15px",
+        }}
+      >
+        {item.Member_Name}
+      </strong>
+
+      <small style={{ color: "#777" }}>
+        {item.memberType === "Primary"
+          ? "Primary Member"
+          : item.relation || "Family Member"}
+      </small>
+    </div>
+  </div>
+))}
 
   <div
     style={{
@@ -296,12 +334,12 @@ const ConferencePayment = ({ registration, onSuccess }) => {
                   lineHeight: "1.2",
                 }}
               >
-                ₹{registration.amount}
+               ₹{amount}
               </div>
 
               <small style={{ color: "#666" }}>
-                {registration.totalMembers} Member
-                {registration.totalMembers > 1 ? "s" : ""} × ₹50
+                {totalMembers} Member
+{totalMembers > 1 ? "s" : ""} × ₹50
               </small>
             </div>
           </div>
@@ -357,7 +395,7 @@ const ConferencePayment = ({ registration, onSuccess }) => {
                 color: "#f4511e",
               }}
             >
-              Amount: ₹{registration.amount}
+             Amount: ₹{amount}
             </div>
           </div>
         </Col>
@@ -471,7 +509,7 @@ const ConferencePayment = ({ registration, onSuccess }) => {
 
     <Form.Control
       type="text"
-      value={`₹${registration.amount}`}
+     value={`₹${amount}`}
       readOnly
       style={{
         backgroundColor: "#f8f9fa",
@@ -481,8 +519,8 @@ const ConferencePayment = ({ registration, onSuccess }) => {
     />
 
     <Form.Text className="text-muted">
-      Payment for {registration.totalMembers} member
-      {registration.totalMembers > 1 ? "s" : ""}
+     Payment for {totalMembers} member
+{totalMembers > 1 ? "s" : ""}
     </Form.Text>
   </Form.Group>
 
@@ -496,14 +534,17 @@ const ConferencePayment = ({ registration, onSuccess }) => {
       </span>
     </Form.Label>
 
-    <Form.Control
-      type="text"
-      placeholder="Enter Transaction ID / UTR No."
-      value={transactionId}
-      onChange={(e) =>
-        setTransactionId(e.target.value)
-      }
-    />
+  <Form.Control
+  type="text"
+  placeholder="Enter Transaction ID / UTR No."
+  value={transactionId}
+  onChange={(e) =>
+    setPaymentData((prev) => ({
+      ...prev,
+      transactionId: e.target.value,
+    }))
+  }
+/>
   </Form.Group>
 
   {/* PAYMENT SCREENSHOT */}
@@ -563,20 +604,17 @@ const ConferencePayment = ({ registration, onSuccess }) => {
   {/* SUBMIT BUTTON */}
   <div className="text-center">
     <Button
-      type="submit"
-      disabled={submitting}
-      style={{
-        backgroundColor: "#ff4b00",
-        border: "none",
-        minWidth: "180px",
-        fontWeight: "600",
-        padding: "10px 25px",
-      }}
-    >
-      {submitting
-        ? "Submitting..."
-        : "Submit Payment"}
-    </Button>
+  type="submit"
+  style={{
+    backgroundColor: "#ff4b00",
+    border: "none",
+    minWidth: "180px",
+    fontWeight: "600",
+    padding: "10px 25px",
+  }}
+>
+  Continue to Review →
+</Button>
   </div>
 
 </Form>

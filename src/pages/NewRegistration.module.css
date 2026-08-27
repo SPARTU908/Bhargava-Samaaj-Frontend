@@ -604,3 +604,630 @@
     font-size: 11px;
   }
 }
+
+/* =========================================
+   STEP 3 - PROFESSIONAL REVIEW PAGE
+========================================= */
+
+.reviewPage {
+  width: 100%;
+  max-width: 1200px;
+  margin: 20px auto 60px;
+}
+
+
+/* Header */
+
+.reviewHeader {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.reviewStepBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #fff0e9;
+  color: #f4511e;
+
+  border: 1px solid #ffd2c1;
+
+  padding: 7px 18px;
+  border-radius: 30px;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  margin-bottom: 12px;
+}
+
+.reviewHeader h2 {
+  margin: 0 0 8px;
+
+  font-size: 28px;
+  font-weight: 700;
+
+  color: #252525;
+}
+
+.reviewHeader p {
+  margin: 0;
+
+  color: #6c757d;
+  font-size: 14px;
+}
+
+
+/* Main registration card */
+
+.reviewMainCard {
+  width: 100% !important;
+
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+
+  display: block !important;
+
+  border: 1px solid #e5e7eb !important;
+  border-radius: 16px !important;
+
+  background: #ffffff !important;
+
+  box-shadow:
+    0 5px 20px rgba(0, 0, 0, 0.05) !important;
+
+  margin-bottom: 28px !important;
+
+  overflow: visible !important;
+}
+
+.reviewMainCard :global(.card-body) {
+  position: relative !important;
+
+  display: block !important;
+
+  width: 100% !important;
+
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+
+  padding: 28px !important;
+
+  overflow: visible !important;
+
+  box-sizing: border-box !important;
+}
+
+
+/* Section heading */
+
+.reviewSectionHeading {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: flex-start;
+
+  gap: 20px;
+
+  padding-bottom: 18px;
+  margin-bottom: 24px;
+
+  border-bottom: 1px solid #ececec;
+}
+
+.reviewSectionHeading h4 {
+  margin: 0 0 5px;
+
+  color: #222;
+
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.reviewSectionHeading p {
+  margin: 0;
+
+  font-size: 13px;
+  color: #777;
+}
+
+
+/* Editable badge */
+
+.editableBadge {
+  background: #fff3ed;
+
+  border: 1px solid #ffccb8;
+
+  color: #f4511e;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  padding: 6px 13px;
+
+  border-radius: 20px;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================
+   PAYMENT CARD
+========================================= */
+
+.reviewPaymentCard {
+  width: 100% !important;
+
+  height: auto !important;
+  min-height: 0 !important;
+
+  position: relative !important;
+
+  clear: both !important;
+
+  margin-top: 30px !important;
+  margin-bottom: 25px !important;
+
+  border: 1px solid #e5e7eb !important;
+  border-radius: 16px !important;
+
+  background: #ffffff !important;
+
+  box-shadow:
+    0 5px 20px rgba(0, 0, 0, 0.05) !important;
+
+  overflow: hidden;
+}
+
+.reviewPaymentCard :global(.card-body) {
+  padding: 28px;
+}
+
+
+.paymentDoneBadge {
+  background: #eaf8ef;
+
+  border: 1px solid #bce7ca;
+
+  color: #218838;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  padding: 6px 13px;
+
+  border-radius: 20px;
+
+  white-space: nowrap;
+}
+
+
+/* Payment summary */
+
+.paymentSummaryGrid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 0;
+
+  background: #fafafa;
+
+  border: 1px solid #ececec;
+
+  border-radius: 12px;
+
+  overflow: hidden;
+}
+
+
+.paymentSummaryItem {
+  padding: 22px 25px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 6px;
+
+  border-right: 1px solid #e5e5e5;
+}
+
+.paymentSummaryItem:last-child {
+  border-right: none;
+}
+
+
+.paymentLabel {
+  color: #777;
+
+  font-size: 12px;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.3px;
+
+  font-weight: 600;
+}
+
+
+.paymentSummaryItem strong {
+  color: #222;
+
+  font-size: 17px;
+
+  word-break: break-word;
+}
+
+
+.paymentAmount {
+  color: #f4511e !important;
+
+  font-size: 21px !important;
+}
+
+
+/* Screenshot */
+
+.paymentScreenshotSection {
+  margin-top: 24px;
+
+  padding-top: 22px;
+
+  border-top: 1px solid #ececec;
+
+  display: flex;
+
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 30px;
+}
+
+
+.paymentScreenshotSection h6 {
+  margin: 0 0 5px;
+
+  font-size: 15px;
+
+  font-weight: 700;
+}
+
+
+.paymentScreenshotSection p {
+  margin: 0;
+
+  color: #777;
+
+  font-size: 13px;
+}
+
+
+.paymentScreenshotBox {
+  width: 160px;
+
+  padding: 8px;
+
+  border: 1px solid #ddd;
+
+  border-radius: 10px;
+
+  background: #fafafa;
+}
+
+
+.paymentScreenshotBox img {
+  width: 100%;
+  height: 110px;
+
+  display: block;
+
+  object-fit: cover;
+
+  border-radius: 7px;
+}
+
+
+/* =========================================
+   FINAL ACTIONS
+========================================= */
+
+.reviewActions {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 20px 22px;
+
+  background: #fff;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 14px;
+
+  box-shadow:
+    0 5px 18px rgba(0, 0, 0, 0.05);
+}
+
+
+.backPaymentButton {
+  min-width: 170px;
+
+  padding: 10px 18px !important;
+
+  font-weight: 600 !important;
+
+  border-radius: 8px !important;
+}
+
+
+.finalSubmitArea {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: flex-end;
+
+  gap: 25px;
+
+  flex: 1;
+}
+
+
+.finalSubmitArea strong {
+  display: block;
+
+  font-size: 14px;
+
+  color: #333;
+
+  text-align: right;
+}
+
+
+.finalSubmitArea p {
+  margin: 3px 0 0;
+
+  font-size: 12px;
+
+  color: #777;
+
+  text-align: right;
+}
+
+
+.finalSubmitButton {
+  background: #f4511e !important;
+
+  border: none !important;
+
+  border-radius: 8px !important;
+
+  padding: 12px 28px !important;
+
+  min-width: 200px;
+
+  font-weight: 700 !important;
+
+  box-shadow:
+    0 4px 10px rgba(244, 81, 30, 0.2);
+}
+
+
+.finalSubmitButton:hover {
+  background: #d94417 !important;
+}
+
+
+/* =========================================
+   REVIEW FORM IMPROVEMENTS
+========================================= */
+
+.reviewMainCard :global(.form-label) {
+  font-size: 13px;
+
+  margin-bottom: 6px;
+
+  color: #333;
+}
+
+
+.reviewMainCard :global(.form-control),
+.reviewMainCard :global(.form-select) {
+  min-height: 42px;
+
+  border-radius: 7px;
+
+  border-color: #d8dce1;
+
+  font-size: 14px;
+
+  box-shadow: none;
+}
+
+
+.reviewMainCard :global(.form-control:focus),
+.reviewMainCard :global(.form-select:focus) {
+  border-color: #f4511e;
+
+  box-shadow:
+    0 0 0 3px rgba(244, 81, 30, 0.08);
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media screen and (max-width: 767px) {
+
+  .reviewPage {
+    margin-top: 10px;
+  }
+
+
+  .reviewHeader h2 {
+    font-size: 22px;
+  }
+
+
+  .reviewSectionHeading {
+    flex-direction: column;
+
+    gap: 10px;
+  }
+
+
+  .paymentSummaryGrid {
+    grid-template-columns: 1fr;
+  }
+
+
+  .paymentSummaryItem {
+    border-right: none;
+
+    border-bottom: 1px solid #e5e5e5;
+  }
+
+
+  .paymentSummaryItem:last-child {
+    border-bottom: none;
+  }
+
+
+  .paymentScreenshotSection {
+    flex-direction: column;
+  }
+
+
+  .paymentScreenshotBox {
+    width: 100%;
+    max-width: 220px;
+  }
+
+
+  .reviewActions {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+
+  .backPaymentButton {
+    width: 100%;
+  }
+
+
+  .finalSubmitArea {
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 12px;
+  }
+
+
+  .finalSubmitArea strong,
+  .finalSubmitArea p {
+    text-align: center;
+  }
+
+
+  .finalSubmitButton {
+    width: 100%;
+  }
+}
+/* =========================================
+   STEP 3 - SHOW ALL PRIMARY FIELDS CLEANLY
+========================================= */
+
+
+
+/* Review page primary fields */
+/* .reviewMainCard :global(.row > .mb-3) {
+  flex: 0 0 33.333333% !important;
+  max-width: 33.333333% !important;
+} */
+
+/* Address ko full width do */
+.reviewMainCard :global(#Address) {
+  min-height: 90px;
+}
+
+/* Photo field bhi clean size me */
+.reviewMainCard :global(#photo) {
+  width: 100%;
+}
+
+.reviewMainCard :global(#photo) + img {
+  max-width: 120px;
+}
+
+/* Tablet */
+@media screen and (max-width: 991px) {
+  .reviewMainCard :global(.row > .mb-3) {
+    flex: 0 0 50% !important;
+    max-width: 50% !important;
+  }
+}
+
+/* Mobile */
+@media screen and (max-width: 767px) {
+  .reviewMainCard :global(.row > .mb-3) {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+/* =====================================================
+   STEP 3 FINAL FORM FLOW FIX
+===================================================== */
+
+.reviewMainCard form {
+  display: block !important;
+
+  width: 100% !important;
+
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+
+  overflow: visible !important;
+
+  position: relative !important;
+}
+
+
+.reviewMainCard form > :global(.row) {
+  display: flex !important;
+  flex-wrap: wrap !important;
+
+  width: auto !important;
+
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+
+  overflow: visible !important;
+}
+
+
+/* All form groups remain inside normal flow */
+
+.reviewMainCard :global(.form-group),
+.reviewMainCard :global(.mb-3),
+.reviewMainCard :global(.mb-4) {
+  position: relative !important;
+
+  float: none !important;
+
+  height: auto !important;
+  max-height: none !important;
+}

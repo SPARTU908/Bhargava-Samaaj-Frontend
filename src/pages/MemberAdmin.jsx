@@ -252,6 +252,7 @@ const handleDeleteMember = (memberId) => {
                   <th className={styles.title}>Payer Mobile </th>
                   <th className={styles.title}>Transaction ID</th>
                   <th className={styles.title}>Download Form </th>
+                  
                   <th className={styles.title}>Action</th>
                   <th className={styles.title}>Status</th>
                   <th className={styles.title}>Delete</th>
