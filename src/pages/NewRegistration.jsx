@@ -109,6 +109,84 @@ const MemberForm = React.memo(
       updateMemberData("familyDetails", updatedFamily);
     };
 
+    const handleFamilyMemberSearch = async (index) => {
+  const familyMember = familyDetails[index];
+
+  if (!familyMember?.LM_NO?.trim()) {
+    alert("Please enter ABBS Life Membership Number");
+    return;
+  }
+
+  try {
+    const data = await searchLifeMember(
+      familyMember.LM_NO.trim()
+    );
+
+    const updatedFamily = [...familyDetails];
+
+    updatedFamily[index] = {
+      ...updatedFamily[index],
+
+      // Relation user ne select kiya hai,
+      // isliye usko preserve karenge
+      Relation: updatedFamily[index].Relation,
+
+      LM_NO: data.LM_NO || familyMember.LM_NO,
+
+      Year: data.Year || "",
+
+      Title: data.Title || "",
+
+      Member_Name: data.Member_Name || "",
+
+      Card_Issued: data.Card_Issued || "",
+
+      S_O_D_O_W_O: data.S_O_D_O_W_O || "",
+
+      Date_of_Birth: data.Date_of_Birth
+        ? data.Date_of_Birth.split("T")[0]
+        : "",
+
+      Address: data.Address || "",
+
+      City: data.City || "",
+
+      Pin: data.Pin || "",
+
+      Contact_No: data.Contact_No || "",
+
+      Email: data.Email || "",
+
+      Gotra: data.Gotra || "",
+
+      Kuldevi: data.Kuldevi || "",
+
+      gender: data.gender || "",
+
+      category: data.category || "",
+
+      photo: data.photo || "",
+
+      photoPreview: data.photo || "",
+    };
+
+    updateMemberData(
+      "familyDetails",
+      updatedFamily
+    );
+  } catch (error) {
+    console.error(
+      "Family member search error:",
+      error
+    );
+
+    alert(
+      error.message ||
+        "No member found with this Life Membership Number"
+    );
+  }
+};
+
     const renderEditableField = useCallback(
       (
         label,
@@ -405,27 +483,44 @@ const MemberForm = React.memo(
                       </Form.Group>
 
                       {/* LM NO */}
-                      <Form.Group
-                        as={Col}
-                        xs={12}
-                        sm={6}
-                        md={3}
-                        className="mb-3"
-                      >
-                        <Form.Label>
-                          <strong>ABBS Life Membership No</strong>
-                        </Form.Label>
+        <Form.Group
+  as={Col}
+  xs={12}
+  sm={12}
+  md={6}
+  className="mb-3"
+>
+  <Form.Label>
+    <strong>ABBS Life Membership No</strong>
+  </Form.Label>
 
-                        <Form.Control
-                          type="text"
-                          placeholder="Enter LM No. if available"
-                          value={familyMember.LM_NO || ""}
-                          onChange={(e) =>
-                            updateFamilyMember(index, "LM_NO", e.target.value)
-                          }
-                          disabled={editingFamilyIndex !== index}
-                        />
-                      </Form.Group>
+  <div className={styles.familyLmSearch}>
+    <Form.Control
+      type="text"
+      placeholder="Enter LM No."
+      value={familyMember.LM_NO || ""}
+      onChange={(e) =>
+        updateFamilyMember(index, "LM_NO", e.target.value)
+      }
+      disabled={editingFamilyIndex !== index}
+    />
+
+    {editingFamilyIndex === index && (
+      <Button
+        type="button"
+       
+        className={styles.familySearchButton}
+        onClick={() => handleFamilyMemberSearch(index)}
+      >
+        Search
+      </Button>
+    )}
+  </div>
+
+  <Form.Text className={styles.familyLmHelp}>
+    Already an ABBS Life Member? Enter LM No. to auto-fill details.
+  </Form.Text>
+</Form.Group>
 
                       {/* Year */}
                       <Form.Group
@@ -1538,17 +1633,31 @@ const NewRegistration = () => {
 
     return isValid;
   };
-  const handlePaymentSuccess = (data) => {
-    setCurrentStep(3);
+  // const handlePaymentSuccess = (data) => {
+  //   setCurrentStep(3);
 
-    setTimeout(() => {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-    }, 100);
-  };
+  //   setTimeout(() => {
+  //     window.scrollTo({
+  //       top: 0,
+  //       behavior: "smooth",
+  //     });
+  //   }, 100);
+  // };
+const handlePaymentSuccess = (data) => {
+  setConferenceRegistration((prev) => ({
+    ...prev,
+    ...data,
+  }));
 
+  setCurrentStep(3);
+
+  setTimeout(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, 100);
+};
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validateForm()) return;

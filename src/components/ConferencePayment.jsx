@@ -26,6 +26,10 @@ const ConferencePayment = ({ registration, onSuccess }) => {
     );
   }
 
+  const primaryMember = registration.members?.find(
+  (member) => member.memberType === "Primary"
+);
+
   const handleScreenshotChange = (e) => {
     const file = e.target.files?.[0];
 
@@ -135,7 +139,7 @@ const ConferencePayment = ({ registration, onSuccess }) => {
                 borderBottom: "1px solid #ffb47a",
               }}
             >
-              <strong
+              {/* <strong
                 style={{
                   display: "block",
                   textAlign: "center",
@@ -192,7 +196,79 @@ const ConferencePayment = ({ registration, onSuccess }) => {
                     {member.registrationNumber}
                   </strong>
                 </div>
-              ))}
+              ))} */}
+
+              <div
+  style={{
+    padding: "22px",
+    borderBottom: "1px solid #ffb47a",
+  }}
+>
+  <strong
+    style={{
+      display: "block",
+      textAlign: "center",
+      marginBottom: "18px",
+      fontSize: "16px",
+    }}
+  >
+    Members
+  </strong>
+
+  {registration.members?.map(
+    (member, index) => (
+      <div
+        key={index}
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          padding: "10px 0",
+          borderBottom:
+            index !==
+            registration.members.length - 1
+              ? "1px solid #eee"
+              : "none",
+        }}
+      >
+        <div>
+          <strong
+            style={{
+              display: "block",
+              fontSize: "15px",
+            }}
+          >
+            {member.Member_Name}
+          </strong>
+
+          <small style={{ color: "#777" }}>
+            {member.memberType === "Primary"
+              ? "Primary Member"
+              : member.relation ||
+                "Family Member"}
+          </small>
+        </div>
+      </div>
+    )
+  )}
+
+  <div
+    style={{
+      marginTop: "15px",
+      padding: "10px",
+      backgroundColor: "#fffaf7",
+      borderRadius: "6px",
+      fontSize: "13px",
+      color: "#666",
+      textAlign: "center",
+    }}
+  >
+    Registration number will be generated
+    after payment submission.
+  </div>
+</div>
+
+
             </div>
 
             {/* Total Amount */}
@@ -289,7 +365,7 @@ const ConferencePayment = ({ registration, onSuccess }) => {
 
       {/* PAYMENT FORM */}
 
-      <Form onSubmit={handleSubmit} className="mt-4">
+      {/* <Form onSubmit={handleSubmit} className="mt-4">
         <Form.Group className="mb-3">
           <Form.Label>
             <strong>Upload Payment Screenshot</strong>
@@ -364,7 +440,146 @@ const ConferencePayment = ({ registration, onSuccess }) => {
             {submitting ? "Submitting..." : "Submit Payment"}
           </Button>
         </div>
-      </Form>
+      </Form> */}
+
+      {/* PAYMENT FORM */}
+
+<Form onSubmit={handleSubmit} className="mt-4">
+
+  {/* MEMBER NAME */}
+  <Form.Group className="mb-3">
+    <Form.Label>
+      <strong>Member Name</strong>
+    </Form.Label>
+
+    <Form.Control
+      type="text"
+      value={primaryMember?.Member_Name || ""}
+      readOnly
+      style={{
+        backgroundColor: "#f8f9fa",
+        fontWeight: "500",
+      }}
+    />
+  </Form.Group>
+
+  {/* PAYMENT AMOUNT */}
+  <Form.Group className="mb-3">
+    <Form.Label>
+      <strong>Amount Paid</strong>
+    </Form.Label>
+
+    <Form.Control
+      type="text"
+      value={`₹${registration.amount}`}
+      readOnly
+      style={{
+        backgroundColor: "#f8f9fa",
+        fontWeight: "600",
+        color: "#f4511e",
+      }}
+    />
+
+    <Form.Text className="text-muted">
+      Payment for {registration.totalMembers} member
+      {registration.totalMembers > 1 ? "s" : ""}
+    </Form.Text>
+  </Form.Group>
+
+  {/* TRANSACTION ID */}
+  <Form.Group className="mb-3">
+    <Form.Label>
+      <strong>Transaction ID / UTR No.</strong>
+
+      <span style={{ color: "red" }}>
+        {" "}*
+      </span>
+    </Form.Label>
+
+    <Form.Control
+      type="text"
+      placeholder="Enter Transaction ID / UTR No."
+      value={transactionId}
+      onChange={(e) =>
+        setTransactionId(e.target.value)
+      }
+    />
+  </Form.Group>
+
+  {/* PAYMENT SCREENSHOT */}
+  <Form.Group className="mb-3">
+    <Form.Label>
+      <strong>Upload Payment Screenshot</strong>
+
+      <span style={{ color: "red" }}>
+        {" "}*
+      </span>
+    </Form.Label>
+
+    <Form.Control
+      type="file"
+      accept="image/*"
+      onChange={handleScreenshotChange}
+    />
+
+    <Form.Text className="text-muted">
+      Upload clear screenshot of payment
+    </Form.Text>
+  </Form.Group>
+
+  {/* SCREENSHOT PREVIEW */}
+  {preview && (
+    <div
+      className="mb-4 text-center"
+      style={{
+        backgroundColor: "#f8f9fa",
+        padding: "15px",
+        borderRadius: "8px",
+        border: "1px solid #ddd",
+      }}
+    >
+      <p
+        style={{
+          fontWeight: "600",
+          marginBottom: "10px",
+        }}
+      >
+        Payment Screenshot Preview
+      </p>
+
+      <Image
+        src={preview}
+        alt="Payment Screenshot"
+        fluid
+        style={{
+          maxHeight: "250px",
+          border: "1px solid #ddd",
+          borderRadius: "8px",
+        }}
+      />
+    </div>
+  )}
+
+  {/* SUBMIT BUTTON */}
+  <div className="text-center">
+    <Button
+      type="submit"
+      disabled={submitting}
+      style={{
+        backgroundColor: "#ff4b00",
+        border: "none",
+        minWidth: "180px",
+        fontWeight: "600",
+        padding: "10px 25px",
+      }}
+    >
+      {submitting
+        ? "Submitting..."
+        : "Submit Payment"}
+    </Button>
+  </div>
+
+</Form>
     </div>
   );
 };

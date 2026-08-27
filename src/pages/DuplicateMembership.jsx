@@ -1,6 +1,4 @@
-import React, {
-  useState,
-} from "react";
+import React, { useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
@@ -13,7 +11,6 @@ import {
 import Navbar from "../components/Navbar/Navbar";
 
 import "./DuplicateMembership.css";
-
 
 const EMPTY_FORM = {
   name: "",
@@ -38,55 +35,43 @@ const EMPTY_FORM = {
   oldAddress: "",
   newAddress: "",
   pincode: "",
+  newPincode: "",
 };
 
-
 const DuplicateMembership = () => {
-
   const navigate = useNavigate();
 
-  const [knowLmNo, setKnowLmNo] =
-    useState(true);
+  const [knowLmNo, setKnowLmNo] = useState(true);
 
-  const [lmNo, setLmNo] =
-    useState("");
+  const [lmNo, setLmNo] = useState("");
 
-  const [searchData, setSearchData] =
-    useState({
-      name: "",
-      dob: "",
-      mobile: "",
-    });
+  const [searchData, setSearchData] = useState({
+    name: "",
+    dob: "",
+    mobile: "",
+  });
 
-  const [searchResults, setSearchResults] =
-    useState([]);
+  const [searchResults, setSearchResults] = useState([]);
 
-  const [verified, setVerified] =
-    useState(false);
+  const [verified, setVerified] = useState(false);
 
-  const [loading, setLoading] =
-    useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const [error, setError] =
-    useState("");
+  const [error, setError] = useState("");
 
-  const [formData, setFormData] =
-    useState(EMPTY_FORM);
+  const [formData, setFormData] = useState(EMPTY_FORM);
 
-  const [showSpouse, setShowSpouse] =
-    useState(false);
+  const [showSpouse, setShowSpouse] = useState(false);
 
-  const [files, setFiles] =
-    useState({
-      photo: null,
-      aadharCard: null,
-      signature: null,
+  const [files, setFiles] = useState({
+    photo: null,
+    aadharCard: null,
+    signature: null,
 
-      spousePhoto: null,
-      spouseAadharCard: null,
-      spouseSignature: null,
-    });
-
+    spousePhoto: null,
+    spouseAadharCard: null,
+    spouseSignature: null,
+  });
 
   /*
   |--------------------------------------------------------------------------
@@ -95,18 +80,13 @@ const DuplicateMembership = () => {
   */
 
   const handleChange = (e) => {
-
-    const {
-      name,
-      value,
-    } = e.target;
+    const { name, value } = e.target;
 
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
-
 
   /*
   |--------------------------------------------------------------------------
@@ -115,11 +95,7 @@ const DuplicateMembership = () => {
   */
 
   const handleSearchChange = (e) => {
-
-    const {
-      name,
-      value,
-    } = e.target;
+    const { name, value } = e.target;
 
     setSearchData((prev) => ({
       ...prev,
@@ -127,22 +103,18 @@ const DuplicateMembership = () => {
     }));
   };
 
-
   /*
   |--------------------------------------------------------------------------
   | FILE
   |--------------------------------------------------------------------------
   */
 
-  const handleFileChange =
-    (name, file) => {
-
-      setFiles((prev) => ({
-        ...prev,
-        [name]: file,
-      }));
-    };
-
+  const handleFileChange = (name, file) => {
+    setFiles((prev) => ({
+      ...prev,
+      [name]: file,
+    }));
+  };
 
   /*
   |--------------------------------------------------------------------------
@@ -151,47 +123,32 @@ const DuplicateMembership = () => {
   */
 
   const selectMember = (member) => {
-
     setFormData((prev) => ({
       ...prev,
 
-      name:
-        member.Member_Name || "",
+      name: member.Member_Name || "",
 
-      abbsLmNo:
-        member.LM_NO || "",
+      abbsLmNo: member.LM_NO || "",
 
-      mobile:
-        member.Contact_No || "",
+      mobile: member.Contact_No || "",
 
-      email:
-        member.Email || "",
+      email: member.Email || "",
 
-        dob:
-        member.Date_of_Birth || "",
+      dob: member.Date_of_Birth || "",
 
+      relationName: member.S_O_D_O_W_O || "",
 
-      relationName:
-        member.S_O_D_O_W_O || "",
+      occupation: member.Occupation || "",
 
-      occupation:
-        member.Occupation || "",
+      gotra: member.Gotra || "",
 
-      gotra:
-        member.Gotra || "",
+      kuldevi: member.Kuldevi || "",
 
-      kuldevi:
-        member.Kuldevi || "",
-
-      oldAddress: [
-        member.Address,
-         member.CITY || member.City,
-      ]
+      oldAddress: [member.Address, member.CITY || member.City]
         .filter(Boolean)
         .join(", "),
 
-      pincode:
-        member.Pin || "",
+      pincode: member.Pin || "",
     }));
 
     setVerified(true);
@@ -201,46 +158,40 @@ const DuplicateMembership = () => {
     setError("");
   };
 
-
   /*
   |--------------------------------------------------------------------------
   | SEARCH LM NUMBER
   |--------------------------------------------------------------------------
   */
 
- const handleLmSearch = async () => {
-  try {
-    if (!lmNo.trim()) {
-      setError("कृपया ABBS LM नंबर दर्ज करें।");
-      return;
+  const handleLmSearch = async () => {
+    try {
+      if (!lmNo.trim()) {
+        setError("कृपया ABBS LM नंबर दर्ज करें।");
+        return;
+      }
+
+      setLoading(true);
+      setError("");
+
+      const response = await searchMemberByLmNo(lmNo.trim());
+
+      console.log("LM SEARCH RESPONSE:", response);
+
+      if (!response?.success || !response?.data) {
+        setError("इस LM नंबर से सदस्य नहीं मिला।");
+        return;
+      }
+
+      selectMember(response.data);
+    } catch (error) {
+      console.error("LM Search Error:", error);
+
+      setError(error?.message || "इस LM नंबर से सदस्य नहीं मिला।");
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(true);
-    setError("");
-
-    const response = await searchMemberByLmNo(lmNo.trim());
-
-    console.log("LM SEARCH RESPONSE:", response);
-
-    if (!response?.success || !response?.data) {
-      setError("इस LM नंबर से सदस्य नहीं मिला।");
-      return;
-    }
-
-    selectMember(response.data);
-
-  } catch (error) {
-    console.error("LM Search Error:", error);
-
-    setError(
-      error?.message ||
-      "इस LM नंबर से सदस्य नहीं मिला।"
-    );
-  } finally {
-    setLoading(false);
-  }
-};
-
+  };
 
   /*
   |--------------------------------------------------------------------------
@@ -248,60 +199,32 @@ const DuplicateMembership = () => {
   |--------------------------------------------------------------------------
   */
 
-  const handleDetailsSearch =
-    async () => {
+  const handleDetailsSearch = async () => {
+    try {
+      if (!searchData.name.trim()) {
+        setError("कृपया नाम दर्ज करें।");
 
-      try {
-
-        if (!searchData.name.trim()) {
-
-          setError(
-            "कृपया नाम दर्ज करें।"
-          );
-
-          return;
-        }
-
-        setLoading(true);
-        setError("");
-
-        const response =
-          await searchMemberByDetails(
-            searchData
-          );
-
-        if (
-          response.data.length === 1
-        ) {
-
-          selectMember(
-            response.data[0]
-          );
-
-        } else {
-
-          setSearchResults(
-            response.data
-          );
-
-        }
-
-      } catch (error) {
-
-        setSearchResults([]);
-
-        setError(
-          error.message ||
-            "कोई सदस्य नहीं मिला।"
-        );
-
-      } finally {
-
-        setLoading(false);
-
+        return;
       }
-    };
 
+      setLoading(true);
+      setError("");
+
+      const response = await searchMemberByDetails(searchData);
+
+      if (response.data.length === 1) {
+        selectMember(response.data[0]);
+      } else {
+        setSearchResults(response.data);
+      }
+    } catch (error) {
+      setSearchResults([]);
+
+      setError(error.message || "कोई सदस्य नहीं मिला।");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   /*
   |--------------------------------------------------------------------------
@@ -309,62 +232,37 @@ const DuplicateMembership = () => {
   |--------------------------------------------------------------------------
   */
 
-  const handleSpouseSearch =
-    async () => {
+  const handleSpouseSearch = async () => {
+    try {
+      if (!formData.spouseLmNo) {
+        alert("Enter spouse LM Number");
 
-      try {
-
-        if (
-          !formData.spouseLmNo
-        ) {
-
-          alert(
-            "Enter spouse LM Number"
-          );
-
-          return;
-        }
-
-        const response =
-          await searchMemberByLmNo(
-            formData.spouseLmNo
-          );
-
-        const member =
-          response.data;
-
-        setFormData((prev) => ({
-          ...prev,
-
-          spouseName:
-            member.Member_Name || "",
-
-          spouseLmNo:
-            member.LM_NO || "",
-
-          spouseMobile:
-            member.Contact_No || "",
-
-          spouseEmail:
-            member.Email || "",
-
-          spouseRelationName:
-            member.S_O_D_O_W_O || "",
-
-          spouseOccupation:
-            member.Occupation || "",
-        }));
-
-      } catch (error) {
-
-        alert(
-          error.message ||
-            "Spouse member not found"
-        );
-
+        return;
       }
-    };
 
+      const response = await searchMemberByLmNo(formData.spouseLmNo);
+
+      const member = response.data;
+
+      setFormData((prev) => ({
+        ...prev,
+
+        spouseName: member.Member_Name || "",
+
+        spouseLmNo: member.LM_NO || "",
+
+        spouseMobile: member.Contact_No || "",
+
+        spouseEmail: member.Email || "",
+
+        spouseRelationName: member.S_O_D_O_W_O || "",
+
+        spouseOccupation: member.Occupation || "",
+      }));
+    } catch (error) {
+      alert(error.message || "Spouse member not found");
+    }
+  };
 
   /*
   |--------------------------------------------------------------------------
@@ -372,981 +270,623 @@ const DuplicateMembership = () => {
   |--------------------------------------------------------------------------
   */
 
-  const handleSubmit =
-    async (e) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-      e.preventDefault();
+    if (!verified) {
+      alert("पहले अपना ABBS सदस्यता रिकॉर्ड verify करें।");
 
-      if (!verified) {
+      return;
+    }
 
-        alert(
-          "पहले अपना ABBS सदस्यता रिकॉर्ड verify करें।"
-        );
+    if (!files.photo || !files.aadharCard || !files.signature) {
+      alert("Photo, Aadhaar और Signature upload करें।");
 
-        return;
-      }
+      return;
+    }
 
-      if (
-        !files.photo ||
-        !files.aadharCard ||
-        !files.signature
-      ) {
+    try {
+      setLoading(true);
 
-        alert(
-          "Photo, Aadhaar और Signature upload करें।"
-        );
+      const payload = new FormData();
 
-        return;
-      }
+      Object.entries(formData).forEach(([key, value]) => {
+        if (value !== "" && value !== null) {
+          payload.append(key, value);
+        }
+      });
 
-      try {
+      payload.append("photo", files.photo);
 
-        setLoading(true);
+      payload.append("aadharCard", files.aadharCard);
 
-        const payload =
-          new FormData();
+      payload.append("signature", files.signature);
 
-        Object.entries(
-          formData
-        ).forEach(
-          ([key, value]) => {
-
-            if (
-              value !== "" &&
-              value !== null
-            ) {
-
-              payload.append(
-                key,
-                value
-              );
-            }
-          }
-        );
-
-        payload.append(
-          "photo",
-          files.photo
-        );
-
-        payload.append(
-          "aadharCard",
-          files.aadharCard
-        );
-
-        payload.append(
-          "signature",
-          files.signature
-        );
-
-
-        if (showSpouse) {
-
-          if (
-            files.spousePhoto
-          ) {
-            payload.append(
-              "spousePhoto",
-              files.spousePhoto
-            );
-          }
-
-          if (
-            files.spouseAadharCard
-          ) {
-            payload.append(
-              "spouseAadharCard",
-              files.spouseAadharCard
-            );
-          }
-
-          if (
-            files.spouseSignature
-          ) {
-            payload.append(
-              "spouseSignature",
-              files.spouseSignature
-            );
-          }
+      if (showSpouse) {
+        if (files.spousePhoto) {
+          payload.append("spousePhoto", files.spousePhoto);
         }
 
+        if (files.spouseAadharCard) {
+          payload.append("spouseAadharCard", files.spouseAadharCard);
+        }
 
-        const response =
-          await submitDuplicateForm(
-            payload
-          );
-
-
-        navigate(
-          "/duplicate-payment",
-          {
-            state: {
-              applicationId:
-                response.data
-                  .applicationId,
-
-              totalMembers:
-                response.data
-                  .totalMembers,
-
-              feePerMember:
-                response.data
-                  .feePerMember,
-
-              totalAmount:
-                response.data
-                  .totalAmount,
-            },
-          }
-        );
-
-      } catch (error) {
-
-        alert(
-          error.message ||
-            "Application submit नहीं हो पाया।"
-        );
-
-      } finally {
-
-        setLoading(false);
-
+        if (files.spouseSignature) {
+          payload.append("spouseSignature", files.spouseSignature);
+        }
       }
-    };
 
+      const response = await submitDuplicateForm(payload);
 
- return (
-  <>
-    <Navbar />
+      navigate("/duplicate-payment", {
+        state: {
+          applicationId: response.data.applicationId,
 
-    <main className="duplicate-page">
-      <div className="duplicate-wrapper">
+          totalMembers: response.data.totalMembers,
 
-        {/* Header */}
-        <section className="duplicate-hero">
-          {/* <div className="hero-badge">
+          feePerMember: response.data.feePerMember,
+
+          totalAmount: response.data.totalAmount,
+        },
+      });
+    } catch (error) {
+      alert(error.message || "Application submit नहीं हो पाया।");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <>
+      <Navbar />
+
+      <main className="duplicate-page">
+        <div className="duplicate-wrapper">
+          {/* Header */}
+          <section className="duplicate-hero">
+            {/* <div className="hero-badge">
             ABBS Duplicate Identity Card
           </div> */}
 
-          <h1>
-            डुप्लिकेट परिचय-पत्र हेतु आवेदन
-          </h1>
+            <h1>डुप्लिकेट परिचय-पत्र हेतु आवेदन</h1>
 
-          {/* <p>
+            {/* <p>
             अखिल भारतीय भार्गव सभा (रजि.)
           </p> */}
 
-          <div className="hero-fee">
-            <span className="fee-label">
-              आवेदन शुल्क
-            </span>
+            <div className="hero-fee">
+              <span className="fee-label">आवेदन शुल्क</span>
 
-            <strong>
-              ₹50 प्रति आवेदन
-            </strong>
-          </div>
-        </section>
+              <strong>₹50 प्रति आवेदन</strong>
+            </div>
+          </section>
 
-
-        {/* ==========================
+          {/* ==========================
             VERIFICATION
         ========================== */}
 
-        {!verified && (
-          <section className="form-card verification-card">
-
-            <div className="section-heading">
-              <div className="section-number">
-                1
-              </div>
-
-              <div>
-                <h2>
-                  सदस्यता सत्यापन
-                </h2>
-
-                <p>
-                  आगे बढ़ने से पहले अपनी ABBS Life
-                  Membership की जानकारी सत्यापित करें।
-                </p>
-              </div>
-            </div>
-
-
-            <div className="verification-options">
-
-              <label
-                className={`verification-option ${
-                  knowLmNo
-                    ? "active-option"
-                    : ""
-                }`}
-              >
-                <input
-                  type="radio"
-                  name="lmOption"
-                  checked={knowLmNo}
-                  onChange={() => {
-                    setKnowLmNo(true);
-                    setError("");
-                    setSearchResults([]);
-                  }}
-                />
+          {!verified && (
+            <section className="form-card verification-card">
+              <div className="section-heading">
+                <div className="section-number">1</div>
 
                 <div>
-                  <strong>
-                    मुझे अपना ABBS L/M Number पता है
-                  </strong>
+                  <h2>सदस्यता सत्यापन</h2>
 
-                  <span>
-                    ABBS Life Membership Number से
-                    सीधे खोजें
-                  </span>
+                  <p>
+                    आगे बढ़ने से पहले अपनी ABBS Life Membership की जानकारी
+                    सत्यापित करें।
+                  </p>
                 </div>
-              </label>
+              </div>
 
-
-              <label
-                className={`verification-option ${
-                  !knowLmNo
-                    ? "active-option"
-                    : ""
-                }`}
-              >
-                <input
-                  type="radio"
-                  name="lmOption"
-                  checked={!knowLmNo}
-                  onChange={() => {
-                    setKnowLmNo(false);
-                    setError("");
-                    setSearchResults([]);
-                  }}
-                />
-
-                <div>
-                  <strong>
-                    मुझे ABBS L/M Number याद नहीं है
-                  </strong>
-
-                  <span>
-                    नाम, जन्म तिथि या मोबाइल से अपना
-                    रिकॉर्ड खोजें
-                  </span>
-                </div>
-              </label>
-
-            </div>
-
-
-            {knowLmNo ? (
-              <div className="search-box">
-
-                <div className="search-field">
-                  <label>
-                    ABBS LM Number
-                    <span className="required">
-                      *
-                    </span>
-                  </label>
-
-                  <input
-                    type="text"
-                    value={lmNo}
-                    onChange={(e) =>
-                      setLmNo(e.target.value)
-                    }
-                    placeholder="जैसे 13772"
-                  />
-                </div>
-
-
-                <button
-                  type="button"
-                  className="primary-btn search-btn"
-                  onClick={handleLmSearch}
-                  disabled={loading}
+              <div className="verification-options">
+                <label
+                  className={`verification-option ${
+                    knowLmNo ? "active-option" : ""
+                  }`}
                 >
-                  {loading
-                    ? "खोज रहे हैं..."
-                    : "सदस्य खोजें"}
-                </button>
+                  <input
+                    type="radio"
+                    name="lmOption"
+                    checked={knowLmNo}
+                    onChange={() => {
+                      setKnowLmNo(true);
+                      setError("");
+                      setSearchResults([]);
+                    }}
+                  />
 
+                  <div>
+                    <strong>मुझे अपना ABBS L/M Number पता है</strong>
+
+                    <span>ABBS Life Membership Number से सीधे खोजें</span>
+                  </div>
+                </label>
+
+                <label
+                  className={`verification-option ${
+                    !knowLmNo ? "active-option" : ""
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="lmOption"
+                    checked={!knowLmNo}
+                    onChange={() => {
+                      setKnowLmNo(false);
+                      setError("");
+                      setSearchResults([]);
+                    }}
+                  />
+
+                  <div>
+                    <strong>मुझे ABBS L/M Number याद नहीं है</strong>
+
+                    <span>नाम, जन्म तिथि या मोबाइल से अपना रिकॉर्ड खोजें</span>
+                  </div>
+                </label>
               </div>
-            ) : (
-              <div className="details-search-grid">
 
-                <div className="search-field">
-                  <label>
-                    Member Name
-                    <span className="required">
-                      *
-                    </span>
-                  </label>
+              {knowLmNo ? (
+                <div className="search-box">
+                  <div className="search-field">
+                    <label>
+                      ABBS LM Number
+                      <span className="required">*</span>
+                    </label>
 
-                  <input
-                    name="name"
-                    value={searchData.name}
-                    onChange={
-                      handleSearchChange
-                    }
-                    placeholder="Enter full name"
-                  />
-                </div>
+                    <input
+                      type="text"
+                      value={lmNo}
+                      onChange={(e) => setLmNo(e.target.value)}
+                      placeholder="जैसे 13772"
+                    />
+                  </div>
 
-
-                <div className="search-field">
-                  <label>
-                    Date of Birth
-                  </label>
-
-                  <input
-                    type="text"
-                    name="dob"
-                    value={searchData.dob}
-                    onChange={
-                      handleSearchChange
-                    }
-                    placeholder="DD.MM.YYYY"
-                  />
-                </div>
-
-
-                <div className="search-field">
-                  <label>
-                    Mobile Number
-                  </label>
-
-                  <input
-                    type="text"
-                    name="mobile"
-                    value={
-                      searchData.mobile
-                    }
-                    onChange={
-                      handleSearchChange
-                    }
-                    placeholder="10 digit mobile number"
-                  />
-                </div>
-
-
-                <div className="details-search-action">
                   <button
                     type="button"
-                    className="primary-btn"
-                    onClick={
-                      handleDetailsSearch
-                    }
+                    className="primary-btn search-btn"
+                    onClick={handleLmSearch}
                     disabled={loading}
                   >
-                    {loading
-                      ? "खोज रहे हैं..."
-                      : "अपना रिकॉर्ड खोजें"}
+                    {loading ? "खोज रहे हैं..." : "सदस्य खोजें"}
                   </button>
                 </div>
+              ) : (
+                <div className="details-search-grid">
+                  <div className="search-field">
+                    <label>
+                      Member Name
+                      <span className="required">*</span>
+                    </label>
 
-              </div>
-            )}
+                    <input
+                      name="name"
+                      value={searchData.name}
+                      onChange={handleSearchChange}
+                      placeholder="Enter full name"
+                    />
+                  </div>
 
+                  <div className="search-field">
+                    <label>Date of Birth</label>
 
-            {error && (
-              <div className="error-message">
-                <span className="message-icon">
-                  !
-                </span>
+                    <input
+                      type="text"
+                      name="dob"
+                      value={searchData.dob}
+                      onChange={handleSearchChange}
+                      placeholder="DD.MM.YYYY"
+                    />
+                  </div>
 
-                {error}
-              </div>
-            )}
+                  <div className="search-field">
+                    <label>Mobile Number</label>
 
+                    <input
+                      type="text"
+                      name="mobile"
+                      value={searchData.mobile}
+                      onChange={handleSearchChange}
+                      placeholder="10 digit mobile number"
+                    />
+                  </div>
 
-            {searchResults.length > 0 && (
-              <div className="search-results">
-
-                <div className="results-title">
-                  <h3>
-                    अपना सही रिकॉर्ड चुनें
-                  </h3>
-
-                  <span>
-                    {searchResults.length} रिकॉर्ड मिले
-                  </span>
+                  <div className="details-search-action">
+                    <button
+                      type="button"
+                      className="primary-btn"
+                      onClick={handleDetailsSearch}
+                      disabled={loading}
+                    >
+                      {loading ? "खोज रहे हैं..." : "अपना रिकॉर्ड खोजें"}
+                    </button>
+                  </div>
                 </div>
+              )}
 
+              {error && (
+                <div className="error-message">
+                  <span className="message-icon">!</span>
 
-                <div className="results-grid">
-                  {searchResults.map(
-                    (member) => (
-                      <div
-                        key={member._id}
-                        className="member-result-card"
-                      >
+                  {error}
+                </div>
+              )}
+
+              {searchResults.length > 0 && (
+                <div className="search-results">
+                  <div className="results-title">
+                    <h3>अपना सही रिकॉर्ड चुनें</h3>
+
+                    <span>{searchResults.length} रिकॉर्ड मिले</span>
+                  </div>
+
+                  <div className="results-grid">
+                    {searchResults.map((member) => (
+                      <div key={member._id} className="member-result-card">
                         <div className="member-avatar">
-                          {member.Member_Name
-                            ?.charAt(0)
-                            ?.toUpperCase() ||
-                            "M"}
+                          {member.Member_Name?.charAt(0)?.toUpperCase() || "M"}
                         </div>
 
                         <div className="member-result-info">
-
-                          <h4>
-                            {
-                              member.Member_Name
-                            }
-                          </h4>
+                          <h4>{member.Member_Name}</h4>
 
                           <div className="result-meta">
                             <span>
-                              <b>LM No:</b>{" "}
-                              {member.LM_NO}
+                              <b>LM No:</b> {member.LM_NO}
                             </span>
 
                             <span>
-                              <b>DOB:</b>{" "}
-                              {member.Date_of_Birth ||
-                                "-"}
+                              <b>DOB:</b> {member.Date_of_Birth || "-"}
                             </span>
 
                             <span>
-                              <b>City:</b>{" "}
-                              {member.CITY ||
-                                member.CITY ||
-                                "-"}
+                              <b>City:</b> {member.CITY || member.CITY || "-"}
                             </span>
 
-                              <span>
+                            <span>
                               <b>Address:</b>{" "}
-                              {member.Address  ||
-                                member.Address  ||
-                                "-"}
+                              {member.Address || member.Address || "-"}
                             </span>
-                              <span>
+                            <span>
                               <b>Contact No:</b>{" "}
-                              {member.Contact_No   ||
-                                member.Contact_No   ||
-                                "-"}
+                              {member.Contact_No || member.Contact_No || "-"}
                             </span>
-
-
                           </div>
-
                         </div>
-
 
                         <button
                           type="button"
                           className="select-btn"
-                          onClick={() =>
-                            selectMember(
-                              member
-                            )
-                          }
+                          onClick={() => selectMember(member)}
                         >
                           Select
                         </button>
                       </div>
-                    )
-                  )}
+                    ))}
+                  </div>
                 </div>
+              )}
+            </section>
+          )}
 
-              </div>
-            )}
-
-          </section>
-        )}
-
-
-        {/* ==========================
+          {/* ==========================
             MAIN FORM
         ========================== */}
 
-        {verified && (
-          <form
-            onSubmit={handleSubmit}
-            className="duplicate-form"
-          >
-
-            {/* Verified status */}
-            <div className="verified-banner">
-
-              <div className="verified-icon">
-                ✓
-              </div>
-
-              <div>
-                <strong>
-                  सदस्यता सत्यापित
-                </strong>
-
-                <span>
-                  ABBS L/M No:{" "}
-                  {formData.abbsLmNo}
-                </span>
-              </div>
-
-            </div>
-
-
-            {/* Member Details */}
-            <section className="form-card">
-
-              <div className="section-heading">
-                <div className="section-number">
-                  2
-                </div>
+          {verified && (
+            <form onSubmit={handleSubmit} className="duplicate-form">
+              {/* Verified status */}
+              <div className="verified-banner">
+                <div className="verified-icon">✓</div>
 
                 <div>
-                  <h2>
-                    सदस्य का विवरण
-                  </h2>
+                  <strong>सदस्यता सत्यापित</strong>
 
-                  <p>
-                    कृपया नीचे दी गई जानकारी जांचें और
-                    आवश्यक होने पर अपडेट करें।
-                  </p>
+                  <span>ABBS L/M No: {formData.abbsLmNo}</span>
                 </div>
               </div>
 
+              {/* Member Details */}
+              <section className="form-card">
+                <div className="section-heading">
+                  <div className="section-number">2</div>
 
-              <div className="form-grid">
+                  <div>
+                    <h2>सदस्य का विवरण</h2>
 
-                <Field
-                  label="Name"
-                  required
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                />
-
-                <Field
-                  label="ABBS LM No"
-                  required
-                  name="abbsLmNo"
-                  value={
-                    formData.abbsLmNo
-                  }
-                  readOnly
-                  locked
-                />
-
-                <Field
-                  label="Mobile"
-                  required
-                  name="mobile"
-                  type="tel"
-                  value={
-                    formData.mobile
-                  }
-                  onChange={
-                    handleChange
-                  }
-                />
-
-                <Field
-                  label="Email"
-                  required
-                  name="email"
-                  type="email"
-                  value={
-                    formData.email
-                  }
-                  onChange={
-                    handleChange
-                  }
-                />
-
-                <Field
-                  label="DOB"
-                  required
-                  name="dob"
-                  type="date"
-                  value={formData.dob}
-                  onChange={
-                    handleChange
-                  }
-                />
-
-                <Field
-                  label="S/o, D/o, W/o Name"
-                  required
-                  name="relationName"
-                  value={
-                    formData.relationName
-                  }
-                  onChange={
-                    handleChange
-                  }
-                />
-
-                <Field
-                  label="Occupation"
-                  required
-                  name="occupation"
-                  value={
-                    formData.occupation
-                  }
-                  onChange={
-                    handleChange
-                  }
-                />
-
-                <Field
-                  label="Gotra"
-                  required
-                  name="gotra"
-                  value={
-                    formData.gotra
-                  }
-                  onChange={
-                    handleChange
-                  }
-                />
-
-                <Field
-                  label="Kuldevi"
-                  required
-                  name="kuldevi"
-                  value={
-                    formData.kuldevi
-                  }
-                  onChange={
-                    handleChange
-                  }
-                />
-
-                <Field
-                  label="Pin Code"
-                  required
-                  name="pincode"
-                  inputMode="numeric"
-                  value={
-                    formData.pincode
-                  }
-                  onChange={
-                    handleChange
-                  }
-                />
-
-              </div>
-
-
-              <div className="address-grid">
-
-                <Textarea
-                  label="Old Address"
-                  required
-                  name="oldAddress"
-                  value={
-                    formData.oldAddress
-                  }
-                  onChange={
-                    handleChange
-                  }
-                  placeholder="पुराना पता"
-                />
-
-                <Textarea
-                  label="New Address"
-                  required
-                  name="newAddress"
-                  value={
-                    formData.newAddress
-                  }
-                  onChange={
-                    handleChange
-                  }
-                  placeholder="नया पता दर्ज करें"
-                />
-
-              </div>
-
-            </section>
-
-
-            {/* Documents */}
-            <section className="form-card">
-
-              <div className="section-heading">
-                <div className="section-number">
-                  3
+                    <p>
+                      कृपया नीचे दी गई जानकारी जांचें और आवश्यक होने पर अपडेट
+                      करें।
+                    </p>
+                  </div>
                 </div>
 
-                <div>
-                  <h2>
-                    आवश्यक दस्तावेज
-                  </h2>
-
-                  <p>
-                    साफ और स्पष्ट फोटो/दस्तावेज अपलोड
-                    करें।
-                  </p>
-                </div>
-              </div>
-
-
-              <div className="upload-grid">
-
-                <FileField
-                  label="Photo"
-                  required
-                  hint="Passport size photo"
-                  file={
-                    files.photo
-                  }
-                  onChange={(file) =>
-                    handleFileChange(
-                      "photo",
-                      file
-                    )
-                  }
-                />
-
-                <FileField
-                  label="Aadhaar Card"
-                  required
-                  hint="Image or PDF"
-                  file={
-                    files.aadharCard
-                  }
-                  onChange={(file) =>
-                    handleFileChange(
-                      "aadharCard",
-                      file
-                    )
-                  }
-                />
-
-                <FileField
-                  label="Signature"
-                  required
-                  hint="Clear signature image"
-                  file={
-                    files.signature
-                  }
-                  onChange={(file) =>
-                    handleFileChange(
-                      "signature",
-                      file
-                    )
-                  }
-                />
-
-              </div>
-
-            </section>
-
-
-            {/* Spouse Toggle */}
-            <section className="form-card spouse-section">
-
-              <div className="spouse-toggle-row">
-
-                <div>
-                  <h2>
-                    जीवनसाथी का परिचय-पत्र
-                  </h2>
-
-                  <p>
-                    यदि जीवनसाथी के लिए भी duplicate
-                    परिचय-पत्र चाहिए तो यह विकल्प चुनें।
-                  </p>
-                </div>
-
-
-                <label className="switch">
-
-                  <input
-                    type="checkbox"
-                    checked={showSpouse}
-                    onChange={(e) =>
-                      setShowSpouse(
-                        e.target.checked
-                      )
-                    }
+                <div className="form-grid">
+                  <Field
+                    label="Name"
+                    required
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
                   />
 
-                  <span className="slider">
-                  </span>
+                  <Field
+                    label="ABBS LM No"
+                    required
+                    name="abbsLmNo"
+                    value={formData.abbsLmNo}
+                    readOnly
+                    locked
+                  />
 
-                </label>
+                  <Field
+                    label="Mobile"
+                    required
+                    name="mobile"
+                    type="tel"
+                    value={formData.mobile}
+                    onChange={handleChange}
+                  />
 
-              </div>
+                  <Field
+                    label="Email"
+                    required
+                    name="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                  />
+
+                  <Field
+                    label="DOB"
+                    required
+                    name="dob"
+                    type="date"
+                    value={formData.dob}
+                    onChange={handleChange}
+                  />
+
+                  <Field
+                    label="S/o, D/o, W/o Name"
+                    required
+                    name="relationName"
+                    value={formData.relationName}
+                    onChange={handleChange}
+                  />
 
 
-              {showSpouse && (
-                <div className="spouse-content">
+                  <Field
+                    label="Gotra"
+                    required
+                    name="gotra"
+                    value={formData.gotra}
+                    onChange={handleChange}
+                  />
 
-                  <div className="subsection-title">
-                    Spouse Details
+                  <Field
+                    label="Kuldevi"
+                    required
+                    name="kuldevi"
+                    value={formData.kuldevi}
+                    onChange={handleChange}
+                  />
+
+                  <Field
+                    label="Pin Code"
+                    required
+                    name="pincode"
+                    inputMode="numeric"
+                    value={formData.pincode}
+                    onChange={handleChange}
+                  />
+
+                  <Field
+                    label="New Pin Code"
+                    required
+                    name="newPincode"
+                    value={formData.newPincode}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div className="address-grid">
+                  <Textarea
+                    label="Old Address/Current Address"
+                    required
+                    name="oldAddress"
+                    value={formData.oldAddress}
+                    onChange={handleChange}
+                    placeholder="पुराना पता"
+                  />
+
+                  <Textarea
+                    label="New Address"
+                    required
+                    name="newAddress"
+                    value={formData.newAddress}
+                    onChange={handleChange}
+                    placeholder="नया पता दर्ज करें"
+                  />
+                  
+                  <Field
+                    label="Occupation"
+                    required
+                    name="occupation"
+                    value={formData.occupation}
+                    onChange={handleChange}
+                  />
+                </div>
+              </section>
+
+              {/* Documents */}
+              <section className="form-card">
+                <div className="section-heading">
+                  <div className="section-number">3</div>
+
+                  <div>
+                    <h2>आवश्यक दस्तावेज</h2>
+
+                    <p>साफ और स्पष्ट फोटो/दस्तावेज अपलोड करें।</p>
+                  </div>
+                </div>
+
+                <div className="upload-grid">
+                  <FileField
+                    label="Photo"
+                    required
+                    hint="Passport size photo"
+                    file={files.photo}
+                    onChange={(file) => handleFileChange("photo", file)}
+                  />
+
+                  <FileField
+                    label="Aadhaar Card"
+                    required
+                    hint="Image or PDF"
+                    file={files.aadharCard}
+                    onChange={(file) => handleFileChange("aadharCard", file)}
+                  />
+
+                  <FileField
+                    label="Signature"
+                    required
+                    hint="Clear signature image"
+                    file={files.signature}
+                    onChange={(file) => handleFileChange("signature", file)}
+                  />
+                </div>
+              </section>
+
+              {/* Spouse Toggle */}
+              <section className="form-card spouse-section">
+                <div className="spouse-toggle-row">
+                  <div>
+                    <h2>जीवनसाथी का परिचय-पत्र</h2>
+
+                    <p>
+                      यदि जीवनसाथी के लिए भी duplicate परिचय-पत्र चाहिए तो यह
+                      विकल्प चुनें।
+                    </p>
                   </div>
 
+                  <label className="switch">
+                    <input
+                      type="checkbox"
+                      checked={showSpouse}
+                      onChange={(e) => setShowSpouse(e.target.checked)}
+                    />
 
-                  <div className="form-grid">
+                    <span className="slider"></span>
+                  </label>
+                </div>
 
-                    <div className="form-field">
+                {showSpouse && (
+                  <div className="spouse-content">
+                    <div className="subsection-title">Spouse Details</div>
 
-                      <label>
-                        Spouse ABBS L/M No
-                        <span className="required">
-                          *
-                        </span>
-                      </label>
+                    <div className="form-grid">
+                      <div className="form-field">
+                        <label>
+                          Spouse ABBS L/M No
+                          <span className="required">*</span>
+                        </label>
 
-                      <div className="lm-search-inline">
+                        <div className="lm-search-inline">
+                          <input
+                            name="spouseLmNo"
+                            value={formData.spouseLmNo}
+                            onChange={handleChange}
+                            placeholder="Enter LM No"
+                          />
 
-                        <input
-                          name="spouseLmNo"
-                          value={
-                            formData.spouseLmNo
-                          }
-                          onChange={
-                            handleChange
-                          }
-                          placeholder="Enter LM No"
-                        />
-
-                        <button
-                          type="button"
-                          onClick={
-                            handleSpouseSearch
-                          }
-                        >
-                          Verify
-                        </button>
-
+                          <button type="button" onClick={handleSpouseSearch}>
+                            Verify
+                          </button>
+                        </div>
                       </div>
 
+                      <Field
+                        label="Spouse Name"
+                        name="spouseName"
+                        value={formData.spouseName}
+                        onChange={handleChange}
+                      />
+
+                      <Field
+                        label="W/o, D/o Name"
+                        name="spouseRelationName"
+                        value={formData.spouseRelationName}
+                        onChange={handleChange}
+                      />
+
+                      <Field
+                        label="Spouse DOB"
+                        name="spouseDob"
+                        type="date"
+                        value={formData.spouseDob}
+                        onChange={handleChange}
+                      />
+
+                      <Field
+                        label="Spouse Occupation"
+                        name="spouseOccupation"
+                        value={formData.spouseOccupation}
+                        onChange={handleChange}
+                      />
+
+                      <Field
+                        label="Spouse Mobile"
+                        name="spouseMobile"
+                        type="tel"
+                        value={formData.spouseMobile}
+                        onChange={handleChange}
+                      />
+
+                      <Field
+                        label="Spouse Email"
+                        name="spouseEmail"
+                        type="email"
+                        value={formData.spouseEmail}
+                        onChange={handleChange}
+                      />
                     </div>
 
+                    <div className="upload-grid spouse-upload-grid">
+                      <FileField
+                        label="Spouse Photo"
+                        hint="Passport size photo"
+                        file={files.spousePhoto}
+                        onChange={(file) =>
+                          handleFileChange("spousePhoto", file)
+                        }
+                      />
 
-                    <Field
-                      label="Spouse Name"
-                      name="spouseName"
-                      value={
-                        formData.spouseName
-                      }
-                      onChange={
-                        handleChange
-                      }
-                    />
+                      <FileField
+                        label="Spouse Aadhaar Card"
+                        hint="Image or PDF"
+                        file={files.spouseAadharCard}
+                        onChange={(file) =>
+                          handleFileChange("spouseAadharCard", file)
+                        }
+                      />
 
-                    <Field
-                      label="W/o, D/o Name"
-                      name="spouseRelationName"
-                      value={
-                        formData.spouseRelationName
-                      }
-                      onChange={
-                        handleChange
-                      }
-                    />
-
-                    <Field
-                      label="Spouse DOB"
-                      name="spouseDob"
-                      type="date"
-                      value={
-                        formData.spouseDob
-                      }
-                      onChange={
-                        handleChange
-                      }
-                    />
-
-                    <Field
-                      label="Spouse Occupation"
-                      name="spouseOccupation"
-                      value={
-                        formData.spouseOccupation
-                      }
-                      onChange={
-                        handleChange
-                      }
-                    />
-
-                    <Field
-                      label="Spouse Mobile"
-                      name="spouseMobile"
-                      type="tel"
-                      value={
-                        formData.spouseMobile
-                      }
-                      onChange={
-                        handleChange
-                      }
-                    />
-
-                    <Field
-                      label="Spouse Email"
-                      name="spouseEmail"
-                      type="email"
-                      value={
-                        formData.spouseEmail
-                      }
-                      onChange={
-                        handleChange
-                      }
-                    />
-
+                      <FileField
+                        label="Spouse Signature"
+                        hint="Clear signature image"
+                        file={files.spouseSignature}
+                        onChange={(file) =>
+                          handleFileChange("spouseSignature", file)
+                        }
+                      />
+                    </div>
                   </div>
+                )}
+              </section>
 
-
-                  <div className="upload-grid spouse-upload-grid">
-
-                    <FileField
-                      label="Spouse Photo"
-                      hint="Passport size photo"
-                      file={
-                        files.spousePhoto
-                      }
-                      onChange={(file) =>
-                        handleFileChange(
-                          "spousePhoto",
-                          file
-                        )
-                      }
-                    />
-
-                    <FileField
-                      label="Spouse Aadhaar Card"
-                      hint="Image or PDF"
-                      file={
-                        files.spouseAadharCard
-                      }
-                      onChange={(file) =>
-                        handleFileChange(
-                          "spouseAadharCard",
-                          file
-                        )
-                      }
-                    />
-
-                    <FileField
-                      label="Spouse Signature"
-                      hint="Clear signature image"
-                      file={
-                        files.spouseSignature
-                      }
-                      onChange={(file) =>
-                        handleFileChange(
-                          "spouseSignature",
-                          file
-                        )
-                      }
-                    />
-
-                  </div>
-
-                </div>
-              )}
-
-            </section>
-
-
-            {/* Fee */}
-            {/* <section className="amount-box">
+              {/* Fee */}
+              {/* <section className="amount-box">
 
               <div>
                 <span>
@@ -1378,184 +918,93 @@ const DuplicateMembership = () => {
 
             </section> */}
 
-            <section className="amount-box">
+              <section className="amount-box">
+                <div>
+                  <span>भुगतान विवरण</span>
 
-  <div>
-    <span>
-      भुगतान विवरण
-    </span>
+                  <small>डुप्लिकेट परिचय-पत्र हेतु निश्चित आवेदन शुल्क</small>
+                </div>
 
-    <small>
-      डुप्लिकेट परिचय-पत्र हेतु निश्चित आवेदन शुल्क
-    </small>
-  </div>
+                <div className="amount-value">
+                  <span>Application Fee</span>
 
-  <div className="amount-value">
+                  <strong>₹50</strong>
+                </div>
+              </section>
 
-    <span>
-      Application Fee
-    </span>
+              {/* Submit */}
+              <div className="submit-area">
+                <p>
+                  Save & Continue पर क्लिक करने के बाद आप payment page पर
+                  जाएंगे।
+                </p>
 
-    <strong>
-      ₹50
-    </strong>
-
-  </div>
-
-</section>
-
-
-            {/* Submit */}
-            <div className="submit-area">
-
-              <p>
-                Save & Continue पर क्लिक करने के बाद आप
-                payment page पर जाएंगे।
-              </p>
-
-              <button
-                type="submit"
-                className="submit-button"
-                disabled={loading}
-              >
-                {loading
-                  ? "Submitting..."
-                  : "Save & Continue to Payment"}
-              </button>
-
-            </div>
-
-          </form>
-        )}
-
-      </div>
-    </main>
-  </>
-);
+                <button
+                  type="submit"
+                  className="submit-button"
+                  disabled={loading}
+                >
+                  {loading ? "Submitting..." : "Save & Continue to Payment"}
+                </button>
+              </div>
+            </form>
+          )}
+        </div>
+      </main>
+    </>
+  );
 };
 
-
-const Field = ({
-  label,
-  required = false,
-  locked = false,
-  ...props
-}) => (
+const Field = ({ label, required = false, locked = false, ...props }) => (
   <div className="form-field">
-
     <label>
       {label}
 
-      {required && (
-        <span className="required">
-          *
-        </span>
-      )}
+      {required && <span className="required">*</span>}
     </label>
 
-    <input
-      {...props}
-      className={
-        locked
-          ? "locked-input"
-          : ""
-      }
-    />
-
+    <input {...props} className={locked ? "locked-input" : ""} />
   </div>
 );
 
-
-
-const Textarea = ({
-  label,
-  required = false,
-  ...props
-}) => (
+const Textarea = ({ label, required = false, ...props }) => (
   <div className="form-field textarea-field">
-
     <label>
       {label}
 
-      {required && (
-        <span className="required">
-          *
-        </span>
-      )}
+      {required && <span className="required">*</span>}
     </label>
 
-    <textarea
-      rows="4"
-      {...props}
-    />
-
+    <textarea rows="4" {...props} />
   </div>
 );
 
-
-const FileField = ({
-  label,
-  required = false,
-  hint,
-  file,
-  onChange,
-}) => (
+const FileField = ({ label, required = false, hint, file, onChange }) => (
   <div className="file-upload-card">
-
-    <div className="upload-icon">
-      ↑
-    </div>
+    <div className="upload-icon">↑</div>
 
     <div className="upload-heading">
       {label}
 
-      {required && (
-        <span className="required">
-          *
-        </span>
-      )}
+      {required && <span className="required">*</span>}
     </div>
 
-    {hint && (
-      <p>{hint}</p>
-    )}
+    {hint && <p>{hint}</p>}
 
     <label className="file-select-button">
-
-      <span>
-        {file
-          ? "Change File"
-          : "Choose File"}
-      </span>
+      <span>{file ? "Change File" : "Choose File"}</span>
 
       <input
         type="file"
         accept="image/*,application/pdf"
-        onChange={(e) =>
-          onChange(
-            e.target.files?.[0] ||
-              null
-          )
-        }
+        onChange={(e) => onChange(e.target.files?.[0] || null)}
       />
-
     </label>
 
-
-    <div
-      className={`file-name ${
-        file
-          ? "has-file"
-          : ""
-      }`}
-    >
-      {file
-        ? file.name
-        : "No file selected"}
+    <div className={`file-name ${file ? "has-file" : ""}`}>
+      {file ? file.name : "No file selected"}
     </div>
-
   </div>
 );
-
 
 export default DuplicateMembership;

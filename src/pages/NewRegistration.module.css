@@ -546,3 +546,61 @@
     box-sizing: border-box !important;
   }
 }
+
+
+/* ==============================
+   FAMILY LM SEARCH
+   ============================== */
+
+.familyLmSearch {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.familyLmSearch :global(.form-control) {
+  flex: 1;
+  min-width: 0;
+  height: 44px;
+}
+
+.familySearchButton {
+  height: 44px;
+  min-width: 92px;
+  padding: 0 18px !important;
+  border-radius: 7px !important;
+  font-weight: 600 !important;
+  white-space: nowrap;
+  background-color:#f26522;
+}
+
+.familyLmHelp {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #6c757d !important;
+}
+
+@media (max-width: 767px) {
+  .familyLmSearch {
+    display: flex;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .familyLmSearch :global(.form-control) {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .familySearchButton {
+    min-width: 82px;
+    padding: 0 12px !important;
+  }
+
+  .familyLmHelp {
+    font-size: 11px;
+  }
+}
