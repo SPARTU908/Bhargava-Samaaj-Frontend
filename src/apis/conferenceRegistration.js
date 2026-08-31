@@ -96,3 +96,45 @@ export const submitConferencePayment =
       );
     }
   };
+
+
+export const getAllConferenceRegistrations = async () => {
+  try {
+    const response = await axios.get(
+      `${API_URL}/api/conference-registration/admin/all`
+    );
+
+    return response.data;
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message ||
+        "Unable to fetch conference registrations"
+    );
+  }
+};
+
+export const checkApprovedConferenceRegistration = async (
+  memberId,
+) => {
+  const response = await axios.get(
+    `${API_URL}/api/conference-registration/check-approved/${memberId}`,
+  );
+
+  return response.data;
+};
+
+export const checkNonAbbsConferenceRegistration =
+  async (email, contactNo) => {
+
+    const response = await axios.get(
+      `${API_URL}/api/conference-registration/check-non-abbs`,
+      {
+        params: {
+          email,
+          contactNo,
+        },
+      },
+    );
+
+    return response.data;
+  };

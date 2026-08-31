@@ -22,8 +22,11 @@ import styles from "./NewRegistration.module.css";
 import {
   createConferenceRegistration,
   submitConferencePayment,
+  checkApprovedConferenceRegistration,
+  checkNonAbbsConferenceRegistration,
 } from "../apis/conferenceRegistration.js";
 import ConferencePayment from "../components/ConferencePayment";
+
 
 const EMPTY_MEMBER = {
   LM_NO: "",
@@ -40,7 +43,7 @@ const EMPTY_MEMBER = {
   Address: "",
   City: "",
   Pin: "",
-  Card_Issued: "",
+  // Card_Issued: "",
   category: "",
   familyDetails: [],
 };
@@ -59,7 +62,11 @@ const MemberForm = React.memo(
     reviewMode = false,
     submitButtonText = "Proceed to Payment →",
     hideSubmitSection = false,
+    isAbbsMember,
+    existingRegistration,
+    checkNonAbbsExistingUser,
   }) => {
+    const disableNonAbbsForm = !isAbbsMember && !!existingRegistration;
     const familyDetails = member?.familyDetails || [];
 
     const [editingFamilyIndex, setEditingFamilyIndex] = useState(null);
@@ -74,7 +81,7 @@ const MemberForm = React.memo(
         Relation: "",
         Title: "",
         Member_Name: "",
-        Card_Issued: "",
+        // Card_Issued: "",
         S_O_D_O_W_O: "",
         Date_of_Birth: "",
         Address: "",
@@ -141,7 +148,7 @@ const MemberForm = React.memo(
 
           Member_Name: data.Member_Name || "",
 
-          Card_Issued: data.Card_Issued || "",
+          // Card_Issued: data.Card_Issued || "",
 
           S_O_D_O_W_O: data.S_O_D_O_W_O || "",
 
@@ -190,6 +197,7 @@ const MemberForm = React.memo(
         placeholder = null,
         required = false,
         options = null,
+        onBlur = null,
       ) => {
         const value = member?.[field] || "";
 
@@ -234,6 +242,7 @@ const MemberForm = React.memo(
                   placeholder={placeholder}
                   value={value}
                   onChange={(e) => updateMemberData(field, e.target.value)}
+                  onBlur={onBlur || undefined}
                   isInvalid={!!formErrors[field]}
                 />
               )
@@ -266,96 +275,106 @@ const MemberForm = React.memo(
 
     return (
       <Form onSubmit={handleSubmit}>
-        <Row>
-          {renderEditableField("Title", "Title", "text", "Mr/Mrs/Miss", true)}
-          {renderEditableField(
-            "Member Name",
-            "Member_Name",
-            "text",
-            null,
-            true,
-          )}
-          {renderEditableField(
-            "S/O,D/O,W/O",
-            "S_O_D_O_W_O",
-            "text",
-            "S/O Mr.ABC",
-            true,
-          )}
-          {renderEditableField(
-            "ABBS Membership Card Issued Year",
-            "Year",
-            "text",
-            null,
-            false,
-          )}
-          {renderEditableField(
-            "Date of Birth",
-            "Date_of_Birth",
-            "date",
-            null,
-            true,
-          )}
-          {renderEditableField("Gotra", "Gotra", "text", null, true)}
-          {renderEditableField("Kuldevi", "Kuldevi", "text", null, true)}
-          {renderEditableField("Gender", "gender", "select", null, true, [
-            "Male",
-            "Female",
-          ])}
-          {renderEditableField("Email", "Email", "email", null, true)}
-          {renderEditableField("Mobile No", "Contact_No", "text", null, true)}
-          {renderEditableField("Address", "Address", "textarea", null, true)}
-          {renderEditableField("City", "City", "text", null, true)}
-          {renderEditableField("PIN Code", "Pin", "text", null, true)}
-          {renderEditableField(
-            "Card Issued",
-            "Card_Issued",
-            "select",
-            null,
-            true,
-            ["Yes", "No"],
-          )}
-          {renderEditableField("Category", "category", "select", null, true, [
-            "Delegate",
-            "Parent of Marriageable Candidate",
-            "Marriageable Candidate",
-          ])}
-
-          <Form.Group
-            as={Col}
-            xs={12}
-            md={4}
-            className="mb-4"
-            controlId="photo"
-          >
-            <Form.Label>
-              <strong>Photo Upload</strong>
-            </Form.Label>
-            {isEditing && (
-              <Form.Control
-                type="file"
-                accept="image/*"
-                onChange={handlePhotoChange}
-              />
+        <fieldset disabled={disableNonAbbsForm}>
+          <Row>
+            {renderEditableField("Title", "Title", "text", "Mr/Mrs/Miss", true)}
+            {renderEditableField(
+              "Member Name",
+              "Member_Name",
+              "text",
+              null,
+              true,
             )}
-            {photoPreview && (
-              <Image
-                src={photoPreview}
-                alt="Member Photo"
-                className="mt-2"
-                style={{
-                  width: "120px",
-                  height: "120px",
-                  objectFit: "cover",
-                  borderRadius: "10px",
-                  border: "1px solid #ddd",
-                  display: "block",
-                }}
-              />
+            {renderEditableField(
+              "S/O,D/O,W/O",
+              "S_O_D_O_W_O",
+              "text",
+              "S/O Mr.ABC",
+              true,
             )}
-          </Form.Group>
+            {renderEditableField(
+              "ABBS Membership Card Issued Year",
+              "Year",
+              "text",
+              null,
+              false,
+            )}
+            {renderEditableField(
+              "Date of Birth",
+              "Date_of_Birth",
+              "date",
+              null,
+              true,
+            )}
+            {renderEditableField("Gotra", "Gotra", "text", null, true)}
+            {renderEditableField("Kuldevi", "Kuldevi", "text", null, true)}
+            {renderEditableField("Gender", "gender", "select", null, true, [
+              "Male",
+              "Female",
+            ])}
+            {renderEditableField(
+              "Email",
+              "Email",
+              "email",
+              null,
+              true,
+              null,
+              checkNonAbbsExistingUser,
+            )}
+            {renderEditableField(
+              "Mobile No",
+              "Contact_No",
+              "text",
+              null,
+              true,
+              null,
+              checkNonAbbsExistingUser,
+            )}
+            {renderEditableField("Address", "Address", "textarea", null, true)}
+            {renderEditableField("City", "City", "text", null, true)}
+            {renderEditableField("PIN Code", "Pin", "text", null, true)}
 
-          {/* <Form.Group
+            {renderEditableField("Category", "category", "select", null, true, [
+              "Delegate",
+              "Parent of Marriageable Candidate",
+              "Marriageable Candidate",
+            ])}
+
+            <Form.Group
+              as={Col}
+              xs={12}
+              md={4}
+              className="mb-4"
+              controlId="photo"
+            >
+              <Form.Label>
+                <strong>Photo Upload</strong>
+              </Form.Label>
+              {isEditing && (
+                <Form.Control
+                  type="file"
+                  accept="image/*"
+                  onChange={handlePhotoChange}
+                />
+              )}
+              {photoPreview && (
+                <Image
+                  src={photoPreview}
+                  alt="Member Photo"
+                  className="mt-2"
+                  style={{
+                    width: "120px",
+                    height: "120px",
+                    objectFit: "cover",
+                    borderRadius: "10px",
+                    border: "1px solid #ddd",
+                    display: "block",
+                  }}
+                />
+              )}
+            </Form.Group>
+
+            {/* <Form.Group
                         as={Col}
                         xs={12}
                         sm={6}
@@ -402,7 +421,7 @@ const MemberForm = React.memo(
                       </Form.Group>
 
                       {/* LM NO */}
-          {/* <Form.Group
+            {/* <Form.Group
                         as={Col}
                         xs={12}
                         sm={12}
@@ -441,8 +460,8 @@ const MemberForm = React.memo(
                         </Form.Text>
                       </Form.Group> */}
 
-          {/* Year */}
-          {/* <Form.Group
+            {/* Year */}
+            {/* <Form.Group
                         as={Col}
                         xs={12}
                         sm={6}
@@ -463,8 +482,8 @@ const MemberForm = React.memo(
                         />
                       </Form.Group> */}
 
-          {/* Title */}
-          {/* <Form.Group
+            {/* Title */}
+            {/* <Form.Group
                         as={Col}
                         xs={12}
                         sm={6}
@@ -497,8 +516,8 @@ const MemberForm = React.memo(
                         )}
                       </Form.Group> */}
 
-          {/* Member Name */}
-          {/* <Form.Group
+            {/* Member Name */}
+            {/* <Form.Group
                         as={Col}
                         xs={12}
                         sm={6}
@@ -539,7 +558,7 @@ const MemberForm = React.memo(
                         )}
                       </Form.Group> */}
 
-          {/* <Form.Group
+            {/* <Form.Group
                         as={Col}
                         xs={12}
                         sm={6}
@@ -581,7 +600,7 @@ const MemberForm = React.memo(
                         )}
                       </Form.Group> */}
 
-          {/* <Form.Group
+            {/* <Form.Group
                         as={Col}
                         xs={12}
                         sm={6}
@@ -628,7 +647,7 @@ const MemberForm = React.memo(
                         )}
                       </Form.Group> */}
 
-          {/* <Form.Group
+            {/* <Form.Group
                         as={Col}
                         xs={12}
                         sm={6}
@@ -668,7 +687,7 @@ const MemberForm = React.memo(
                         )}
                       </Form.Group> */}
 
-          {/* <Form.Group
+            {/* <Form.Group
                         as={Col}
                         xs={12}
                         sm={6}
@@ -708,7 +727,7 @@ const MemberForm = React.memo(
                         )}
                       </Form.Group> */}
 
-          {/* <Form.Group
+            {/* <Form.Group
                         as={Col}
                         xs={12}
                         sm={6}
@@ -754,7 +773,7 @@ const MemberForm = React.memo(
                           </div>
                         )}
                       </Form.Group> */}
-          {/* 
+            {/* 
                       <Form.Group
                         as={Col}
                         xs={12}
@@ -795,7 +814,7 @@ const MemberForm = React.memo(
                         )}
                       </Form.Group> */}
 
-          {/* <Form.Group
+            {/* <Form.Group
                         as={Col}
                         xs={12}
                         sm={6}
@@ -838,7 +857,7 @@ const MemberForm = React.memo(
                         )}
                       </Form.Group> */}
 
-          {/* <Form.Group
+            {/* <Form.Group
                         as={Col}
                         xs={12}
                         sm={6}
@@ -878,7 +897,7 @@ const MemberForm = React.memo(
                           </div>
                         )}
                       </Form.Group> */}
-          {/* 
+            {/* 
                       <Form.Group
                         as={Col}
                         xs={12}
@@ -919,8 +938,8 @@ const MemberForm = React.memo(
                         )}
                       </Form.Group> */}
 
-          {/* PIN */}
-          {/* <Form.Group
+            {/* PIN */}
+            {/* <Form.Group
                         as={Col}
                         xs={12}
                         sm={6}
@@ -961,8 +980,8 @@ const MemberForm = React.memo(
                         )}
                       </Form.Group> */}
 
-          {/* Card Issued */}
-          {/* <Form.Group
+            {/* Card Issued */}
+            {/* <Form.Group
                         as={Col}
                         xs={12}
                         sm={6}
@@ -1009,7 +1028,7 @@ const MemberForm = React.memo(
                         )}
                       </Form.Group> */}
 
-          {/* <Form.Group
+            {/* <Form.Group
                         as={Col}
                         xs={12}
                         sm={6}
@@ -1059,7 +1078,7 @@ const MemberForm = React.memo(
                           </div>
                         )}
                       </Form.Group> */}
-          {/* 
+            {/* 
                       <Form.Group
                         as={Col}
                         xs={12}
@@ -1104,485 +1123,487 @@ const MemberForm = React.memo(
                           />
                         )}
                       </Form.Group> */}
-          {/* </Row>  */}
+            {/* </Row>  */}
 
-          {/* FAMILY MEMBER SECTION */}
+            {/* FAMILY MEMBER SECTION */}
 
-          {(!reviewMode || familyDetails.length > 0) && (
-            <Col xs={12} className="mt-4">
-              <div className={styles.familySection}>
-                <div className={styles.familyHeader}>
-                  <div>
-                    <h5 className="mb-1">Family Members</h5>
+            {(!reviewMode || familyDetails.length > 0) && (
+              <Col xs={12} className="mt-4">
+                <div className={styles.familySection}>
+                  <div className={styles.familyHeader}>
+                    <div>
+                      <h5 className="mb-1">Family Members</h5>
 
-                    <p className="mb-0 text-muted small">
-                      {reviewMode
-                        ? "Review and edit family member details."
-                        : "Add family members who will attend the conference with you."}
-                    </p>
+                      <p className="mb-0 text-muted small">
+                        {reviewMode
+                          ? "Review and edit family member details."
+                          : "Add family members who will attend the conference with you."}
+                      </p>
+                    </div>
+
+                    {/* ADD BUTTON ONLY STEP 1 */}
+                    {!reviewMode && (
+                      <Button
+                        type="button"
+                        className={styles.addFamilyButton}
+                        onClick={addFamilyMember}
+                      >
+                        + Add Family Member
+                      </Button>
+                    )}
                   </div>
 
-                  {/* ADD BUTTON ONLY STEP 1 */}
-                  {!reviewMode && (
-                    <Button
-                      type="button"
-                      className={styles.addFamilyButton}
-                      onClick={addFamilyMember}
-                    >
-                      + Add Family Member
-                    </Button>
-                  )}
-                </div>
+                  {/* FAMILY CARDS */}
+                  {familyDetails.map((familyMember, index) => (
+                    <Card key={index} className={`${styles.familyCard} mb-4`}>
+                      <Card.Body>
+                        <div className="d-flex justify-content-between align-items-center mb-3">
+                          <h6 className="mb-0">Family Member {index + 1}</h6>
 
-                {/* FAMILY CARDS */}
-                {familyDetails.map((familyMember, index) => (
-                  <Card key={index} className={`${styles.familyCard} mb-4`}>
-                    <Card.Body>
-                      <div className="d-flex justify-content-between align-items-center mb-3">
-                        <h6 className="mb-0">Family Member {index + 1}</h6>
+                          {/* EDIT/DELETE ONLY NORMAL FORM */}
+                          {!reviewMode && (
+                            <div className="d-flex gap-2">
+                              {editingFamilyIndex !== index && (
+                                <Button
+                                  type="button"
+                                  variant="outline-primary"
+                                  size="sm"
+                                  onClick={() => setEditingFamilyIndex(index)}
+                                >
+                                  <FaEdit className="me-1" />
+                                  Edit
+                                </Button>
+                              )}
 
-                        {/* EDIT/DELETE ONLY NORMAL FORM */}
-                        {!reviewMode && (
-                          <div className="d-flex gap-2">
-                            {editingFamilyIndex !== index && (
                               <Button
                                 type="button"
-                                variant="outline-primary"
+                                variant="outline-danger"
                                 size="sm"
-                                onClick={() => setEditingFamilyIndex(index)}
+                                onClick={() => removeFamilyMember(index)}
                               >
-                                <FaEdit className="me-1" />
-                                Edit
+                                Delete
                               </Button>
-                            )}
+                            </div>
+                          )}
+                        </div>
 
-                            <Button
-                              type="button"
-                              variant="outline-danger"
-                              size="sm"
-                              onClick={() => removeFamilyMember(index)}
-                            >
-                              Delete
-                            </Button>
-                          </div>
-                        )}
-                      </div>
+                        <Row className={`${styles.familyFieldsRow} g-3`}>
+                          {/* RELATION */}
+                          <Form.Group as={Col} xs={12} md={4} className="mb-3">
+                            <Form.Label>
+                              <strong>Relation</strong>{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </Form.Label>
 
-                      <Row className={`${styles.familyFieldsRow} g-3`}>
-                        {/* RELATION */}
-                        <Form.Group as={Col} xs={12} md={4} className="mb-3">
-                          <Form.Label>
-                            <strong>Relation</strong>{" "}
-                            <span style={{ color: "red" }}>*</span>
-                          </Form.Label>
-
-                          <Form.Select
-                            value={familyMember.Relation || ""}
-                            onChange={(e) =>
-                              updateFamilyMember(
-                                index,
-                                "Relation",
-                                e.target.value,
-                              )
-                            }
-                            isInvalid={
-                              !!formErrors[`familyDetails_${index}_Relation`]
-                            }
-                          >
-                            <option value="">Select Relation</option>
-                            <option value="Spouse">Spouse</option>
-                            <option value="Son">Son</option>
-                            <option value="Daughter">Daughter</option>
-                            <option value="Father">Father</option>
-                            <option value="Mother">Mother</option>
-                            <option value="Brother">Brother</option>
-                            <option value="Sister">Sister</option>
-                            <option value="Other">Other</option>
-                          </Form.Select>
-
-                          <Form.Control.Feedback type="invalid">
-                            {formErrors[`familyDetails_${index}_Relation`]}
-                          </Form.Control.Feedback>
-                        </Form.Group>
-
-                        {/* LM NO */}
-                        {/* LM NO SEARCH */}
-                        <Form.Group as={Col} xs={12} md={4} className="mb-3">
-                          <Form.Label>
-                            <strong>ABBS Life Membership No</strong>
-                          </Form.Label>
-
-                          <div className="d-flex gap-2">
-                            <Form.Control
-                              type="text"
-                              placeholder="Enter LM No."
-                              value={familyMember.LM_NO || ""}
+                            <Form.Select
+                              value={familyMember.Relation || ""}
                               onChange={(e) =>
                                 updateFamilyMember(
                                   index,
-                                  "LM_NO",
+                                  "Relation",
+                                  e.target.value,
+                                )
+                              }
+                              isInvalid={
+                                !!formErrors[`familyDetails_${index}_Relation`]
+                              }
+                            >
+                              <option value="">Select Relation</option>
+                              <option value="Spouse">Spouse</option>
+                              <option value="Son">Son</option>
+                              <option value="Daughter">Daughter</option>
+                              <option value="Father">Father</option>
+                              <option value="Mother">Mother</option>
+                              <option value="Brother">Brother</option>
+                              <option value="Sister">Sister</option>
+                              <option value="Other">Other</option>
+                            </Form.Select>
+
+                            <Form.Control.Feedback type="invalid">
+                              {formErrors[`familyDetails_${index}_Relation`]}
+                            </Form.Control.Feedback>
+                          </Form.Group>
+
+                          {/* LM NO */}
+                          {/* LM NO SEARCH */}
+                          <Form.Group as={Col} xs={12} md={4} className="mb-3">
+                            <Form.Label>
+                              <strong>ABBS Life Membership No</strong>
+                            </Form.Label>
+
+                            <div className="d-flex gap-2">
+                              <Form.Control
+                                type="text"
+                                placeholder="Enter LM No."
+                                value={familyMember.LM_NO || ""}
+                                onChange={(e) =>
+                                  updateFamilyMember(
+                                    index,
+                                    "LM_NO",
+                                    e.target.value,
+                                  )
+                                }
+                              />
+
+                              {/* Search only before final review */}
+                              {!reviewMode && (
+                                <Button
+                                  type="button"
+                                  className={styles.familySearchButton}
+                                  onClick={() =>
+                                    handleFamilyMemberSearch(index)
+                                  }
+                                >
+                                  Search
+                                </Button>
+                              )}
+                            </div>
+
+                            {!reviewMode && (
+                              <Form.Text className="text-muted">
+                                Already an ABBS Life Member? Enter LM No. to
+                                auto-fill details.
+                              </Form.Text>
+                            )}
+                          </Form.Group>
+
+                          {/* YEAR */}
+                          <Form.Group as={Col} xs={12} md={4} className="mb-3">
+                            <Form.Label>
+                              <strong>ABBS Membership Card Issued Year</strong>
+                            </Form.Label>
+
+                            <Form.Control
+                              type="text"
+                              value={familyMember.Year || ""}
+                              onChange={(e) =>
+                                updateFamilyMember(
+                                  index,
+                                  "Year",
                                   e.target.value,
                                 )
                               }
                             />
+                          </Form.Group>
 
-                            {/* Search only before final review */}
-                            {!reviewMode && (
-                              <Button
-                                type="button"
-                                className={styles.familySearchButton}
-                                onClick={() => handleFamilyMemberSearch(index)}
-                              >
-                                Search
-                              </Button>
-                            )}
-                          </div>
+                          {/* TITLE */}
+                          <Form.Group as={Col} xs={12} md={4} className="mb-3">
+                            <Form.Label>
+                              <strong>Title</strong>{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </Form.Label>
 
-                          {!reviewMode && (
-                            <Form.Text className="text-muted">
-                              Already an ABBS Life Member? Enter LM No. to
-                              auto-fill details.
-                            </Form.Text>
-                          )}
-                        </Form.Group>
+                            <Form.Select
+                              value={familyMember.Title || ""}
+                              onChange={(e) =>
+                                updateFamilyMember(
+                                  index,
+                                  "Title",
+                                  e.target.value,
+                                )
+                              }
+                            >
+                              <option value="">Select Title</option>
+                              <option value="Mr">Mr</option>
+                              <option value="Mrs">Mrs</option>
+                              <option value="Miss">Miss</option>
+                              <option value="Ms">Ms</option>
+                              <option value="Dr">Dr</option>
+                            </Form.Select>
+                          </Form.Group>
 
-                        {/* YEAR */}
-                        <Form.Group as={Col} xs={12} md={4} className="mb-3">
-                          <Form.Label>
-                            <strong>ABBS Membership Card Issued Year</strong>
-                          </Form.Label>
+                          {/* MEMBER NAME */}
+                          <Form.Group as={Col} xs={12} md={4} className="mb-3">
+                            <Form.Label>
+                              <strong>Member Name</strong>{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </Form.Label>
 
-                          <Form.Control
-                            type="text"
-                            value={familyMember.Year || ""}
-                            onChange={(e) =>
-                              updateFamilyMember(index, "Year", e.target.value)
-                            }
-                          />
-                        </Form.Group>
+                            <Form.Control
+                              type="text"
+                              value={familyMember.Member_Name || ""}
+                              onChange={(e) =>
+                                updateFamilyMember(
+                                  index,
+                                  "Member_Name",
+                                  e.target.value,
+                                )
+                              }
+                              isInvalid={
+                                !!formErrors[
+                                  `familyDetails_${index}_Member_Name`
+                                ]
+                              }
+                            />
 
-                        {/* TITLE */}
-                        <Form.Group as={Col} xs={12} md={4} className="mb-3">
-                          <Form.Label>
-                            <strong>Title</strong>{" "}
-                            <span style={{ color: "red" }}>*</span>
-                          </Form.Label>
+                            <Form.Control.Feedback type="invalid">
+                              {formErrors[`familyDetails_${index}_Member_Name`]}
+                            </Form.Control.Feedback>
+                          </Form.Group>
 
-                          <Form.Select
-                            value={familyMember.Title || ""}
-                            onChange={(e) =>
-                              updateFamilyMember(index, "Title", e.target.value)
-                            }
-                          >
-                            <option value="">Select Title</option>
-                            <option value="Mr">Mr</option>
-                            <option value="Mrs">Mrs</option>
-                            <option value="Miss">Miss</option>
-                            <option value="Ms">Ms</option>
-                            <option value="Dr">Dr</option>
-                          </Form.Select>
-                        </Form.Group>
+                          {/* S/O */}
+                          <Form.Group as={Col} xs={12} md={4} className="mb-3">
+                            <Form.Label>
+                              <strong>S/O, D/O, W/O</strong>{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </Form.Label>
 
-                        {/* MEMBER NAME */}
-                        <Form.Group as={Col} xs={12} md={4} className="mb-3">
-                          <Form.Label>
-                            <strong>Member Name</strong>{" "}
-                            <span style={{ color: "red" }}>*</span>
-                          </Form.Label>
+                            <Form.Control
+                              type="text"
+                              value={familyMember.S_O_D_O_W_O || ""}
+                              onChange={(e) =>
+                                updateFamilyMember(
+                                  index,
+                                  "S_O_D_O_W_O",
+                                  e.target.value,
+                                )
+                              }
+                            />
+                          </Form.Group>
 
-                          <Form.Control
-                            type="text"
-                            value={familyMember.Member_Name || ""}
-                            onChange={(e) =>
-                              updateFamilyMember(
-                                index,
-                                "Member_Name",
-                                e.target.value,
-                              )
-                            }
-                            isInvalid={
-                              !!formErrors[`familyDetails_${index}_Member_Name`]
-                            }
-                          />
+                          {/* DOB */}
+                          <Form.Group as={Col} xs={12} md={4} className="mb-3">
+                            <Form.Label>
+                              <strong>Date of Birth</strong>{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </Form.Label>
 
-                          <Form.Control.Feedback type="invalid">
-                            {formErrors[`familyDetails_${index}_Member_Name`]}
-                          </Form.Control.Feedback>
-                        </Form.Group>
+                            <Form.Control
+                              type="date"
+                              value={familyMember.Date_of_Birth || ""}
+                              max={new Date().toISOString().split("T")[0]}
+                              onChange={(e) =>
+                                updateFamilyMember(
+                                  index,
+                                  "Date_of_Birth",
+                                  e.target.value,
+                                )
+                              }
+                            />
+                          </Form.Group>
 
-                        {/* S/O */}
-                        <Form.Group as={Col} xs={12} md={4} className="mb-3">
-                          <Form.Label>
-                            <strong>S/O, D/O, W/O</strong>{" "}
-                            <span style={{ color: "red" }}>*</span>
-                          </Form.Label>
+                          {/* GOTRA */}
+                          <Form.Group as={Col} xs={12} md={4} className="mb-3">
+                            <Form.Label>
+                              <strong>Gotra</strong>{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </Form.Label>
 
-                          <Form.Control
-                            type="text"
-                            value={familyMember.S_O_D_O_W_O || ""}
-                            onChange={(e) =>
-                              updateFamilyMember(
-                                index,
-                                "S_O_D_O_W_O",
-                                e.target.value,
-                              )
-                            }
-                          />
-                        </Form.Group>
+                            <Form.Control
+                              type="text"
+                              value={familyMember.Gotra || ""}
+                              onChange={(e) =>
+                                updateFamilyMember(
+                                  index,
+                                  "Gotra",
+                                  e.target.value,
+                                )
+                              }
+                            />
+                          </Form.Group>
 
-                        {/* DOB */}
-                        <Form.Group as={Col} xs={12} md={4} className="mb-3">
-                          <Form.Label>
-                            <strong>Date of Birth</strong>{" "}
-                            <span style={{ color: "red" }}>*</span>
-                          </Form.Label>
+                          {/* KULDEVI */}
+                          <Form.Group as={Col} xs={12} md={4} className="mb-3">
+                            <Form.Label>
+                              <strong>Kuldevi</strong>{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </Form.Label>
 
-                          <Form.Control
-                            type="date"
-                            value={familyMember.Date_of_Birth || ""}
-                            max={new Date().toISOString().split("T")[0]}
-                            onChange={(e) =>
-                              updateFamilyMember(
-                                index,
-                                "Date_of_Birth",
-                                e.target.value,
-                              )
-                            }
-                          />
-                        </Form.Group>
+                            <Form.Control
+                              type="text"
+                              value={familyMember.Kuldevi || ""}
+                              onChange={(e) =>
+                                updateFamilyMember(
+                                  index,
+                                  "Kuldevi",
+                                  e.target.value,
+                                )
+                              }
+                            />
+                          </Form.Group>
 
-                        {/* GOTRA */}
-                        <Form.Group as={Col} xs={12} md={4} className="mb-3">
-                          <Form.Label>
-                            <strong>Gotra</strong>{" "}
-                            <span style={{ color: "red" }}>*</span>
-                          </Form.Label>
+                          {/* GENDER */}
+                          <Form.Group as={Col} xs={12} md={4} className="mb-3">
+                            <Form.Label>
+                              <strong>Gender</strong>{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </Form.Label>
 
-                          <Form.Control
-                            type="text"
-                            value={familyMember.Gotra || ""}
-                            onChange={(e) =>
-                              updateFamilyMember(index, "Gotra", e.target.value)
-                            }
-                          />
-                        </Form.Group>
+                            <Form.Select
+                              value={familyMember.gender || ""}
+                              onChange={(e) =>
+                                updateFamilyMember(
+                                  index,
+                                  "gender",
+                                  e.target.value,
+                                )
+                              }
+                            >
+                              <option value="">Select Gender</option>
+                              <option value="Male">Male</option>
+                              <option value="Female">Female</option>
+                              <option value="Other">Other</option>
+                            </Form.Select>
+                          </Form.Group>
 
-                        {/* KULDEVI */}
-                        <Form.Group as={Col} xs={12} md={4} className="mb-3">
-                          <Form.Label>
-                            <strong>Kuldevi</strong>{" "}
-                            <span style={{ color: "red" }}>*</span>
-                          </Form.Label>
+                          {/* EMAIL */}
+                          <Form.Group as={Col} xs={12} md={4} className="mb-3">
+                            <Form.Label>
+                              <strong>Email</strong>{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </Form.Label>
 
-                          <Form.Control
-                            type="text"
-                            value={familyMember.Kuldevi || ""}
-                            onChange={(e) =>
-                              updateFamilyMember(
-                                index,
-                                "Kuldevi",
-                                e.target.value,
-                              )
-                            }
-                          />
-                        </Form.Group>
+                            <Form.Control
+                              type="email"
+                              value={familyMember.Email || ""}
+                              onChange={(e) =>
+                                updateFamilyMember(
+                                  index,
+                                  "Email",
+                                  e.target.value,
+                                )
+                              }
+                            />
+                          </Form.Group>
 
-                        {/* GENDER */}
-                        <Form.Group as={Col} xs={12} md={4} className="mb-3">
-                          <Form.Label>
-                            <strong>Gender</strong>{" "}
-                            <span style={{ color: "red" }}>*</span>
-                          </Form.Label>
+                          {/* MOBILE */}
+                          <Form.Group as={Col} xs={12} md={4} className="mb-3">
+                            <Form.Label>
+                              <strong>Mobile No</strong>{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </Form.Label>
 
-                          <Form.Select
-                            value={familyMember.gender || ""}
-                            onChange={(e) =>
-                              updateFamilyMember(
-                                index,
-                                "gender",
-                                e.target.value,
-                              )
-                            }
-                          >
-                            <option value="">Select Gender</option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                            <option value="Other">Other</option>
-                          </Form.Select>
-                        </Form.Group>
+                            <Form.Control
+                              type="tel"
+                              maxLength={10}
+                              value={familyMember.Contact_No || ""}
+                              onChange={(e) => {
+                                const value = e.target.value.replace(/\D/g, "");
 
-                        {/* EMAIL */}
-                        <Form.Group as={Col} xs={12} md={4} className="mb-3">
-                          <Form.Label>
-                            <strong>Email</strong>{" "}
-                            <span style={{ color: "red" }}>*</span>
-                          </Form.Label>
+                                updateFamilyMember(index, "Contact_No", value);
+                              }}
+                            />
+                          </Form.Group>
 
-                          <Form.Control
-                            type="email"
-                            value={familyMember.Email || ""}
-                            onChange={(e) =>
-                              updateFamilyMember(index, "Email", e.target.value)
-                            }
-                          />
-                        </Form.Group>
+                          {/* ADDRESS */}
+                          <Form.Group as={Col} xs={12} md={4} className="mb-3">
+                            <Form.Label>
+                              <strong>Address</strong>{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </Form.Label>
 
-                        {/* MOBILE */}
-                        <Form.Group as={Col} xs={12} md={4} className="mb-3">
-                          <Form.Label>
-                            <strong>Mobile No</strong>{" "}
-                            <span style={{ color: "red" }}>*</span>
-                          </Form.Label>
+                            <Form.Control
+                              as="textarea"
+                              rows={3}
+                              value={familyMember.Address || ""}
+                              onChange={(e) =>
+                                updateFamilyMember(
+                                  index,
+                                  "Address",
+                                  e.target.value,
+                                )
+                              }
+                            />
+                          </Form.Group>
 
-                          <Form.Control
-                            type="tel"
-                            maxLength={10}
-                            value={familyMember.Contact_No || ""}
-                            onChange={(e) => {
-                              const value = e.target.value.replace(/\D/g, "");
+                          {/* CITY */}
+                          <Form.Group as={Col} xs={12} md={4} className="mb-3">
+                            <Form.Label>
+                              <strong>City</strong>{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </Form.Label>
 
-                              updateFamilyMember(index, "Contact_No", value);
-                            }}
-                          />
-                        </Form.Group>
+                            <Form.Control
+                              type="text"
+                              value={familyMember.City || ""}
+                              onChange={(e) =>
+                                updateFamilyMember(
+                                  index,
+                                  "City",
+                                  e.target.value,
+                                )
+                              }
+                            />
+                          </Form.Group>
 
-                        {/* ADDRESS */}
-                        <Form.Group as={Col} xs={12} md={4} className="mb-3">
-                          <Form.Label>
-                            <strong>Address</strong>{" "}
-                            <span style={{ color: "red" }}>*</span>
-                          </Form.Label>
+                          {/* PIN */}
+                          <Form.Group as={Col} xs={12} md={4} className="mb-3">
+                            <Form.Label>
+                              <strong>PIN Code</strong>{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </Form.Label>
 
-                          <Form.Control
-                            as="textarea"
-                            rows={3}
-                            value={familyMember.Address || ""}
-                            onChange={(e) =>
-                              updateFamilyMember(
-                                index,
-                                "Address",
-                                e.target.value,
-                              )
-                            }
-                          />
-                        </Form.Group>
+                            <Form.Control
+                              type="text"
+                              maxLength={6}
+                              value={familyMember.Pin || ""}
+                              onChange={(e) => {
+                                const value = e.target.value.replace(/\D/g, "");
 
-                        {/* CITY */}
-                        <Form.Group as={Col} xs={12} md={4} className="mb-3">
-                          <Form.Label>
-                            <strong>City</strong>{" "}
-                            <span style={{ color: "red" }}>*</span>
-                          </Form.Label>
+                                updateFamilyMember(index, "Pin", value);
+                              }}
+                            />
+                          </Form.Group>
 
-                          <Form.Control
-                            type="text"
-                            value={familyMember.City || ""}
-                            onChange={(e) =>
-                              updateFamilyMember(index, "City", e.target.value)
-                            }
-                          />
-                        </Form.Group>
+                          {/* CATEGORY */}
+                          <Form.Group as={Col} xs={12} md={4} className="mb-3">
+                            <Form.Label>
+                              <strong>Category</strong>{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </Form.Label>
 
-                        {/* PIN */}
-                        <Form.Group as={Col} xs={12} md={4} className="mb-3">
-                          <Form.Label>
-                            <strong>PIN Code</strong>{" "}
-                            <span style={{ color: "red" }}>*</span>
-                          </Form.Label>
+                            <Form.Select
+                              value={familyMember.category || ""}
+                              onChange={(e) =>
+                                updateFamilyMember(
+                                  index,
+                                  "category",
+                                  e.target.value,
+                                )
+                              }
+                            >
+                              <option value="">Select Category</option>
 
-                          <Form.Control
-                            type="text"
-                            maxLength={6}
-                            value={familyMember.Pin || ""}
-                            onChange={(e) => {
-                              const value = e.target.value.replace(/\D/g, "");
+                              <option value="Delegate">Delegate</option>
 
-                              updateFamilyMember(index, "Pin", value);
-                            }}
-                          />
-                        </Form.Group>
+                              <option value="Parent of Marriageable Candidate">
+                                Parent of Marriageable Candidate
+                              </option>
 
-                        {/* CARD ISSUED */}
-                        <Form.Group as={Col} xs={12} md={4} className="mb-3">
-                          <Form.Label>
-                            <strong>Card Issued</strong>{" "}
-                            <span style={{ color: "red" }}>*</span>
-                          </Form.Label>
+                              <option value="Marriageable Candidate">
+                                Marriageable Candidate
+                              </option>
+                            </Form.Select>
+                          </Form.Group>
+                        </Row>
+                      </Card.Body>
+                    </Card>
+                  ))}
+                </div>
+              </Col>
+            )}
+          </Row>
 
-                          <Form.Select
-                            value={familyMember.Card_Issued || ""}
-                            onChange={(e) =>
-                              updateFamilyMember(
-                                index,
-                                "Card_Issued",
-                                e.target.value,
-                              )
-                            }
-                          >
-                            <option value="">Select</option>
-                            <option value="Yes">Yes</option>
-                            <option value="No">No</option>
-                          </Form.Select>
-                        </Form.Group>
+          {!hideSubmitSection && (
+            <div className={styles.submitSection}>
+              <div>
+                <p className={styles.submitTitle}>Ready to continue?</p>
 
-                        {/* CATEGORY */}
-                        <Form.Group as={Col} xs={12} md={4} className="mb-3">
-                          <Form.Label>
-                            <strong>Category</strong>{" "}
-                            <span style={{ color: "red" }}>*</span>
-                          </Form.Label>
-
-                          <Form.Select
-                            value={familyMember.category || ""}
-                            onChange={(e) =>
-                              updateFamilyMember(
-                                index,
-                                "category",
-                                e.target.value,
-                              )
-                            }
-                          >
-                            <option value="">Select Category</option>
-
-                            <option value="Delegate">Delegate</option>
-
-                            <option value="Parent of Marriageable Candidate">
-                              Parent of Marriageable Candidate
-                            </option>
-
-                            <option value="Marriageable Candidate">
-                              Marriageable Candidate
-                            </option>
-                          </Form.Select>
-                        </Form.Group>
-                      </Row>
-                    </Card.Body>
-                  </Card>
-                ))}
+                <small className="text-muted">
+                  Please review all details before proceeding to payment.
+                </small>
               </div>
-            </Col>
-          )}
-        </Row>
 
-        {!hideSubmitSection && (
-          <div className={styles.submitSection}>
-            <div>
-              <p className={styles.submitTitle}>Ready to continue?</p>
-
-              <small className="text-muted">
-                Please review all details before proceeding to payment.
-              </small>
+              <Button
+                type="submit"
+                disabled={submitting || disableNonAbbsForm}
+                className={styles.submitButton}
+              >
+                {submitting ? "Processing..." : submitButtonText}
+              </Button>
             </div>
-
-            <Button
-              type="submit"
-              disabled={submitting}
-              className={styles.submitButton}
-            >
-              {submitting ? "Processing..." : submitButtonText}
-            </Button>
-          </div>
-        )}
+          )}
+        </fieldset>
       </Form>
     );
   },
@@ -1601,6 +1622,10 @@ const NewRegistration = () => {
   const [photoFile, setPhotoFile] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
+  const [alreadyRegistered, setAlreadyRegistered] = useState(null);
+  const [nonAbbsExistingRegistration, setNonAbbsExistingRegistration] =
+    useState(null);
+  const [checkingNonAbbs, setCheckingNonAbbs] = useState(false);
 
   const [conferenceRegistration, setConferenceRegistration] = useState(null);
   const [paymentData, setPaymentData] = useState({
@@ -1609,13 +1634,127 @@ const NewRegistration = () => {
     preview: "",
   });
 
+  const checkNonAbbsExistingUser = async () => {
+    if (isAbbsMember) return;
+
+    const email = member?.Email?.trim();
+    const mobile = member?.Contact_No?.trim();
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    const mobileRegex = /^[6-9]\d{9}$/;
+
+    if (
+      !email ||
+      !mobile ||
+      !emailRegex.test(email) ||
+      !mobileRegex.test(mobile)
+    ) {
+      return;
+    }
+
+    try {
+      setCheckingNonAbbs(true);
+
+      const result = await checkNonAbbsConferenceRegistration(email, mobile);
+
+      if (result?.alreadyRegistered) {
+        setNonAbbsExistingRegistration(result);
+        setAlreadyRegistered(result);
+      } else {
+        setNonAbbsExistingRegistration(null);
+        setAlreadyRegistered(null);
+      }
+    } catch (error) {
+      console.error("Non ABBS duplicate check failed:", error);
+    } finally {
+      setCheckingNonAbbs(false);
+    }
+  };
+
+  // const handleSearch = async () => {
+  //   setError("");
+  //   setMember(null);
+  //   setPhotoPreview(null);
+
+  //   try {
+  //     const data = await searchLifeMember(LM_NO.trim());
+
+  //     setMember(data);
+
+  //     setIsEditing(true);
+
+  //     if (data.photo) {
+  //       const photoUrl = data.photo.startsWith("http")
+  //         ? data.photo
+  //         : `https://bhargava-samaaj.blr1.digitaloceanspaces.com/registration/${data.photo}`;
+
+  //       setPhotoPreview(photoUrl);
+  //     }
+  //   } catch (error) {
+  //     setError(
+  //       error.message || "No member found with this Life Membership Number",
+  //     );
+  //   }
+  // };
   const handleSearch = async () => {
     setError("");
     setMember(null);
     setPhotoPreview(null);
+    setAlreadyRegistered(null);
+
+    if (!LM_NO.trim()) {
+      setError("Please enter ABBS Life Membership Number");
+      return;
+    }
 
     try {
+      /*
+    |--------------------------------------------------------------------------
+    | STEP 1 - Search Life Member
+    |--------------------------------------------------------------------------
+    */
+
       const data = await searchLifeMember(LM_NO.trim());
+
+      if (!data?._id) {
+        setError("Member not found");
+        return;
+      }
+
+      /*
+    |--------------------------------------------------------------------------
+    | STEP 2 - Check Existing APPROVED Conference Registration
+    |--------------------------------------------------------------------------
+    */
+
+      const registrationCheck = await checkApprovedConferenceRegistration(
+        data._id,
+      );
+
+      /*
+    |--------------------------------------------------------------------------
+    | Already Approved
+    |--------------------------------------------------------------------------
+    */
+
+      if (registrationCheck?.alreadyRegistered) {
+        setAlreadyRegistered(registrationCheck);
+
+        // Important:
+        // Don't show/edit the registration form
+        setMember(null);
+
+        return;
+      }
+
+      /*
+    |--------------------------------------------------------------------------
+    | Not Registered / Not Approved
+    |--------------------------------------------------------------------------
+    */
+
+      setAlreadyRegistered(null);
 
       setMember(data);
 
@@ -1629,12 +1768,15 @@ const NewRegistration = () => {
         setPhotoPreview(photoUrl);
       }
     } catch (error) {
+      console.error("Search error:", error);
+
+      setAlreadyRegistered(null);
+
       setError(
-        error.message || "No member found with this Life Membership Number",
+        error?.response?.data?.message || error?.message || "Member not found",
       );
     }
   };
-
   const handlePhotoChange = (e) => {
     const file = e.target.files[0];
     if (file && file.type.startsWith("image/")) {
@@ -1771,9 +1913,9 @@ const NewRegistration = () => {
       errors.Pin = "Enter a valid 6-digit PIN code.";
     }
 
-    if (isEmpty(member.Card_Issued)) {
-      errors.Card_Issued = "Please select whether card was issued.";
-    }
+    // if (isEmpty(member.Card_Issued)) {
+    //   errors.Card_Issued = "Please select whether card was issued.";
+    // }
 
     if (isEmpty(member.category)) {
       errors.category = "Please select a category.";
@@ -1852,9 +1994,9 @@ const NewRegistration = () => {
         errors[`${prefix}Pin`] = "Enter a valid 6-digit PIN code.";
       }
 
-      if (isEmpty(familyMember.Card_Issued)) {
-        errors[`${prefix}Card_Issued`] = "Please select card issued status.";
-      }
+      // if (isEmpty(familyMember.Card_Issued)) {
+      //   errors[`${prefix}Card_Issued`] = "Please select card issued status.";
+      // }
 
       if (isEmpty(familyMember.category)) {
         errors[`${prefix}category`] = "Please select a category.";
@@ -1895,10 +2037,79 @@ const NewRegistration = () => {
     }, 100);
   };
 
-  const handleSubmit = (e) => {
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+
+  //   if (!validateForm()) return;
+
+  //   setCurrentStep(2);
+
+  //   window.scrollTo({
+  //     top: 0,
+  //     behavior: "smooth",
+  //   });
+  // };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!validateForm()) return;
+
+    /*
+  |--------------------------------------------------------------------------
+  | Non-ABBS duplicate check
+  |--------------------------------------------------------------------------
+  */
+
+    if (!isAbbsMember) {
+      try {
+        const registrationCheck = await checkNonAbbsConferenceRegistration(
+          member.Email,
+          member.Contact_No,
+        );
+
+        if (registrationCheck?.alreadyRegistered) {
+          setAlreadyRegistered(registrationCheck);
+
+          if (registrationCheck?.alreadyRegistered) {
+            setNonAbbsExistingRegistration(registrationCheck);
+
+            setAlreadyRegistered(registrationCheck);
+
+            setCurrentStep(1);
+
+            window.scrollTo({
+              top: 0,
+              behavior: "smooth",
+            });
+
+            return;
+          }
+
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
+
+          return;
+        }
+      } catch (error) {
+        console.error("Non-ABBS registration check error:", error);
+
+        setError(
+          error?.response?.data?.message ||
+            "Unable to check existing registration.",
+        );
+
+        return;
+      }
+    }
+
+    /*
+  |--------------------------------------------------------------------------
+  | Continue normal flow
+  |--------------------------------------------------------------------------
+  */
 
     setCurrentStep(2);
 
@@ -2068,11 +2279,7 @@ const NewRegistration = () => {
             >
               <div className="me-3" style={{ flex: 1 }}>
                 <ul className="mb-0 ps-3">
-                  <li>
-                    ★ Online Registration: Rs. 50 per person (Rs. 50/- will be
-                    charged while collecting your card during the Jaipur
-                    Conference.)
-                  </li>
+                  <li>★ Online Registration: Rs. 50 per person</li>
                   <li>
                     ★ On-Spot Registration at the Adhiveshan Venue: Rs. 100 per
                     person
@@ -2102,6 +2309,10 @@ const NewRegistration = () => {
                   setIsAbbsMember(true);
                   setMember(null);
                   setError("");
+                  setFormErrors({}); // ADD THIS
+                  setPhotoPreview(null);
+                  setPhotoFile(null);
+                  setAlreadyRegistered(null);
                 }}
               >
                 ABBS Life Member
@@ -2112,6 +2323,11 @@ const NewRegistration = () => {
                   setIsAbbsMember(false);
                   setIsEditing(true);
                   setMember(EMPTY_MEMBER);
+                  setError("");
+                  setFormErrors({}); // ADD
+                  setPhotoPreview(null);
+                  setPhotoFile(null);
+                  setAlreadyRegistered(null);
                 }}
               >
                 Non-ABBS Life Member
@@ -2156,6 +2372,42 @@ const NewRegistration = () => {
                 </Row>
 
                 {error && <Alert variant="danger">{error}</Alert>}
+
+                {alreadyRegistered && (
+                  <Alert
+                    variant={
+                      alreadyRegistered.registrationStatus === "approved"
+                        ? "success"
+                        : "warning"
+                    }
+                    className="mt-4"
+                  >
+                    <div className="text-center">
+                      <h5 className="mb-2">
+                        {alreadyRegistered.registrationStatus === "approved"
+                          ? "✓ Already Registered"
+                          : "⏳ Registration Already Submitted"}
+                      </h5>
+
+                      <p className="mb-2">{alreadyRegistered.message}</p>
+
+                      {alreadyRegistered.registrationNumbers?.length > 0 && (
+                        <div className="mt-3">
+                          <strong>Registration Number:</strong>
+
+                          {alreadyRegistered.registrationNumbers.map(
+                            (item, index) => (
+                              <div key={index}>
+                                {item.name} -{" "}
+                                <strong>{item.registrationNumber}</strong>
+                              </div>
+                            ),
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </Alert>
+                )}
                 {member && (
                   <Row>
                     <Col xs={12}>
@@ -2179,25 +2431,59 @@ const NewRegistration = () => {
                 )}
               </>
             ) : (
-              <Row className="mb-4">
-                <Col xs={12}>
-                  <Card className={styles.registrationCard}>
-                    <Card.Body className={styles.registrationCardBody}>
-                      <MemberForm
-                        member={member}
-                        isEditing={isEditing}
-                        formErrors={formErrors}
-                        submitting={submitting}
-                        photoPreview={photoPreview}
-                        handlePhotoChange={handlePhotoChange}
-                        setIsEditing={setIsEditing}
-                        handleSubmit={handleSubmit}
-                        updateMemberData={updateMemberData}
-                      />
-                    </Card.Body>
-                  </Card>
-                </Col>
-              </Row>
+              <>
+                {/* ========================================= */}
+                {/* NON-ABBS ALREADY REGISTERED MESSAGE */}
+                {/* ========================================= */}
+
+                {nonAbbsExistingRegistration && (
+                  <Alert
+                    variant={
+                      nonAbbsExistingRegistration.registrationStatus ===
+                      "approved"
+                        ? "success"
+                        : "warning"
+                    }
+                    className="mb-4"
+                  >
+                    <div className="text-center">
+                      <h5 className="mb-2">
+                        {nonAbbsExistingRegistration.registrationStatus ===
+                        "approved"
+                          ? "✓ Already Registered"
+                          : "⏳ Payment Already Submitted"}
+                      </h5>
+
+                      <p className="mb-0">
+                        {nonAbbsExistingRegistration.message}
+                      </p>
+                    </div>
+                  </Alert>
+                )}
+
+                <Row className="mb-4">
+                  <Col xs={12}>
+                    <Card className={styles.registrationCard}>
+                      <Card.Body className={styles.registrationCardBody}>
+                        <MemberForm
+                          member={member}
+                          isEditing={isEditing}
+                          formErrors={formErrors}
+                          submitting={submitting}
+                          photoPreview={photoPreview}
+                          handlePhotoChange={handlePhotoChange}
+                          setIsEditing={setIsEditing}
+                          handleSubmit={handleSubmit}
+                          updateMemberData={updateMemberData}
+                          isAbbsMember={isAbbsMember}
+                          existingRegistration={nonAbbsExistingRegistration}
+                          checkNonAbbsExistingUser={checkNonAbbsExistingUser}
+                        />
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                </Row>
+              </>
             )}
           </>
         )}
@@ -2354,7 +2640,7 @@ const NewRegistration = () => {
           </div>
         )}
 
-        {currentStep === 4 && (
+        {/* {currentStep === 4 && (
           <Row className="justify-content-center">
             <Col md={8}>
               <Card className="p-4 text-center">
@@ -2393,6 +2679,161 @@ const NewRegistration = () => {
               </Card>
             </Col>
           </Row>
+        )} */}
+        {currentStep === 4 && (
+          <Row className="justify-content-center">
+            <Col md={8}>
+              <Card className="p-4 text-center">
+                <div
+                  style={{
+                    fontSize: "60px",
+                    color: "green",
+                  }}
+                >
+                  ✓
+                </div>
+
+                <h3 className="text-warning">
+                  Registration Submitted for Verification
+                </h3>
+
+                <p>
+                  Your registration details and payment information have been
+                  submitted successfully for verification.
+                  After successful verification of your details and payment, you will receive a confirmation email for your conference registration.
+                </p>
+
+                {conferenceRegistration && (
+                  <>
+                    {/* PRIMARY MEMBER */}
+                    <div
+                      style={{
+                        marginTop: "20px",
+                        padding: "18px",
+                        backgroundColor: "#fff7f2",
+                        border: "1px solid #ffb47a",
+                        borderRadius: "10px",
+                      }}
+                    >
+                      <p
+                        style={{
+                          marginBottom: "5px",
+                          color: "#666",
+                        }}
+                      >
+                        Primary Member Registration Number
+                      </p>
+
+                      <h4
+                        style={{
+                          color: "#f4511e",
+                          fontWeight: "700",
+                          marginBottom: 0,
+                        }}
+                      >
+                        {conferenceRegistration.primaryRegistrationNumber}
+                      </h4>
+                    </div>
+
+                    {/* ALL REGISTERED MEMBERS */}
+                    {conferenceRegistration.registrationNumbers?.length > 0 && (
+                      <div
+                        style={{
+                          marginTop: "25px",
+                          textAlign: "left",
+                        }}
+                      >
+                        <h5
+                          style={{
+                            textAlign: "center",
+                            fontWeight: "700",
+                            marginBottom: "15px",
+                          }}
+                        >
+                          All Registered Members
+                        </h5>
+
+                        {conferenceRegistration.registrationNumbers.map(
+                          (registrationNumber, index) => {
+                            // Primary + Family members in same order
+                            const allMembers = [
+                              {
+                                ...member,
+                                memberType: "Primary",
+                              },
+
+                              ...(member?.familyDetails || []).map(
+                                (familyMember) => ({
+                                  ...familyMember,
+                                  memberType: "Family",
+                                }),
+                              ),
+                            ];
+
+                            const registeredMember = allMembers[index];
+
+                            return (
+                              <div
+                                key={registrationNumber || index}
+                                style={{
+                                  display: "flex",
+                                  justifyContent: "space-between",
+                                  alignItems: "center",
+                                  gap: "15px",
+                                  padding: "12px 15px",
+                                  marginBottom: "80px",
+                                  border: "1px solid #eee",
+                                  borderRadius: "8px",
+                                  backgroundColor: "#fff",
+                                }}
+                              >
+                                <div>
+                                  <strong
+                                    style={{
+                                      display: "block",
+                                    }}
+                                  >
+                                    {registeredMember?.Member_Name ||
+                                      `Member ${index + 1}`}
+                                  </strong>
+
+                                  <small
+                                    style={{
+                                      color: "#777",
+                                    }}
+                                  >
+                                    {index === 0
+                                      ? "Primary Member"
+                                      : registeredMember?.Relation ||
+                                        "Family Member"}
+                                  </small>
+                                </div>
+
+                                <strong
+                                  style={{
+                                    color: "#f4511e",
+                                    whiteSpace: "nowrap",
+                                  }}
+                                >
+                                  {registrationNumber}
+                                </strong>
+                              </div>
+                            );
+                          },
+                        )}
+                      </div>
+                    )}
+
+                   {/* <p className="mt-3">
+ 
+  After successful verification of your details and payment,
+  you will receive a confirmation email for your conference registration.
+</p> */}
+                  </>
+                )}
+              </Card>
+            </Col>
+          </Row>
         )}
         <Toast
           onClose={() => setShowToast(false)}
@@ -2412,12 +2853,14 @@ const NewRegistration = () => {
             fontWeight: "500",
           }}
         >
-          🎉 Registration Form submitted successfully!
+         Registration details submitted for verification.
         </Toast>
       </Container>
       {/* <Container>
         Form under maintenance
       </Container> */}
+
+  
     </>
   );
 };

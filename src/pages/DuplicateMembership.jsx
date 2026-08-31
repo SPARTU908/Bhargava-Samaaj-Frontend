@@ -665,6 +665,8 @@ const DuplicateMembership = () => {
                     onChange={handleChange}
                   />
 
+
+
                   <Field
                     label="Kuldevi"
                     required
@@ -673,26 +675,7 @@ const DuplicateMembership = () => {
                     onChange={handleChange}
                   />
 
-                  <Field
-                    label="Pin Code"
-                    required
-                    name="pincode"
-                    inputMode="numeric"
-                    value={formData.pincode}
-                    onChange={handleChange}
-                  />
-
-                  <Field
-                    label="New Pin Code"
-                    required
-                    name="newPincode"
-                    value={formData.newPincode}
-                    onChange={handleChange}
-                  />
-                </div>
-
-                <div className="address-grid">
-                  <Textarea
+                   <Textarea
                     label="Old Address/Current Address"
                     required
                     name="oldAddress"
@@ -701,7 +684,7 @@ const DuplicateMembership = () => {
                     placeholder="पुराना पता"
                   />
 
-                  <Textarea
+                    <Textarea
                     label="New Address"
                     required
                     name="newAddress"
@@ -709,6 +692,33 @@ const DuplicateMembership = () => {
                     onChange={handleChange}
                     placeholder="नया पता दर्ज करें"
                   />
+
+                  
+                 
+                </div>
+
+                <div className="address-grid">
+
+                 <Field
+                    label="Pin Code"
+                    required
+                    name="pincode"
+                    inputMode="numeric"
+                    value={formData.pincode}
+                    onChange={handleChange}
+                  />
+
+
+                   <Field
+                    label="New Pin Code"
+                    required
+                    name="newPincode"
+                    value={formData.newPincode}
+                    onChange={handleChange}
+                  />
+
+
+                
                   
                   <Field
                     label="Occupation"

@@ -15,6 +15,181 @@ import {
 import { Table } from "react-bootstrap";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
+import { getAllConferenceRegistrations } from "../apis/conferenceRegistration";
+
+const MemberDetailsTable = ({ member }) => {
+  if (!member) {
+    return (
+      <div className="alert alert-warning">
+        Member details not available.
+      </div>
+    );
+  }
+
+  return (
+    <Table
+      bordered
+      responsive
+      size="sm"
+      className="align-middle"
+    >
+      <tbody>
+        <tr>
+          <th>Registration Number</th>
+          <td>
+            {member.registrationNumber ||
+              "-"}
+          </td>
+
+          <th>Member Type</th>
+          <td>
+            {member.memberType || "-"}
+          </td>
+        </tr>
+
+        <tr>
+          <th>Relation</th>
+          <td>
+            {member.relation || "-"}
+          </td>
+
+          <th>LM No</th>
+          <td>
+            {member.LM_NO || "-"}
+          </td>
+        </tr>
+
+        <tr>
+          <th>Title</th>
+          <td>
+            {member.Title || "-"}
+          </td>
+
+          <th>Name</th>
+          <td>
+            {member.Member_Name || "-"}
+          </td>
+        </tr>
+
+        <tr>
+          <th>Membership Year</th>
+          <td>
+            {member.Year || "-"}
+          </td>
+
+          <th>Card Issued</th>
+          <td>
+            {member.Card_Issued ||
+              "-"}
+          </td>
+        </tr>
+
+        <tr>
+          <th>S/O, D/O, W/O</th>
+          <td>
+            {member.S_O_D_O_W_O ||
+              "-"}
+          </td>
+
+          <th>Date of Birth</th>
+          <td>
+            {member.Date_of_Birth ||
+              "-"}
+          </td>
+        </tr>
+
+        <tr>
+          <th>Gender</th>
+          <td>
+            {member.gender || "-"}
+          </td>
+
+          <th>Category</th>
+          <td>
+            {member.category || "-"}
+          </td>
+        </tr>
+
+        <tr>
+          <th>Gotra</th>
+          <td>
+            {member.Gotra || "-"}
+          </td>
+
+          <th>Kuldevi</th>
+          <td>
+            {member.Kuldevi || "-"}
+          </td>
+        </tr>
+
+        <tr>
+          <th>Mobile</th>
+          <td>
+            {member.Contact_No ||
+              "-"}
+          </td>
+
+          <th>Email</th>
+          <td>
+            {member.Email || "-"}
+          </td>
+        </tr>
+
+        <tr>
+          <th>City</th>
+          <td>
+            {member.City || "-"}
+          </td>
+
+          <th>PIN Code</th>
+          <td>
+            {member.Pin || "-"}
+          </td>
+        </tr>
+
+        <tr>
+          <th>Address</th>
+
+          <td colSpan="3">
+            {member.Address || "-"}
+          </td>
+        </tr>
+
+        <tr>
+          <th>Photo</th>
+
+          <td colSpan="3">
+            {member.photo ? (
+              <a
+                href={member.photo}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  src={member.photo}
+                  alt={
+                    member.Member_Name ||
+                    "Member"
+                  }
+                  style={{
+                    width: "100px",
+                    height: "100px",
+                    objectFit: "cover",
+                    borderRadius: "8px",
+                    border:
+                      "1px solid #ddd",
+                  }}
+                />
+              </a>
+            ) : (
+              "N/A"
+            )}
+          </td>
+        </tr>
+      </tbody>
+    </Table>
+  );
+};
 
 const ConferenceAdminDashboard = () => {
   const [selectedSection, setSelectedSection] = useState(null);
@@ -26,7 +201,7 @@ const ConferenceAdminDashboard = () => {
   const [updatedPage, setUpdatedPage] = useState(1);
   const [newPage, setNewPage] = useState(1);
   const [registeredUsers, setRegisteredUsers] = useState([]);
-const [totalUsers, setTotalUsers] = useState(0);
+  const [totalUsers, setTotalUsers] = useState(0);
 
   const [lifeMemberSearch, setLifeMemberSearch] = useState({
     lmNo: "",
@@ -40,6 +215,19 @@ const [totalUsers, setTotalUsers] = useState(0);
   const [totalNewLifeMembers, setTotalNewLifeMembers] = useState(0);
 
   const [genderFilter, setGenderFilter] = useState("");
+
+  const [conferenceRegistrations, setConferenceRegistrations] = useState([]);
+
+  const [totalConferenceRegistrations, setTotalConferenceRegistrations] =
+    useState(0);
+
+  const [conferenceSearch, setConferenceSearch] = useState("");
+
+  const [paymentStatusFilter, setPaymentStatusFilter] = useState("");
+
+  const [registrationStatusFilter, setRegistrationStatusFilter] = useState("");
+
+  const [expandedRegistration, setExpandedRegistration] = useState(null);
 
   const cleanCity = (city) => {
     if (!city) return null;
@@ -119,7 +307,7 @@ const [totalUsers, setTotalUsers] = useState(0);
   const handleSoftDelete = async (member) => {
     if (!member?._id) return;
     const confirmDelete = window.confirm(
-      "Are you sure you want to delete this life member?"
+      "Are you sure you want to delete this life member?",
     );
     if (!confirmDelete) return;
 
@@ -214,11 +402,26 @@ const [totalUsers, setTotalUsers] = useState(0);
       }
     };
 
+    const fetchConferenceRegistrations = async () => {
+      try {
+        const res = await getAllConferenceRegistrations();
+
+        if (res?.registrations) {
+          setConferenceRegistrations(res.registrations);
+
+          setTotalConferenceRegistrations(res.registrations.length);
+        }
+      } catch (err) {
+        console.error("Error fetching conference registrations:", err);
+      }
+    };
+
     fetchUsers();
     fetchAwardForms();
     fetchLifeMembers();
     fetchUpdatedLifeMembers();
     fetchNewLifeMembers();
+    fetchConferenceRegistrations();
   }, []);
 
   const handleLogout = () => {
@@ -262,14 +465,14 @@ const [totalUsers, setTotalUsers] = useState(0);
     .filter((member) =>
       cityFilter
         ? (member.City || "").toLowerCase() === cityFilter.toLowerCase()
-        : true
+        : true,
     );
 
   const updatedTotalPages = Math.ceil(updatedFiltered.length / itemsPerPage);
 
   const updatedPaginated = updatedFiltered.slice(
     (updatedPage - 1) * itemsPerPage,
-    updatedPage * itemsPerPage
+    updatedPage * itemsPerPage,
   );
 
   const newFiltered = newLifeMembers
@@ -277,24 +480,78 @@ const [totalUsers, setTotalUsers] = useState(0);
     .filter((member) =>
       cityFilter
         ? (member.City || "").toLowerCase() === cityFilter.toLowerCase()
-        : true
+        : true,
     );
 
   const newTotalPages = Math.ceil(newFiltered.length / itemsPerPage);
 
   const newPaginated = newFiltered.slice(
     (newPage - 1) * itemsPerPage,
-    newPage * itemsPerPage
+    newPage * itemsPerPage,
   );
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentMembers = filteredLifeMembers.slice(
     indexOfFirstItem,
-    indexOfLastItem
+    indexOfLastItem,
   );
 
   const totalPages = Math.ceil(filteredLifeMembers.length / itemsPerPage);
+
+  const filteredConferenceRegistrations =
+  conferenceRegistrations.filter(
+    (registration) => {
+      const primary =
+        registration.members?.find(
+          (member) =>
+            member.memberType ===
+            "Primary"
+        );
+
+      const search =
+        conferenceSearch
+          .trim()
+          .toLowerCase();
+
+      const matchesSearch =
+        !search ||
+        primary?.Member_Name
+          ?.toLowerCase()
+          .includes(search) ||
+        primary?.LM_NO
+          ?.toLowerCase()
+          .includes(search) ||
+        primary?.Contact_No
+          ?.toLowerCase()
+          .includes(search) ||
+        primary?.Email
+          ?.toLowerCase()
+          .includes(search) ||
+        registration.members?.some(
+          (member) =>
+            member.registrationNumber
+              ?.toLowerCase()
+              .includes(search)
+        );
+
+      const matchesPaymentStatus =
+        !paymentStatusFilter ||
+        registration.payment?.status ===
+          paymentStatusFilter;
+
+      const matchesRegistrationStatus =
+        !registrationStatusFilter ||
+        registration.registrationStatus ===
+          registrationStatusFilter;
+
+      return (
+        matchesSearch &&
+        matchesPaymentStatus &&
+        matchesRegistrationStatus
+      );
+    }
+  );
 
   const renderSection = () => {
     switch (selectedSection) {
@@ -864,8 +1121,8 @@ const [totalUsers, setTotalUsers] = useState(0);
 
                       <td>
                         <button
-                          className={styles.deleteButton} 
-                          onClick={() => handleSoftDelete(member)} 
+                          className={styles.deleteButton}
+                          onClick={() => handleSoftDelete(member)}
                         >
                           Delete
                         </button>
@@ -898,6 +1155,542 @@ const [totalUsers, setTotalUsers] = useState(0);
             </div>
           </>
         );
+
+
+      case "conferenceRegistrations":
+  return (
+    <div className={styles.userTableWrapper}>
+      <div
+        className="d-flex justify-content-between align-items-center mb-3"
+      >
+        <div>
+          <h4 className="mb-1">
+            Conference Registrations
+          </h4>
+
+          <small className="text-muted">
+            Total Registrations:{" "}
+            {
+              filteredConferenceRegistrations.length
+            }
+          </small>
+        </div>
+      </div>
+
+      {/* FILTERS */}
+
+      <div
+        className="d-flex flex-wrap gap-2 mb-4"
+      >
+        <input
+          type="text"
+          className="form-control"
+          style={{ maxWidth: "320px" }}
+          placeholder="Search name, LM No, mobile, registration no..."
+          value={conferenceSearch}
+          onChange={(e) =>
+            setConferenceSearch(
+              e.target.value
+            )
+          }
+        />
+
+        <select
+          className="form-select"
+          style={{ maxWidth: "220px" }}
+          value={paymentStatusFilter}
+          onChange={(e) =>
+            setPaymentStatusFilter(
+              e.target.value
+            )
+          }
+        >
+          <option value="">
+            All Payment Status
+          </option>
+
+          <option value="pending">
+            Pending
+          </option>
+
+          <option value="submitted">
+            Submitted
+          </option>
+
+          <option value="verified">
+            Verified
+          </option>
+
+          <option value="rejected">
+            Rejected
+          </option>
+        </select>
+
+        <select
+          className="form-select"
+          style={{ maxWidth: "240px" }}
+          value={
+            registrationStatusFilter
+          }
+          onChange={(e) =>
+            setRegistrationStatusFilter(
+              e.target.value
+            )
+          }
+        >
+          <option value="">
+            All Registration Status
+          </option>
+
+          <option value="payment_pending">
+            Payment Pending
+          </option>
+
+          <option value="payment_submitted">
+            Payment Submitted
+          </option>
+
+          <option value="approved">
+            Approved
+          </option>
+
+          <option value="rejected">
+            Rejected
+          </option>
+        </select>
+      </div>
+
+      {filteredConferenceRegistrations
+        .length === 0 ? (
+        <div
+          className="alert alert-info"
+        >
+          No conference registrations
+          found.
+        </div>
+      ) : (
+        filteredConferenceRegistrations.map(
+          (registration, regIndex) => {
+            const primaryMember =
+              registration.members?.find(
+                (member) =>
+                  member.memberType ===
+                  "Primary"
+              );
+
+            const familyMembers =
+              registration.members?.filter(
+                (member) =>
+                  member.memberType ===
+                  "Family"
+              ) || [];
+
+            const isExpanded =
+              expandedRegistration ===
+              registration._id;
+
+            return (
+              <div
+                key={registration._id}
+                style={{
+                  border:
+                    "1px solid #ddd",
+                  borderRadius: "10px",
+                  marginBottom: "20px",
+                  overflow: "hidden",
+                  background: "#fff",
+                }}
+              >
+                {/* MAIN REGISTRATION */}
+
+                <div
+                  style={{
+                    padding: "15px",
+                    background:
+                      "#f8f9fa",
+                  }}
+                >
+                  <div className="row g-3 align-items-center">
+                    <div className="col-md-1">
+                      <strong>
+                        #{regIndex + 1}
+                      </strong>
+                    </div>
+
+                    <div className="col-md-2">
+                      <small className="text-muted d-block">
+                        Primary Member
+                      </small>
+
+                      <strong>
+                        {primaryMember
+                          ?.Member_Name ||
+                          "-"}
+                      </strong>
+                    </div>
+
+                    <div className="col-md-2">
+                      <small className="text-muted d-block">
+                        Registration No.
+                      </small>
+
+                      <strong
+                        style={{
+                          color:
+                            "#f4511e",
+                        }}
+                      >
+                        {primaryMember
+                          ?.registrationNumber ||
+                          "-"}
+                      </strong>
+                    </div>
+
+                    <div className="col-md-1">
+                      <small className="text-muted d-block">
+                        Members
+                      </small>
+
+                      <strong>
+                        {
+                          registration.totalMembers
+                        }
+                      </strong>
+                    </div>
+
+                    <div className="col-md-2">
+                      <small className="text-muted d-block">
+                        Amount
+                      </small>
+
+                      <strong>
+                        ₹
+                        {
+                          registration.amount
+                        }
+                      </strong>
+                    </div>
+
+                    <div className="col-md-2">
+                      <small className="text-muted d-block">
+                        Payment
+                      </small>
+
+                      <span
+                        className={`badge ${
+                          registration
+                            .payment
+                            ?.status ===
+                          "verified"
+                            ? "bg-success"
+                            : registration
+                                  .payment
+                                  ?.status ===
+                                "rejected"
+                              ? "bg-danger"
+                              : registration
+                                    .payment
+                                    ?.status ===
+                                  "submitted"
+                                ? "bg-warning text-dark"
+                                : "bg-secondary"
+                        }`}
+                      >
+                        {registration
+                          .payment
+                          ?.status ||
+                          "-"}
+                      </span>
+                    </div>
+
+                    <div className="col-md-2">
+                      <button
+                        className="btn btn-primary btn-sm"
+                        onClick={() =>
+                          setExpandedRegistration(
+                            isExpanded
+                              ? null
+                              : registration._id
+                          )
+                        }
+                      >
+                        {isExpanded
+                          ? "Hide Details"
+                          : "View Complete Details"}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* COMPLETE DETAILS */}
+
+                {isExpanded && (
+                  <div
+                    style={{
+                      padding: "20px",
+                    }}
+                  >
+                    {/* PAYMENT DETAILS */}
+
+                    <h5 className="mb-3">
+                      Payment Details
+                    </h5>
+
+                    <Table
+                      bordered
+                      responsive
+                      size="sm"
+                    >
+                      <tbody>
+                        <tr>
+                          <th>
+                            Total Members
+                          </th>
+
+                          <td>
+                            {
+                              registration.totalMembers
+                            }
+                          </td>
+
+                          <th>
+                            Total Amount
+                          </th>
+
+                          <td>
+                            ₹
+                            {
+                              registration.amount
+                            }
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <th>
+                            Transaction ID /
+                            UTR
+                          </th>
+
+                          <td>
+                            {registration
+                              .payment
+                              ?.transactionId ||
+                              "-"}
+                          </td>
+
+                          <th>
+                            Payment Status
+                          </th>
+
+                          <td>
+                            {registration
+                              .payment
+                              ?.status ||
+                              "-"}
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <th>
+                            Registration
+                            Status
+                          </th>
+
+                          <td>
+                            {registration.registrationStatus ||
+                              "-"}
+                          </td>
+
+                          <th>
+                            Payment Submitted
+                          </th>
+
+                          <td>
+                            {registration
+                              .payment
+                              ?.submittedAt
+                              ? new Date(
+                                  registration.payment.submittedAt
+                                ).toLocaleString(
+                                  "en-IN"
+                                )
+                              : "-"}
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <th>
+                            Verified At
+                          </th>
+
+                          <td>
+                            {registration
+                              .payment
+                              ?.verifiedAt
+                              ? new Date(
+                                  registration.payment.verifiedAt
+                                ).toLocaleString(
+                                  "en-IN"
+                                )
+                              : "-"}
+                          </td>
+
+                          <th>
+                            Created At
+                          </th>
+
+                          <td>
+                            {registration.createdAt
+                              ? new Date(
+                                  registration.createdAt
+                                ).toLocaleString(
+                                  "en-IN"
+                                )
+                              : "-"}
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <th>
+                            Remarks
+                          </th>
+
+                          <td colSpan="3">
+                            {registration
+                              .payment
+                              ?.remarks ||
+                              "-"}
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <th>
+                            Payment Screenshot
+                          </th>
+
+                          <td colSpan="3">
+                            {registration
+                              .payment
+                              ?.screenshot ? (
+                              <a
+                                href={
+                                  registration
+                                    .payment
+                                    .screenshot
+                                }
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                <img
+                                  src={
+                                    registration
+                                      .payment
+                                      .screenshot
+                                  }
+                                  alt="Payment Screenshot"
+                                  style={{
+                                    width:
+                                      "160px",
+                                    maxHeight:
+                                      "180px",
+                                    objectFit:
+                                      "contain",
+                                    border:
+                                      "1px solid #ddd",
+                                    borderRadius:
+                                      "6px",
+                                  }}
+                                />
+                              </a>
+                            ) : (
+                              "N/A"
+                            )}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </Table>
+
+                    {/* PRIMARY */}
+
+                    <h5 className="mt-4 mb-3">
+                      Primary Member
+                    </h5>
+
+                    <MemberDetailsTable
+                      member={
+                        primaryMember
+                      }
+                    />
+
+                    {/* FAMILY */}
+
+                    <h5 className="mt-4 mb-3">
+                      Family Members (
+                      {
+                        familyMembers.length
+                      }
+                      )
+                    </h5>
+
+                    {familyMembers.length >
+                    0 ? (
+                      familyMembers.map(
+                        (
+                          familyMember,
+                          index
+                        ) => (
+                          <div
+                            key={
+                              familyMember._id ||
+                              index
+                            }
+                            style={{
+                              marginBottom:
+                                "25px",
+                            }}
+                          >
+                            <h6
+                              style={{
+                                background:
+                                  "#fff7f2",
+                                padding:
+                                  "10px",
+                                borderRadius:
+                                  "5px",
+                                color:
+                                  "#f4511e",
+                              }}
+                            >
+                              Family Member{" "}
+                              {index + 1}
+                              {familyMember.relation
+                                ? ` - ${familyMember.relation}`
+                                : ""}
+                            </h6>
+
+                            <MemberDetailsTable
+                              member={
+                                familyMember
+                              }
+                            />
+                          </div>
+                        )
+                      )
+                    ) : (
+                      <p className="text-muted">
+                        No family
+                        members added.
+                      </p>
+                    )}
+                  </div>
+                )}
+              </div>
+            );
+          }
+        )
+      )}
+    </div>
+  );
 
       default:
         return (
@@ -976,6 +1769,18 @@ const [totalUsers, setTotalUsers] = useState(0);
                 onClick={() => setSelectedSection("updatedLifeMembers")}
               >
                 Updated and New Registered Life Members
+              </div>
+            </div>
+            <div>
+              <div
+                className={`${styles.optionButton} ${
+                  selectedSection === "conferenceRegistrations"
+                    ? styles.activeButton
+                    : ""
+                }`}
+                onClick={() => setSelectedSection("conferenceRegistrations")}
+              >
+                Conference Registrations
               </div>
             </div>
           </div>
