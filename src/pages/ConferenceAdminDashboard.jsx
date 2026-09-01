@@ -276,6 +276,52 @@ const ConferenceAdminDashboard = () => {
     saveAs(blob, fileName);
   };
 
+    const exportConferenceRegistrationsToExcel = () => {
+    const rows = [];
+
+    filteredConferenceRegistrations.forEach((registration, regIndex) => {
+      (registration.members || []).forEach((member) => {
+        rows.push({
+          S_No: regIndex + 1,
+          Registration_ID: registration._id,
+          Member_Type: member.memberType,
+          Relation: member.relation,
+          Registration_Number: member.registrationNumber,
+          LM_No: member.LM_NO,
+          Year: member.Year,
+          Title: member.Title,
+          Name: member.Member_Name,
+          S_O_D_O_W_O: member.S_O_D_O_W_O,
+          Date_of_Birth: member.Date_of_Birth,
+          Gender: member.gender,
+          Category: member.category,
+          Gotra: member.Gotra,
+          Kuldevi: member.Kuldevi,
+          Mobile: member.Contact_No,
+          Email: member.Email,
+          City: member.City,
+          Pincode: member.Pin,
+          Address: member.Address,
+          Total_Members: registration.totalMembers,
+          Amount: registration.amount,
+          Transaction_ID: registration.payment?.transactionId,
+          Payment_Status: registration.payment?.status,
+          Registration_Status: registration.registrationStatus,
+          Payment_Submitted_At: registration.payment?.submittedAt
+            ? new Date(registration.payment.submittedAt).toLocaleString("en-IN")
+            : "",
+          Verified_At: registration.payment?.verifiedAt
+            ? new Date(registration.payment.verifiedAt).toLocaleString("en-IN")
+            : "",
+          Created_At: registration.createdAt
+            ? new Date(registration.createdAt).toLocaleString("en-IN")
+            : "",
+        });
+      });
+    });
+
+    exportToExcel(rows, "ConferenceRegistrations.xlsx");
+  };
   const exportAwardFormsToExcel = () => {
     const formattedData = awardForms.map((user, index) => ({
       S_No: index + 1,
@@ -1175,6 +1221,13 @@ const ConferenceAdminDashboard = () => {
             }
           </small>
         </div>
+        
+        <button
+          onClick={exportConferenceRegistrationsToExcel}
+          className="btn btn-success"
+        >
+          📥 Download Excel
+        </button>
       </div>
 
       {/* FILTERS */}
