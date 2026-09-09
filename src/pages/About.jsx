@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar/Navbar";
 import { Container, Row, Col, Button, Image } from "react-bootstrap";
 import history from "../assets/history.png";
 import samvidhaan from "../assets/samvidhaan.png";
-import samiti1 from "../assets/samiti1.png";
+import samiti1 from "../assets/samiti1.PNG";
 import samiti from "../assets/New Samiti.PNG";
 import shiksha from "../assets/shiksha samiti new.PNG";
 
