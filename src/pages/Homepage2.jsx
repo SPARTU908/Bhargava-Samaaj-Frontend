@@ -13,7 +13,6 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
 import banner from "../assets/banner.jpg";
-import announcement from "../assets/announce.png";
 import activity from "../assets/new event.PNG";
 import president from "../assets/President.jpeg";
 import secretary from "../assets/sanjay.jpg";
@@ -35,7 +34,6 @@ import salil from "../assets/salil.jpg";
 import sanjay3 from "../assets/sanjay2.jpg";
 import sohan from "../assets/sohan.jpg";
 import narayan from "../assets/narayan.jpeg";
-import announcement2 from "../assets/announcement.PNG";
 import activity1 from "../assets/Event1.PNG";
 import activity2 from "../assets/Event2.PNG";
 
@@ -124,42 +122,6 @@ const Homepage = () => {
 
       {/* BANNER */}
       <Image src={banner} alt="banner" fluid className="w-100" />
-
-      {/* ANNOUNCEMENT */}
-      <Container className="my-5">
-        <Row className="align-items-center">
-          <Col md={2} className="text-center mb-3 mb-md-0">
-            <Image
-              src={announcement}
-              fluid
-              rounded
-              className="shadow-sm"
-              alt="Announcement"
-            />
-          </Col>
-
-          <Col>
-            <div className="p-4 border rounded bg-light shadow-sm">
-              <p>
-                अखिल भारतीय भार्गव सभा (रजि.) कि मुलताई के बैठक में 
-                प्रस्तावित कार्यकारिणी सत्र 2025-27 कि सातवीं बैठक इंदौर भार्गव सभा, 
-                इंदौर के आतिथ्य में 03-04 अक्टूबर, 2026 को आयोजित की जाएगी।
-              </p>
-              {/* <Image
-                src={announcement2}
-                alt="activity"
-                fluid
-                rounded
-                style={{
-                  border: "3px solid #ea8d0c",
-                  maxHeight: "500px",
-                  objectFit: "cover",
-                }}
-              /> */}
-            </div>
-          </Col>
-        </Row>
-      </Container>
 
             {/* PDF SECTION */}
   <Container className="my-5">
