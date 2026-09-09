@@ -123,6 +123,61 @@ const Homepage = () => {
       {/* BANNER */}
       <Image src={banner} alt="banner" fluid className="w-100" />
 
+      {/* LIFE MEMBERS ANNOUNCEMENT */}
+      <Container className="my-5">
+        <Row className="justify-content-center">
+          <Col md={10} lg={8}>
+            <div
+              className="p-4 shadow-sm"
+              style={{
+                backgroundColor: "#fdf8f3",
+                borderRadius: "14px",
+                border: "1px solid #ea8d0c",
+              }}
+            >
+              <h4 className="fw-bold mb-3" style={{ color: "#ea8d0c" }}>
+                अखिल भारतीय भार्गव सभा के दिनांक 30-06-2026 तक बने आजीवन सदस्य
+              </h4>
+              <p style={{ textAlign: "justify" }}>
+                अखिल भारतीय भार्गव सभा के दिनांक 30-06-2026 तक बने आजीवन
+                सदस्यों की सूची यहाँ दी जा रही है और जिन सदस्यों को अखिल
+                भारतीय भार्गव सभा द्वारा लैमिनेटेड परिचय-पत्र जारी कर दिया गया
+                है, उनके नाम के सामने दिये कालम में 'YES' मार्क किया गया है।
+                अतः ऐसे सदस्य जिनका अखिल भारतीय भार्गव सभा द्वारा जारी
+                परिचय-पत्र खो गया है अथवा उनके पते में परिवर्तन हुआ हो तो उस
+                स्थिति में डुप्लीकेट परिचय-पत्र हेतु सदस्य को पुनः पूर्ण रूप
+                से भरा हुआ हस्ताक्षरित एवं सत्यापित प्रपत्र, फोटोग्राफ, प्रति
+                सदस्य शुल्क 50 रुपये सहित दिनांक 30-09-2026 से पूर्व सभा
+                कार्यालय में पहुँचवाना आवश्यक है ताकि आपका डुप्लीकेट
+                परिचय-पत्र जारी किया जा सके।
+              </p>
+              <p className="mb-4">
+                - संजय कुमार भार्गव, प्रधान सचिव, मो-:{" "}
+                <a href="tel:9414076842">9414076842</a>
+              </p>
+
+              <div className="d-flex gap-2 flex-wrap">
+                <a
+                  href="/pdfs/ABBS-Life-Members-30-06-2026.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-warning fw-semibold px-4"
+                >
+                  📄 सूची देखें
+                </a>
+                <a
+                  href="/pdfs/ABBS-Life-Members-30-06-2026.pdf"
+                  download="ABBS-Life-Members-30-06-2026.pdf"
+                  className="btn btn-outline-warning fw-semibold px-4"
+                >
+                  ⬇️ डाउनलोड करें
+                </a>
+              </div>
+            </div>
+          </Col>
+        </Row>
+      </Container>
+
             {/* PDF SECTION */}
   <Container className="my-5">
   <Row className="justify-content-center">
