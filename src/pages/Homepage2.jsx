@@ -165,14 +165,7 @@ const Homepage = () => {
                 >
                   📄 सूची देखें
                 </a>
-                <a
-                  href="/pdfs/ABBS-Life-Members-30-06-2026.pdf"
-                  download="ABBS-Life-Members-30-06-2026.pdf"
-                  className="btn btn-outline-warning fw-semibold px-4"
-                >
-                  ⬇️ डाउनलोड करें
-                </a>
-              </div>
+                </div>
             </div>
           </Col>
         </Row>
