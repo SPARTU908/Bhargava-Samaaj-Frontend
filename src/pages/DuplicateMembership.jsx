@@ -610,6 +610,7 @@ const DuplicateMembership = () => {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
+                    readOnly
                   />
 
                   <Field
@@ -822,6 +823,7 @@ const DuplicateMembership = () => {
                         name="spouseName"
                         value={formData.spouseName}
                         onChange={handleChange}
+                        readOnly
                       />
 
                       <Field
