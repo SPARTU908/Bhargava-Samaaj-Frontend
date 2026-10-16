@@ -144,7 +144,7 @@ const Homepage = () => {
       {/* BANNER */}
       <Image src={banner} alt="banner" fluid className="w-100" />
 
-      {/* LIFE MEMBERS ANNOUNCEMENT */}
+      {/* GENERAL ANNOUNCEMENT (सामान्य सूचना) */}
       <Container className="my-5">
         <Row className="justify-content-center">
           <Col md={10} lg={8}>
@@ -157,42 +157,41 @@ const Homepage = () => {
               }}
             >
               <h4 className="fw-bold mb-3" style={{ color: "#ea8d0c" }}>
-                अखिल भारतीय भार्गव सभा के दिनांक 30-06-2026 तक बने आजीवन सदस्य
+                📢 सामान्य सूचना
               </h4>
-              <p style={{ textAlign: "justify" }}>
-                अखिल भारतीय भार्गव सभा के दिनांक 30-06-2026 तक बने आजीवन
-                सदस्यों की सूची यहाँ दी जा रही है और जिन सदस्यों को अखिल
-                भारतीय भार्गव सभा द्वारा लैमिनेटेड परिचय-पत्र जारी कर दिया गया
-                है, उनके नाम के सामने दिये कालम में 'YES' मार्क किया गया है।
-                अतः ऐसे सदस्य जिनका अखिल भारतीय भार्गव सभा द्वारा जारी
-                परिचय-पत्र खो गया है अथवा उनके पते में परिवर्तन हुआ हो तो उस
-                स्थिति में डुप्लीकेट परिचय-पत्र हेतु सदस्य को पुनः पूर्ण रूप
-                से भरा हुआ हस्ताक्षरित एवं सत्यापित प्रपत्र, फोटोग्राफ, प्रति
-                सदस्य शुल्क 50 रुपये सहित दिनांक 30-09-2026 से पूर्व सभा
-                कार्यालय में पहुँचवाना आवश्यक है ताकि आपका डुप्लीकेट
-                परिचय-पत्र जारी किया जा सके।
+              <h5 className="fw-bold mb-3">
+                अखिल भारतीय भार्गव सभा (रजि.) का 135वाँ वार्षिक अधिवेशन-2026
+              </h5>
+              <p className="mb-2">
+                <strong>दिनांक:</strong> शनिवार 26, रविवार 27 एवं सोमवार 28
+                दिसंबर, 2026
               </p>
-              <p className="mb-4">
-                - संजय कुमार भार्गव, प्रधान सचिव, मो-:{" "}
-                <a href="tel:9414076842">9414076842</a>
+              <p className="mb-3">
+                <strong>अधिवेशन स्थल:</strong> गणेश बाग, मुहाना मंडी रोड, जयपुर
+                (राजस्थान)
+              </p>
+              <p className="mb-4" style={{ textAlign: "justify" }}>
+                समस्त भार्गव बंधुओं एवं मातृशक्ति को अधिवेशन में सादर एवं
+                सस्नेह निमंत्रण। अधिवेशन से संबंधित पूर्ण जानकारी हेतु नीचे दी
+                गई पुस्तिका देखें।
               </p>
 
               <div className="d-flex gap-2 flex-wrap">
                 <a
-                  href="/pdfs/ABBS-Life-Members-30-06-2026.pdf"
+                  href="/pdfs/Adhiveshan-2026-Jaipur.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn-warning fw-semibold px-4"
                 >
-                  📄 सूची देखें
+                  📄 PDF देखें
                 </a>
-                {/* <a
-                  href="/pdfs/ABBS-Life-Members-30-06-2026.pdf"
-                  download="ABBS-Life-Members-30-06-2026.pdf"
+                <a
+                  href="/pdfs/Adhiveshan-2026-Jaipur.pdf"
+                  download="Adhiveshan-2026-Jaipur.pdf"
                   className="btn btn-outline-warning fw-semibold px-4"
                 >
                   ⬇️ डाउनलोड करें
-                </a> */}
+                </a>
               </div>
             </div>
           </Col>
