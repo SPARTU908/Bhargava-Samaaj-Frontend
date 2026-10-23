@@ -42,6 +42,7 @@ const coverImages = {
   "July-2026":"/covers/july-2026.PNG",
   "August-2026":"/covers/august-2026.PNG",
   "September-2026":"/covers/sep-2026.PNG",
+  "October-2026":"/covers/oct-2026.PNG",
   "January-2025": "/covers/january-2025.png",
   "February-2025": "/covers/february-2025.png",
   "March-2025": "/covers/march-2025.png",
