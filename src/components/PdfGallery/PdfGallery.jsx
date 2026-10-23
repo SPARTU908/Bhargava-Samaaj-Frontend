@@ -11,7 +11,7 @@ const allMonths = [
 const pdfData = [
    {
     year: 2026,
-    months: ["January","February","March","April","May","June","July","August","September"]
+    months: ["January","February","March","April","May","June","July","August","September","October"]
   },
   {
     year: 2025,
