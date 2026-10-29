@@ -251,7 +251,7 @@ const Homepage = () => {
       {/* SMARIKA 2025 SECTION */}
       <Container id="smarika" className="my-5">
         <h3 className="text-center mb-4 fw-bold" style={{ color: "#ea8d0c" }}>
-          स्मारिका 2025
+          भार्गव पत्रिका के ग्राहकों हेतु अति आवश्यक सूचना
         </h3>
 
         <Row className="justify-content-center">
@@ -267,12 +267,12 @@ const Homepage = () => {
             >
               {/* COVER IMAGE */}
               <img
-                src="/covers/smarika.jpeg"
-                alt="Smarika 2025"
+                src="/covers/patrika-notice.jpg"
+                alt="भार्गव पत्रिका के ग्राहकों हेतु अति आवश्यक सूचना"
                 style={{
                   width: "100%",
                   maxHeight: "670px",
-                  objectFit: "cover",
+                  objectFit: "contain",
                 }}
               />
 
@@ -290,7 +290,7 @@ const Homepage = () => {
                   fontSize: "0.9rem",
                 }}
               >
-                2025
+                अक्टूबर 2026
               </span>
 
               {/* OVERLAY ACTION BAR */}
@@ -309,7 +309,7 @@ const Homepage = () => {
                 }}
               >
                 <a
-                  href="/pdfs/Smarika2025.pdf"
+                  href="/pdfs/Patrika-Notice-Oct2026.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn-warning px-4 fw-semibold"
@@ -318,7 +318,7 @@ const Homepage = () => {
                 </a>
 
                 <a
-                  href="/pdfs/Smarika2025.pdf"
+                  href="/pdfs/Patrika-Notice-Oct2026.pdf"
                   download
                   className="btn btn-outline-light px-4 fw-semibold"
                 >
