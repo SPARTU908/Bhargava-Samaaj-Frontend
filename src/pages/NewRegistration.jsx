@@ -306,8 +306,8 @@ const MemberForm = React.memo(
               null,
               true,
             )}
-            {renderEditableField("Gotra", "Gotra", "text", null, true)}
-            {renderEditableField("Kuldevi", "Kuldevi", "text", null, true)}
+            {renderEditableField("Gotra", "Gotra", "text", null, false)}
+            {renderEditableField("Kuldevi", "Kuldevi", "text", null, false)}
             {renderEditableField("Gender", "gender", "select", null, true, [
               "Male",
               "Female",
@@ -656,7 +656,6 @@ const MemberForm = React.memo(
                       >
                         <Form.Label>
                           <strong>Gotra</strong>{" "}
-                          <span style={{ color: "red" }}>*</span>
                         </Form.Label>
 
                         {isFamilyEditable(index) ? (
@@ -696,7 +695,6 @@ const MemberForm = React.memo(
                       >
                         <Form.Label>
                           <strong>Kuldevi</strong>{" "}
-                          <span style={{ color: "red" }}>*</span>
                         </Form.Label>
 
                         {isFamilyEditable(index) ? (
@@ -1386,7 +1384,6 @@ const MemberForm = React.memo(
                           <Form.Group as={Col} xs={12} md={4} className="mb-3">
                             <Form.Label>
                               <strong>Gotra</strong>{" "}
-                              <span style={{ color: "red" }}>*</span>
                             </Form.Label>
 
                             <Form.Control
@@ -1406,7 +1403,6 @@ const MemberForm = React.memo(
                           <Form.Group as={Col} xs={12} md={4} className="mb-3">
                             <Form.Label>
                               <strong>Kuldevi</strong>{" "}
-                              <span style={{ color: "red" }}>*</span>
                             </Form.Label>
 
                             <Form.Control
@@ -1873,13 +1869,7 @@ const NewRegistration = () => {
       }
     }
 
-    if (isEmpty(member.Gotra)) {
-      errors.Gotra = "Gotra is required.";
-    }
 
-    if (isEmpty(member.Kuldevi)) {
-      errors.Kuldevi = "Kuldevi is required.";
-    }
 
     if (isEmpty(member.gender)) {
       errors.gender = "Please select gender.";
@@ -1956,13 +1946,7 @@ const NewRegistration = () => {
         }
       }
 
-      if (isEmpty(familyMember.Gotra)) {
-        errors[`${prefix}Gotra`] = "Gotra is required.";
-      }
 
-      if (isEmpty(familyMember.Kuldevi)) {
-        errors[`${prefix}Kuldevi`] = "Kuldevi is required.";
-      }
 
       if (isEmpty(familyMember.gender)) {
         errors[`${prefix}gender`] = "Gender is required.";
