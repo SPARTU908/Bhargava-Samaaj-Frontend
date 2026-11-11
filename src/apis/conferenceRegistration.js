@@ -124,14 +124,15 @@ export const checkApprovedConferenceRegistration = async (
 };
 
 export const checkNonAbbsConferenceRegistration =
-  async (email, contactNo) => {
+  async ({ name, dob, soDoWo }) => {
 
     const response = await axios.get(
       `${API_URL}/api/conference-registration/check-non-abbs`,
       {
         params: {
-          email,
-          contactNo,
+          name,
+          dob,
+          soDoWo,
         },
       },
     );
