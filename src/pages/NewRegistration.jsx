@@ -284,6 +284,8 @@ const MemberForm = React.memo(
               "text",
               null,
               true,
+              null,
+              checkNonAbbsExistingUser,
             )}
             {renderEditableField(
               "S/O,D/O,W/O",
@@ -291,6 +293,8 @@ const MemberForm = React.memo(
               "text",
               "S/O Mr.ABC",
               true,
+              null,
+              checkNonAbbsExistingUser,
             )}
             {renderEditableField(
               "ABBS Membership Card Issued Year",
@@ -305,6 +309,8 @@ const MemberForm = React.memo(
               "date",
               null,
               true,
+              null,
+              checkNonAbbsExistingUser,
             )}
             {renderEditableField("Gotra", "Gotra", "text", null, false)}
             {renderEditableField("Kuldevi", "Kuldevi", "text", null, false)}
@@ -318,8 +324,6 @@ const MemberForm = React.memo(
               "email",
               null,
               true,
-              null,
-              checkNonAbbsExistingUser,
             )}
             {renderEditableField(
               "Mobile No",
@@ -327,8 +331,6 @@ const MemberForm = React.memo(
               "text",
               null,
               true,
-              null,
-              checkNonAbbsExistingUser,
             )}
             {renderEditableField("Address", "Address", "textarea", null, true)}
             {renderEditableField("City", "City", "text", null, true)}
@@ -1633,26 +1635,24 @@ const NewRegistration = () => {
   const checkNonAbbsExistingUser = async () => {
     if (isAbbsMember) return;
 
-    const email = member?.Email?.trim();
-    const mobile = member?.Contact_No?.trim();
+    // Duplicate = same person (name + DOB or S/O,D/O,W/O). Email and mobile
+    // are not used because family members often share them.
+    const name = member?.Member_Name?.trim();
+    const dob = member?.Date_of_Birth?.trim();
+    const soDoWo = member?.S_O_D_O_W_O?.trim();
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    const mobileRegex = /^[6-9]\d{9}$/;
-
-    if (
-      !email ||
-      !mobile ||
-      !emailRegex.test(email) ||
-      !mobileRegex.test(mobile)
-    ) {
+    if (!name || (!dob && !soDoWo)) {
       return;
     }
 
     try {
       setCheckingNonAbbs(true);
 
-      const result = await checkNonAbbsConferenceRegistration(email, mobile);
+      const result = await checkNonAbbsConferenceRegistration({
+        name,
+        dob,
+        soDoWo,
+      });
 
       if (result?.alreadyRegistered) {
         setNonAbbsExistingRegistration(result);
@@ -2047,10 +2047,11 @@ const NewRegistration = () => {
 
     if (!isAbbsMember) {
       try {
-        const registrationCheck = await checkNonAbbsConferenceRegistration(
-          member.Email,
-          member.Contact_No,
-        );
+        const registrationCheck = await checkNonAbbsConferenceRegistration({
+          name: member.Member_Name,
+          dob: member.Date_of_Birth,
+          soDoWo: member.S_O_D_O_W_O,
+        });
 
         if (registrationCheck?.alreadyRegistered) {
           setAlreadyRegistered(registrationCheck);
