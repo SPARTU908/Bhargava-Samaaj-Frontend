@@ -101,15 +101,24 @@ export const submitConferencePayment =
 export const getAllConferenceRegistrations = async () => {
   try {
     const response = await axios.get(
-      `${API_URL}/api/conference-registration/admin/all`
+      `${API_URL}/api/conference-registration/admin/all`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("adminToken") || ""}`,
+        },
+      },
     );
 
     return response.data;
   } catch (error) {
-    throw new Error(
+    const err = new Error(
       error.response?.data?.message ||
+        error.response?.data?.msg ||
         "Unable to fetch conference registrations"
     );
+    // 401 = missing/expired login, 403 = wrong admin role
+    err.status = error.response?.status;
+    throw err;
   }
 };
 

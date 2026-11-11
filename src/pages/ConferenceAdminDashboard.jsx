@@ -459,6 +459,17 @@ const ConferenceAdminDashboard = () => {
         }
       } catch (err) {
         console.error("Error fetching conference registrations:", err);
+
+        if (err.status === 401 || err.status === 403) {
+          toast.error("Your admin session has expired. Please log in again.", {
+            position: "top-center",
+            autoClose: 3000,
+          });
+
+          setTimeout(() => {
+            navigate("/admin");
+          }, 2000);
+        }
       }
     };
 
