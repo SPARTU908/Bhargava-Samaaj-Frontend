@@ -202,6 +202,14 @@ const Navbar = () => {
                   >
                     सभा की निधियाँ
                   </NavDropdown.Item>
+                  <NavDropdown.Item
+                    as="a"
+                    href="/pdfs/ABBS_Balance_Sheet_2025-26.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    बैलेंस शीट 2025-26
+                  </NavDropdown.Item>
                 </NavDropdown>
 
               
